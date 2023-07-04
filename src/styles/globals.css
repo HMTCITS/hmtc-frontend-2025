@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.drop-shadow-glow {
+  filter: drop-shadow(0 0 20px rgba(255, 165, 0, 0.8))
+    drop-shadow(0 0 40px rgba(255, 69, 0, 0.8))
+    drop-shadow(0 0 60px rgba(255, 0, 0, 0.8));
+}

@@ -1,0 +1,8 @@
+.next
+node_modules
+package.json
+yarn.lock
+.lintstagedrc
+.prettierrc
+public
+next-env.d.ts
