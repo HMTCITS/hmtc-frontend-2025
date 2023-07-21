@@ -12,12 +12,12 @@ interface TextComponentProps {
 const VisiMisi: React.FC<TextComponentProps> = ({ text1, text2 }) => {
   return (
     <section className='relative flex h-fit w-full justify-center overflow-hidden bg-orange-main font-primary text-white'>
-      <main className='flex w-4/5 justify-between py-20'>
+      <div className='flex w-4/5 flex-col justify-between gap-y-6 py-20 md:flex-row'>
         <div className='w-full space-y-8'>
-          <h1 className='text-6xl font-extrabold'>{text1}</h1>
-          <p className='text-lg font-medium'>{text2}</p>
+          <h1 className='max-w-xl text-6xl font-extrabold'>{text1}</h1>
+          <p className='font-secondary font-medium'>{text2}</p>
         </div>
-        <div className='flex w-1/3 items-center justify-center'>
+        <div className='flex w-full items-center justify-start md:w-1/3 md:justify-end'>
           <ButtonLink
             href='#'
             className='text bg-white'
@@ -27,7 +27,7 @@ const VisiMisi: React.FC<TextComponentProps> = ({ text1, text2 }) => {
             Klik di sini!
           </ButtonLink>
         </div>
-      </main>
+      </div>
       <div className='absolute left-0 top-0 -translate-x-[5%] -translate-y-[51%] opacity-10'>
         <Image src='/images/bungaa.png' width={680} height={200} alt='bunga' />
       </div>

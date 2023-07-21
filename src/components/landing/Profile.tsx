@@ -3,15 +3,15 @@ import React from 'react';
 
 const Profile = () => {
   return (
-    <main className='flex w-full items-center justify-center gap-x-6 py-10'>
-      <div className='w-1/2 border-2 border-solid'>
-        <Image src='/images/bungaa.png' alt='' width={400} height={400} />
+    <section className='flex w-full flex-col items-center justify-center gap-x-14 gap-y-6 py-24 lg:flex-row'>
+      <div className='flex w-full items-center lg:w-1/2'>
+        <Image src='/images/example-vid.png' alt='' width={610} height={369} />
       </div>
-      <div className='w-1/2 space-y-4 '>
-        <h2 className='font-primary text-6xl font-extrabold'>
+      <div className='w-full space-y-6 text-black-main lg:w-1/2'>
+        <h2 className='w-full font-primary text-6xl font-extrabold lg:w-3/4'>
           Lihat vron nyanyi di sini!
         </h2>
-        <p className='font-secondary text-lg'>
+        <p className='font-secondary'>
           Metus in sit mollis vulputate. Mollis ac amet nec malesuada. Nunc elit
           ac placerat dictum ornare purus aenean aliquam fermentum. Non pulvinar
           placerat vestibulum faucibus. A dignissim in neque integer maecenas
@@ -19,7 +19,7 @@ const Profile = () => {
           ipsum sed mauris tincidunt risus. Sed sagittis donec tellus pulvinar{' '}
         </p>
       </div>
-    </main>
+    </section>
   );
 };
 

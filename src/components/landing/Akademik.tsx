@@ -8,34 +8,42 @@ const Akademik = () => {
         <div className='w-full'>
           <h1 className='text-6xl font-extrabold'>Akademik.</h1>
         </div>
-        <div className='grid grid-cols-2'>
-          <div className='space-y-4 p-6 hover:bg-white hover:bg-opacity-10'>
-            <h2 className='text-2xl font-semibold'>Bank Soal</h2>
-            <p className='text-lg'>
+        <div className='grid grid-cols-2 font-secondary'>
+          <div className='group space-y-4 p-6 transition-colors duration-150 hover:bg-white hover:bg-opacity-10'>
+            <h2 className='text-2xl font-semibold group-hover:underline'>
+              Bank Soal
+            </h2>
+            <p className='line-clamp-2 text-blue-200'>
               Nec vel senectus condimentum nec tempor amet porta. Consectetur
               tincidunt urna nulla donec est consequat blandit. Commodo dolor
               eu.
             </p>
           </div>
-          <div className='space-y-4 p-6 hover:bg-white hover:bg-opacity-10'>
-            <h2 className='text-2xl font-semibold'>Silabus</h2>
-            <p className='text-lg'>
+          <div className='group space-y-4 p-6 transition-colors duration-200 hover:bg-white hover:bg-opacity-10'>
+            <h2 className='text-2xl font-semibold group-hover:underline'>
+              Silabus
+            </h2>
+            <p className='line-clamp-2 text-blue-200'>
               Nec vel senectus condimentum nec tempor amet porta. Consectetur
               tincidunt urna nulla donec est consequat blandit. Commodo dolor
               eu.
             </p>
           </div>
-          <div className='space-y-4 p-6 hover:bg-white hover:bg-opacity-10'>
-            <h2 className='text-2xl font-semibold'>MBKM</h2>
-            <p className='text-lg'>
+          <div className='group space-y-4 p-6 transition-colors duration-200 hover:bg-white hover:bg-opacity-10'>
+            <h2 className='text-2xl font-semibold group-hover:underline'>
+              MBKM
+            </h2>
+            <p className='line-clamp-2 text-blue-200'>
               Nec vel senectus condimentum nec tempor amet porta. Consectetur
               tincidunt urna nulla donec est consequat blandit. Commodo dolor
               eu.
             </p>
           </div>
-          <div className='space-y-4 p-6 hover:bg-white hover:bg-opacity-10'>
-            <h2 className='text-2xl font-semibold'>Kalender Akademik</h2>
-            <p className='text-lg'>
+          <div className='group space-y-4 p-6 transition-colors duration-200 hover:bg-white hover:bg-opacity-10'>
+            <h2 className='text-2xl font-semibold group-hover:underline'>
+              Kalender Akademik
+            </h2>
+            <p className='line-clamp-2 text-blue-200'>
               Nec vel senectus condimentum nec tempor amet porta. Consectetur
               tincidunt urna nulla donec est consequat blandit. Commodo dolor
               eu.

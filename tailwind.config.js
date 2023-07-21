@@ -171,7 +171,11 @@ module.exports = {
         },
         base: {
           dark: '#212121',
+          gray: '#F0F2F5',
         },
+      },
+      transitionProperty: {
+        decoration: 'text-decoration',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
