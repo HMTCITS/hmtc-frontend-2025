@@ -19,8 +19,14 @@ const poppins = Poppins({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <main className={clsxm(playfair_display.variable, poppins.variable)}>
-      <Component {...pageProps} />;
+    <main
+      className={clsxm(
+        playfair_display.variable,
+        poppins.variable,
+        'scroll-smooth'
+      )}
+    >
+      <Component {...pageProps} />
     </main>
   );
 }

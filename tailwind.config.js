@@ -172,6 +172,10 @@ module.exports = {
         base: {
           dark: '#212121',
           gray: '#F0F2F5',
+          nav: '#9AA2B1',
+          icon: '#757575',
+          border: '#E4E7EB',
+          subtle: '#2f2f33',
         },
       },
       transitionProperty: {

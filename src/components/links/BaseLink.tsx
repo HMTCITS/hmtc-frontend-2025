@@ -24,6 +24,7 @@ const BaseLink = React.forwardRef<HTMLAnchorElement, BaseLinkProps>(
           href={href}
           ref={ref}
           className={className}
+          scroll={false}
           {...rest}
           {...nextLinkProps}
         >

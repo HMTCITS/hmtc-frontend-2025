@@ -9,6 +9,8 @@ enum ButtonVariant {
   'secondary',
   'warning',
   'netral',
+  'unstyled',
+  'light',
 }
 
 enum ButtonSize {
@@ -61,6 +63,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           'focus:outline-none focus-visible:outline',
           'font-semibold transition-colors duration-75',
           'disabled:cursor-not-allowed',
+          'transition-colors duration-75',
           [
             size === 'small' && [
               'min-h-[1.75rem] md:min-h-[2rem]',
@@ -100,6 +103,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               'bg-white text-base-dark',
               'ring-2 ring-black-main',
               'hover:bg-zinc-100 disabled:bg-zinc-200',
+            ],
+            variant === 'light' && [
+              'bg-white text-base-dark',
+              'hover:bg-base-subtle hover:text-white disabled:bg-zinc-200',
             ],
           ],
           isLoading &&
