@@ -68,13 +68,20 @@ export default function Home() {
                 width={180}
                 height={200}
                 className='w-full'
+                priority
               />
             </div>
             <div className='w-fit md:w-[470px]'>
-              <Typography variant='k0' className='font-primary text-black-main'>
+              <Typography
+                variant='k0'
+                className='font-primary text-black-main drop-shadow'
+              >
                 Sansargya
               </Typography>
-              <Typography variant='k0' className='font-primary text-black-main'>
+              <Typography
+                variant='k0'
+                className='font-primary text-black-main drop-shadow'
+              >
                 Abhijaya
               </Typography>
             </div>
@@ -89,6 +96,7 @@ export default function Home() {
               width={2000}
               height={800}
               className='object-cover'
+              priority
             />
             <div className='absolute bottom-0 h-24 w-full bg-gradient-to-t from-base-dark from-10% to-transparent md:h-52'></div>
           </div>

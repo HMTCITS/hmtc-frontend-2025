@@ -32,13 +32,7 @@ export default function Layout({
   //#endregion //*========= Sidebar =========
 
   return (
-    <div
-      className={clsxm(
-        'overflow-x-hidden',
-        isSidebarOpen && 'h-screen overflow-y-hidden md:h-fit',
-        className
-      )}
-    >
+    <div className={clsxm('overflow-x-hidden', className)}>
       {withNavbar && (
         <Navbar
           isSidebarOpen={isSidebarOpen}

@@ -52,7 +52,9 @@ export default function Typography<T extends React.ElementType = 'p'>({
       className={clsxm(
         //#region  //*=========== Variants ===========
         [
-          variant === 'k0' && ['text-4xl font-bold md:text-8xl'],
+          variant === 'k0' && [
+            'text-4xl font-bold leading-none md:text-[80px]',
+          ],
           variant === 'k1' && [
             'text-[2rem] font-extrabold leading-tight md:text-[3.25rem]',
           ],

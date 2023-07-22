@@ -11,45 +11,45 @@ const Akademik = () => {
           <Typography variant='k1'>Akademik.</Typography>
         </div>
         <div className='grid grid-cols-1 font-secondary md:grid-cols-2'>
-          <div className='group space-y-4 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:p-6'>
+          <div className='group space-y-1 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'>
             <Typography variant='h2' className='group-hover:underline'>
               Bank Soal
             </Typography>
-            <p className='line-clamp-2 text-blue-200'>
+            <Typography className='line-clamp-2 text-blue-200'>
               Nec vel senectus condimentum nec tempor amet porta. Consectetur
               tincidunt urna nulla donec est consequat blandit. Commodo dolor
               eu.
-            </p>
+            </Typography>
           </div>
-          <div className='group space-y-4 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:p-6'>
+          <div className='group space-y-1 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'>
             <Typography variant='h2' className='group-hover:underline'>
               Silabus
             </Typography>
-            <p className='line-clamp-2 text-blue-200'>
+            <Typography className='line-clamp-2 text-blue-200'>
               Nec vel senectus condimentum nec tempor amet porta. Consectetur
               tincidunt urna nulla donec est consequat blandit. Commodo dolor
               eu.
-            </p>
+            </Typography>
           </div>
-          <div className='group space-y-4 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:p-6'>
+          <div className='group space-y-1 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'>
             <Typography variant='h2' className='group-hover:underline'>
               MBKM
             </Typography>
-            <p className='line-clamp-2 text-blue-200'>
+            <Typography className='line-clamp-2 text-blue-200'>
               Nec vel senectus condimentum nec tempor amet porta. Consectetur
               tincidunt urna nulla donec est consequat blandit. Commodo dolor
               eu.
-            </p>
+            </Typography>
           </div>
-          <div className='group space-y-4 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:p-6'>
+          <div className='group space-y-1 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'>
             <Typography variant='h2' className='group-hover:underline'>
               Kalender Akademik
             </Typography>
-            <p className='line-clamp-2 text-blue-200'>
+            <Typography className='line-clamp-2 text-blue-200'>
               Nec vel senectus condimentum nec tempor amet porta. Consectetur
               tincidunt urna nulla donec est consequat blandit. Commodo dolor
               eu.
-            </p>
+            </Typography>
           </div>
         </div>
       </main>

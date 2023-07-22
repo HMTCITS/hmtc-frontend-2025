@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import * as React from 'react';
 import {
+  FaChevronDown,
   FaInstagram,
   FaLine,
   FaLinkedinIn,
@@ -76,6 +77,10 @@ const Akademik = [
 ];
 
 export default function Footer() {
+  const [isApaIniOpen, setIsApaIniOpen] = React.useState(false);
+  const [isAkademikOpen, setIsAkademikOpen] = React.useState(false);
+  const toggleApaIni = () => setIsApaIniOpen((prev) => !prev);
+  const toggleAkademik = () => setIsAkademikOpen((prev) => !prev);
   return (
     <footer
       className={clsxm(
@@ -85,7 +90,7 @@ export default function Footer() {
     >
       <div
         className={clsxm(
-          'flex w-full flex-col items-center gap-x-4 gap-y-12',
+          'flex w-full flex-col items-center gap-x-4 gap-y-12 pb-6',
           'md:min-h-[240px] md:flex-row md:items-start md:justify-between'
         )}
       >
@@ -115,86 +120,78 @@ export default function Footer() {
 
         <div className='grid grid-cols-2 gap-x-6 font-secondary'>
           <div className='flex w-full flex-col items-center gap-y-2.5 md:w-[187px] md:items-start'>
-            <Typography variant='s2' className='uppercase'>
-              apa ini?
-            </Typography>
-            {ApaIni.map(({ label, href }, index) => (
-              <BaseLink
-                key={index}
-                href={href}
-                className='text-sm text-base-icon md:text-base'
+            <div onClick={toggleApaIni} className='flex items-center gap-2'>
+              <Typography
+                variant='s2'
+                className='cursor-pointer font-secondary uppercase'
               >
-                {label}
-              </BaseLink>
-            ))}
+                apa ini?
+              </Typography>
+              <FaChevronDown
+                className={clsxm(
+                  'text-white md:hidden',
+                  'transition-transform duration-200 ease-in-out',
+                  isApaIniOpen && 'rotate-180'
+                )}
+              />
+            </div>
+            <div
+              className={clsxm(
+                'flex flex-col items-center gap-3 md:items-start',
+                'overflow-y-hidden transition-all duration-300 ease-in-out',
+                isApaIniOpen
+                  ? 'max-h-96 opacity-100'
+                  : 'max-h-0 opacity-0 md:max-h-96 md:opacity-100'
+              )}
+            >
+              {ApaIni.map(({ label, href }, index) => (
+                <BaseLink
+                  key={index}
+                  href={href}
+                  className='text-sm text-base-icon hover:text-white md:text-base'
+                >
+                  {label}
+                </BaseLink>
+              ))}
+            </div>
           </div>
           <div className='flex w-full flex-col items-center gap-y-2.5 md:w-[187px] md:items-start'>
-            <Typography variant='s2' className='uppercase'>
-              akademik
-            </Typography>
-            {Akademik.map(({ label, href }, index) => (
-              <BaseLink
-                key={index}
-                href={href}
-                className='text-sm text-base-icon md:text-base'
+            <div onClick={toggleAkademik} className='flex items-center gap-2'>
+              <Typography
+                variant='s2'
+                className='cursor-pointer font-secondary uppercase'
               >
-                {label}
-              </BaseLink>
-            ))}
+                akademik
+              </Typography>
+              <FaChevronDown
+                className={clsxm(
+                  'text-white md:hidden',
+                  'transition-transform duration-200 ease-in-out',
+                  isAkademikOpen && 'rotate-180'
+                )}
+              />
+            </div>
+            <div
+              className={clsxm(
+                'flex flex-col items-center gap-3 md:items-start',
+                'overflow-y-hidden transition-all duration-300 ease-in-out',
+                isAkademikOpen
+                  ? 'max-h-96 opacity-100'
+                  : 'max-h-0 opacity-0 md:max-h-96 md:opacity-100'
+              )}
+            >
+              {Akademik.map(({ label, href }, index) => (
+                <BaseLink
+                  key={index}
+                  href={href}
+                  className='text-sm text-base-icon hover:text-white md:text-base'
+                >
+                  {label}
+                </BaseLink>
+              ))}
+            </div>
           </div>
         </div>
-
-        {/* <div className='flex flex-col items-center gap-3 md:items-start'>
-          <div className='flex items-center gap-2' onClick={toggleDivisiUkm}>
-            <Typography variant='b1' className='text-base-white font-semibold'>
-              Divisi UKM
-            </Typography>
-            <FaChevronDown
-              className={clsxm(
-                'text-base-white md:hidden',
-                'transition-transform duration-200 ease-in-out',
-                isDivisiUkmOpen && 'rotate-180'
-              )}
-            />
-          </div>
-
-          <div
-            className={clsxm(
-              'flex flex-col items-center gap-3 md:items-start',
-              'overflow-y-hidden transition-all duration-300 ease-in-out',
-              isDivisiUkmOpen
-                ? 'max-h-96 opacity-100'
-                : 'max-h-0 opacity-0 md:max-h-96 md:opacity-100'
-            )}
-          >
-            {NAVBAR_LINKS.map(({ id, name, href }) => (
-              <BaseLink key={id} href={href}>
-                <Typography variant='b1' className='text-base-icon'>
-                  {name}
-                </Typography>
-              </BaseLink>
-            ))}
-          </div>
-        </div> */}
-
-        {/* <div className='flex flex-col items-center gap-3 md:items-start'>
-          <Typography variant='b1' className='text-base-white font-semibold'>
-            Our Social Media
-          </Typography>
-
-          <div className='flex items-center gap-6'>
-            {NAVBAR_LINKS.map(({ id, ...rest }) => (
-              <ButtonLink
-                key={id}
-                target='_blank'
-                variant='unstyled'
-                className='h-6 w-6 p-0'
-                iconClassName='text-base-icon'
-                {...rest}
-              />
-            ))}
-          </div>
-        </div> */}
       </div>
       <div className='h-1 w-full border-t border-black-main'></div>
       <div className='flex w-full flex-col items-center justify-center gap-y-6 md:flex-row md:justify-between'>
