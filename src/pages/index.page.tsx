@@ -6,61 +6,74 @@ import Everblue from '@/components/landing/Everblue';
 import Profile from '@/components/landing/Profile';
 import Promotion from '@/components/landing/Promotion';
 import VisiMisi from '@/components/landing/VisiMisi';
+import BaseLink from '@/components/links/BaseLink';
+import Typography from '@/components/typography/Typography';
 
 export default function Home() {
   return (
     <main>
-      <div className='mx-auto flex min-h-screen w-4/5 items-center'>
-        <div className='font-primary text-4xl font-extrabold md:text-6xl'>
-          <h3 className='flex w-full flex-col leading-tight'>
+      <div className='mx-auto flex min-h-screen w-full flex-col items-center justify-center px-6 md:w-4/5 md:px-0'>
+        <div className='w-full font-primary'>
+          <Typography
+            variant='k1'
+            className='flex w-full flex-col text-center text-black-main md:text-left'
+          >
             <span className=' w-full lg:w-3/5'>Selamat datang di</span>{' '}
             <span>Himpunan Mahasiswa </span>
             <span className='text-blue-main'>Teknik Computer-Informatika.</span>
-          </h3>
+          </Typography>
         </div>
       </div>
-      <div className='mx-auto h-full w-4/5 space-y-8 py-24'>
-        <div className='flex w-full flex-col items-center justify-between gap-y-4 font-primary lg:flex-row'>
-          <h3 className='text-4xl font-extrabold md:text-6xl'>Tentang Kami.</h3>
-          <a
-            className='font-secondary text-base font-semibold text-blue-main md:text-xl'
+      <div className='mx-auto h-full w-full space-y-9 px-6 py-10 md:w-4/5 md:px-0 md:py-24'>
+        <div className='flex w-full flex-col justify-between gap-y-4 font-primary lg:flex-row lg:items-center'>
+          <Typography variant='k1' className='text-black-main'>
+            Tentang Kami
+          </Typography>
+          <BaseLink
+            className='font-secondary font-semibold text-blue-main md:text-lg'
             href='#'
           >
             Baca Selengkapnya
-          </a>
+          </BaseLink>
         </div>
-        <div className='space-y-6 border-b-2 border-dotted pb-28 font-secondary text-lg'>
-          <p>
+        <div className='space-y-6 border-b-2 border-dotted pb-16 font-secondary text-lg md:pb-28'>
+          <Typography variant='b1' className='text-base'>
             Organisasi ini bernama Himpunan Mahasiswa Teknik Computer –
             Informatika yang selanjutnya disebut HMTC.
-          </p>
-          <p>
+          </Typography>
+          <Typography variant='b1' className='text-base'>
             Tujuan HMTC adalah tercapainya kesempurnaan pendidikan dalam rangka
             membentuk pribadi mahasiswa yang bertaqwa kepada Tuhan Yang Maha
             Esa, memiliki sikap kecendekiawanan, integritas, kepekaan sosial,
             serta mampu menguasai dan mengembangkan Ilmu Pengetahuan dan
             Teknologi Informatika dan Komputer.
-          </p>
+          </Typography>
         </div>
       </div>
-      <div className='mb-32 w-full pt-9'>
-        <div className='flex flex-col items-center justify-center gap-x-8 md:flex-row'>
-          <Image
-            src='/images/logohmtc.png'
-            alt='Logo'
-            width={180}
-            height={200}
-          />
-          <div className='w-full md:w-[470px]'>
-            <h3 className='break-words text-center font-primary text-5xl font-bold text-black-main md:text-left md:text-8xl'>
-              Sansargya Abhijaya
-            </h3>
+      <div className='mx-auto mb-10 w-full px-6 pt-4 md:mb-32 md:w-full md:px-0 md:pt-9'>
+        <div className='flex items-center justify-center gap-x-2 md:gap-x-8'>
+          <div className='w-[90px] md:w-fit'>
+            <Image
+              src='/images/logohmtc.png'
+              alt='Logo'
+              width={180}
+              height={200}
+              className='w-full'
+            />
+          </div>
+          <div className='w-fit md:w-[470px]'>
+            <Typography variant='k0' className='font-primary text-black-main'>
+              Sansargya
+            </Typography>
+            <Typography variant='k0' className='font-primary text-black-main'>
+              Abhijaya
+            </Typography>
           </div>
         </div>
       </div>
       <div className='w-full'>
-        <div className='relative min-h-[808px] w-full'>
-          <div className='absolute -top-4 h-52 w-full bg-gradient-to-b from-white from-20% to-transparent'></div>
+        <div className='relative h-fit w-full md:min-h-[808px]'>
+          <div className='absolute -top-4 h-24 w-full bg-gradient-to-b from-white from-20% to-transparent md:h-52'></div>
           <Image
             src='/images/fotohmtc.svg'
             alt='fotohmtc'
@@ -68,10 +81,10 @@ export default function Home() {
             height={800}
             className='object-cover'
           />
-          <div className='absolute bottom-0 h-52 w-full bg-gradient-to-t from-base-dark from-10% to-transparent'></div>
+          <div className='absolute bottom-0 h-24 w-full bg-gradient-to-t from-base-dark from-10% to-transparent md:h-52'></div>
         </div>
-        <div className='flex h-full w-full items-center justify-center bg-base-dark py-24'>
-          <div className='flex w-4/5 flex-col justify-between gap-x-6 gap-y-6 lg:flex-row'>
+        <div className='flex h-full w-full items-center justify-center bg-base-dark py-10 md:py-24'>
+          <div className='flex w-full flex-col justify-between gap-x-6 gap-y-6 px-6 md:w-4/5 md:px-0 lg:flex-row'>
             <VisiMisi
               text1='Visi'
               text2='Dui orci odio blandit velit sit ac. Dolor tellus adipiscing proin integer ac leo vitae molestie. In nam ac vel posuere morbi lacus scelerisque congue. Donec duis dolor urna faucibus. Tristique erat et fringilla mauris massa in proin. Amet pretium ut eleifend et ultricies tellus felis. Non suscipit.'
@@ -83,17 +96,17 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className='mx-auto w-4/5 space-y-14 py-24'>
-        <div className='flex w-full flex-col items-center justify-between gap-y-6 font-primary lg:flex-row'>
-          <h3 className='text-4xl font-extrabold text-black-main md:text-6xl'>
+      <div className='mx-auto w-full space-y-14 px-6 py-10 md:w-4/5 md:px-0 md:py-24'>
+        <div className='flex w-full flex-col justify-between gap-y-4 font-primary lg:flex-row lg:items-center lg:gap-y-6'>
+          <Typography variant='k1' className='text-black-main'>
             Kepengurusan.
-          </h3>
-          <a
-            className='font-secondary text-xl font-semibold text-blue-main'
+          </Typography>
+          <BaseLink
+            className='font-secondary font-semibold text-blue-main md:text-lg'
             href='#'
           >
             Baca Selengkapnya
-          </a>
+          </BaseLink>
         </div>
         <div>
           <AnggotaCarousel />
@@ -106,7 +119,7 @@ export default function Home() {
           href='adfasd.com'
         />
       </div>
-      <div className='mx-auto w-4/5'>
+      <div className='mx-auto w-full px-6 md:w-4/5 md:px-0'>
         <Profile />
         <Everblue />
       </div>

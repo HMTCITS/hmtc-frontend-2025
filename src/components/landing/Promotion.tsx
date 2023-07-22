@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 
 import ButtonLink from '@/components/links/ButtonLink';
+import Typography from '@/components/typography/Typography';
 
 interface TextComponentProps {
   text1: string;
@@ -12,10 +13,14 @@ interface TextComponentProps {
 const VisiMisi: React.FC<TextComponentProps> = ({ text1, text2 }) => {
   return (
     <section className='relative flex h-fit w-full justify-center overflow-hidden bg-orange-main font-primary text-white'>
-      <div className='flex w-4/5 flex-col justify-between gap-y-6 py-20 md:flex-row'>
+      <div className='flex w-full flex-col justify-between gap-y-6 px-6 py-10 md:w-4/5 md:flex-row md:px-0 md:py-20'>
         <div className='w-full space-y-8'>
-          <h1 className='max-w-xl text-6xl font-extrabold'>{text1}</h1>
-          <p className='font-secondary font-medium'>{text2}</p>
+          <Typography variant='k1' className='max-w-xl'>
+            {text1}
+          </Typography>
+          <Typography className='font-secondary text-orange-100'>
+            {text2}
+          </Typography>
         </div>
         <div className='flex w-full items-center justify-start md:w-1/3 md:justify-end'>
           <ButtonLink

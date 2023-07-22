@@ -32,7 +32,7 @@ const settings: Settings = {
   infinite: true,
   slidesToShow: 3,
   centerMode: true,
-  centerPadding: '55px',
+  centerPadding: '50px',
   slidesToScroll: 1,
   adaptiveHeight: true,
   nextArrow: <NextArrow />,
