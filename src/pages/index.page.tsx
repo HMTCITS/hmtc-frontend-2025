@@ -4,6 +4,7 @@ import AnggotaCarousel from '@/components/carousel/AnggotaCarousel';
 import Divider from '@/components/Divider';
 import Akademik from '@/components/landing/Akademik';
 import Everblue from '@/components/landing/Everblue';
+import Gallery from '@/components/landing/Gallery';
 import Profile from '@/components/landing/Profile';
 import Promotion from '@/components/landing/Promotion';
 import VisiMisi from '@/components/landing/VisiMisi';
