@@ -138,6 +138,9 @@ export default function Home() {
             href='adfasd.com'
           />
         </div>
+        <div>
+          <Gallery />
+        </div>
         <div className='relative mx-auto w-full px-6 md:w-4/5 md:px-0'>
           <Profile />
           <Everblue />
