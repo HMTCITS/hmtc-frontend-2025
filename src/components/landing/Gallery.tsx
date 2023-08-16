@@ -11,7 +11,7 @@ const image = [
 
 const Gallery = () => {
   return (
-    <div className='shadow-m w-full space-y-6 bg-[#212121] p-32 font-secondary text-white'>
+    <div className='shadow-m w-full space-y-6 bg-[#212121] p-12 font-secondary text-white md:p-32'>
       <div className='grid w-full grid-cols-3 gap-x-8'>
         <div>
           <Image

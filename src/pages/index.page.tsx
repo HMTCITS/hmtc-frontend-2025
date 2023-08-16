@@ -74,6 +74,30 @@ export default function Home() {
               sosial, serta mampu menguasai dan mengembangkan Ilmu Pengetahuan
               dan Teknologi Informatika dan Komputer.
             </Typography>
+            <Typography variant='b1' className='text-base'>
+              Saat dilahirkan jurusan Teknik Komputer dulu (saat ini Teknik
+              Informatika) dibidani oleh team dari jurusan Teknik Elektro dengan
+              bidang studi komputer. Secara organisasi dan operasional, termasuk
+              aktivitas akademis dan kemahasiswaan, Teknik Komputer berada
+              dibawah naungan teknik elektro yang saat itu memiliki banyak
+              prestasi.
+            </Typography>
+            <Typography variant='b1' className='text-base'>
+              Tidak ingin berlama-lama di bawah bayang-bayang kebesaran Teknik
+              Elektro, maka sejak tahun 1987, Teknik Komputer sudah mulai
+              membentuk organisasi kemahasiswaan. Awalnya hanya sekedar
+              menunjukkan eksistensi dengan kegiatan-kegiatan internal. Begitu
+              seterusnya dan secara pasti Teknik Komputer mulai menyusun draft
+              bentuk organisasi Himpunan Mahasiswa Teknik Computer (sengaja
+              tidak menggunakan huruf &apos;k&apos;, karena sudah digunakan oleh
+              Teknik Kimia)/HMTC.
+            </Typography>
+            <Typography variant='b1' className='text-base'>
+              Kurun waktu 1987-1989 merupakan masa-masa yang penuh perjuangan
+              untuk mematangkan bentuk organisasi dan eksistensi HMTC. Pada
+              tahun 1989 HMTC sudah menjadi organisasi kemahasiswaan yang
+              mandiri dan lepas dari Teknik Elektro.
+            </Typography>
           </div>
         </div>
         <div className='mx-auto mb-10 w-full px-6 pt-4 md:mb-32 md:w-full md:px-0 md:pt-9'>
@@ -125,10 +149,12 @@ export default function Home() {
               />
               <VisiMisi
                 text1='Misi'
-                text2='Membina kekeluargaan dengan menjaga keharmonisan dan kebersamaan di lingkup internal Teknik Informatika ITS berlandaskan asas keterbukaan dan saling menghargai. 
-                Membentuk perilaku yang responsif serta membudayakan umpan balik yang efektif.
-                Menciptakan dan memperkuat hubungan dengan stakeholder demi meningkatkan perkembangan HMTC ITS.
-                Optimasi pengembangan potensi mahasiswa Teknik Informatika.'
+                text2={[
+                  'Membina kekeluargaan dengan menjaga keharmonisan dan kebersamaan di lingkup internal Teknik Informatika ITS berlandaskan asas keterbukaan dan saling menghargai.',
+                  'Membentuk perilaku yang responsif serta membudayakan umpan balik yang efektif.',
+                  'Menciptakan dan memperkuat hubungan dengan stakeholder demi meningkatkan perkembangan HMTC ITS.',
+                  'Optimasi pengembangan potensi mahasiswa Teknik Informatika.',
+                ]}
               />
             </div>
           </div>

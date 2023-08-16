@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React from 'react';
 
 import Typography from '@/components/typography/Typography';
@@ -7,17 +6,20 @@ const Profile = () => {
   return (
     <section className='flex w-full flex-col items-center justify-center gap-x-14 gap-y-6 py-10 md:py-24 lg:flex-row'>
       <div className='flex w-full items-center lg:w-1/2'>
-        <Image
-          src='/images/example-vid.png'
-          alt=''
-          width={610}
-          height={369}
-          priority
-        />
+        <iframe
+          width='560'
+          height='315'
+          src='https://www.youtube.com/embed/bA3W5-SCM1g'
+          title='YouTube video player'
+          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+          allowFullScreen
+          className='border-none'
+          style={{ border: 'none' }}
+        ></iframe>
       </div>
       <div className='w-full space-y-6 text-black-main lg:w-1/2'>
         <Typography variant='k1' className='w-full font-primary lg:w-3/4'>
-          Lihat vron nyanyi di sini!
+          Teaser SW 124 - Informatika ITS
         </Typography>
         <Typography className='font-secondary'>
           Metus in sit mollis vulputate. Mollis ac amet nec malesuada. Nunc elit
