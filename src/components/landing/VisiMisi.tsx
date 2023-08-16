@@ -9,7 +9,7 @@ interface TextComponentProps {
 
 const VisiMisi: React.FC<TextComponentProps> = ({ text1, text2 }) => {
   return (
-    <div className='flex w-full border-l-4 border-blue-light-2 bg-white bg-opacity-10 font-secondary text-white shadow-md'>
+    <div className='flex w-full border-l-4 border-blue-light-2 bg-white bg-opacity-10 font-secondary text-white shadow-md hover:bg-opacity-20'>
       <div className='space-y-4 p-6 md:space-y-8 md:p-10'>
         <Typography variant='i1' className='text-xl'>
           {text1}

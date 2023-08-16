@@ -6,7 +6,6 @@ import { HiMenu } from 'react-icons/hi';
 
 import Button from '@/components/buttons/Button';
 import BaseLink from '@/components/links/BaseLink';
-import ButtonLink from '@/components/links/ButtonLink';
 import Typography from '@/components/typography/Typography';
 import { NAVBAR_LINKS } from '@/constants/layout';
 import clsxm from '@/lib/clsxm';
@@ -43,7 +42,7 @@ export default function Navbar({
           'flex flex-row-reverse items-center justify-between bg-transparent min-[800px]:flex-row',
           'px-6 py-4 min-[800px]:px-24',
           isShift && [
-            'bg-white bg-opacity-50 shadow-sm backdrop-blur transition-colors duration-150',
+            'bg-white shadow-sm backdrop-blur transition-colors duration-150',
           ]
         )}
       >
@@ -112,9 +111,9 @@ export default function Navbar({
             </div>
           </div>
 
-          <ButtonLink href='' size='large'>
+          {/* <ButtonLink href='' size='large'>
             Masuk
-          </ButtonLink>
+          </ButtonLink> */}
         </div>
 
         <div className='flex flex-col items-center justify-end gap-8'>

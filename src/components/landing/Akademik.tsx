@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 
+import BaseLink from '@/components/links/BaseLink';
 import Typography from '@/components/typography/Typography';
 
 const Akademik = () => {
@@ -11,46 +12,54 @@ const Akademik = () => {
           <Typography variant='k1'>Akademik.</Typography>
         </div>
         <div className='grid grid-cols-1 font-secondary md:grid-cols-2'>
-          <div className='group space-y-1 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'>
+          <BaseLink
+            href='https://intip.in/BankIlmuKesmaHMTC'
+            openNewTab={true}
+            className='group space-y-1 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'
+          >
             <Typography variant='h2' className='group-hover:underline'>
               Bank Soal
             </Typography>
             <Typography className='line-clamp-2 text-blue-200'>
-              Nec vel senectus condimentum nec tempor amet porta. Consectetur
-              tincidunt urna nulla donec est consequat blandit. Commodo dolor
-              eu.
+              Kumpulan soal-soal dan sumber pembelajaran buat teman-teman HMTC!
             </Typography>
-          </div>
-          <div className='group space-y-1 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'>
+          </BaseLink>
+          <BaseLink
+            href='https://www.its.ac.id/informatika/id/akademik/kurikulum-silabus-s1/#1621313980849-d5e14193-9cf5'
+            openNewTab={true}
+            className='group space-y-1 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'
+          >
             <Typography variant='h2' className='group-hover:underline'>
               Silabus
             </Typography>
             <Typography className='line-clamp-2 text-blue-200'>
-              Nec vel senectus condimentum nec tempor amet porta. Consectetur
-              tincidunt urna nulla donec est consequat blandit. Commodo dolor
-              eu.
+              Download file PDF silabus mata kuliah Teknik Informatika
             </Typography>
-          </div>
-          <div className='group space-y-1 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'>
+          </BaseLink>
+          <BaseLink
+            href='https://kampusmerdeka.kemdikbud.go.id/'
+            openNewTab={true}
+            className='group space-y-1 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'
+          >
             <Typography variant='h2' className='group-hover:underline'>
               MBKM
             </Typography>
             <Typography className='line-clamp-2 text-blue-200'>
-              Nec vel senectus condimentum nec tempor amet porta. Consectetur
-              tincidunt urna nulla donec est consequat blandit. Commodo dolor
-              eu.
+              Lihat informasi mengenai Merdeka Belajar Kampus Merdeka (MBKM)
             </Typography>
-          </div>
-          <div className='group space-y-1 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'>
+          </BaseLink>
+          <BaseLink
+            href='https://www.its.ac.id/pendidikan/2023/02/02/kalender-akademik-its-tahun-akademik-2023-2024/'
+            openNewTab={true}
+            className='group space-y-1 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'
+          >
             <Typography variant='h2' className='group-hover:underline'>
               Kalender Akademik
             </Typography>
             <Typography className='line-clamp-2 text-blue-200'>
-              Nec vel senectus condimentum nec tempor amet porta. Consectetur
-              tincidunt urna nulla donec est consequat blandit. Commodo dolor
-              eu.
+              Download file PDF Kalender Akademik 2022/2023
             </Typography>
-          </div>
+          </BaseLink>
         </div>
       </main>
       <div className='absolute right-0 top-0 z-0 -translate-y-[60%] opacity-10'>

@@ -15,7 +15,7 @@ import Typography from '@/components/typography/Typography';
 export default function Home() {
   return (
     <Layout>
-      <main className='scroll-smooth'>
+      <main className='relative scroll-smooth'>
         <div
           id='home'
           className='relative mx-auto flex min-h-screen w-full flex-col items-center justify-center px-6 md:w-4/5 md:px-0'
@@ -33,6 +33,22 @@ export default function Home() {
             </Typography>
           </div>
           <Divider id='about' />
+        </div>
+        <div className='absolute right-0 top-0 -translate-y-[10%] translate-x-[55%] opacity-10'>
+          <Image
+            src='/images/bungablack.png'
+            width={480}
+            height={200}
+            alt='bunga'
+          />
+        </div>
+        <div className='absolute left-0 top-20 -translate-x-[55%] translate-y-[80%] opacity-10'>
+          <Image
+            src='/images/bungablack.png'
+            width={480}
+            height={200}
+            alt='bunga'
+          />
         </div>
         <div className='mx-auto h-full w-full space-y-9 px-6 py-10 md:w-4/5 md:px-0 md:py-24'>
           <div className='flex w-full flex-col justify-between gap-y-4 font-primary lg:flex-row lg:items-center'>
@@ -105,11 +121,14 @@ export default function Home() {
             <div className='flex w-full flex-col justify-between gap-x-6 gap-y-6 px-6 md:w-4/5 md:px-0 lg:flex-row'>
               <VisiMisi
                 text1='Visi'
-                text2='Dui orci odio blandit velit sit ac. Dolor tellus adipiscing proin integer ac leo vitae molestie. In nam ac vel posuere morbi lacus scelerisque congue. Donec duis dolor urna faucibus. Tristique erat et fringilla mauris massa in proin. Amet pretium ut eleifend et ultricies tellus felis. Non suscipit.'
+                text2='Semangat kekeluargaan HMTC demi  terwujudnya lingkungan yang responsif, kolaboratif, dan inovatif.'
               />
               <VisiMisi
                 text1='Misi'
-                text2='Dui orci odio blandit velit sit ac. Dolor tellus adipiscing proin integer ac leo vitae molestie. In nam ac vel posuere morbi lacus scelerisque congue. Donec duis dolor urna faucibus. Tristique erat et fringilla mauris massa in proin. Amet pretium ut eleifend et ultricies tellus felis. Non suscipit.'
+                text2='Membina kekeluargaan dengan menjaga keharmonisan dan kebersamaan di lingkup internal Teknik Informatika ITS berlandaskan asas keterbukaan dan saling menghargai. 
+                Membentuk perilaku yang responsif serta membudayakan umpan balik yang efektif.
+                Menciptakan dan memperkuat hubungan dengan stakeholder demi meningkatkan perkembangan HMTC ITS.
+                Optimasi pengembangan potensi mahasiswa Teknik Informatika.'
               />
             </div>
           </div>

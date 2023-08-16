@@ -5,7 +5,6 @@ import {
   FaInstagram,
   FaLine,
   FaLinkedinIn,
-  FaTiktok,
   FaTwitter,
   FaYoutube,
 } from 'react-icons/fa';
@@ -18,61 +17,57 @@ import clsxm from '@/lib/clsxm';
 const SocialMedia = [
   {
     icon: FaTwitter,
-    href: '',
+    href: 'https://twitter.com/hmtc_its',
   },
   {
     icon: FaInstagram,
-    href: '',
+    href: 'https://www.instagram.com/hmtc_its/',
   },
   {
     icon: FaYoutube,
-    href: '',
+    href: 'https://www.youtube.com/@bluepresshmtc',
   },
   {
     icon: FaLinkedinIn,
-    href: '',
-  },
-  {
-    icon: FaTiktok,
-    href: '',
+    href: 'https://www.linkedin.com/company/himpunan-mahasiswa-teknik-computer-informatika/',
   },
   {
     icon: FaLine,
-    href: '',
+    href: 'https://tr.ee/T1xoSC0squ',
   },
 ];
 
 const ApaIni = [
   {
     label: 'Tentang kami',
-    href: '',
+    href: '#about',
   },
   {
     label: 'Kepengurusan',
-    href: '',
+    href: '#kepengurusan',
   },
   {
     label: 'MBKM',
-    href: '',
+    href: '#akademik',
   },
 ];
 
 const Akademik = [
   {
     label: 'Bank Soal',
-    href: '',
+    href: '#akademik',
   },
   {
     label: 'Silabus',
-    href: '',
+    href: '#akademik',
   },
   {
     label: 'MBKM',
-    href: '',
+    href: '#akademik',
   },
   {
     label: 'Kalender Akademik',
-    href: '',
+    href: '#akademik',
   },
 ];
 
@@ -125,7 +120,7 @@ export default function Footer() {
                 variant='s2'
                 className='cursor-pointer font-secondary uppercase'
               >
-                apa ini?
+                hmtc
               </Typography>
               <FaChevronDown
                 className={clsxm(
