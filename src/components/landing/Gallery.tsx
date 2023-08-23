@@ -7,7 +7,7 @@ const Gallery = () => {
       <div className='grid w-full grid-cols-3 gap-x-8'>
         <div className='h-full'>
           <Image
-            src='/images/gallery/Wisuda3.jpg'
+            src='/images/gallery/Wisuda3.JPG'
             alt='gallery-1'
             width={4000}
             height={6000}
@@ -27,7 +27,7 @@ const Gallery = () => {
       <div className='w-full'>
         <div>
           <Image
-            src='/images/gallery/Wisuda.jpg'
+            src='/images/gallery/Wisuda.JPG'
             alt='gallery-3'
             width={6000}
             height={4000}
@@ -38,7 +38,7 @@ const Gallery = () => {
       <div className='grid w-full grid-cols-3 gap-x-8'>
         <div className='col-span-2'>
           <Image
-            src='/images/gallery/HGTC.jpg'
+            src='/images/gallery/HGTC.JPG'
             alt='gallery-4'
             width={5184}
             height={3456}
