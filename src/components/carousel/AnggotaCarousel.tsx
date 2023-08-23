@@ -30,10 +30,10 @@ const settings: Settings = {
   autoplay: true,
   autoplaySpeed: 6000,
   infinite: true,
-  slidesToShow: 3,
+  slidesToShow: 1,
   centerMode: true,
   centerPadding: '50px',
-  slidesToScroll: 1,
+  slidesPerRow: 2,
   adaptiveHeight: true,
   nextArrow: <NextArrow />,
   prevArrow: <PrevArrow />,
@@ -41,8 +41,9 @@ const settings: Settings = {
     {
       breakpoint: 1200,
       settings: {
-        slidesToShow: 2,
-        slidesToScroll: 1,
+        slidesToShow: 1,
+        slidesToScroll: 2,
+        slidesPerRow: 2,
       },
     },
     {
@@ -50,6 +51,7 @@ const settings: Settings = {
       settings: {
         slidesToShow: 1,
         slidesToScroll: 1,
+        slidesPerRow: 1,
       },
     },
     {
@@ -57,6 +59,7 @@ const settings: Settings = {
       settings: {
         slidesToShow: 1,
         slidesToScroll: 1,
+        slidesPerRow: 1,
       },
     },
   ],
@@ -76,11 +79,13 @@ export default function AnggotaCarousel({ className, ...rest }: BannerProps) {
     >
       <div className='h-full max-w-full'>
         <Slider {...settings}>
-          {Anggota.map(({ ...props }, index) => (
-            <div key={index} className=''>
-              <AnggotaCard {...props} />
-            </div>
-          ))}
+          {Anggota.map(({ ...props }, index) => {
+            return (
+              <div key={index} className='h-[30rem]'>
+                <AnggotaCard {...props} />
+              </div>
+            );
+          })}
         </Slider>
       </div>
     </div>

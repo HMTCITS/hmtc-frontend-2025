@@ -68,8 +68,8 @@ export default function Navbar({
               href={href}
               className={clsxm(
                 'group p-2.5 font-secondary text-base-nav transition-colors duration-75 hover:text-black-main',
-                router.asPath.split('/')[1] === '' &&
-                  href === '#home' && ['!text-black-main'],
+                (router.asPath.split('/')[1] === href.slice(1) ||
+                  router.asPath.split('/')[1] === '') && ['!text-black-main'],
                 router.asPath.split('/')[1] === href && ['!text-black-main']
               )}
             >

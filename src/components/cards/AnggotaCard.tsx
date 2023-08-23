@@ -4,9 +4,9 @@ import { DataAnggota } from '@/constants/anggota';
 
 export default function AnggotaCard({ nama, jabatan, image }: DataAnggota) {
   return (
-    <div className='mx-auto w-fit space-y-6'>
-      <div className='bg-base-gray pt-6'>
-        <Image {...image} alt='' />
+    <div className='mx-auto h-full w-fit space-y-6'>
+      <div className='h-full bg-base-gray pt-6'>
+        <Image {...image} alt='' className='h-full w-full object-cover' />
       </div>
       <div className='flex justify-center'>
         <div className=' text-center font-semibold'>

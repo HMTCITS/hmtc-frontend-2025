@@ -59,7 +59,7 @@ export default function Typography<T extends React.ElementType = 'p'>({
             'text-[2rem] font-extrabold leading-tight md:text-[3.25rem]',
           ],
           variant === 'k2' && ['text-4xl font-bold md:text-[3.25rem]'],
-          variant === 'j0' && ['text-5xl font-bold'],
+          variant === 'j0' && ['font-bold md:text-5xl'],
           variant === 'j1' && ['text-4xl font-bold'],
           variant === 'j2' && ['text-3xl font-bold'],
           variant === 'i1' && ['font-bold md:text-2xl'],

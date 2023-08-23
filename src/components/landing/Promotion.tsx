@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
 
-import ButtonLink from '@/components/links/ButtonLink';
 import Typography from '@/components/typography/Typography';
 
 interface TextComponentProps {
@@ -22,7 +21,7 @@ const VisiMisi: React.FC<TextComponentProps> = ({ text1, text2 }) => {
             {text2}
           </Typography>
         </div>
-        <div className='flex w-full items-center justify-start md:w-1/3 md:justify-end'>
+        {/* <div className='flex w-full items-center justify-start md:w-1/3 md:justify-end'>
           <ButtonLink
             href='#'
             className='text bg-white'
@@ -31,7 +30,7 @@ const VisiMisi: React.FC<TextComponentProps> = ({ text1, text2 }) => {
           >
             Klik di sini!
           </ButtonLink>
-        </div>
+        </div> */}
       </div>
       <div className='absolute left-0 top-0 -translate-x-[5%] -translate-y-[51%] opacity-10'>
         <Image src='/images/bungaa.png' width={680} height={200} alt='bunga' />

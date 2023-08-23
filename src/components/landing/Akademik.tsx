@@ -42,10 +42,10 @@ const Akademik = () => {
             className='group space-y-1 p-4 transition-all duration-150 hover:!cursor-pointer hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'
           >
             <Typography variant='h2' className='group-hover:underline'>
-              MBKM
+              Informasi Akademik & Kemahasiswaan
             </Typography>
             <Typography className='line-clamp-2 text-blue-200'>
-              Informasi mengenai Merdeka Belajar Kampus Merdeka (MBKM)
+              Sumber informasi terkait proses perkuliahan di Teknik Informatika
             </Typography>
           </BaseLink>
           <BaseLink

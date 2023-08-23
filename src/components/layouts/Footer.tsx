@@ -47,7 +47,7 @@ const ApaIni = [
     href: '#kepengurusan',
   },
   {
-    label: 'MBKM',
+    label: 'Informasi',
     href: '#akademik',
   },
 ];

@@ -40,7 +40,7 @@ const BaseLink = React.forwardRef<HTMLAnchorElement, BaseLinkProps>(
         rel='noopener noreferrer'
         href={href}
         {...rest}
-        className={clsxm('cursor-ne-resize', className)}
+        className={clsxm('cursor-pointer', className)}
       >
         {children}
       </a>

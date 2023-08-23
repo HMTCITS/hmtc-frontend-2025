@@ -18,16 +18,21 @@ const Profile = () => {
         ></iframe>
       </div>
       <div className='w-full space-y-6 text-black-main lg:w-1/2'>
-        <Typography variant='k1' className='w-full font-primary'>
+        <Typography
+          variant='k1'
+          className='w-full font-primary text-[2rem] !leading-tight md:text-[2.75rem] xl:text-5xl'
+        >
           TCLIPS - Internship Experience in Malaysia
         </Typography>
         <Typography className='font-secondary'>
-          Metus in sit mollis vulputate. Mollis ac amet nec malesuada. Nunc elit
-          ac placerat dictum ornare purus aenean aliquam fermentum. Non pulvinar
-          placerat vestibulum faucibus. A dignissim in neque integer maecenas
-          sed. Vulputate phasellus placerat id nulla felis. Bibendum condimentum
-          ipsum sed mauris tincidunt risus. Sed sagittis donec tellus pulvinar{' '}
+          TCLIPS hadir kembali nih! Episode kali bakalan nyeritain kegiatan para
+          anak TC yang sedang magang di Negeri Malaysia loh. Penasaran sama apa
+          saja yang dilakuin sama teman-teman kita di sana? Tonton dan nikmati
+          perjalanan dari arek-arek TC yaa!
         </Typography>
+        {/* <Typography variant='h4'>
+          #TCLIPS #MedfoSansargaAbhijaya #HMTCSansargaAbhijaya #ITSSurabaya
+        </Typography> */}
       </div>
     </section>
   );
