@@ -7,8 +7,8 @@ const Gallery = () => {
       <div className='grid w-full grid-cols-3 gap-x-8'>
         <div className='h-full'>
           <Image
-            src={'/images/gallery/Wisuda3.jpg'}
-            alt=''
+            src='/images/gallery/Wisuda3.jpg'
+            alt='gallery-1'
             width={4000}
             height={6000}
             className='h-full object-cover'
@@ -16,8 +16,8 @@ const Gallery = () => {
         </div>
         <div className='col-span-2'>
           <Image
-            src={'/images/gallery/2.png'}
-            alt=''
+            src='/images/gallery/2.png'
+            alt='gallery-2'
             width={2460}
             height={1581}
             className='h-full object-cover'
@@ -27,8 +27,8 @@ const Gallery = () => {
       <div className='w-full'>
         <div>
           <Image
-            src={'/images/gallery/Wisuda.jpg'}
-            alt=''
+            src='/images/gallery/Wisuda.jpg'
+            alt='gallery-3'
             width={6000}
             height={4000}
             className='h-full object-cover'
@@ -38,8 +38,8 @@ const Gallery = () => {
       <div className='grid w-full grid-cols-3 gap-x-8'>
         <div className='col-span-2'>
           <Image
-            src={'/images/gallery/HGTC.jpg'}
-            alt=''
+            src='/images/gallery/HGTC.jpg'
+            alt='gallery-4'
             width={5184}
             height={3456}
             className='h-full object-cover'
@@ -47,8 +47,8 @@ const Gallery = () => {
         </div>
         <div>
           <Image
-            src={'/images/gallery/5.png'}
-            alt=''
+            src='/images/gallery/5.png'
+            alt='gallery-4'
             width={800}
             height={1054}
             className='h-full object-cover'
