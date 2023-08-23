@@ -15,7 +15,7 @@ const Akademik = () => {
           <BaseLink
             href='https://intip.in/BankIlmuKesmaHMTC'
             openNewTab={true}
-            className='group space-y-1 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'
+            className='group space-y-1 p-4 transition-all duration-150 hover:!cursor-pointer hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'
           >
             <Typography variant='h2' className='group-hover:underline'>
               Bank Soal
@@ -27,7 +27,7 @@ const Akademik = () => {
           <BaseLink
             href='https://www.its.ac.id/informatika/id/akademik/kurikulum-silabus-s1/#1621313980849-d5e14193-9cf5'
             openNewTab={true}
-            className='group space-y-1 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'
+            className='group space-y-1 p-4 transition-all duration-150 hover:!cursor-pointer hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'
           >
             <Typography variant='h2' className='group-hover:underline'>
               Silabus
@@ -37,21 +37,21 @@ const Akademik = () => {
             </Typography>
           </BaseLink>
           <BaseLink
-            href='https://kampusmerdeka.kemdikbud.go.id/'
+            href='https://its.id/BerkasAkademikDanKemahasiswaanIF'
             openNewTab={true}
-            className='group space-y-1 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'
+            className='group space-y-1 p-4 transition-all duration-150 hover:!cursor-pointer hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'
           >
             <Typography variant='h2' className='group-hover:underline'>
               MBKM
             </Typography>
             <Typography className='line-clamp-2 text-blue-200'>
-              Lihat informasi mengenai Merdeka Belajar Kampus Merdeka (MBKM)
+              Informasi mengenai Merdeka Belajar Kampus Merdeka (MBKM)
             </Typography>
           </BaseLink>
           <BaseLink
             href='https://www.its.ac.id/pendidikan/2023/02/02/kalender-akademik-its-tahun-akademik-2023-2024/'
             openNewTab={true}
-            className='group space-y-1 p-4 transition-all duration-150 hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'
+            className='group space-y-1 p-4 transition-all duration-150 hover:!cursor-pointer hover:bg-white hover:bg-opacity-10 md:space-y-4 md:p-6'
           >
             <Typography variant='h2' className='group-hover:underline'>
               Kalender Akademik

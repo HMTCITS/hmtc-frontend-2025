@@ -55,12 +55,6 @@ export default function Home() {
             <Typography variant='k1' className='text-black-main'>
               Tentang Kami
             </Typography>
-            <BaseLink
-              className='font-secondary font-semibold text-blue-main md:text-lg'
-              href='#'
-            >
-              Baca Selengkapnya
-            </BaseLink>
           </div>
           <div className='space-y-6 border-b-2 border-dotted pb-16 font-secondary text-lg md:pb-28'>
             <Typography variant='b1' className='text-base'>

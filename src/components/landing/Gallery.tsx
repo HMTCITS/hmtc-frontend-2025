@@ -2,10 +2,10 @@ import Image from 'next/image';
 import React from 'react';
 
 const image = [
-  '/images/gallery/1.png',
+  '/images/gallery/Wisuda3.jpg',
   '/images/gallery/2.png',
-  '/images/gallery/3.png',
-  '/images/gallery/4.png',
+  '/images/gallery/Wisuda.jpg',
+  '/images/gallery/HGTC.jpg',
   '/images/gallery/5.png',
 ];
 
@@ -13,13 +13,13 @@ const Gallery = () => {
   return (
     <div className='shadow-m w-full space-y-6 bg-[#212121] p-12 font-secondary text-white md:p-32'>
       <div className='grid w-full grid-cols-3 gap-x-8'>
-        <div>
+        <div className='h-full'>
           <Image
             src={image[0]}
             alt=''
             width={1000}
             height={800}
-            className='object-cover'
+            className='h-full object-cover'
           />
         </div>
         <div className='col-span-2'>
@@ -27,8 +27,8 @@ const Gallery = () => {
             src={image[1]}
             alt=''
             width={2000}
-            height={800}
-            className='object-cover'
+            height={600}
+            className='h-full object-cover'
           />
         </div>
       </div>
@@ -39,7 +39,7 @@ const Gallery = () => {
             alt=''
             width={2000}
             height={800}
-            className='object-cover'
+            className='h-full object-cover'
           />
         </div>
       </div>
@@ -50,7 +50,7 @@ const Gallery = () => {
             alt=''
             width={2000}
             height={800}
-            className='object-cover'
+            className='h-full object-cover'
           />
         </div>
         <div>
@@ -59,7 +59,7 @@ const Gallery = () => {
             alt=''
             width={2000}
             height={800}
-            className='object-cover'
+            className='h-full object-cover'
           />
         </div>
       </div>

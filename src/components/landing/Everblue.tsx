@@ -18,7 +18,12 @@ const Everblue = () => {
           ipsum sed mauris tincidunt risus. Sed sagittis donec tellus pulvinar{' '}
         </Typography>
         <div className='py-6'>
-          <ButtonLink href='#' size='large' variant='primary'>
+          <ButtonLink
+            href='https://online.fliphtml5.com/ougyq/milj/'
+            target='_blank'
+            size='large'
+            variant='primary'
+          >
             Baca di sini
           </ButtonLink>
         </div>

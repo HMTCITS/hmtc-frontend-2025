@@ -9,7 +9,7 @@ const Profile = () => {
         <iframe
           width='560'
           height='315'
-          src='https://www.youtube.com/embed/bA3W5-SCM1g'
+          src='https://www.youtube.com/embed/8sA62jHZ984'
           title='YouTube video player'
           allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
           allowFullScreen
@@ -18,8 +18,8 @@ const Profile = () => {
         ></iframe>
       </div>
       <div className='w-full space-y-6 text-black-main lg:w-1/2'>
-        <Typography variant='k1' className='w-full font-primary lg:w-3/4'>
-          Teaser SW 124 - Informatika ITS
+        <Typography variant='k1' className='w-full font-primary'>
+          TCLIPS - Internship Experience in Malaysia
         </Typography>
         <Typography className='font-secondary'>
           Metus in sit mollis vulputate. Mollis ac amet nec malesuada. Nunc elit
