@@ -9,7 +9,6 @@ import Profile from '@/components/landing/Profile';
 import Promotion from '@/components/landing/Promotion';
 import VisiMisi from '@/components/landing/VisiMisi';
 import Layout from '@/components/layouts/Layout';
-import BaseLink from '@/components/links/BaseLink';
 import Typography from '@/components/typography/Typography';
 
 export default function Home() {
@@ -159,12 +158,6 @@ export default function Home() {
             <Typography variant='k1' className='text-black-main'>
               Kepengurusan.
             </Typography>
-            <BaseLink
-              className='font-secondary font-semibold text-blue-main md:text-lg'
-              href='#'
-            >
-              Baca Selengkapnya
-            </BaseLink>
           </div>
           <div>
             <AnggotaCarousel />
@@ -172,8 +165,8 @@ export default function Home() {
         </div>
         <div>
           <Promotion
-            text1='Barangkali perlu promosi, taruh sini'
-            text2='Metus in sit mollis vulputate. Mollis ac amet nec malesuada. Nunc elit ac placerat dictum ornare purus aenean aliquam fermentum. Non pulvinar placerat vestibulum faucibus. A dignissim in neque integer maecenas sed. Vulputate phasellus placerat id nulla felis. Bibendum condimentum ipsum sed mauris tincidunt risus. Sed sagittis donec tellus pulvinar '
+            text1='Gallery HMTC'
+            text2='Merambah dunia teknologi melalui rangkaian acara HMTC. Mulai dari diskusi teknologi menarik bersama para pemimpin industri hingga workshop praktis yang mengupas tuntas rahasia pemrograman dan inovasi, rangkaian acara yang dirancang untuk memberdayakan dan menginspirasi.'
             href='adfasd.com'
           />
         </div>

@@ -81,7 +81,7 @@ export default function AnggotaCarousel({ className, ...rest }: BannerProps) {
         <Slider {...settings}>
           {Anggota.map(({ ...props }, index) => {
             return (
-              <div key={index} className='h-[30rem]'>
+              <div key={index} className='h-fit'>
                 <AnggotaCard {...props} />
               </div>
             );
