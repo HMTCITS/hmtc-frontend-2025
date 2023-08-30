@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import AnggotaCarousel from '@/components/carousel/AnggotaCarousel';
+import Kepengurusan from '@/components/carousel/Kepengurusan';
 import Divider from '@/components/Divider';
 import Akademik from '@/components/landing/Akademik';
 import Everblue from '@/components/landing/Everblue';
@@ -160,7 +160,7 @@ export default function Home() {
             </Typography>
           </div>
           <div>
-            <AnggotaCarousel />
+            <Kepengurusan />
           </div>
         </div>
         <div>

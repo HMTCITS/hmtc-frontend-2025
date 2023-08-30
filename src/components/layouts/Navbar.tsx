@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import * as React from 'react';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import { HiMenu } from 'react-icons/hi';
@@ -21,7 +20,6 @@ export default function Navbar({
   openSidebar,
   closeSidebar,
 }: NavbarProps) {
-  const router = useRouter();
   const [isShift, setIsShift] = React.useState(false);
 
   const handleScroll = () => {
@@ -67,10 +65,7 @@ export default function Navbar({
               key={id}
               href={href}
               className={clsxm(
-                'group p-2.5 font-secondary text-base-nav transition-colors duration-75 hover:text-black-main',
-                (router.asPath.split('/')[1] === href.slice(1) ||
-                  router.asPath.split('/')[1] === '') && ['!text-black-main'],
-                router.asPath.split('/')[1] === href && ['!text-black-main']
+                'group p-2.5 font-secondary text-black-main transition-colors duration-75 hover:text-base-nav'
               )}
             >
               <Typography className='font-medium'>{name}</Typography>

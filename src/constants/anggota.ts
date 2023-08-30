@@ -15,8 +15,8 @@ export const Anggota: DataAnggota[] = [
     image: {
       src: '/images/kepengurusan/Kahima.svg',
       alt: 'tes',
-      width: 1021,
-      height: 823,
+      width: 640,
+      height: 885,
     },
   },
   {
@@ -83,7 +83,7 @@ export const Anggota: DataAnggota[] = [
     nama: 'Surya Abdillah',
     jabatan: 'Kadep Sosmas',
     image: {
-      src: '/images/kepengurusan/Sosmas1.svg',
+      src: '/images/kepengurusan/Sosmas-1.svg',
       alt: 'tes',
       width: 515,
       height: 585,
@@ -93,7 +93,7 @@ export const Anggota: DataAnggota[] = [
     nama: 'Naily Khairiya',
     jabatan: 'Wakadep Sosmas',
     image: {
-      src: '/images/kepengurusan/Sosmas2.svg',
+      src: '/images/kepengurusan/Sosmas-2.svg',
       alt: 'tes',
       width: 440,
       height: 598,
@@ -103,40 +103,40 @@ export const Anggota: DataAnggota[] = [
     nama: 'Aaliyah Farah Adibah',
     jabatan: 'Kadep Hublu',
     image: {
-      src: '/images/kepengurusan/Hublu1.svg',
+      src: '/images/kepengurusan/Hublu-1.svg',
       alt: 'tes',
-      width: 515,
-      height: 585,
+      width: 670,
+      height: 651,
     },
   },
   {
     nama: 'M Daffa Aldriantama',
     jabatan: 'Wakadep Hublu',
     image: {
-      src: '/images/kepengurusan/Hublu2.svg',
+      src: '/images/kepengurusan/Hublu-2.svg',
       alt: 'tes',
-      width: 515,
-      height: 585,
+      width: 451,
+      height: 635,
     },
   },
   {
     nama: 'Kadek Ari Dharmika',
     jabatan: 'Kadep Medfo',
     image: {
-      src: '/images/kepengurusan/Medfo1.svg',
+      src: '/images/kepengurusan/Medfo-1.svg',
       alt: 'tes',
-      width: 515,
-      height: 585,
+      width: 526,
+      height: 606,
     },
   },
   {
     nama: 'Rahel Cecilia Purba',
     jabatan: 'Wakadep Medfo',
     image: {
-      src: '/images/kepengurusan/Medfo2.svg',
+      src: '/images/kepengurusan/Medfo-2.svg',
       alt: 'tes',
       width: 515,
-      height: 585,
+      height: 600,
     },
   },
   {
@@ -165,8 +165,8 @@ export const Anggota: DataAnggota[] = [
     image: {
       src: '/images/kepengurusan/KWU1.svg',
       alt: 'tes',
-      width: 515,
-      height: 585,
+      width: 488,
+      height: 626,
     },
   },
   {
@@ -195,8 +195,8 @@ export const Anggota: DataAnggota[] = [
     image: {
       src: '/images/kepengurusan/PSDM2.svg',
       alt: 'tes',
-      width: 515,
-      height: 585,
+      width: 476,
+      height: 650,
     },
   },
   {
@@ -225,35 +225,8 @@ export const Anggota: DataAnggota[] = [
     image: {
       src: '/images/kepengurusan/Profkil2.svg',
       alt: 'tes',
-      width: 515,
-      height: 585,
-    },
-  },
-];
-
-export const Asset: DataAnggota[] = [
-  {
-    image: {
-      src: '/images/kepengurusan/example-img.png',
-      alt: 'tes',
-      width: 340,
-      height: 400,
-    },
-  },
-  {
-    image: {
-      src: '/images/kepengurusan/example-img.png',
-      alt: 'tes',
-      width: 340,
-      height: 400,
-    },
-  },
-  {
-    image: {
-      src: '/images/kepengurusan/example-img.png',
-      alt: 'tes',
-      width: 340,
-      height: 400,
+      width: 580,
+      height: 655,
     },
   },
 ];
