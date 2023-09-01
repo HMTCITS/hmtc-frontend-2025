@@ -13,6 +13,10 @@ module.exports = {
         primary: ['var(--font-fairplay-display)'],
         secondary: ['var(--font-poppins)'],
       },
+      fontSize: {
+        mid: ['15px', '22px'],
+        macro: ['17px', '26px'],
+      },
       colors: {
         white: {
           DEFAULT: '#FFFFFF',

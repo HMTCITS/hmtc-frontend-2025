@@ -38,7 +38,7 @@ export default function Kepengurusan() {
         },
       }}
       autoplay={{
-        delay: 2500,
+        delay: 3500,
         disableOnInteraction: false,
       }}
       navigation={{

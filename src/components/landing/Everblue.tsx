@@ -14,12 +14,19 @@ const Everblue = () => {
         >
           Baca Everblue dong!
         </Typography>
-        <Typography className='font-secondary'>
-          Metus in sit mollis vulputate. Mollis ac amet nec malesuada. Nunc elit
-          ac placerat dictum ornare purus aenean aliquam fermentum. Non pulvinar
-          placerat vestibulum faucibus. A dignissim in neque integer maecenas
-          sed. Vulputate phasellus placerat id nulla felis. Bibendum condimentum
-          ipsum sed mauris tincidunt risus. Sed sagittis donec tellus pulvinar{' '}
+        <Typography className='font-secondary md:text-macro'>
+          <span className='font-semibold text-blue-main'>Everblue</span>{' '}
+          merupakan majalah yang menghadirkan informasi Topik teknologi,
+          Pengalaman Civitas Akademik. Kabar terbaru seputar TC, atau apapun
+          yang berkaitan dengan Teknik Informatika ITS.
+        </Typography>
+        <Typography className='font-secondary md:text-macro'>
+          Melalui media majalah ini,{' '}
+          <span className='font-semibold text-blue-main'>Everblue</span>{' '}
+          diharapkan dapat menjadi sumber informasi bagi mahasiswa departemen
+          Teknik Informatika terkait perkembangan dan inovasi dalam dunia IT
+          serta saluran yang efektif dan efisien dalam penyebaran informasi dan
+          dokumentasi HMTC kepada seluruh anggota dan masyarakat luas.
         </Typography>
         <div className='py-6'>
           <ButtonLink
@@ -35,13 +42,13 @@ const Everblue = () => {
 
       <BaseLink
         href='https://online.fliphtml5.com/ougyq/milj/'
-        className='order-1 w-full transition duration-150 hover:!-translate-y-2.5 hover:shadow-2xl lg:order-2 lg:w-fit'
+        className='order-1 w-full lg:order-2 lg:w-fit'
       >
-        <div className='h-[450px] w-full max-w-[400px] space-y-2 border-r-8 border-blue-main bg-black-dark-3 p-14 font-primary text-white'>
+        <div className='h-[450px] w-full max-w-[400px] space-y-2 border-r-8 border-blue-main bg-black-dark-3 p-14 font-primary text-white transition duration-150 hover:!-translate-y-2.5 hover:shadow-2xl'>
           <Typography variant='k2' className='text-5xl'>
             Everblue
           </Typography>
-          <Typography variant='j2'>vol.81</Typography>
+          <Typography variant='j2'>vol.57</Typography>
         </div>
       </BaseLink>
     </section>

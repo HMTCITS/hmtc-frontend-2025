@@ -24,7 +24,7 @@ const Profile = () => {
         >
           TCLIPS - Internship Experience in Malaysia
         </Typography>
-        <Typography className='font-secondary'>
+        <Typography className='font-secondary md:text-macro'>
           TCLIPS hadir kembali nih! Episode kali bakalan nyeritain kegiatan para
           anak TC yang sedang magang di Negeri Malaysia loh. Penasaran sama apa
           saja yang dilakuin sama teman-teman kita di sana? Tonton dan nikmati
