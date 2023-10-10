@@ -11,12 +11,32 @@ export type DataAnggota = {
 export const Anggota: DataAnggota[] = [
   {
     nama: 'Mohammad Fany Faizul Akbar',
-    jabatan: 'Ketua 1',
+    jabatan: 'Ketua Himpunan',
     image: {
       src: '/images/kepengurusan/Kahima.svg',
       alt: 'tes',
       width: 640,
       height: 885,
+    },
+  },
+  {
+    nama: 'Tio Dwi Ardhana',
+    jabatan: 'Internal',
+    image: {
+      src: '/images/kepengurusan/Internal.svg',
+      alt: 'tes',
+      width: 435,
+      height: 625,
+    },
+  },
+  {
+    nama: 'Jabalnur',
+    jabatan: 'Eksternal',
+    image: {
+      src: '/images/kepengurusan/Eksternal.svg',
+      alt: 'tes',
+      width: 539,
+      height: 617,
     },
   },
   {
