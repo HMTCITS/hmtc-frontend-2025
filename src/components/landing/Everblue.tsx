@@ -1,12 +1,11 @@
 import React from 'react';
 
-import BaseLink from '@/components/links/BaseLink';
 import ButtonLink from '@/components/links/ButtonLink';
 import Typography from '@/components/typography/Typography';
 
 const Everblue = () => {
   return (
-    <section className='flex w-full flex-col items-center justify-center gap-x-14 gap-y-6 py-10 md:py-24 lg:flex-row'>
+    <section className='flex w-full flex-col items-center justify-center gap-x-14 gap-y-6 py-10 md:py-24 lg:flex-col'>
       <div className='order-2 w-full space-y-6 text-black-main lg:order-1'>
         <Typography
           variant='k1'
@@ -39,18 +38,12 @@ const Everblue = () => {
           </ButtonLink>
         </div>
       </div>
-
-      <BaseLink
-        href='https://online.fliphtml5.com/ougyq/milj/'
-        className='order-1 w-full lg:order-2 lg:w-fit'
-      >
-        <div className='h-[450px] w-full max-w-[400px] space-y-2 border-r-8 border-blue-main bg-black-dark-3 p-14 font-primary text-white transition duration-150 hover:!-translate-y-2.5 hover:shadow-2xl'>
-          <Typography variant='k2' className='text-5xl'>
-            Everblue
-          </Typography>
-          <Typography variant='j2'>vol.57</Typography>
-        </div>
-      </BaseLink>
+      <iframe
+        src='https://online.fliphtml5.com/ougyq/milj/</section>'
+        width='100%'
+        height='800px'
+        allowFullScreen
+      ></iframe>
     </section>
   );
 };
