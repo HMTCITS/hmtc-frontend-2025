@@ -3,7 +3,7 @@ import * as React from 'react';
 import BaseDialog from '@/components/dialog/BaseDialog';
 import Footer from '@/components/layouts/Footer';
 import Navbar from '@/components/layouts/Navbar';
-import clsxm from '@/lib/clsxm';
+import cn from '@/lib/clsxm';
 import useDialogStore from '@/store/useDialogStore';
 
 type LayoutOpt = {
@@ -32,7 +32,7 @@ export default function Layout({
   //#endregion //*========= Sidebar =========
 
   return (
-    <div className={clsxm('overflow-x-hidden', className)}>
+    <div className={cn('overflow-x-hidden', className)}>
       {withNavbar && (
         <Navbar
           isSidebarOpen={isSidebarOpen}

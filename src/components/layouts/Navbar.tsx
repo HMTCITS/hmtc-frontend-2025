@@ -5,9 +5,10 @@ import { HiMenu } from 'react-icons/hi';
 
 import Button from '@/components/buttons/Button';
 import BaseLink from '@/components/links/BaseLink';
+import ButtonLink from '@/components/links/ButtonLink';
 import Typography from '@/components/typography/Typography';
 import { NAVBAR_LINKS } from '@/constants/layout';
-import clsxm from '@/lib/clsxm';
+import cn from '@/lib/clsxm';
 
 type NavbarProps = {
   isSidebarOpen: boolean;
@@ -34,9 +35,9 @@ export default function Navbar({
   }, []);
 
   return (
-    <header className={clsxm('fixed top-0 z-[100] w-full')}>
+    <header className={cn('fixed top-0 z-[100] w-full')}>
       <div
-        className={clsxm(
+        className={cn(
           'flex flex-row-reverse items-center justify-between bg-transparent min-[800px]:flex-row',
           'px-6 py-4 min-[800px]:px-24',
           isShift && [
@@ -64,18 +65,21 @@ export default function Navbar({
             <BaseLink
               key={id}
               href={href}
-              className={clsxm(
+              className={cn(
                 'group p-2.5 font-secondary text-black-main transition-colors duration-75 hover:text-base-nav'
               )}
             >
               <Typography className='font-medium'>{name}</Typography>
             </BaseLink>
           ))}
+          <ButtonLink href='/login' size='large'>
+            Masuk
+          </ButtonLink>
         </nav>
       </div>
 
       <nav
-        className={clsxm(
+        className={cn(
           'fixed left-0 top-0 h-full w-full bg-black-main text-white',
           'transition duration-200 ease-in-out',
           'grid grid-rows-2 min-[800px]:hidden',
@@ -106,9 +110,9 @@ export default function Navbar({
             </div>
           </div>
 
-          {/* <ButtonLink href='' size='large'>
+          <ButtonLink href='/login' size='large'>
             Masuk
-          </ButtonLink> */}
+          </ButtonLink>
         </div>
 
         <div className='flex flex-col items-center justify-end gap-8'>

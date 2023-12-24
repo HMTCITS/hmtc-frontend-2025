@@ -3,7 +3,7 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Playfair_Display, Poppins } from 'next/font/google';
 
-import clsxm from '@/lib/clsxm';
+import cn from '@/lib/clsxm';
 
 const playfair_display = Playfair_Display({
   subsets: ['latin'],
@@ -20,7 +20,7 @@ const poppins = Poppins({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <main
-      className={clsxm(
+      className={cn(
         playfair_display.variable,
         poppins.variable,
         'scroll-smooth'

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 import { DataAnggota } from '@/constants/anggota';
-import clsxm from '@/lib/clsxm';
+import cn from '@/lib/clsxm';
 
 type AnggotaCardProps = {
   index: number;
@@ -15,7 +15,7 @@ export default function AnggotaCard({
 }: DataAnggota & AnggotaCardProps) {
   return (
     <div
-      className={clsxm(
+      className={cn(
         'mx-auto h-full w-full max-w-[25rem] space-y-6',
         (index === 0 || index === 19) && 'max-w-none'
       )}

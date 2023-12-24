@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import clsxm from '@/lib/clsxm';
+import cn from '@/lib/clsxm';
 
 export enum TypographyVariant {
   'k0',
@@ -49,7 +49,7 @@ export default function Typography<T extends React.ElementType = 'p'>({
   const Component = as || 'p';
   return (
     <Component
-      className={clsxm(
+      className={cn(
         //#region  //*=========== Variants ===========
         [
           variant === 'k0' && [

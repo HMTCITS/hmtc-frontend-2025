@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IconType } from 'react-icons';
 import { ImSpinner2 } from 'react-icons/im';
 
-import clsxm from '@/lib/clsxm';
+import cn from '@/lib/clsxm';
 
 enum ButtonVariant {
   'primary',
@@ -58,7 +58,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         type='button'
         disabled={disabled}
-        className={clsxm(
+        className={cn(
           'flex items-center justify-center',
           'focus:outline-none focus-visible:outline',
           'font-semibold transition-colors duration-75',
@@ -116,7 +116,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {isLoading && (
           <div
-            className={clsxm(
+            className={cn(
               'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
               variant === 'primary' && 'text-white',
               variant === 'secondary' && 'text-orange-main',
@@ -126,14 +126,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             <ImSpinner2 className='animate-spin' />
           </div>
         )}
-        {Icon && <Icon className={clsxm(iconClassName)} />}
-        {LeftIcon && !Icon && <LeftIcon className={clsxm(leftIconClassName)} />}
+        {Icon && <Icon className={cn(iconClassName)} />}
+        {LeftIcon && !Icon && <LeftIcon className={cn(leftIconClassName)} />}
         {!Icon && (
-          <p className={clsxm('font-secondary', textClassName)}>{children}</p>
+          <p className={cn('font-secondary', textClassName)}>{children}</p>
         )}
-        {RightIcon && !Icon && (
-          <RightIcon className={clsxm(rightIconClassName)} />
-        )}
+        {RightIcon && !Icon && <RightIcon className={cn(rightIconClassName)} />}
       </button>
     );
   }

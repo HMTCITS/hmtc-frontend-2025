@@ -12,7 +12,7 @@ import {
 import SocialCard from '@/components/layouts/components/Social';
 import BaseLink from '@/components/links/BaseLink';
 import Typography from '@/components/typography/Typography';
-import clsxm from '@/lib/clsxm';
+import cn from '@/lib/clsxm';
 
 const SocialMedia = [
   {
@@ -78,13 +78,13 @@ export default function Footer() {
   const toggleAkademik = () => setIsAkademikOpen((prev) => !prev);
   return (
     <footer
-      className={clsxm(
+      className={cn(
         'bg-blue-1000 w-full px-6 py-12 md:px-24',
         'flex flex-col items-center gap-6 bg-base-dark text-white md:gap-6'
       )}
     >
       <div
-        className={clsxm(
+        className={cn(
           'flex w-full flex-col items-center gap-x-4 gap-y-12 pb-6',
           'md:min-h-[240px] md:flex-row md:items-start md:justify-between'
         )}
@@ -123,7 +123,7 @@ export default function Footer() {
                 hmtc
               </Typography>
               <FaChevronDown
-                className={clsxm(
+                className={cn(
                   'text-white md:hidden',
                   'transition-transform duration-200 ease-in-out',
                   isApaIniOpen && 'rotate-180'
@@ -131,7 +131,7 @@ export default function Footer() {
               />
             </div>
             <div
-              className={clsxm(
+              className={cn(
                 'flex flex-col items-center gap-3 md:items-start',
                 'overflow-y-hidden transition-all duration-300 ease-in-out',
                 isApaIniOpen
@@ -159,7 +159,7 @@ export default function Footer() {
                 akademik
               </Typography>
               <FaChevronDown
-                className={clsxm(
+                className={cn(
                   'text-white md:hidden',
                   'transition-transform duration-200 ease-in-out',
                   isAkademikOpen && 'rotate-180'
@@ -167,7 +167,7 @@ export default function Footer() {
               />
             </div>
             <div
-              className={clsxm(
+              className={cn(
                 'flex flex-col items-center gap-3 md:items-start',
                 'overflow-y-hidden transition-all duration-300 ease-in-out',
                 isAkademikOpen

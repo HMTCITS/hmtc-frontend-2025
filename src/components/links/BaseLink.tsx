@@ -1,7 +1,7 @@
 import Link, { LinkProps } from 'next/link';
 import * as React from 'react';
 
-import clsxm from '@/lib/clsxm';
+import cn from '@/lib/clsxm';
 
 export type BaseLinkProps = {
   href: string;
@@ -40,7 +40,7 @@ const BaseLink = React.forwardRef<HTMLAnchorElement, BaseLinkProps>(
         rel='noopener noreferrer'
         href={href}
         {...rest}
-        className={clsxm('cursor-pointer', className)}
+        className={cn('cursor-pointer', className)}
       >
         {children}
       </a>
