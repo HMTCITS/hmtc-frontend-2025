@@ -39,9 +39,11 @@ const Everblue = () => {
         </div>
       </div>
       <iframe
-        src='https://online.fliphtml5.com/ougyq/milj/</section>'
+        src='https://online.fliphtml5.com/ougyq/milj'
         width='100%'
-        height='800px'
+        height='750px'
+        loading='lazy'
+        seamless
         allowFullScreen
       ></iframe>
     </section>

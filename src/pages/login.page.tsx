@@ -33,7 +33,7 @@ export default function LoginPage() {
         </Typography>
       </div>
       <FormProvider {...form}>
-        <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
+        <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
           <div className='space-y-4'>
             <Input
               id='email'
@@ -49,6 +49,14 @@ export default function LoginPage() {
               containerClassName='font-secondary'
               validation={{ required: 'Kata sandi tidak boleh kosong' }}
             />
+          </div>
+          <div className='flex items-center justify-end'>
+            <BaseLink
+              href='/forgot-password'
+              className='text-end font-secondary text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
+            >
+              Lupa kata sandi?
+            </BaseLink>
           </div>
           <Button type='submit' className='w-full'>
             Masuk

@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 .drop-shadow-glow {
-  filter: drop-shadow(0 0 20px rgba(255, 165, 0, 0.8))
-    drop-shadow(0 0 40px rgba(255, 69, 0, 0.8))
-    drop-shadow(0 0 60px rgba(255, 0, 0, 0.8));
+  filter: drop-shadow(0 0 20px rgba(0, 0, 255, 0.8))
+    drop-shadow(0 0 40px rgba(0, 0, 128, 0.8))
+    drop-shadow(0 0 60px rgba(0, 0, 255, 0.8));
 }
 
 .layout {
