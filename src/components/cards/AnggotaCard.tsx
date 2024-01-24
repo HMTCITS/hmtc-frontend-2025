@@ -20,20 +20,12 @@ export default function AnggotaCard({
         (index === 0 || index === 19) && 'max-w-none'
       )}
     >
-      <div className='h-[25rem] bg-base-gray pt-6'>
+      <div className='h-[25rem]  pt-6'>
         <Image
           {...image}
           alt=''
           className='h-full w-full object-contain object-bottom'
         />
-      </div>
-      <div className='flex h-fit justify-center'>
-        <div className='text-center font-semibold'>
-          <p className='text-[20px] text-black-main'>{nama}</p>
-          <p className='uppercase tracking-wider text-orange-light-5'>
-            {jabatan}
-          </p>
-        </div>
       </div>
     </div>
   );
