@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Satoshi:wght@400;700&family=Adelphe:wght@400;700&display=swap'); /* yang aku tambah */
+
+body {
+  @apply font-satoshi; 
+}
+h1, h2, h3, h4, h5, h6 {
+  @apply font-adelphe;
+}
+
 .drop-shadow-glow {
   filter: drop-shadow(0 0 20px rgba(0, 0, 255, 0.8))
     drop-shadow(0 0 40px rgba(0, 0, 128, 0.8))
