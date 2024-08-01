@@ -12,6 +12,9 @@ module.exports = {
       fontFamily: {
         primary: ['var(--font-fairplay-display)'],
         secondary: ['var(--font-poppins)'],
+        satoshi: ['Satoshi', 'sans-serif'], //yang aku tambah
+        adelphe: ['Adelphe', 'serif'], //yang aku tambah
+        libre: ['Libre Caslon Condensed', 'serif'],
       },
       fontSize: {
         mid: ['15px', '22px'],
