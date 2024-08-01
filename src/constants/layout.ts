@@ -1,8 +1,9 @@
 export const NAVBAR_LINKS = [
-  { id: 1, name: 'Home', href: '#home' },
-  { id: 2, name: 'Tentang HMTC', href: '#about' },
-  { id: 3, name: 'Kepengurusan', href: '#kepengurusan' },
+  { id: 1, name: 'About Us', href: '#aboutus' },
+  { id: 2, name: 'History of HMTC', href: '#historyofhmtc' },
+  { id: 3, name: 'Gallery', href: '#gallery' },
   { id: 4, name: 'Akademik', href: '#akademik' },
+  { id: 5, name: 'Blog', href: '#blog' },
 ];
 
 export const Misi = [
