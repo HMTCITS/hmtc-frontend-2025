@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import BaseDialog from '@/components/dialog/BaseDialog';
-import Footer from '@/components/layouts/Footer';
 import Navbar from '@/components/layouts/Navbar';
 import cn from '@/lib/clsxm';
 import useDialogStore from '@/store/useDialogStore';
@@ -47,7 +46,6 @@ export default function Layout({
         open={open}
         options={state}
       />
-      {withFooter && <Footer />}
     </div>
   );
 }

@@ -41,17 +41,17 @@ export default function Navbar({
           'flex flex-row-reverse items-center justify-between bg-transparent min-[800px]:flex-row',
           'px-6 py-4 min-[800px]:px-24',
           isShift && [
-            'bg-white shadow-sm backdrop-blur transition-colors duration-150',
+            'bg-black shadow-sm backdrop-blur transition-colors duration-150',
           ]
         )}
       >
-        <BaseLink href='/' className='p-2.5 min-[800px]:p-0'>
-          <Typography
-            variant='h2'
-            className='font-secondary font-black uppercase'
-          >
-            hmtc
-          </Typography>
+        <BaseLink className="relative w-28 h-20 md:w-24 md:h-24" href='#home'>
+          <Image
+            src="/images/logohmtc2024.png"
+            alt="Kunci Transformasi Logo"
+            layout="fill"
+            objectFit="contain"
+          />
         </BaseLink>
 
         <Button
@@ -66,15 +66,12 @@ export default function Navbar({
               key={id}
               href={href}
               className={cn(
-                'group p-2.5 font-secondary text-black-main transition-colors duration-75 hover:text-base-nav'
+                'group p-2.5 font-secondary text-white-main transition-colors duration-75 hover:text-base-nav'
               )}
             >
-              <Typography className='font-medium'>{name}</Typography>
+              <Typography className='font-satoshi'>{name}</Typography>
             </BaseLink>
           ))}
-          <ButtonLink href='/login' size='large'>
-            Masuk
-          </ButtonLink>
         </nav>
       </div>
 
@@ -90,7 +87,7 @@ export default function Navbar({
       >
         <div className='z-10 flex flex-col items-center gap-14 px-4 py-6'>
           <BaseLink href='/' className='w-16'>
-            <Image src='/images/logohmtc.png' alt='' width={563} height={592} />
+            <Image src='/images/logohmtc2024.png' alt='' width={700} height={730} />
           </BaseLink>
 
           <div className='flex flex-col items-center gap-8'>
@@ -102,17 +99,13 @@ export default function Navbar({
                   className='text-base-white'
                   onClick={closeSidebar}
                 >
-                  <Typography as='h6' className='font-medium'>
+                  <Typography as='h6' className='font-satoshi'>
                     {name}
                   </Typography>
                 </BaseLink>
               ))}
             </div>
           </div>
-
-          <ButtonLink href='/login' size='large'>
-            Masuk
-          </ButtonLink>
         </div>
 
         <div className='flex flex-col items-center justify-end gap-8'>
