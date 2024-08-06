@@ -39,7 +39,7 @@ export default function Navbar({
       <div
         className={cn(
           'flex flex-row-reverse items-center justify-between bg-transparent min-[800px]:flex-row',
-          'px-6 py-4 min-[800px]:px-24',
+          'px-6 py-1 min-[800px]:px-24',
           isShift && [
             'bg-black shadow-sm backdrop-blur transition-colors duration-150',
           ]
@@ -117,21 +117,6 @@ export default function Navbar({
           />
 
           <div className='relative h-1/2'></div>
-
-          <Image
-            src='/images/bungaa.png'
-            alt='Decoration'
-            width={1935}
-            height={2009}
-            className='absolute -bottom-32 -left-32 z-0 w-full max-w-[25rem] opacity-10'
-          />
-          <Image
-            src='/images/bungaa.png'
-            alt='Decoration'
-            width={1935}
-            height={2009}
-            className='absolute -bottom-40 -right-40 z-0 w-full max-w-[20rem] opacity-10'
-          />
         </div>
       </nav>
     </header>
