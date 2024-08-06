@@ -29,30 +29,29 @@ export default function Home() {
             <div className='absolute inset-0 bg-black opacity-75 z-10'></div>
           </div>
 
-          <div className="relative z-20 flex flex-col items-start p-6 mx-11 md:p-12">
-            <div className="mt-28 space-y-8">
-              <div className="flex md:flex-row md:justify-between md:items-center">
-                <h1 className="text-6xl font-libre leading-tight md:text-8xl md:mr-auto">
+          <div className="relative z-20 flex flex-col items-start p-6 mx-4 sm:mx-6 md:mx-11 md:p-12">
+            <div className="mt-20 space-y-8 md:mt-28">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+                <h1 className="text-4xl font-libre sm:text-6xl md:text-8xl md:mr-auto">
                   Bersama Bersinergi <br />
                 </h1>
-                <p className="mt-4 pl-44 ml-96 text-sm font-satoshi md:text-base md:mt-0">
+                <p className="absolute right-16 mt-4 text-sm font-satoshi sm:text-base md:text-lg md:mt-0">
                   Elementum mantis <br />vulputate faucibus.
                 </p>
               </div>
-              <div className="flex flex-col pt-20 pb-20 md:flex-row md:justify-center">
-                <p className="mt-4 text-sm font-satoshi md:text-base md:mr-auto">
+              <div className="flex flex-col pt-12 pb-12 md:pt-20 md:pb-20 md:flex-row md:justify-center">
+                <p className="mt-4 text-sm font-satoshi sm:text-base md:text-lg md:mr-auto">
                   Justo aliquet aliquet <br />nulla ultrices etiam.
                 </p>
-                <h1 className="text-6xl font-libre leading-tight pl-40 md:text-8xl md:mr-auto">
+                <h1 className="text-4xl font-libre absolute start-1/2 sm:text-6xl md:text-8xl md:mr-auto md:pl-8">
                   Menjadi
                 </h1>
               </div>
               <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-                <h1 className="text-6xl font-libre leading-tight md:text-8xl">
+                <h1 className="text-4xl font-libre leading-tight sm:text-6xl md:text-[137px]">
                   <span className="italic font-libre">Kunci Transformasi</span>
                 </h1>
-                <span className="italic font-libre text-6xl md:text-8xl"></span>
-                <p className="mt-2 pr-96 text-sm font-satoshi md:text-base md:mt-0">
+                <p className="mt-2 text-sm absolute bottom-[155px] right-[236px] font-satoshi sm:text-base md:text-lg md:mt-0 md:pr-8">
                   HMTC 2024
                 </p>
               </div>
@@ -104,7 +103,6 @@ export default function Home() {
 
 
         <div
-          id='home'
           className='relative mx-auto flex min-h-screen w-full flex-col items-center justify-center px-6 md:w-4/5 md:px-0'
         >
           <div className='w-full font-primary'>
@@ -122,14 +120,6 @@ export default function Home() {
           <Divider id='about' />
         </div>
         <div className='absolute right-0 top-0 -translate-y-[10%] translate-x-[55%] opacity-10'>
-          <Image
-            src='/images/bungablack.png'
-            width={480}
-            height={200}
-            alt='bunga'
-          />
-        </div>
-        <div className='absolute left-0 top-20 -translate-x-[55%] translate-y-[80%] opacity-10'>
           <Image
             src='/images/bungablack.png'
             width={480}
