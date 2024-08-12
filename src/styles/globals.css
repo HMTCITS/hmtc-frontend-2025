@@ -53,6 +53,54 @@ h6 {
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/satoshi/Satoshi-Regular.woff2') format('woff2'),
+    url('/fonts/satoshi/Satoshi-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/satoshi/Satoshi-Medium.woff2') format('woff2'),
+    url('/fonts/satoshi/Satoshi-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/satoshi/Satoshi-Bold.woff2') format('woff2'),
+    url('/fonts/satoshi/Satoshi-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Adelphe Fructidor';
+  src: url('/fonts/adelphe/Adelphe-FructidorBold.woff2') format('woff2'),
+    url('/fonts/adelphe/Adelphe-FructidorBold.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Adelphe Fructidor';
+  src: url('/fonts/adelphe/Adelphe-FructidorRegular.woff2') format('woff2'),
+    url('/fonts/adelphe/Adelphe-FructidorRegular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Include other font weights and styles as needed */
+.adelphe-fructidor {
+  font-family: 'Adelphe Fructidor', sans-serif;
+}
+.text-gradient {
+  @apply bg-blue-gradient bg-clip-text text-transparent;
+}
+
 .drop-shadow-glow {
   filter: drop-shadow(0 0 20px rgba(0, 0, 255, 0.8))
     drop-shadow(0 0 40px rgba(0, 0, 128, 0.8))
@@ -108,4 +156,22 @@ h6 {
 .swiper-button-next::after,
 .swiper-button-prev::after {
   content: '' !important;
+}
+
+.carousel {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.carousel-item {
+  min-width: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
