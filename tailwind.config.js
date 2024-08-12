@@ -1,6 +1,6 @@
+// tailwind.config.js
 const { fontFamily } = require('tailwindcss/defaultTheme');
 
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -10,6 +10,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        sans: ['Satoshi', ...fontFamily.sans],
         primary: ['var(--font-fairplay-display)'],
         secondary: ['var(--font-poppins)'],
       },
@@ -189,6 +190,7 @@ module.exports = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'blue-gradient': 'linear-gradient(270deg, #00AAE7 40%, #0076C0 65%)', // Gradien teks
       },
     },
   },

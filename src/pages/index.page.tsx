@@ -5,11 +5,15 @@ import Divider from '@/components/Divider';
 import Akademik from '@/components/landing/Akademik';
 import Everblue from '@/components/landing/Everblue';
 import Gallery from '@/components/landing/Gallery';
-import Profile from '@/components/landing/Profile';
 import Promotion from '@/components/landing/Promotion';
 import VisiMisi from '@/components/landing/VisiMisi';
 import Layout from '@/components/layouts/Layout';
 import Typography from '@/components/typography/Typography';
+
+import PeopleHMTC from '@/components/landing/PeopleHMTC';
+import LifeAtHMTC from '@/components/landing/LifeAtHMTC';
+import GalleryHMTC from '@/components/landing/GalleryHMTC';
+import HMTCBlog from '@/components/landing/HMTCBlog';
 
 export default function Home() {
   return (
@@ -174,8 +178,11 @@ export default function Home() {
           <Gallery />
         </div>
         <div className='relative mx-auto w-full px-6 md:w-4/5 md:px-0'>
-          <Profile />
-          <Everblue />
+          <PeopleHMTC />
+          <LifeAtHMTC />
+          <GalleryHMTC />
+          <HMTCBlog />
+          {/* <Everblue /> */}
           <Divider id='akademik' />
         </div>
         <div>
