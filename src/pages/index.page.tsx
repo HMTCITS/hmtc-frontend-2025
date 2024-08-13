@@ -148,13 +148,12 @@ export default function Home() {
           <PeopleHMTC />
           <LifeAtHMTC />
           <GalleryHMTC />
-          <HMTCBlog />
           {/* <Everblue /> */}
           <PeopleHMTC />
           <LifeAtHMTC />
           <GalleryHMTC />
-          <HMTCBlog />
           {/* <Everblue /> */}
+          <HMTCBlog />
           <Divider id='akademik' />
         </div>
       </main>

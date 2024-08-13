@@ -70,10 +70,10 @@ const HMTCBlog: React.FC = () => {
   return (
     <section className='bg-white pb-24 pt-24 md:pt-20'>
       <div className='container mx-auto p-4 lg:p-0'>
-        <h2 className='text-gradient font-sans text-lg font-medium'>
+        <h2 className='text-gradient font-satoshi text-lg font-medium'>
           HMTC BLOG
         </h2>
-        <h1 className='adelphe-fructidor mb-6 mt-3 w-full text-3xl font-bold lg:w-[65%] lg:text-5xl lg:leading-[52.80px]'>
+        <h1 className='mb-6 mt-3 w-full font-adelphe text-3xl font-bold lg:w-[65%] lg:text-5xl lg:leading-[52.80px]'>
           Delving into Stories, Insights, and the Latest Trends from HMTC
         </h1>
 
@@ -87,8 +87,8 @@ const HMTCBlog: React.FC = () => {
                       <Image
                         src={post.image}
                         alt={post.title}
-                        layout='fill'
-                        objectFit='contain'
+                        fill
+                        style={{ objectFit: 'contain' }}
                       />
                     </div>
                     <div className='px-1 pt-4 lg:p-4'>

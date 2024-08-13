@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '../styles/font.css';
 
 @import url('https://fonts.googleapis.com/css2?family=Satoshi:wght@400;700&family=Adelphe:wght@400;700&display=swap'); /* yang aku tambah */
 
@@ -193,3 +194,39 @@ h6 {
   height: 100%;
   object-fit: cover;
 }
+
+.text-sm {
+  margin-bottom: 6;
+  line-height: 1.2; /* Atur line-height sesuai kebutuhan */
+}
+
+.text-xs {
+  margin-top: 0; /* Pastikan margin atas juga 0 untuk elemen kedua */
+  line-height: 1.2; /* Atur line-height sesuai kebutuhan */
+}
+
+.carousel {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.carousel-item {
+  min-width: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Include other font weights and styles as needed */
+/* .adelphe-fructidor {
+  font-family: 'Adelphe Fructidor', sans-serif;
+}
+.text-gradient {
+  @apply bg-blue-gradient bg-clip-text text-transparent;
+} */
