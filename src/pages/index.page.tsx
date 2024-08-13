@@ -10,6 +10,7 @@ import Promotion from '@/components/landing/Promotion';
 import VisiMisi from '@/components/landing/VisiMisi';
 import Layout from '@/components/layouts/Layout';
 import Typography from '@/components/typography/Typography';
+import HMTCBlog from '@/components/landing/HMTCBlog';
 
 export default function Home() {
   return (
@@ -176,6 +177,7 @@ export default function Home() {
         <div className='relative mx-auto w-full px-6 md:w-4/5 md:px-0'>
           <Profile />
           <Everblue />
+          <HMTCBlog />
           <Divider id='akademik' />
         </div>
         <div>

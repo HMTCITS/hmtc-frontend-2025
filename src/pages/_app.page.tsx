@@ -1,4 +1,5 @@
 import '@/styles/globals.css';
+import '@/styles/embla.css'
 
 import type { AppProps } from 'next/app';
 import { Playfair_Display, Poppins } from 'next/font/google';

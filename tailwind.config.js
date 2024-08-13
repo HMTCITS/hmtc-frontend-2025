@@ -12,6 +12,10 @@ module.exports = {
       fontFamily: {
         primary: ['var(--font-fairplay-display)'],
         secondary: ['var(--font-poppins)'],
+        inter: ['Inter', ...fontFamily.sans], 
+        satoshi: ['Satoshi', ...fontFamily.sans],
+        adelphe: ['Adelphe', ...fontFamily.sans],
+        libre: ['Libre Caslon Condensed', ...fontFamily.sans],
       },
       fontSize: {
         mid: ['15px', '22px'],
