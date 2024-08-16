@@ -16,6 +16,43 @@ h6 {
   @apply font-adelphe;
 }
 
+@font-face {
+  font-family: 'Adelphe Fructidor';
+  src: url('/font/Adelphe-FructidorBold.woff2') format('woff2'),
+    url('/font/Adelphe-FructidorBold.woff') format('woff'),
+    url('/font/Adelphe-ructidorBold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/font/satoshi-medium-italic.woff2') format('woff2'),
+    url('/font/satoshi-medium-italic.woff') format('woff'),
+    url('/font/satoshi-medium-italic.ttf') format('truetype');
+  font-weight: 500; /* Medium weight */
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Libre Caslon Condensed';
+  src: url('/font/libre-caslon/LibreCaslonCondensed-BoldItalic.woff2')
+      format('woff2'),
+    url('/font/libre-caslon/LibreCaslonCondensed-BoldItalic.woff')
+      format('woff'),
+    url('/font/libre-caslon/LibreCaslonCondensed-BoldItalic.ttf')
+      format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Helvetica Neue';
+  src: url('/font/helvetica-neue/HelveticaNeueRegular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .drop-shadow-glow {
   filter: drop-shadow(0 0 20px rgba(0, 0, 255, 0.8))
     drop-shadow(0 0 40px rgba(0, 0, 128, 0.8))
