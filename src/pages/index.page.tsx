@@ -1,9 +1,20 @@
-import Image from 'next/image';
-import * as React from 'react';
+// src/pages/index.page.tsx
 
+import Image from 'next/image';
+
+import Kepengurusan from '@/components/carousel/Kepengurusan';
+import Divider from '@/components/Divider';
+import Akademik from '@/components/landing/Akademik';
+import Everblue from '@/components/landing/Everblue';
+import Gallery from '@/components/landing/Gallery';
+import Profile from '@/components/landing/Profile';
+import Promotion from '@/components/landing/Promotion';
+import VisiMisi from '@/components/landing/VisiMisi';
 import Layout from '@/components/layouts/Layout';
 
 export default function Home() {
+  const slides = [0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6];
+
   return (
     <Layout>
       <main className='relative scroll-smooth'>
@@ -100,6 +111,67 @@ export default function Home() {
             />
             <div className='absolute bottom-0 h-24 w-full bg-gradient-to-t from-base-dark from-10% to-transparent md:h-52'></div>
           </div>
+          <div className='flex h-full w-full items-center justify-center bg-[#121212] py-10 md:py-24'>
+            <div className='flex w-full flex-col justify-between gap-x-6 gap-y-6 px-6 md:w-4/5 md:px-0 lg:flex-row lg:gap-x-12'>
+              <div className='lg:ml-[-80px]'>
+                <VisiMisi
+                  text1='Vision'
+                  text2='Transformasi HMTC sebagai Pionir Utama Elemen Teknik Informatika Demi Mewujudkan Organisasi Yang Berdampak dan Berkualitas'
+                />
+              </div>
+              <div className='lg:ml-[-50px]'>
+                <VisiMisi
+                  text1='Mission'
+                  text2={[
+                    'Mengimplementasi program transformasi yang inovatif untuk meningkatkan daya saing dan memperbaiki kondisi HMTC sebagai organisasi di Teknik Informatika.',
+                    'Menginisiasi dan mempelopori seluruh aspek pergerakan mahasiswa Teknik Informatika untuk menciptakan lingkungan yang dinamis dan kolaboratif.',
+                    'Mengevaluasi dan mengoptimalkan aksi HMTC untuk menciptakan keberdampakan yang signifikan dan berkualitas di seluruh lapisan Teknik Informatika.',
+                  ]}
+                />
+              </div>
+            </div>
+          </div>
+          <div className='flex h-full w-full  bg-[#121212] py-10 md:py-24'>
+            <div className='flex w-full flex-col gap-x-6 gap-y-6 px-6 md:w-4/5 md:px-0 lg:flex-row lg:gap-x-12'>
+              <Quotes />
+            </div>
+          </div>
+          <div className='flex h-full w-full items-center  bg-[#121212] py-10 md:py-24'>
+            <div className=' flex w-full flex-col justify-between gap-x-6 gap-y-6 px-6 md:w-4/5 md:px-0 lg:flex-row lg:gap-x-12'>
+              <div className='relative w-full'>
+                <KetuaCarousel slides={slides} options={{ loop: true }} />
+              </div>
+            </div>
+          </div>
+          <Divider id='kepengurusan' />
+        </div>
+        <div className='mx-auto w-full space-y-14 px-6 py-10 md:w-4/5 md:px-0 md:py-24'>
+          <div className='flex w-full flex-col justify-between gap-y-4 font-primary lg:flex-row lg:items-center lg:gap-y-6'>
+            <Typography variant='k1' className='text-black-main'>
+              Kepengurusan.
+            </Typography>
+          </div>
+          <div>
+            <Kepengurusan />
+          </div>
+        </div>
+        <div>
+          <Promotion
+            text1='Gallery HMTC'
+            text2='Merambah dunia teknologi melalui rangkaian acara HMTC. Mulai dari diskusi teknologi menarik bersama para pemimpin industri hingga workshop praktis yang mengupas tuntas rahasia pemrograman dan inovasi, rangkaian acara yang dirancang untuk memberdayakan dan menginspirasi.'
+            href='adfasd.com'
+          />
+        </div>
+        <div>
+          <Gallery />
+        </div>
+        <div className='relative mx-auto w-full px-6 md:w-4/5 md:px-0'>
+          <Profile />
+          <Everblue />
+          <Divider id='akademik' />
+        </div>
+        <div>
+          <Akademik />
         </div>
       </main>
     </Layout>
