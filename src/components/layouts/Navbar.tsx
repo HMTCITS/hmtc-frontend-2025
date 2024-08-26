@@ -5,7 +5,6 @@ import { HiMenu } from 'react-icons/hi';
 
 import Button from '@/components/buttons/Button';
 import BaseLink from '@/components/links/BaseLink';
-import ButtonLink from '@/components/links/ButtonLink';
 import Typography from '@/components/typography/Typography';
 import { NAVBAR_LINKS } from '@/constants/layout';
 import cn from '@/lib/clsxm';
@@ -45,12 +44,12 @@ export default function Navbar({
           ]
         )}
       >
-        <BaseLink className="relative w-28 h-20 md:w-24 md:h-24" href='#home'>
+        <BaseLink className='relative h-20 w-28 md:h-24 md:w-24' href='#home'>
           <Image
-            src="/images/logohmtc2024.png"
-            alt="Kunci Transformasi Logo"
-            layout="fill"
-            objectFit="contain"
+            src='/images/logohmtc2024.png'
+            alt='Kunci Transformasi Logo'
+            layout='fill'
+            objectFit='contain'
           />
         </BaseLink>
 
@@ -87,7 +86,12 @@ export default function Navbar({
       >
         <div className='z-10 flex flex-col items-center gap-14 px-4 py-6'>
           <BaseLink href='/' className='w-16'>
-            <Image src='/images/logohmtc2024.png' alt='' width={700} height={730} />
+            <Image
+              src='/images/logohmtc2024.png'
+              alt=''
+              width={700}
+              height={730}
+            />
           </BaseLink>
 
           <div className='flex flex-col items-center gap-8'>

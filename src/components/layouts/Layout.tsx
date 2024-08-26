@@ -14,7 +14,6 @@ type LayoutOpt = {
 export default function Layout({
   children,
   className,
-  withFooter = true,
   withNavbar = true,
 }: LayoutOpt) {
   //#region  //*=========== Store ===========

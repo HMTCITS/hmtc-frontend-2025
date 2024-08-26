@@ -8,8 +8,6 @@ type AnggotaCardProps = {
 };
 
 export default function AnggotaCard({
-  nama,
-  jabatan,
   image,
   index,
 }: DataAnggota & AnggotaCardProps) {
