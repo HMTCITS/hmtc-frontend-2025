@@ -3,10 +3,10 @@ import AutoScroll from 'embla-carousel-auto-scroll';
 import useEmblaCarousel from 'embla-carousel-react';
 import React, { useEffect, useRef, useState } from 'react';
 
-import KetuaCard from '../cards/KetuaCard'; 
+import KetuaCard from '../cards/KetuaCard';
 
 type PropType = {
-  slides: number[]; 
+  slides: number[];
   options?: EmblaOptionsType;
 };
 
@@ -17,8 +17,10 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
     duration: 1000,
   };
 
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, [AutoScroll(autoScrollOptions)]);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [emblaRef, emblaApi] = useEmblaCarousel(options, [
+    AutoScroll(autoScrollOptions),
+  ]);
+  const [_isPlaying, setIsPlaying] = useState(true);
   const carouselRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -52,28 +54,41 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
   }, [emblaApi]);
 
   return (
-    <div className="relative w-full lg:w-[1512px] flex flex-col items-center p-[20px] lg:p-[40px] gap-[10px] isolate mb-[20px] lg:mb-0">
-      <div className="flex flex-col items-start gap-[20px] lg:gap-[80px] w-full lg:w-[1312px] z-10">
-        <div className="flex flex-col items-start gap-[16px] lg:gap-[32px] w-full lg:w-[1062px]">
-          <h2 className="text-[#FFFFFF] text-base uppercase font-satoshi-medium">
+    <div className='relative isolate mb-[20px] flex w-full flex-col items-center gap-[10px] p-[20px] lg:mb-0 lg:w-[1512px] lg:p-[40px]'>
+      <div className='z-10 flex w-full flex-col items-start gap-[20px] lg:w-[1312px] lg:gap-[80px]'>
+        <div className='flex w-full flex-col items-start gap-[16px] lg:w-[1062px] lg:gap-[32px]'>
+          <h2 className='font-satoshi-medium text-base uppercase text-[#FFFFFF]'>
             History of HMTC
           </h2>
-          <h1 className="text-[#FFFFFF] text-4xl lg:text-5xl leading-[40px] lg:leading-[53px] font-adelph-fructidor font-bold w-full lg:w-[617px]">
+          <h1 className='w-full font-adelph-fructidor text-4xl font-bold leading-[40px] text-[#FFFFFF] lg:w-[617px] lg:text-5xl lg:leading-[53px]'>
             Get to Know The Chairman of HMTC
           </h1>
-          
-          <p className="text-[#FFFFFF] text-sm lg:text-lg leading-[20px] lg:leading-[25px] font-satoshi-regular">
-            Ultricies lorem massa sagittis sit sed morbi in facilisis ullamcorper. Ut vel ornare placerat sapien magnis lectus eget volutpat aliquet. Proin sed viverra vitae magna justo ipsum. Porttitor risus morbi laoreet purus eget consectetur in semper nisl. Tincidunt blandit adipiscing nulla ipsum cursus tristique dui. Morbi sagittis elit vitae pulvinar. A ultrices id mi amet facilisis potenti. Velit tincidunt sit sed dolor mi commodo. Egestas sodales id at tempus non vivamus convallis posuere.
+
+          <p className='font-satoshi-regular text-sm leading-[20px] text-[#FFFFFF] lg:text-lg lg:leading-[25px]'>
+            Ultricies lorem massa sagittis sit sed morbi in facilisis
+            ullamcorper. Ut vel ornare placerat sapien magnis lectus eget
+            volutpat aliquet. Proin sed viverra vitae magna justo ipsum.
+            Porttitor risus morbi laoreet purus eget consectetur in semper nisl.
+            Tincidunt blandit adipiscing nulla ipsum cursus tristique dui. Morbi
+            sagittis elit vitae pulvinar. A ultrices id mi amet facilisis
+            potenti. Velit tincidunt sit sed dolor mi commodo. Egestas sodales
+            id at tempus non vivamus convallis posuere.
           </p>
         </div>
       </div>
 
-      <div className="relative overflow-hidden w-full lg:w-[1312px] h-[272.67px] mt-10 lg:mt-20" ref={carouselRef}>
-        <div className="embla__viewport" ref={emblaRef}>
-          <div className="flex">
-            {slides.map((index) => (
-              <div className="embla__slide flex-shrink-0 w-[150px] lg:w-[194.5px] h-[200px] lg:h-[272.67px] mx-3" key={index}>
-                <KetuaCard imageIndex={index} /> 
+      <div
+        className='relative mt-10 h-[272.67px] w-full overflow-hidden lg:mt-20 lg:w-[1312px]'
+        ref={carouselRef}
+      >
+        <div className='embla__viewport' ref={emblaRef}>
+          <div className='flex'>
+            {slides.map((id, index) => (
+              <div
+                className='embla__slide mx-3 h-[200px] w-[150px] flex-shrink-0 lg:h-[272.67px] lg:w-[194.5px]'
+                key={index}
+              >
+                <KetuaCard imageIndex={id} />
               </div>
             ))}
           </div>

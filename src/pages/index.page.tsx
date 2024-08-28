@@ -3,14 +3,17 @@
 import Image from 'next/image';
 
 import Kepengurusan from '@/components/carousel/Kepengurusan';
+import KetuaCarousel from '@/components/carousel/KetuaCarousel';
 import Divider from '@/components/Divider';
 import Akademik from '@/components/landing/Akademik';
 import Everblue from '@/components/landing/Everblue';
 import Gallery from '@/components/landing/Gallery';
 import Profile from '@/components/landing/Profile';
 import Promotion from '@/components/landing/Promotion';
+import Quotes from '@/components/landing/Quotes';
 import VisiMisi from '@/components/landing/VisiMisi';
 import Layout from '@/components/layouts/Layout';
+import Typography from '@/components/typography/Typography';
 
 export default function Home() {
   const slides = [0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6];
@@ -99,9 +102,8 @@ export default function Home() {
           </div>
         </div>
 
-        <div className='relative flex h-screen items-center justify-center bg-gray-100'>
-          <div className='relative h-3/4 w-full md:h-full'>
-            <div className='absolute -top-4 h-24 w-full bg-gradient-to-b from-white from-20% to-transparent md:h-52'></div>
+        <div className='relative bg-gray-100'>
+          <div className='relative h-screen w-full'>
             <Image
               src='/images/fotohmtc2024.png'
               alt='fotohmtc'
@@ -109,7 +111,6 @@ export default function Home() {
               objectFit='cover'
               priority
             />
-            <div className='absolute bottom-0 h-24 w-full bg-gradient-to-t from-base-dark from-10% to-transparent md:h-52'></div>
           </div>
           <div className='flex h-full w-full items-center justify-center bg-[#121212] py-10 md:py-24'>
             <div className='flex w-full flex-col justify-between gap-x-6 gap-y-6 px-6 md:w-4/5 md:px-0 lg:flex-row lg:gap-x-12'>
@@ -145,6 +146,7 @@ export default function Home() {
           </div>
           <Divider id='kepengurusan' />
         </div>
+
         <div className='mx-auto w-full space-y-14 px-6 py-10 md:w-4/5 md:px-0 md:py-24'>
           <div className='flex w-full flex-col justify-between gap-y-4 font-primary lg:flex-row lg:items-center lg:gap-y-6'>
             <Typography variant='k1' className='text-black-main'>

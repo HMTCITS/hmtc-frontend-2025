@@ -9,17 +9,17 @@ interface TextComponentProps {
 
 const VisiMisi: React.FC<TextComponentProps> = ({ text1, text2 }) => {
   return (
-    <div className='flex flex-col items-start p-4 md:p-6 gap-4 md:gap-5 w-full max-w-[800px] mx-auto'>
-      <Typography 
-      variant='i1' 
-      className='text-5xl md:text-5xl font-adelph-fructidor font-bold leading-[28px] md:leading-[53px] text-white mb-4'
+    <div className='mx-auto flex w-full max-w-[800px] flex-col items-start gap-4 p-4 md:gap-5 md:p-6'>
+      <Typography
+        variant='i1'
+        className='mb-4 font-adelph-fructidor text-5xl font-bold leading-[28px] text-white md:text-5xl md:leading-[53px]'
       >
         {text1}
       </Typography>
       {typeof text2 === 'string' ? (
         <Typography
           variant='s2'
-          className='text-base md:text-lg font-normal text-gray-400 leading-[20px] md:leading-[28px] w-full md:w-[334px] h-auto md:h-[100px]'
+          className='h-auto w-full text-base font-normal leading-[20px] text-gray-400 md:h-[100px] md:w-[334px] md:text-lg md:leading-[28px]'
         >
           {text2}
         </Typography>
@@ -29,7 +29,7 @@ const VisiMisi: React.FC<TextComponentProps> = ({ text1, text2 }) => {
             {text2.map((text, index) => (
               <li
                 key={index}
-                className='text-base md:text-lg font-normal text-gray-400 leading-[20px] md:leading-[28px] w-full md:w-[868px]'
+                className='w-full text-base font-normal leading-[20px] text-gray-400 md:w-[868px] md:text-lg md:leading-[28px]'
               >
                 {text}
               </li>
