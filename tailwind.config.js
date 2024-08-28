@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     extend: {
       lineHeight: {
-        '110' : '1.10',
+        110: '1.10',
       },
       fontFamily: {
         primary: ['var(--font-fairplay-display)'],
@@ -19,7 +19,7 @@ module.exports = {
         adelphe: ['Adelphe', 'serif'], //yang aku tambah
         libre: ['Libre Caslon Condensed', 'serif'],
         'adelph-fructidor': ['"Adelphe Fructidor"', 'sans-serif'],
-        'satoshi': ['Satoshi', 'sans-serif'],
+        satoshi: ['Satoshi', 'sans-serif'],
         'libre-caslon-condensed': ['"Libre Caslon Condensed"', 'serif'],
         'helvetica-neue': ['"Helvetica Neue"', 'sans-serif'],
       },
