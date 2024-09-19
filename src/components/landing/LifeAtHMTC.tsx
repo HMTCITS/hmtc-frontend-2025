@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 
 const LifeAtHMTC: React.FC = () => {
   const [options, setOptions] = useState({
@@ -15,13 +16,10 @@ const LifeAtHMTC: React.FC = () => {
     });
   }, []);
 
-  const [emblaRef, embla] = useEmblaCarousel({
+  const [emblaRef] = useEmblaCarousel({
     loop: false,
     ...options,
   });
-
-  const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
-  const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
 
   const posts = [
     {
@@ -42,21 +40,6 @@ const LifeAtHMTC: React.FC = () => {
     },
     // Add more posts as needed
   ];
-
-  const scrollPrev = useCallback(() => embla && embla.scrollPrev(), [embla]);
-  const scrollNext = useCallback(() => embla && embla.scrollNext(), [embla]);
-
-  const onSelect = useCallback(() => {
-    if (!embla) return;
-    setPrevBtnEnabled(embla.canScrollPrev());
-    setNextBtnEnabled(embla.canScrollNext());
-  }, [embla]);
-
-  useEffect(() => {
-    if (!embla) return;
-    embla.on('select', onSelect);
-    onSelect();
-  }, [embla, onSelect]);
 
   return (
     <section className='flex min-h-screen flex-col items-center justify-center bg-white p-4 font-sans'>
@@ -81,7 +64,9 @@ const LifeAtHMTC: React.FC = () => {
             {posts.map((post, index) => (
               <div className='embla__slide' key={index}>
                 <a href={post.link} target='_blank' rel='noopener noreferrer'>
-                  <img
+                  <Image
+                    width={200}
+                    height={200}
                     src={post.image}
                     alt={`Post ${index + 1}`}
                     className='h-full w-full object-cover'

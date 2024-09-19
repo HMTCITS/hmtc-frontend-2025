@@ -2,22 +2,15 @@
 
 import Image from 'next/image';
 
-import Kepengurusan from '@/components/carousel/Kepengurusan';
 import KetuaCarousel from '@/components/carousel/KetuaCarousel';
 import Divider from '@/components/Divider';
-import Akademik from '@/components/landing/Akademik';
-import Everblue from '@/components/landing/Everblue';
-import Gallery from '@/components/landing/Gallery';
-import Promotion from '@/components/landing/Promotion';
+import GalleryHMTC from '@/components/landing/GalleryHMTC';
+import HMTCBlog from '@/components/landing/HMTCBlog';
+import LifeAtHMTC from '@/components/landing/LifeAtHMTC';
+import PeopleHMTC from '@/components/landing/PeopleHMTC';
 import Quotes from '@/components/landing/Quotes';
 import VisiMisi from '@/components/landing/VisiMisi';
 import Layout from '@/components/layouts/Layout';
-import Typography from '@/components/typography/Typography';
-
-import PeopleHMTC from '@/components/landing/PeopleHMTC';
-import LifeAtHMTC from '@/components/landing/LifeAtHMTC';
-import GalleryHMTC from '@/components/landing/GalleryHMTC';
-import HMTCBlog from '@/components/landing/HMTCBlog';
 
 export default function Home() {
   const slides = [0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6];
@@ -151,26 +144,6 @@ export default function Home() {
           <Divider id='kepengurusan' />
         </div>
 
-        <div className='mx-auto w-full space-y-14 px-6 py-10 md:w-4/5 md:px-0 md:py-24'>
-          <div className='flex w-full flex-col justify-between gap-y-4 font-primary lg:flex-row lg:items-center lg:gap-y-6'>
-            <Typography variant='k1' className='text-black-main'>
-              Kepengurusan.
-            </Typography>
-          </div>
-          <div>
-            <Kepengurusan />
-          </div>
-        </div>
-        <div>
-          <Promotion
-            text1='Gallery HMTC'
-            text2='Merambah dunia teknologi melalui rangkaian acara HMTC. Mulai dari diskusi teknologi menarik bersama para pemimpin industri hingga workshop praktis yang mengupas tuntas rahasia pemrograman dan inovasi, rangkaian acara yang dirancang untuk memberdayakan dan menginspirasi.'
-            href='adfasd.com'
-          />
-        </div>
-        <div>
-          <Gallery />
-        </div>
         <div className='relative mx-auto w-full px-6 md:w-4/5 md:px-0'>
           <PeopleHMTC />
           <LifeAtHMTC />
@@ -178,9 +151,6 @@ export default function Home() {
           <HMTCBlog />
           {/* <Everblue /> */}
           <Divider id='akademik' />
-        </div>
-        <div>
-          <Akademik />
         </div>
       </main>
     </Layout>

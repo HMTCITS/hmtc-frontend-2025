@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 const PeopleHMTC = () => {
@@ -48,7 +49,9 @@ const PeopleHMTC = () => {
           <div className='mt-10 w-full space-y-4'>
             <div className='flex items-center'>
               <div className=''>
-                <img
+                <Image
+                  width={200}
+                  height={200}
                   src='/icons/Frame.svg'
                   alt='Departments Icon'
                   className='h-6 w-6'
@@ -64,7 +67,9 @@ const PeopleHMTC = () => {
             </div>
             <div className='flex w-full items-center border-t border-gray-300 pt-4 lg:w-[438px]'>
               <div className=''>
-                <img
+                <Image
+                  width={200}
+                  height={200}
                   src='/icons/Frame (1).svg'
                   alt='People Icon'
                   className='h-6 w-6'
@@ -80,7 +85,9 @@ const PeopleHMTC = () => {
             </div>
             <div className='flex w-full items-center border-t border-gray-300 pt-4 lg:w-[438px]'>
               <div className=''>
-                <img
+                <Image
+                  width={200}
+                  height={200}
                   src='/icons/Frame (2).svg'
                   alt='Proker Icon'
                   className='h-6 w-6'
@@ -107,7 +114,9 @@ const PeopleHMTC = () => {
                 }`}
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}
               >
-                <img
+                <Image
+                  width={200}
+                  height={200}
                   src={src}
                   alt={`Profile image ${index + 1}`}
                   className='h-full w-full object-cover'
