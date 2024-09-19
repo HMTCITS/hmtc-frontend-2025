@@ -90,25 +90,23 @@ export default function Footer() {
         )}
       >
         <BaseLink href='/' className='flex items-center gap-x-4'>
-          <div className='w-16'>
+          <div className='w-12'>
             <Image
-              src='/images/logohmtc.png'
+              src='/images/logohmtc1.png'
               alt='Logo'
               width={1440}
               height={1440}
-              className='w-20 md:w-44'
+              style={{ width: '48.62px', height: '55.09px' }}
               priority
             />
           </div>
           <div>
             <Typography
-              variant='h1'
-              className='flex flex-col font-primary text-xl font-extrabold'
+              variant='h2'
+              className='flex flex-col font-inter text-sm'
             >
-              <span>Himpunan Mahasiswa</span>
-              <span className='text-blue-light-2'>
-                Teknik Computer-Informatika
-              </span>
+              <span>Kunci</span>
+              <span>Transformasi.</span>
             </Typography>
           </div>
         </BaseLink>
@@ -194,7 +192,7 @@ export default function Footer() {
           variant='s2'
           className='order-2 font-secondary text-sm uppercase text-base-icon md:order-1 md:text-center'
         >
-          &copy; HMTC ITS 2023
+          &copy; HMTC ITS 2024 | KUNCI TRANSFORMASI
         </Typography>
         <div className='order-1 flex items-center gap-x-4 md:order-2'>
           {SocialMedia.map(({ icon: Icon, href }, index) => (

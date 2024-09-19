@@ -23,6 +23,10 @@ module.exports = {
         satoshi: ['Satoshi', 'sans-serif'],
         'libre-caslon-condensed': ['"Libre Caslon Condensed"', 'serif'],
         'helvetica-neue': ['"Helvetica Neue"', 'sans-serif'],
+        inter: ['Inter', ...fontFamily.sans], 
+        satoshi: ['Satoshi', ...fontFamily.sans],
+        adelphe: ['Adelphe', ...fontFamily.sans],
+        libre: ['Libre Caslon Condensed', ...fontFamily.sans],
       },
       fontSize: {
         mid: ['15px', '22px'],

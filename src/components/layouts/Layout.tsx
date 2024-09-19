@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import BaseDialog from '@/components/dialog/BaseDialog';
+import Footer from '@/components/layouts/Footer';
 import Navbar from '@/components/layouts/Navbar';
 import cn from '@/lib/clsxm';
 import useDialogStore from '@/store/useDialogStore';
-
 type LayoutOpt = {
   children: React.ReactNode;
   withFooter?: boolean;
@@ -15,6 +15,7 @@ export default function Layout({
   children,
   className,
   withNavbar = true,
+  withFooter = true,
 }: LayoutOpt) {
   //#region  //*=========== Store ===========
   const open = useDialogStore.useOpen();
@@ -45,6 +46,7 @@ export default function Layout({
         open={open}
         options={state}
       />
+      {withFooter && <Footer />}
     </div>
   );
 }
