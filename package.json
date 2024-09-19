@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@fontsource/inter": "^5.0.20",
+    "@fontsource/inter": "^5.0.20",
     "@headlessui/react": "^1.7.15",
     "@types/node": "20.3.3",
     "@types/react": "18.2.14",
@@ -35,7 +36,10 @@
     "framer-motion": "^10.12.18",
     "immer": "9.0.16",
     "next": "^13.4.8",
+    "next": "^13.4.8",
     "postcss": "8.4.24",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "7.45.2",
