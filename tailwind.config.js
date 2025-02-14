@@ -6,6 +6,7 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/layouts/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
@@ -16,14 +17,14 @@ module.exports = {
         sans: ['Satoshi', ...fontFamily.sans],
         primary: ['var(--font-fairplay-display)'],
         secondary: ['var(--font-poppins)'],
-        satoshi: ['Satoshi', 'sans-serif'], //yang aku tambah
-        adelphe: ['Adelphe', 'serif'], //yang aku tambah
+        satoshi: ['Satoshi', 'sans-serif'],
+        adelphe: ['Adelphe', 'serif'],
         libre: ['Libre Caslon Condensed', 'serif'],
         'adelph-fructidor': ['"Adelphe Fructidor"', 'sans-serif'],
         satoshi: ['Satoshi', 'sans-serif'],
         'libre-caslon-condensed': ['"Libre Caslon Condensed"', 'serif'],
         'helvetica-neue': ['"Helvetica Neue"', 'sans-serif'],
-        inter: ['Inter', ...fontFamily.sans], 
+        inter: ['Inter', ...fontFamily.sans],
         satoshi: ['Satoshi', ...fontFamily.sans],
         adelphe: ['Adelphe', ...fontFamily.sans],
         libre: ['Libre Caslon Condensed', ...fontFamily.sans],

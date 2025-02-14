@@ -1,13 +1,5 @@
 module.exports = {
-  // Lint & Prettify TS and JS files
-  '**/*.(ts|tsx|js)': () => [
-    `yarn format:write`,
-    `yarn lint`,
-    `yarn lint:fix`,
-    `yarn lint:strict`,
-    `yarn typecheck`,
-  ],
-
-  // Prettify only Markdown and JSON files
-  '**/*.(md|json)': () => `yarn format:write`,
+  '**/*.(ts|tsx)': () => 'pnpm typecheck', // Lakukan pengecekan tipe pada file TypeScript (ts, tsx)
+  '**/*.(ts|tsx|js)': () => ['pnpm lint:strict', 'pnpm format:write'], // Lakukan linting dan formatting pada file TS, TSX, dan JS
+  '**/*.(md|json)': () => 'pnpm format:write', // Lakukan formatting pada file Markdown dan JSON
 };
