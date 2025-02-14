@@ -39,13 +39,14 @@ const Everblue = () => {
         </div>
       </div>
       <iframe
+        title='Everblue'
         src='https://online.fliphtml5.com/ougyq/milj'
         width='100%'
         height='750px'
         loading='lazy'
         seamless
         allowFullScreen
-      ></iframe>
+      />
     </section>
   );
 };

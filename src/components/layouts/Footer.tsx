@@ -74,8 +74,21 @@ const Akademik = [
 export default function Footer() {
   const [isApaIniOpen, setIsApaIniOpen] = React.useState(false);
   const [isAkademikOpen, setIsAkademikOpen] = React.useState(false);
+
   const toggleApaIni = () => setIsApaIniOpen((prev) => !prev);
   const toggleAkademik = () => setIsAkademikOpen((prev) => !prev);
+
+  // Handle keyboard events (Enter or Space) to trigger the toggle
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLDivElement>,
+    toggle: () => void
+  ) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggle();
+    }
+  };
+
   return (
     <footer
       className={cn(
@@ -113,7 +126,13 @@ export default function Footer() {
 
         <div className='grid grid-cols-2 gap-x-6 font-secondary'>
           <div className='flex w-full flex-col items-center gap-y-2.5 md:w-[187px] md:items-start'>
-            <div onClick={toggleApaIni} className='flex items-center gap-2'>
+            <div
+              role='button'
+              tabIndex={0}
+              onClick={toggleApaIni}
+              onKeyDown={(e) => handleKeyDown(e, toggleApaIni)}
+              className='flex items-center gap-2 cursor-pointer'
+            >
               <Typography
                 variant='s2'
                 className='cursor-pointer font-secondary uppercase'
@@ -149,7 +168,13 @@ export default function Footer() {
             </div>
           </div>
           <div className='flex w-full flex-col items-center gap-y-2.5 md:w-[187px] md:items-start'>
-            <div onClick={toggleAkademik} className='flex items-center gap-2'>
+            <div
+              role='button'
+              tabIndex={0}
+              onClick={toggleAkademik}
+              onKeyDown={(e) => handleKeyDown(e, toggleAkademik)}
+              className='flex items-center gap-2 cursor-pointer'
+            >
               <Typography
                 variant='s2'
                 className='cursor-pointer font-secondary uppercase'

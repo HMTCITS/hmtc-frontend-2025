@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image';
+import React, { useCallback, useEffect, useState } from 'react';
 
 const HMTCBlog: React.FC = () => {
   const [emblaRef, embla] = useEmblaCarousel({
