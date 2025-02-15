@@ -84,7 +84,7 @@ export default function Navbar({
             : '-translate-x-full opacity-0'
         )}
       >
-        <div className='z-10 flex flex-col items-center gap-14 px-4 py-40'>
+        <div className='z-10 flex flex-col items-center gap-14 px-4 py-24'>
           <BaseLink href='/' className='w-32'>
             <Image
               src='/images/logohmtc2024.png'
