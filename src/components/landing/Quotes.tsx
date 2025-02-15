@@ -25,8 +25,8 @@ const Quotes: React.FC = () => {
               <Image
                 src='/images/Quotes/fotoQuotes.png'
                 alt='Quote Image'
-                layout='fill'
-                objectFit='cover'
+                fill
+                className='object-cover'
               />
             </div>
             <div className='flex h-[52px] w-[158px] flex-col items-start gap-[2px]'>
@@ -46,9 +46,8 @@ const Quotes: React.FC = () => {
           <Image
             src='/images/Quotes/Quotes.png'
             alt='Quotes Background'
-            layout='fill'
-            objectFit='cover'
-            className='rounded-none'
+            fill
+            className='rounded-none object-cover'
           />
 
           {/* Teks di Atas Gambar */}

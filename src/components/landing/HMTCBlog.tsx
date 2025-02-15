@@ -1,3 +1,5 @@
+'use client';
+
 import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -102,7 +104,7 @@ const HMTCBlog: React.FC = () => {
                         src={post.image}
                         alt={post.title}
                         fill
-                        style={{ objectFit: 'contain' }}
+                        className='object-contain'
                       />
                     </div>
                     <div className='px-1 pt-4 lg:pt-4'>

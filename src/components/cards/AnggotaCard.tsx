@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 
 import { DataAnggota } from '@/constants/anggota';
 import cn from '@/lib/clsxm';
@@ -18,11 +18,12 @@ export default function AnggotaCard({
         (index === 0 || index === 19) && 'max-w-none'
       )}
     >
-      <div className='h-[25rem]  pt-6'>
+      <div className='h-[25rem] pt-6 relative'>
         <Image
-          {...image}
-          alt=''
-          className='h-full w-full object-contain object-bottom'
+          src={image as StaticImageData}
+          alt="Foto Anggota"
+          fill 
+          className='object-contain object-bottom'
         />
       </div>
     </div>

@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import * as React from 'react';
 import {
@@ -99,8 +101,8 @@ export default function Footer() {
               alt='Logo'
               width={1440}
               height={1440}
-              style={{ width: '48.62px', height: '55.09px' }}
               priority
+              className='h-[55.09px] w-[48.62px]'
             />
           </div>
           <div>
