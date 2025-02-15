@@ -32,10 +32,10 @@ export default function Home() {
             <div className='absolute inset-0 z-10 bg-black opacity-75'></div>
           </div>
 
-          <div className='relative z-20 mx-4 flex flex-col items-start p-6 pt-40 sm:mx-6 md:mx-11 md:p-12'>
+          <div className='relative z-20 mx-4 flex flex-col items-start p-6 pb-40 pt-[40%] sm:mx-6 md:mx-11 md:p-12'>
             <div className='mt-20 space-y-8 md:mt-28'>
               <div className='flex flex-col md:flex-row md:items-center md:justify-between'>
-                <h1 className='font-libre text-4xl sm:text-8xl md:mr-auto md:text-8xl lg:text-7xl'>
+                <h1 className='font-libre text-4xl italic sm:text-8xl md:mr-auto md:text-8xl lg:text-7xl'>
                   Bersama Bersinergi <br />
                 </h1>
                 <p className='invisible absolute right-16 mt-4 font-satoshi sm:invisible md:invisible md:mt-0 md:text-lg lg:visible'>
@@ -48,7 +48,7 @@ export default function Home() {
                   Justo aliquet aliquet <br />
                   nulla ultrices etiam.
                 </p>
-                <h1 className='absolute start-1/2 font-libre text-5xl sm:text-8xl md:mr-auto md:pl-8 md:text-7xl lg:text-8xl'>
+                <h1 className='absolute start-[45%] font-libre text-5xl italic sm:text-8xl md:mr-auto md:pl-8 md:text-7xl lg:text-8xl'>
                   Menjadi
                 </h1>
               </div>
