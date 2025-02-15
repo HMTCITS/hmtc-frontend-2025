@@ -9,6 +9,7 @@ import HMTCBlog from '@/components/landing/HMTCBlog';
 import LifeAtHMTC from '@/components/landing/LifeAtHMTC';
 import PeopleHMTC from '@/components/landing/PeopleHMTC';
 import Quotes from '@/components/landing/Quotes';
+import QuotesKahima from '@/components/landing/QuotesKahima';
 import VisiMisi from '@/components/landing/VisiMisi';
 import Layout from '@/components/layouts/Layout';
 
@@ -31,7 +32,7 @@ export default function Home() {
             <div className='absolute inset-0 z-10 bg-black opacity-75'></div>
           </div>
 
-          <div className='relative z-20 mx-4 flex flex-col items-start p-6 sm:mx-6 md:mx-11 md:p-12'>
+          <div className='relative z-20 mx-4 flex flex-col items-start p-6 pt-40 sm:mx-6 md:mx-11 md:p-12'>
             <div className='mt-20 space-y-8 md:mt-28'>
               <div className='flex flex-col md:flex-row md:items-center md:justify-between'>
                 <h1 className='font-libre text-4xl sm:text-8xl md:mr-auto md:text-8xl lg:text-7xl'>
@@ -43,7 +44,7 @@ export default function Home() {
                 </p>
               </div>
               <div className='flex flex-col pb-12 pt-12 md:flex-row md:justify-center md:pb-20 md:pt-20'>
-                <p className='mt-4 font-satoshi text-sm sm:text-xl md:mr-auto md:text-lg'>
+                <p className='invisible mt-4 font-satoshi text-sm sm:visible sm:text-xl md:mr-auto md:text-lg'>
                   Justo aliquet aliquet <br />
                   nulla ultrices etiam.
                 </p>
@@ -65,29 +66,29 @@ export default function Home() {
 
         <div
           id='aboutus'
-          className='flex min-h-screen flex-col items-center justify-center bg-white py-2 '
+          className='flex flex-col items-center justify-center bg-white py-16'
         >
-          <div className='flex w-full flex-1 flex-col items-center justify-center px-20'>
-            <div className='flex w-full flex-col items-center justify-between md:flex-row'>
-              <div className='flex justify-center md:w-1/2'>
+          <div className='flex w-full flex-1 flex-col items-center justify-center px-10 pt-16 md:px-16 lg:px-20 lg:pt-40'>
+            <div className='flex w-full flex-col items-center justify-between lg:flex-row'>
+              <div className='flex justify-center lg:w-1/2'>
                 <Image
                   src='/images/fotbarhmtc2024.png'
                   alt='HMTC Informatics'
                   width={550}
                   height={400}
-                  className='object-cover'
+                  className='rounded-[15px] object-cover'
                 />
               </div>
-              <div className='mt-8 text-left md:ml-8 md:mt-0 md:w-1/2'>
+              <div className='mt-8 text-left md:pt-8 lg:ml-8 lg:mt-0 lg:w-1/2'>
                 <h2 className='font-satoshi text-xl text-blue-600'>About Us</h2>
-                <h1 className='mt-2 font-adelphe text-4xl font-bold'>
+                <h1 className='mt-2 font-adelphe text-4xl font-bold leading-[50px]'>
                   Dedication to Excellence in Education and Technology
                 </h1>
-                <p className='mt-4 text-gray-700'>
+                <p className='mt-6 text-gray-700'>
                   Organisasi ini bernama Himpunan Mahasiswa Teknik Computer —
                   Informatika yang selanjutnya disebut HMTC.
                 </p>
-                <p className='mt-2 text-gray-700'>
+                <p className='mt-6 text-gray-700'>
                   Tujuan HMTC adalah tercapainya kesempurnaan pendidikan dalam
                   rangka membentuk pribadi mahasiswa yang bertaqwa kepada Tuhan
                   Yang Maha Esa, memiliki sikap kecendekiawanan, integritas,
@@ -110,14 +111,14 @@ export default function Home() {
             />
           </div>
           <div className='flex h-full w-full items-center justify-center bg-[#121212] py-10 md:py-24'>
-            <div className='flex w-full flex-col justify-between gap-x-6 gap-y-6 px-6 md:w-4/5 md:px-0 lg:flex-row lg:gap-x-12'>
-              <div className='lg:ml-[-80px]'>
+            <div className='flex w-full flex-col justify-between gap-x-6 gap-y-6 px-6 md:w-[90%] md:px-0 lg:flex-row lg:gap-x-32'>
+              <div className=''>
                 <VisiMisi
                   text1='Vision'
                   text2='Transformasi HMTC sebagai Pionir Utama Elemen Teknik Informatika Demi Mewujudkan Organisasi Yang Berdampak dan Berkualitas'
                 />
               </div>
-              <div className='lg:ml-[-50px]'>
+              <div className=''>
                 <VisiMisi
                   text1='Mission'
                   text2={[
@@ -130,12 +131,12 @@ export default function Home() {
             </div>
           </div>
           <div className='flex h-full w-full  bg-[#121212] py-10 md:py-24'>
-            <div className='flex w-full flex-col gap-x-6 gap-y-6 px-6 md:w-4/5 md:px-0 lg:flex-row lg:gap-x-12'>
+            <div className='flex w-full flex-col gap-x-6 gap-y-6 px-6'>
               <Quotes />
             </div>
           </div>
-          <div className='flex h-full w-full items-center  bg-[#121212] py-10 md:py-24'>
-            <div className=' flex w-full flex-col justify-between gap-x-6 gap-y-6 px-6 md:w-4/5 md:px-0 lg:flex-row lg:gap-x-12'>
+          <div className='flex h-full w-full items-center bg-[#121212] px-4 py-10 md:px-20 md:py-24 lg:px-[8%]'>
+            <div className=' flex w-full flex-col justify-between'>
               <div className='relative w-full'>
                 <KetuaCarousel slides={slides} options={{ loop: true }} />
               </div>
@@ -144,17 +145,13 @@ export default function Home() {
           <Divider id='kepengurusan' />
         </div>
 
-        <div className='relative mx-auto w-full px-6 md:w-4/5 md:px-0'>
-          <PeopleHMTC />
-          <LifeAtHMTC />
-          <GalleryHMTC />
-          {/* <Everblue /> */}
+        <div className='relative mx-auto w-full'>
           <PeopleHMTC />
           <LifeAtHMTC />
           <GalleryHMTC />
           {/* <Everblue /> */}
           <HMTCBlog />
-          <Divider id='akademik' />
+          <QuotesKahima />
         </div>
       </main>
     </Layout>

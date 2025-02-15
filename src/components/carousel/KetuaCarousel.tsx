@@ -54,13 +54,17 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
   }, [emblaApi]);
 
   return (
-    <div className='relative isolate mb-[20px] flex w-full flex-col items-center gap-[10px] p-[20px] lg:mb-0 lg:w-[1512px] lg:p-[40px]'>
-      <div className='z-10 flex w-full flex-col items-start gap-[20px] lg:w-[1312px] lg:gap-[80px]'>
-        <div className='flex w-full flex-col items-start gap-[16px] lg:w-[1062px] lg:gap-[32px]'>
+    <div className='relative isolate mb-[20px] flex w-full flex-col items-center gap-[10px] p-[20px] lg:mb-0'>
+      <div
+        id='historyofhmtc'
+        className='flex flex-col items-center justify-center bg-white py-16'
+      ></div>
+      <div className='z-10 flex w-full flex-col items-start gap-[20px] '>
+        <div className='flex w-full flex-col items-start gap-[16px] '>
           <h2 className='font-satoshi-medium text-base uppercase text-[#FFFFFF]'>
             History of HMTC
           </h2>
-          <h1 className='w-full font-adelph-fructidor text-4xl font-bold leading-[40px] text-[#FFFFFF] lg:w-[617px] lg:text-5xl lg:leading-[53px]'>
+          <h1 className='w-full font-adelph-fructidor text-4xl font-bold leading-[40px] text-[#FFFFFF] lg:text-5xl lg:leading-[53px]'>
             Get to Know The Chairman of HMTC
           </h1>
 
@@ -78,7 +82,7 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
       </div>
 
       <div
-        className='relative mt-10 h-[272.67px] w-full overflow-hidden lg:mt-20 lg:w-[1312px]'
+        className='relative mt-10 h-[272.67px] w-full overflow-hidden lg:mt-20 '
         ref={carouselRef}
       >
         <div className='embla__viewport' ref={emblaRef}>

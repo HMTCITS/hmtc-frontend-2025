@@ -37,14 +37,14 @@ export default function Navbar({
     <header className={cn('fixed top-0 z-[100] w-full')}>
       <div
         className={cn(
-          'flex flex-row-reverse items-center justify-between bg-transparent min-[800px]:flex-row',
+          'flex items-center justify-between bg-transparent min-[800px]:flex-row',
           'px-6 py-1 min-[800px]:px-24',
           isShift && [
             'bg-black shadow-sm backdrop-blur transition-colors duration-150',
           ]
         )}
       >
-        <BaseLink className='relative h-20 w-28 md:h-24 md:w-24' href='#home'>
+        <BaseLink className='relative h-20 w-28 md:h-20 md:w-24' href='#home'>
           <Image
             src='/images/logohmtc2024.png'
             alt='Kunci Transformasi Logo'
@@ -55,7 +55,7 @@ export default function Navbar({
 
         <Button
           icon={HiMenu}
-          className='min-[800px]:hidden'
+          className='ml-auto min-[800px]:hidden'
           onClick={openSidebar}
         />
 
@@ -84,8 +84,8 @@ export default function Navbar({
             : '-translate-x-full opacity-0'
         )}
       >
-        <div className='z-10 flex flex-col items-center gap-14 px-4 py-6'>
-          <BaseLink href='/' className='w-16'>
+        <div className='z-10 flex flex-col items-center gap-14 px-4 py-40'>
+          <BaseLink href='/' className='w-32'>
             <Image
               src='/images/logohmtc2024.png'
               alt=''
@@ -95,7 +95,7 @@ export default function Navbar({
           </BaseLink>
 
           <div className='flex flex-col items-center gap-8'>
-            <div className='flex flex-col items-center gap-6'>
+            <div className='flex flex-col items-center gap-8'>
               {NAVBAR_LINKS.map(({ id, name, href }) => (
                 <BaseLink
                   key={id}

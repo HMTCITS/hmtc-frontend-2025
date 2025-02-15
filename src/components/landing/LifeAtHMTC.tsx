@@ -42,8 +42,8 @@ const LifeAtHMTC: React.FC = () => {
   ];
 
   return (
-    <section className='flex min-h-screen flex-col items-center justify-center bg-white p-4 font-sans'>
-      <div className='w-full pt-24 text-center lg:max-w-[65%] lg:pt-14'>
+    <section className='flex flex-col items-center justify-center bg-white p-4 py-24 font-sans'>
+      <div className='w-full max-w-[90%] text-center lg:max-w-[65%]'>
         <h2 className='text-gradient font-sans text-lg font-medium'>
           LIFE AT HMTC
         </h2>
@@ -58,7 +58,7 @@ const LifeAtHMTC: React.FC = () => {
           facilisi turpis id nunc.
         </p>
       </div>
-      <div className='w-full max-w-7xl'>
+      <div className='w-full max-w-7xl md:px-12'>
         <div className='embla' ref={emblaRef}>
           <div className='embla__container'>
             {posts.map((post, index) => (

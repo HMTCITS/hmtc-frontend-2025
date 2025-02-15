@@ -31,16 +31,20 @@ const PeopleHMTC = () => {
   };
 
   return (
-    <section className='flex min-h-screen flex-col items-center justify-center bg-white font-sans'>
-      <div className='flex w-full max-w-7xl flex-col items-center pt-20 lg:flex-row'>
-        <div className='w-full px-4 lg:w-[65%] lg:px-0'>
+    <section className='flex flex-col items-center justify-center bg-white font-sans md:px-[8%] md:py-24'>
+      <div
+        id='peoplebehindhmtc'
+        className='flex flex-col items-center justify-center bg-white py-6'
+      ></div>
+      <div className='flex w-full max-w-[95%] flex-col items-center pt-20 lg:flex-row'>
+        <div className='w-full px-6 lg:w-[65%] lg:px-0'>
           <h1 className='text-gradient font-sans text-lg font-medium'>
             HMTC 2024 KUNCI TRANSFORMASI
           </h1>
           <h2 className='adelphe-fructidor mt-3 text-3xl font-bold leading-tight lg:text-5xl lg:leading-[52.80px]'>
             The People Behind HMTC
           </h2>
-          <p className='mt-6 text-gray-600'>
+          <p className='mt-6 max-w-[90%] text-gray-600'>
             Sed eu volutpat eget elementum. Enim aliquam pellentesque sit
             pretium ut. Tristique non tincidunt ullamcorper libero massa
             aliquam. In suspendisse sed bibendum lectus blandit. Aenean

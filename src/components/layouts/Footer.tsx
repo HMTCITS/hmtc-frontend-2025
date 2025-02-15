@@ -14,6 +14,7 @@ import BaseLink from '@/components/links/BaseLink';
 import Typography from '@/components/typography/Typography';
 import cn from '@/lib/clsxm';
 
+//footer links
 const SocialMedia = [
   {
     icon: FaTwitter,
@@ -37,6 +38,7 @@ const SocialMedia = [
   },
 ];
 
+//footer hmtc
 const ApaIni = [
   {
     label: 'Tentang kami',
@@ -52,6 +54,7 @@ const ApaIni = [
   },
 ];
 
+//footer akademik
 const Akademik = [
   {
     label: 'Bank Soal',

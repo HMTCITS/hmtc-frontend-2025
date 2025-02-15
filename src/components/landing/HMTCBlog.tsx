@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image';
+import React, { useCallback, useEffect, useState } from 'react';
 
 const HMTCBlog: React.FC = () => {
   const [emblaRef, embla] = useEmblaCarousel({
@@ -68,8 +68,12 @@ const HMTCBlog: React.FC = () => {
   }, [embla, setScrollSnaps, onSelect]);
 
   return (
-    <section className='bg-white pb-24 pt-24 md:pt-20'>
-      <div className='container mx-auto p-4 lg:p-0'>
+    <section className='bg-white pb-24 pt-20 md:px-[10%] md:pt-24'>
+      <div
+        id='blog'
+        className='flex flex-col items-center justify-center bg-white py-16'
+      ></div>
+      <div className='container mx-auto p-6 lg:p-0'>
         <h2
           className='text-gradient font-satoshi text-lg font-medium'
           style={{
@@ -83,7 +87,7 @@ const HMTCBlog: React.FC = () => {
         >
           HMTC BLOG
         </h2>
-        <h1 className='mb-6 mt-3 w-full font-adelphe text-3xl font-bold lg:w-[65%] lg:text-5xl lg:leading-[52.80px]'>
+        <h1 className='mb-6 mt-3 w-full font-adelphe text-3xl font-bold md:w-[80%] md:text-5xl md:leading-[52.80px]'>
           Delving into Stories, Insights, and the Latest Trends from HMTC
         </h1>
 

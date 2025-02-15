@@ -1,5 +1,5 @@
-import React from 'react';
 import Image from 'next/image';
+import React from 'react';
 
 const GalleryHMTC: React.FC = () => {
   const images = [
@@ -10,9 +10,13 @@ const GalleryHMTC: React.FC = () => {
   ];
 
   return (
-    <section className='flex min-h-screen flex-col items-center justify-center bg-white p-4 pt-[100px] font-sans'>
+    <section className='flex flex-col items-center justify-center bg-white p-6 font-sans md:py-10 md:pt-[100px]'>
+      <div
+        id='gallery'
+        className='flex flex-col items-center justify-center bg-white py-16'
+      ></div>
       <div className='pb-[50px] md:pb-[40px] lg:pb-[70px]'>
-        <h1 className='adelphe-fructidor left-0 w-full text-left text-3xl font-bold lg:absolute lg:max-w-[50%] lg:text-5xl'>
+        <h1 className='adelphe-fructidor left-0 w-full text-left text-3xl font-bold md:px-[10%] md:text-3xl lg:absolute lg:max-w-[70%] lg:text-5xl lg:leading-[1.2]'>
           From Capturing Moments to Sharing Memories
         </h1>
       </div>
@@ -77,7 +81,7 @@ const GalleryHMTC: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className='mt-12 w-full max-w-7xl text-right md:mt-6'>
+      <div className='mr-4 mt-4 w-full max-w-7xl text-right md:mr-10 md:mt-6'>
         <a
           href='/gallery'
           className='font-medium text-black underline underline-offset-4 '
