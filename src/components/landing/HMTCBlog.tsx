@@ -15,28 +15,28 @@ const HMTCBlog: React.FC = () => {
       image: '/images/bloghmtc/blog-1.png',
       title: 'Melukiskan Hikmah, Kembali Fitrah',
       excerpt:
-        'Bulan Ramadhan buat aku adalah waktu yang spesial. Bukan cuma soal puasa, tapi juga tentang gimana orang-orang di lin...',
+        'Bulan Ramadhan buat aku adalah waktu yang spesial. Bukan cuma soal puasa, tapi juga tentang gimana orang-orang di lin..',
       link: 'https://www.instagram.com/p/C5j83s6yKTE/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
     },
     {
       image: '/images/bloghmtc/blog-2.png',
       title: 'Kartini: Simbol Perjuangan Perempuan Indonesia',
       excerpt:
-        'Cras pellentesque ullamcorper tincidunt in diam lectus sem. Sit in quam aliquet enim consequat aliquam. Nulla eget.',
+        'Kartini bukan sekadar nama, dia adalah simbol perjuangan bagi semua perempuan di Indonesia. Melalui semangatnya yang..',
       link: 'https://www.instagram.com/p/C6AM32Rycy8/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
     },
     {
       image: '/images/bloghmtc/blog-3.png',
       title: 'Bisnis Bagi Anak Muda di Era Digital',
       excerpt:
-        'Sit at elit aliquet auctor quam ac. Vel diam suspendisse tempus eu vulputate scelerisque velit sapien quis. Viverra ac.',
+        'Menggali Peluang Bisnis di Era Digital! Anak muda punya potensi besar untuk menciptakan inovasi di dunia digital..',
       link: 'https://www.instagram.com/p/C7Dmkdtx9iD/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
     },
     {
       image: '/images/bloghmtc/blog-4.png',
       title: 'Idul Adha di Perantauan, Ngapain ya?',
       excerpt:
-        'Viverra eu vitae tempus id. Diam amet turpis nunc bibendum purus sapien non elementum. Eleifend gravida commodo.',
+        'Idul Adha di Perantaun, Ngapain ya? Hari Raya Idul Adha selalu jadi momen yang ditunggu-tunggu umat Muslim di seluruh..',
       link: 'https://www.instagram.com/p/C8TQi0rC4OU/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
     },
     {
@@ -68,10 +68,10 @@ const HMTCBlog: React.FC = () => {
   }, [embla, setScrollSnaps, onSelect]);
 
   return (
-    <section className='bg-white pb-24 pt-20 md:px-[10%] md:pt-24'>
+    <section className='bg-white px-4 pb-24 pt-10 md:px-[10%] md:pt-24'>
       <div
         id='blog'
-        className='flex flex-col items-center justify-center bg-white py-16'
+        className='my-0 flex flex-col items-center justify-center bg-white'
       ></div>
       <div className='container mx-auto p-6 lg:p-0'>
         <h2
@@ -105,7 +105,7 @@ const HMTCBlog: React.FC = () => {
                         style={{ objectFit: 'contain' }}
                       />
                     </div>
-                    <div className='px-1 pt-4 lg:p-4'>
+                    <div className='px-1 pt-4 lg:pt-4'>
                       <h3 className='mb-3  text-xl font-bold'>{post.title}</h3>
                       <p className='text-sm text-gray-600'>{post.excerpt}</p>
                     </div>

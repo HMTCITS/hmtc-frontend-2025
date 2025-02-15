@@ -10,7 +10,7 @@ const GalleryHMTC: React.FC = () => {
   ];
 
   return (
-    <section className='flex flex-col items-center justify-center bg-white p-6 font-sans md:py-10 md:pt-[100px]'>
+    <section className='flex flex-col items-center justify-center bg-white p-8 pt-0 font-sans md:py-10 md:pt-[100px]'>
       <div
         id='gallery'
         className='flex flex-col items-center justify-center bg-white py-16'

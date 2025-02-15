@@ -69,14 +69,14 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
           </h1>
 
           <p className='font-satoshi-regular text-sm leading-[20px] text-[#FFFFFF] lg:text-lg lg:leading-[25px]'>
-            Ultricies lorem massa sagittis sit sed morbi in facilisis
-            ullamcorper. Ut vel ornare placerat sapien magnis lectus eget
-            volutpat aliquet. Proin sed viverra vitae magna justo ipsum.
-            Porttitor risus morbi laoreet purus eget consectetur in semper nisl.
-            Tincidunt blandit adipiscing nulla ipsum cursus tristique dui. Morbi
-            sagittis elit vitae pulvinar. A ultrices id mi amet facilisis
-            potenti. Velit tincidunt sit sed dolor mi commodo. Egestas sodales
-            id at tempus non vivamus convallis posuere.
+            Sejarah HMTC dibangun oleh para pemimpin visioner yang telah
+            memberikan kontribusi besar dalam membentuk organisasi HMTC ini.
+            Dengan dedikasi dan semangat kepemimpinan mereka, HMTC terus
+            berkembang menjadi organisasi yang solid dan inovatif. Tiap periode
+            kepemimpinan terus membawa perubahan, tantangan, serta pencapaian
+            yang menjadi fondasi bagi generasi HMTC berikutnya, hingga kini,
+            Farrela Ranku Mahisa, Ketua HMTC 2024 Kabinet Kunci Transformasi
+            hadir untuk membawa transformasi HMTC kearah yang lebih baik.
           </p>
         </div>
       </div>

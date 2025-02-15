@@ -112,7 +112,7 @@ export default function Navbar({
           </div>
         </div>
 
-        <div className='flex flex-col items-center justify-end gap-8'>
+        <div className='flex flex-col items-center justify-end gap-0'>
           <Button
             size='large'
             icon={FaArrowLeftLong}

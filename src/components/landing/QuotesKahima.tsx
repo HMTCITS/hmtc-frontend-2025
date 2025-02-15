@@ -13,7 +13,7 @@ const QuotesKahima = () => {
 
   return (
     <section
-      className='relative flex h-fit w-full justify-center overflow-hidden bg-blue-main px-6 py-6 text-white'
+      className='relative flex h-fit w-full justify-center overflow-hidden bg-blue-main px-10 py-16 text-white md:p-6'
       style={{
         background:
           'linear-gradient(263.67deg, #00AAE7 -8.55%, #0076C0 97.16%)',
