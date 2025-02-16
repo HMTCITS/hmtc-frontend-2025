@@ -7,7 +7,6 @@ import { HiMenu } from 'react-icons/hi';
 import { Link as ScrollLink } from 'react-scroll';
 
 import Button from '@/components/buttons/Button';
-import BaseLink from '@/components/links/BaseLink';
 import Typography from '@/components/typography/Typography';
 import { NAVBAR_LINKS } from '@/constants/layout';
 import cn from '@/lib/clsxm';
@@ -58,7 +57,7 @@ export default function Navbar({
             src='/images/logohmtc2024.png'
             alt='Kunci Transformasi Logo'
             fill
-            style={{ objectFit: 'contain' }} 
+            style={{ objectFit: 'contain' }}
           />
         </ScrollLink>
 

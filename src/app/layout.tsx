@@ -1,14 +1,14 @@
-"use client"
+'use client';
 
 import '@/styles/globals.css';
 import '@/styles/embla.css';
 
 import { Playfair_Display, Poppins } from 'next/font/google';
-import cn from '@/lib/clsxm';
-
-import Navbar from '@/components/layouts/Navbar';
-import Footer from '@/components/layouts/Footer';
 import { useState } from 'react';
+
+import Footer from '@/components/layouts/Footer';
+import Navbar from '@/components/layouts/Navbar';
+import cn from '@/lib/clsxm';
 
 const playfair_display = Playfair_Display({
   subsets: ['latin'],

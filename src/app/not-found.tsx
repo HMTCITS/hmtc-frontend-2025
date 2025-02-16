@@ -1,7 +1,7 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { FiChevronRight } from 'react-icons/fi';
 import { MdWbTwilight } from 'react-icons/md';
-import Link from 'next/link';
 
 import Typography from '@/components/typography/Typography';
 
