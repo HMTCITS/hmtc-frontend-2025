@@ -61,7 +61,7 @@ const nextConfig = {
   reactStrictMode: true,
 
   // Aktifkan SWC minification untuk optimasi performa
-  swcMinify: true,
+  // swcMinify: true,
 
   // Konfigurasi ESLint hanya pada direktori 'src'
   eslint: {
