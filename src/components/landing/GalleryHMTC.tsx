@@ -11,7 +11,10 @@ const GalleryHMTC: React.FC = () => {
 
   return (
     <section className='flex flex-col items-center justify-center bg-white p-8 pt-0 font-sans md:py-10 md:pt-[100px]'>
-      <div id='gallery' className='flex flex-col items-center justify-center bg-white py-16'></div>
+      <div
+        id='gallery'
+        className='flex flex-col items-center justify-center bg-white py-16'
+      ></div>
 
       <div className='pb-[50px] md:pb-[40px] lg:pb-[70px]'>
         <h1 className='adelphe-fructidor left-0 w-full text-left text-3xl font-bold md:px-[10%] md:text-3xl lg:absolute lg:max-w-[70%] lg:text-5xl lg:leading-[1.2]'>
@@ -27,7 +30,7 @@ const GalleryHMTC: React.FC = () => {
             alt='Gallery image 1'
             fill
             className='object-cover'
-            sizes="(max-width: 768px) 100vw, 500px"
+            sizes='(max-width: 768px) 100vw, 500px'
           />
         </div>
 
@@ -38,7 +41,7 @@ const GalleryHMTC: React.FC = () => {
             alt='Gallery image 2'
             fill
             className='object-cover'
-            sizes="(max-width: 768px) 100vw, 375px"
+            sizes='(max-width: 768px) 100vw, 375px'
           />
         </div>
 
@@ -49,7 +52,7 @@ const GalleryHMTC: React.FC = () => {
             alt='Gallery image 3'
             fill
             className='object-cover'
-            sizes="(max-width: 768px) 100vw, 450px"
+            sizes='(max-width: 768px) 100vw, 450px'
           />
         </div>
 
@@ -60,13 +63,16 @@ const GalleryHMTC: React.FC = () => {
             alt='Gallery image 4'
             fill
             className='object-cover'
-            sizes="(max-width: 768px) 100vw, 350px"
+            sizes='(max-width: 768px) 100vw, 350px'
           />
         </div>
       </div>
 
       <div className='mr-4 mt-4 w-full max-w-7xl text-right md:mr-10 md:mt-6'>
-        <a href='/gallery' className='font-medium text-black underline underline-offset-4'>
+        <a
+          href='/gallery'
+          className='font-medium text-black underline underline-offset-4'
+        >
           Explore Gallery HMTC &rarr;
         </a>
       </div>

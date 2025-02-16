@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { EmblaOptionsType } from 'embla-carousel';
 import AutoScroll from 'embla-carousel-auto-scroll';

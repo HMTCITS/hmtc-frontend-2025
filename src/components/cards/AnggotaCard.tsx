@@ -18,11 +18,11 @@ export default function AnggotaCard({
         (index === 0 || index === 19) && 'max-w-none'
       )}
     >
-      <div className='h-[25rem] pt-6 relative'>
+      <div className='relative h-[25rem] pt-6'>
         <Image
           src={image as StaticImageData}
-          alt="Foto Anggota"
-          fill 
+          alt='Foto Anggota'
+          fill
           className='object-contain object-bottom'
         />
       </div>

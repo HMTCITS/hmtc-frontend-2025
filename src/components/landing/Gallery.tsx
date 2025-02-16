@@ -11,7 +11,7 @@ const Gallery = () => {
             alt='gallery-1'
             fill
             className='object-cover'
-            sizes="(max-width: 768px) 100vw, 400px"
+            sizes='(max-width: 768px) 100vw, 400px'
             priority
           />
         </div>
@@ -21,7 +21,7 @@ const Gallery = () => {
             alt='gallery-2'
             fill
             className='object-cover'
-            sizes="(max-width: 768px) 100vw, 500px"
+            sizes='(max-width: 768px) 100vw, 500px'
           />
         </div>
       </div>
@@ -32,7 +32,7 @@ const Gallery = () => {
           alt='gallery-3'
           fill
           className='object-cover'
-          sizes="(max-width: 768px) 100vw, 600px"
+          sizes='(max-width: 768px) 100vw, 600px'
         />
       </div>
 
@@ -43,7 +43,7 @@ const Gallery = () => {
             alt='gallery-4'
             fill
             className='object-cover'
-            sizes="(max-width: 768px) 100vw, 500px"
+            sizes='(max-width: 768px) 100vw, 500px'
           />
         </div>
         <div className='relative h-[500px]'>
@@ -52,7 +52,7 @@ const Gallery = () => {
             alt='gallery-5'
             fill
             className='object-cover'
-            sizes="(max-width: 768px) 100vw, 300px"
+            sizes='(max-width: 768px) 100vw, 300px'
           />
         </div>
       </div>

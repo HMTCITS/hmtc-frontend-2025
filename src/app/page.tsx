@@ -39,7 +39,7 @@ export default function Page() {
               </p>
             </div>
             <div className='flex flex-col pb-12 pt-12 md:flex-row md:justify-center md:pb-20 md:pt-20'>
-              <p className='invisible mt-4 font-satoshi text-sm sm:text-xl sm:invisible md:invisible md:mr-auto md:text-lg lg:visible'>
+              <p className='invisible mt-4 font-satoshi text-sm sm:invisible sm:text-xl md:invisible md:mr-auto md:text-lg lg:visible'>
                 Justo aliquet aliquet <br />
                 nulla ultrices etiam.
               </p>
