@@ -83,7 +83,7 @@ const nextConfig = {
   webpack(config) {
     // Cari rule yang sudah ada untuk file SVG
     const fileLoaderRule = config.module.rules.find(
-      (rule) => rule.test && rule.test.test && rule.test.test('.svg')
+      (rule) => rule.test && rule.test.test && rule.test.test('.svg'),
     );
 
     // Tambahkan rule baru untuk SVG:
@@ -104,7 +104,7 @@ const nextConfig = {
           dimensions: false,
           titleProp: true,
         },
-      }
+      },
     );
 
     // Modifikasi rule file loader asli agar mengabaikan file SVG
