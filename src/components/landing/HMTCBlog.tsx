@@ -52,7 +52,7 @@ const HMTCBlog: React.FC = () => {
     (index: number) => {
       if (embla) embla.scrollTo(index);
     },
-    [embla]
+    [embla],
   );
 
   const onSelect = useCallback(() => {

@@ -15,7 +15,7 @@ export default function AnggotaCard({
     <div
       className={cn(
         'mx-auto h-full w-full max-w-[25rem] space-y-6',
-        (index === 0 || index === 19) && 'max-w-none'
+        (index === 0 || index === 19) && 'max-w-none',
       )}
     >
       <div className='h-[25rem]  pt-6'>

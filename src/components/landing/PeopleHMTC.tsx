@@ -20,13 +20,13 @@ const PeopleHMTC = () => {
 
   const scrollPrev = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? totalSlides - 1 : prevIndex - 1
+      prevIndex === 0 ? totalSlides - 1 : prevIndex - 1,
     );
   };
 
   const scrollNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === totalSlides - 1 ? 0 : prevIndex + 1
+      prevIndex === totalSlides - 1 ? 0 : prevIndex + 1,
     );
   };
 

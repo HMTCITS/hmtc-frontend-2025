@@ -41,7 +41,7 @@ export default function Navbar({
           'px-6 py-1 min-[800px]:px-24',
           isShift && [
             'bg-black shadow-sm backdrop-blur transition-colors duration-150',
-          ]
+          ],
         )}
       >
         <BaseLink className='relative h-20 w-28 md:h-24 md:w-24' href='#home'>
@@ -65,7 +65,7 @@ export default function Navbar({
               key={id}
               href={href}
               className={cn(
-                'group p-2.5 font-secondary text-white-main transition-colors duration-75 hover:text-base-nav'
+                'group p-2.5 font-secondary text-white-main transition-colors duration-75 hover:text-base-nav',
               )}
             >
               <Typography className='font-satoshi'>{name}</Typography>
@@ -81,7 +81,7 @@ export default function Navbar({
           'grid grid-rows-2 min-[800px]:hidden',
           isSidebarOpen
             ? 'translate-x-0 opacity-100'
-            : '-translate-x-full opacity-0'
+            : '-translate-x-full opacity-0',
         )}
       >
         <div className='z-10 flex flex-col items-center gap-14 px-4 py-6'>

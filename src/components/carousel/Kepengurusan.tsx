@@ -59,7 +59,7 @@ export default function Kepengurusan() {
           className={cn(
             index % 2 === 0 ? 'lg:pr-20' : 'lg:pl-20',
             index === Anggota.length - 1 && 'lg:pl-0 lg:pr-20',
-            index === Anggota.length - 2 && 'lg:pl-20 lg:pr-0'
+            index === Anggota.length - 2 && 'lg:pl-20 lg:pr-0',
           )}
         >
           <AnggotaCard {...props} index={index} />

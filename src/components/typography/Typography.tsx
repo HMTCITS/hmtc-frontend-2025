@@ -83,7 +83,7 @@ export default function Typography<T extends React.ElementType = 'p'>({
           variant === 'c1' && ['text-xs font-light'],
           variant === 'c2' && ['text-[11px] leading-[14px]'],
         ],
-        className
+        className,
       )}
       {...rest}
     >

@@ -50,7 +50,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       textClassName,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const disabled = isLoading || buttonDisabled;
     return (
@@ -110,7 +110,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           ],
           isLoading &&
             'relative text-transparent transition-none hover:text-transparent disabled:cursor-wait',
-          className
+          className,
         )}
         {...rest}
       >
@@ -120,7 +120,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
               variant === 'primary' && 'text-white',
               variant === 'secondary' && 'text-orange-main',
-              variant === 'netral' && 'text-base-dark'
+              variant === 'netral' && 'text-base-dark',
             )}
           >
             <ImSpinner2 className='animate-spin' />
@@ -134,7 +134,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {RightIcon && !Icon && <RightIcon className={cn(rightIconClassName)} />}
       </button>
     );
-  }
+  },
 );
 
 export default Button;

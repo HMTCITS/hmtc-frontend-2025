@@ -81,7 +81,7 @@ export default function Footer() {
   // Handle keyboard events (Enter or Space) to trigger the toggle
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>,
-    toggle: () => void
+    toggle: () => void,
   ) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -93,13 +93,13 @@ export default function Footer() {
     <footer
       className={cn(
         'bg-blue-1000 w-full px-6 py-12 md:px-24',
-        'flex flex-col items-center gap-6 bg-base-dark text-white md:gap-6'
+        'flex flex-col items-center gap-6 bg-base-dark text-white md:gap-6',
       )}
     >
       <div
         className={cn(
           'flex w-full flex-col items-center gap-x-4 gap-y-12 pb-6',
-          'md:min-h-[240px] md:flex-row md:items-start md:justify-between'
+          'md:min-h-[240px] md:flex-row md:items-start md:justify-between',
         )}
       >
         <BaseLink href='/' className='flex items-center gap-x-4'>
@@ -143,7 +143,7 @@ export default function Footer() {
                 className={cn(
                   'text-white md:hidden',
                   'transition-transform duration-200 ease-in-out',
-                  isApaIniOpen && 'rotate-180'
+                  isApaIniOpen && 'rotate-180',
                 )}
               />
             </div>
@@ -153,7 +153,7 @@ export default function Footer() {
                 'overflow-y-hidden transition-all duration-300 ease-in-out',
                 isApaIniOpen
                   ? 'max-h-96 opacity-100'
-                  : 'max-h-0 opacity-0 md:max-h-96 md:opacity-100'
+                  : 'max-h-0 opacity-0 md:max-h-96 md:opacity-100',
               )}
             >
               {ApaIni.map(({ label, href }, index) => (
@@ -185,7 +185,7 @@ export default function Footer() {
                 className={cn(
                   'text-white md:hidden',
                   'transition-transform duration-200 ease-in-out',
-                  isAkademikOpen && 'rotate-180'
+                  isAkademikOpen && 'rotate-180',
                 )}
               />
             </div>
@@ -195,7 +195,7 @@ export default function Footer() {
                 'overflow-y-hidden transition-all duration-300 ease-in-out',
                 isAkademikOpen
                   ? 'max-h-96 opacity-100'
-                  : 'max-h-0 opacity-0 md:max-h-96 md:opacity-100'
+                  : 'max-h-0 opacity-0 md:max-h-96 md:opacity-100',
               )}
             >
               {Akademik.map(({ label, href }, index) => (

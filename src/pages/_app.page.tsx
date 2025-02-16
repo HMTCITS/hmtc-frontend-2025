@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
       className={cn(
         playfair_display.variable,
         poppins.variable,
-        'scroll-smooth'
+        'scroll-smooth',
       )}
     >
       <Component {...pageProps} />

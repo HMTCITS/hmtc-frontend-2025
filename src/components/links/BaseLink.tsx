@@ -45,7 +45,7 @@ const BaseLink = React.forwardRef<HTMLAnchorElement, BaseLinkProps>(
         {children}
       </a>
     );
-  }
+  },
 );
 
 export default BaseLink;

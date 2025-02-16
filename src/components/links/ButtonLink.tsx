@@ -15,7 +15,7 @@ export type ButtonLinkProps = {
 const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
   (
     { href, openNewTab, className, nextLinkProps, target, children, ...rest },
-    ref
+    ref,
   ) => {
     return (
       <BaseLink
@@ -29,7 +29,7 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
         <Button {...rest}>{children}</Button>
       </BaseLink>
     );
-  }
+  },
 );
 
 export default ButtonLink;

@@ -31,13 +31,13 @@ const useDialogStoreBase = create<DialogStoreType>((set) => ({
       produce<DialogStoreType>((state) => {
         state.open = true;
         state.state = { ...state.state, ...options };
-      })
+      }),
     );
     return new Promise<void>((resolve, reject) => {
       set(
         produce<DialogStoreType>((state) => {
           state.awaitingPromise = { resolve, reject };
-        })
+        }),
       );
     });
   },
@@ -46,7 +46,7 @@ const useDialogStoreBase = create<DialogStoreType>((set) => ({
       produce<DialogStoreType>((state) => {
         state.state.catchOnCancel && state.awaitingPromise?.reject?.();
         state.open = false;
-      })
+      }),
     );
   },
   handleSubmit: () => {
@@ -54,7 +54,7 @@ const useDialogStoreBase = create<DialogStoreType>((set) => ({
       produce<DialogStoreType>((state) => {
         state.awaitingPromise?.resolve?.();
         state.open = false;
-      })
+      }),
     );
   },
 }));
