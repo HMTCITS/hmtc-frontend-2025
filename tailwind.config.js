@@ -1,5 +1,4 @@
-// tailwind.config.js
-const { fontFamily } = require('tailwindcss/defaultTheme');
+import fontFamily from 'tailwindcss/defaultTheme';
 
 module.exports = {
   content: [
