@@ -4,24 +4,19 @@ import { ImSpinner2 } from 'react-icons/im';
 
 import cn from '@/lib/clsxm';
 
-enum ButtonVariant {
-  'primary',
-  'secondary',
-  'warning',
-  'netral',
-  'unstyled',
-  'light',
-}
-
-enum ButtonSize {
-  'small',
-  'base',
-  'large',
-}
+// Convert enum definitions to union types for cleaner TS usage.
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'warning'
+  | 'netral'
+  | 'unstyled'
+  | 'light';
+export type ButtonSize = 'small' | 'base' | 'large';
 
 export type ButtonProps = {
-  size?: keyof typeof ButtonSize;
-  variant?: keyof typeof ButtonVariant;
+  size?: ButtonSize;
+  variant?: ButtonVariant;
   isLoading?: boolean;
   icon?: IconType;
   leftIcon?: IconType;
@@ -136,5 +131,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     );
   },
 );
+
+Button.displayName = 'Button';
 
 export default Button;

@@ -1,4 +1,4 @@
-import { Dialog, Transition } from '@headlessui/react';
+import { Dialog, DialogBackdrop, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import * as React from 'react';
 import {
@@ -35,9 +35,9 @@ export type DialogOptions = {
  *
  * **Should be called with the hook, not by the component itself**
  *
- *
  * @see useDialogStore
- * @example ```tsx
+ * @example
+ * ```tsx
  * const dialog = useDialog();
  *
  * dialog(options);
@@ -58,7 +58,7 @@ export default function BaseDialog({
         static
         className='fixed inset-0 z-40 overflow-y-auto'
         open={open}
-        onClose={() => onClose()}
+        onClose={onClose}
       >
         <div className='flex min-h-screen items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0'>
           <Transition.Child
@@ -70,7 +70,7 @@ export default function BaseDialog({
             leaveFrom='opacity-100'
             leaveTo='opacity-0'
           >
-            <Dialog.Overlay className='fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity' />
+            <DialogBackdrop className='fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity' />
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}
