@@ -1,8 +1,8 @@
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import react from 'eslint-plugin-react';
-import jsxA11Y from 'eslint-plugin-jsx-a11y';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unusedImports from 'eslint-plugin-unused-imports';
+import queryPlugin from '@tanstack/eslint-plugin-query'; 
 import globals from 'globals';
 import tsParser from '@typescript-eslint/parser';
 import path from 'node:path';
@@ -27,7 +27,6 @@ export default [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
-    'plugin:jsx-a11y/recommended',
     'prettier',
   ),
   // Extend Next.js specific rules via string-based references.
@@ -40,10 +39,9 @@ export default [
     plugins: {
       '@typescript-eslint': typescriptEslint,
       react,
-      'jsx-a11y': jsxA11Y,
       'simple-import-sort': simpleImportSort,
       'unused-imports': unusedImports,
-      // Next.js rules are included above.
+      '@tanstack/query': queryPlugin, 
     },
     languageOptions: {
       globals: {
@@ -67,9 +65,7 @@ export default [
       },
     },
     rules: {
-      // Disable PropTypes validation because TypeScript is used.
       'react/prop-types': 'off',
-      // Turn off no-unused-vars because we rely on the unused-imports plugin.
       'no-unused-vars': 'off',
       'no-console': 'warn',
       'react/display-name': 'off',

@@ -3,7 +3,7 @@ import { get, RegisterOptions, useFormContext } from 'react-hook-form';
 import { IconType } from 'react-icons';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
 
-import cn from '@/lib/clsxm';
+import { cn } from '@/lib/utils';
 
 export type InputProps = {
   label: string | null;

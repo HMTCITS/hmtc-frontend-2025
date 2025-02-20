@@ -2,9 +2,8 @@ import * as React from 'react';
 import { IconType } from 'react-icons';
 import { ImSpinner2 } from 'react-icons/im';
 
-import cn from '@/lib/clsxm';
+import { cn } from '@/lib/utils';
 
-// Convert enum definitions to union types for cleaner TS usage.
 export type ButtonVariant =
   | 'primary'
   | 'secondary'
@@ -131,7 +130,5 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     );
   },
 );
-
-Button.displayName = 'Button';
 
 export default Button;

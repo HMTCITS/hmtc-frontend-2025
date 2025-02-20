@@ -1,24 +1,25 @@
 /**
  * Next.js Production Configuration
  *
- * Konfigurasi ini mengatur:
- * - Security Headers untuk meningkatkan keamanan (CSP, HSTS, XSS Protection, dsb.)
- * - React Strict Mode dan SWC Minification untuk performa dan pengembangan yang lebih baik
- * - ESLint hanya pada direktori 'src'
- * - Custom Webpack untuk mengoptimalkan impor file SVG:
- *    - Menggunakan file loader default untuk file SVG yang diimpor dengan query ?url
- *    - Mengonversi file SVG lainnya menjadi komponen React menggunakan @svgr/webpack
+ * This configuration sets:
+ * - Security Headers to improve security (CSP, HSTS, XSS Protection, etc.)
+ * - React Strict Mode and SWC Minification for improved performance and development experience
+ * - ESLint to run only on the 'src' directory
+ * - Custom Webpack rules to optimize SVG imports:
+ *    - Uses the default file loader for SVG files imported with query ?url
+ *    - Converts other SVG imports into React components using @svgr/webpack
  *
- * Catatan: Pastikan dependensi seperti @svgr/webpack sudah terinstal di proyek.
+ * Note: For improved security, consider using a nonce‑based approach for inline scripts.
  */
 
 const ContentSecurityPolicy = `
   default-src 'self';
+  script-src 'self' 'unsafe-inline' 'unsafe-eval';
+  style-src 'self' 'unsafe-inline';
   object-src 'none';
   base-uri 'self';
   frame-ancestors 'self';
   manifest-src 'self';
-  report-uri /api/report-csp-violation;
 `;
 
 const securityHeaders = [
@@ -54,51 +55,50 @@ const securityHeaders = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Nonaktifkan header "X-Powered-By"
+  // Disable the "X-Powered-By" header for security
   poweredByHeader: false,
 
-  // Aktifkan React Strict Mode untuk mendeteksi potensi masalah
+  // Enable React Strict Mode to help identify potential issues
   reactStrictMode: true,
 
-  // Aktifkan SWC minification untuk optimasi performa
+  // Enable SWC minification for performance (uncomment if desired)
   // swcMinify: true,
 
-  // Konfigurasi ESLint hanya pada direktori 'src'
+  // Run ESLint only on the 'src' directory
   eslint: {
     dirs: ['src'],
   },
 
-  // Menambahkan security headers pada setiap request
+  // Apply security headers to every route
   async headers() {
     return [
       {
-        // Terapkan headers ke seluruh route
         source: '/(.*)',
         headers: securityHeaders,
       },
     ];
   },
 
-  // Konfigurasi custom Webpack untuk mengoptimalkan impor SVG
+  // Custom Webpack configuration for optimized SVG imports
   webpack(config) {
-    // Cari rule yang sudah ada untuk file SVG
+    // Find the default file loader rule for SVG files
     const fileLoaderRule = config.module.rules.find(
       (rule) => rule.test && rule.test.test && rule.test.test('.svg'),
     );
 
-    // Tambahkan rule baru untuk SVG:
-    // 1. Jika file SVG diimpor dengan query "?url", gunakan file loader default
-    // 2. Untuk impor SVG lainnya, gunakan @svgr/webpack agar bisa diperlakukan sebagai komponen React
+    // Add custom rules:
+    // 1. If a SVG is imported with ?url, use the default file loader
+    // 2. Otherwise, transform SVGs into React components using @svgr/webpack
     config.module.rules.push(
       {
         ...fileLoaderRule,
         test: /\.svg$/i,
-        resourceQuery: /url/, // Menghandle file *.svg?url
+        resourceQuery: /url/, // Handle *.svg?url
       },
       {
         test: /\.svg$/i,
         issuer: { not: /\.(css|scss|sass)$/ },
-        resourceQuery: { not: /url/ }, // Mengabaikan file *.svg?url
+        resourceQuery: { not: /url/ }, // Ignore *.svg?url
         loader: '@svgr/webpack',
         options: {
           dimensions: false,
@@ -107,13 +107,11 @@ const nextConfig = {
       },
     );
 
-    // Modifikasi rule file loader asli agar mengabaikan file SVG
+    // Modify the default file loader rule to ignore SVG files
     if (fileLoaderRule) {
-      if (fileLoaderRule.exclude) {
-        fileLoaderRule.exclude.push(/\.svg$/i);
-      } else {
-        fileLoaderRule.exclude = [/\.svg$/i];
-      }
+      fileLoaderRule.exclude = fileLoaderRule.exclude
+        ? [...fileLoaderRule.exclude, /\.svg$/i]
+        : [/\.svg$/i];
     }
 
     return config;

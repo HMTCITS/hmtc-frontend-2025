@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ButtonLink from '@/components/links/ButtonLink';
-import Typography from '@/components/typography/Typography';
+import Typography from '@/components/Typography';
 
 const Everblue = () => {
   return (
@@ -39,14 +39,13 @@ const Everblue = () => {
         </div>
       </div>
       <iframe
-        title='Everblue'
         src='https://online.fliphtml5.com/ougyq/milj'
         width='100%'
         height='750px'
         loading='lazy'
         seamless
         allowFullScreen
-      />
+      ></iframe>
     </section>
   );
 };

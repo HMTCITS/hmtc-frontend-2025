@@ -1,3 +1,5 @@
+'use client';
+
 import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
@@ -42,8 +44,8 @@ const LifeAtHMTC: React.FC = () => {
   ];
 
   return (
-    <section className='flex min-h-screen flex-col items-center justify-center bg-white p-4 font-sans'>
-      <div className='w-full pt-24 text-center lg:max-w-[65%] lg:pt-14'>
+    <section className='flex flex-col items-center justify-center bg-white p-4 pt-28 font-sans'>
+      <div className='w-full max-w-[90%] text-center lg:max-w-[65%]'>
         <h2 className='text-gradient font-sans text-lg font-medium'>
           LIFE AT HMTC
         </h2>
@@ -51,14 +53,15 @@ const LifeAtHMTC: React.FC = () => {
           All The Things We Do
         </h1>
         <p className='mb-14 text-base text-gray-600'>
-          Sed eu volutpat eget elementum. Enim aliquam pellentesque sit pretium
-          ut. Tristique non tincidunt ullamcorper libero massa aliquam. In
-          suspendisse sed bibendum lectus blandit. Aenean elementum bibendum
-          convallis suspendisse vel massa ullamcorper. Diam et molestie massa
-          facilisi turpis id nunc.
+          Setiap kegiatan yang kami lakukan merupakan wujud nyata dari semangat
+          kebersamaan dan dedikasi kami untuk menuju perubahan, mulai dari
+          Banabung (Bagi Nasi Bungkus) yang membawa kepedulian sosial, Welcome
+          Party HMTC 2024 yang mempererat solidaritas, hingga HMTC Incremental
+          yang menjadi langkah strategis dalam membangun organisasi yang lebih
+          progresif.
         </p>
       </div>
-      <div className='w-full max-w-7xl'>
+      <div className='w-full max-w-7xl md:px-12'>
         <div className='embla' ref={emblaRef}>
           <div className='embla__container'>
             {posts.map((post, index) => (

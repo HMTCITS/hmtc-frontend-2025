@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import React, { useState } from 'react';
 
@@ -31,20 +33,25 @@ const PeopleHMTC = () => {
   };
 
   return (
-    <section className='flex min-h-screen flex-col items-center justify-center bg-white font-sans'>
-      <div className='flex w-full max-w-7xl flex-col items-center pt-20 lg:flex-row'>
-        <div className='w-full px-4 lg:w-[65%] lg:px-0'>
+    <section className='flex flex-col items-center justify-center bg-white font-sans md:px-[8%] md:py-24'>
+      <div
+        id='peoplebehindhmtc'
+        className='flex flex-col items-center justify-center bg-white py-6'
+      ></div>
+      <div className='flex w-full max-w-[95%] flex-col items-center pt-4 lg:flex-row'>
+        <div className='w-full px-6 lg:w-[65%] lg:px-0'>
           <h1 className='text-gradient font-sans text-lg font-medium'>
             HMTC 2024 KUNCI TRANSFORMASI
           </h1>
           <h2 className='adelphe-fructidor mt-3 text-3xl font-bold leading-tight lg:text-5xl lg:leading-[52.80px]'>
             The People Behind HMTC
           </h2>
-          <p className='mt-6 text-gray-600'>
-            Sed eu volutpat eget elementum. Enim aliquam pellentesque sit
-            pretium ut. Tristique non tincidunt ullamcorper libero massa
-            aliquam. In suspendisse sed bibendum lectus blandit. Aenean
-            elementum bibendum convallis.
+          <p className='mt-6 max-w-[90%] text-gray-600'>
+            Di balik setiap langkah besar, ada individu-individu hebat yang
+            bekerja dengan penuh dedikasi. Setiap anggota memiliki peran penting
+            dalam mewujudkan visi transformasi HMTC dari merancang inovasi,
+            membangun kolaborasi, hingga menciptakan lingkungan yang lebih
+            dinamis dan berdampak.
           </p>
           <div className='mt-10 w-full space-y-4'>
             <div className='flex items-center'>
@@ -60,8 +67,8 @@ const PeopleHMTC = () => {
               <div className='ml-4 h-auto w-full md:w-[438px]'>
                 <p className='font-bold text-gray-800'>9 Departments</p>
                 <p className='text-gray-600'>
-                  Quam a hac gravida adipiscing donec urna condimentum. Vitae
-                  tincidunt facilisis eu proin mauris pretium sed.
+                  9 departemen HMTC yang saling berkolaborasi dalam menjalankan
+                  berbagai terobosan program HMTC Kunci Transformasi.
                 </p>
               </div>
             </div>
@@ -78,8 +85,8 @@ const PeopleHMTC = () => {
               <div className='ml-4 h-auto w-full md:w-[438px]'>
                 <p className='font-bold text-gray-800'>100+ People</p>
                 <p className='text-gray-600'>
-                  Lectus dolor proin vitae pharetra sagittis nulla. Urna
-                  pellentesque dictum morbi elementum sem volutpat.
+                  Ratusan pengurus HMTC dengan semangat dan dedikasi tinggi
+                  untuk terus membawa HMTC ke level yang lebih baik.
                 </p>
               </div>
             </div>
@@ -96,8 +103,9 @@ const PeopleHMTC = () => {
               <div className='ml-4 w-full md:w-[438px]'>
                 <p className='font-bold text-gray-800'>20+ Proker</p>
                 <p className='text-gray-600'>
-                  Porta volutpat dignissim ut ipsum scelerisque. Luctus lobortis
-                  aliquam elementum velit quis aliquam sem.
+                  Dengan lebih dari 20 program kerja unggulan, HMTC 2024
+                  berfokus untuk memberikan kontribusi nyata bagi mahasiswa dan
+                  KM ITS
                 </p>
               </div>
             </div>

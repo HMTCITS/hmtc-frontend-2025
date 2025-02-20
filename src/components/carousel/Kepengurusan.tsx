@@ -19,7 +19,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import AnggotaCard from '@/components/cards/AnggotaCard';
 import { Anggota } from '@/constants/anggota';
-import cn from '@/lib/clsxm';
+import { cn } from '@/lib/utils';
 
 export default function Kepengurusan() {
   return (

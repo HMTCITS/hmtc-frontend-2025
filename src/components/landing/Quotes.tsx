@@ -3,11 +3,11 @@ import React from 'react';
 
 const Quotes: React.FC = () => {
   return (
-    <div className='relative isolate flex h-auto w-full flex-col items-center justify-center gap-[10px] p-[20px] lg:h-[546px] lg:w-[1512px] lg:flex-row lg:p-[100px]'>
+    <div className='relative isolate flex h-auto w-full flex-col items-center justify-center gap-[10px] p-[20px] md:px-20 '>
       {/* Background Gradient */}
       <div className='absolute h-full w-full'></div>
 
-      <div className='z-10 flex h-auto w-full flex-col items-center justify-between gap-[20px] lg:h-[346px] lg:w-[1312px] lg:flex-row lg:gap-[75px]'>
+      <div className='z-10 flex h-auto w-full flex-col items-center gap-[20px] lg:h-[346px] lg:flex-row lg:gap-[90px]'>
         {/* Kontainer Teks dan Info */}
         <div className='flex h-auto w-full flex-col items-start gap-[20px] lg:h-[208px] lg:w-[480px] lg:gap-[60px]'>
           {/* Paragraf Utama */}
@@ -25,8 +25,8 @@ const Quotes: React.FC = () => {
               <Image
                 src='/images/Quotes/fotoQuotes.png'
                 alt='Quote Image'
-                layout='fill'
-                objectFit='cover'
+                fill
+                className='object-cover'
               />
             </div>
             <div className='flex h-[52px] w-[158px] flex-col items-start gap-[2px]'>
@@ -41,23 +41,28 @@ const Quotes: React.FC = () => {
         </div>
 
         {/* Gambar Besar dengan Teks di Atasnya */}
+        {/* Gambar Besar dengan Teks di Atasnya */}
         <div className='relative flex h-[200px] w-full items-center justify-center md:h-[300px] lg:h-[346px] lg:w-[646px]'>
           <Image
             src='/images/Quotes/Quotes.png'
             alt='Quotes Background'
-            layout='fill'
-            objectFit='cover'
-            className='rounded-none'
+            fill
+            className='rounded-none object-cover'
           />
-          {/* Kontainer Teks di Atas Gambar */}
-          <div className=' absolute left-0 top-[-50px] flex h-[200px] w-full flex-col justify-between p-[15px] md:h-[300px] lg:top-[-50px] lg:h-[346px] lg:w-[646px]'>
-            <div className='flex h-[20px] w-full flex-row items-center justify-between lg:ml-[15px]'>
-              <div className='  font-satoshi-regular ml-[-15px] whitespace-nowrap text-sm leading-[18px] text-white md:text-sm md:leading-[20px] lg:ml-[-30px]'>
+
+          {/* Teks di Atas Gambar */}
+          <div className='absolute inset-0 flex w-full flex-col justify-between '>
+            {/* Baris Atas: "HMTC INCREMENTAL" dan Tanggal */}
+            <div className='mt-[-25px] flex w-full flex-row items-center justify-between px-0 md:mt-[-5%]'>
+              {/* Judul */}
+              <div className='font-satoshi-regular text-xs text-white lg:text-sm'>
                 HMTC INCREMENTAL
               </div>
+
+              {/* Garis + Tanggal */}
               <div className='flex flex-row items-center'>
-                <div className='h-[1px] w-[80px] border lg:w-[130px] lg:border'></div>
-                <p className='font-satoshi-regular ml-[5px] mr-[-15px] whitespace-nowrap text-sm leading-[18px] text-white md:text-sm md:leading-[20px] lg:ml-[10px] lg:mr-0'>
+                <div className='h-[1px] w-[80px] border border-white md:w-[120px]'></div>
+                <p className='font-satoshi-regular ml-2 text-sm text-white lg:text-sm'>
                   29 06 2024
                 </p>
               </div>
