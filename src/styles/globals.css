@@ -134,7 +134,7 @@
 
 /* Include other font weights and styles as needed */
 .adelphe-fructidor {
-  font-family: [var(--font-adelphe)]
+  font-family: [var(--font-adelphe)];
 }
 @layer base {
   :root {

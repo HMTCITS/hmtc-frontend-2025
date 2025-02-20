@@ -2,7 +2,7 @@ import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import react from 'eslint-plugin-react';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unusedImports from 'eslint-plugin-unused-imports';
-import queryPlugin from '@tanstack/eslint-plugin-query'; 
+import queryPlugin from '@tanstack/eslint-plugin-query';
 import globals from 'globals';
 import tsParser from '@typescript-eslint/parser';
 import path from 'node:path';
@@ -41,7 +41,7 @@ export default [
       react,
       'simple-import-sort': simpleImportSort,
       'unused-imports': unusedImports,
-      '@tanstack/query': queryPlugin, 
+      '@tanstack/query': queryPlugin,
     },
     languageOptions: {
       globals: {
