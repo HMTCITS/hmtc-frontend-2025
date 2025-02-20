@@ -1,5 +1,3 @@
----
-
 ## Getting Started
 
 ### 1. Clone the Repository
@@ -7,11 +5,13 @@
 You can clone this repository using one of the following methods:
 
 #### a. Using Terminal (Bash, etc.)
+
 ```bash
 git clone https://github.com/HMTCITS/hmtc-frontend-2024.git
 ```
 
 #### b. Using [GitHub Desktop](https://desktop.github.com/)
+
 Follow the instructions on GitHub Desktop to clone the repository.
 
 ---
