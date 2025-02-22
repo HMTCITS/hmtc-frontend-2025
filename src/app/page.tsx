@@ -43,7 +43,7 @@ export default function Page() {
                 Justo aliquet aliquet <br />
                 nulla ultrices etiam.
               </p>
-              <h1 className='absolute start-[45%] font-libre text-5xl italic sm:text-8xl md:mr-auto md:pl-8 md:text-7xl lg:text-8xl'>
+              <h1 className='absolute start-[45%] font-libre text-5xl italic sm:text-8xl md:mr-auto md:text-7xl md:start-[55%] lg:start-[65%] lg:text-8xl'>
                 Menjadi
               </h1>
             </div>
@@ -81,11 +81,11 @@ export default function Page() {
               <h1 className='mt-2 font-adelphe text-4xl font-bold leading-[50px]'>
                 Dedication to Excellence in Education and Technology
               </h1>
-              <p className='mt-6 text-gray-700'>
+              <p className='mt-6 text-justify font-satoshi font-normal text-gray-700'>
                 Organisasi ini bernama Himpunan Mahasiswa Teknik Computer —
                 Informatika yang selanjutnya disebut HMTC.
               </p>
-              <p className='mt-6 text-gray-700'>
+              <p className='mt-6 text-justify font-satoshi font-normal text-gray-700'>
                 Tujuan HMTC adalah tercapainya kesempurnaan pendidikan dalam
                 rangka membentuk pribadi mahasiswa yang bertaqwa kepada Tuhan
                 Yang Maha Esa, memiliki sikap kecendekiawanan, integritas,

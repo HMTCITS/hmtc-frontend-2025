@@ -44,7 +44,7 @@ const SocialMedia = [
 const ApaIni = [
   {
     label: 'Tentang kami',
-    href: '#about',
+    href: '#aboutus',
   },
   {
     label: 'Kepengurusan',

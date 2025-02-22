@@ -24,7 +24,7 @@ const HMTCBlog: React.FC = () => {
       image: '/images/bloghmtc/blog-2.png',
       title: 'Kartini: Simbol Perjuangan Perempuan Indonesia',
       excerpt:
-        'Kartini bukan sekadar nama, dia adalah simbol perjuangan bagi semua perempuan di Indonesia. Melalui semangatnya yang..',
+        'Kartini bukan sekadar nama, dia adalah simbol perjuangan bagi semua perempuan di Indonesia. Melalui..',
       link: 'https://www.instagram.com/p/C6AM32Rycy8/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
     },
     {
@@ -108,8 +108,12 @@ const HMTCBlog: React.FC = () => {
                       />
                     </div>
                     <div className='px-1 pt-4 lg:pt-4'>
-                      <h3 className='mb-3  text-xl font-bold'>{post.title}</h3>
-                      <p className='text-sm text-gray-600'>{post.excerpt}</p>
+                      <h3 className='font-adelphe mb-3  text-xl font-bold'>
+                        {post.title}
+                      </h3>
+                      <p className='font-satoshi text-sm text-gray-600'>
+                        {post.excerpt}
+                      </p>
                     </div>
                   </a>
                 </div>
@@ -117,7 +121,7 @@ const HMTCBlog: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className='mt-8 flex justify-center md:mt-4'>
+        <div className='mt-8 flex justify-center'>
           {scrollSnaps.map((_, index) => (
             <button
               key={index}

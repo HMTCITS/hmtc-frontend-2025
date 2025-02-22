@@ -46,13 +46,13 @@ const LifeAtHMTC: React.FC = () => {
   return (
     <section className='flex flex-col items-center justify-center bg-white p-4 pt-28 font-sans'>
       <div className='w-full max-w-[90%] text-center lg:max-w-[65%]'>
-        <h2 className='text-gradient font-sans text-lg font-medium'>
+        <h2 className='text-gradient font-satoshi text-lg font-medium'>
           LIFE AT HMTC
         </h2>
-        <h1 className='adelphe-fructidor mb-5 mt-5 text-3xl font-bold lg:text-5xl'>
+        <h1 className='font-adelphe mb-5 mt-5 text-3xl font-bold lg:text-5xl'>
           All The Things We Do
         </h1>
-        <p className='mb-14 text-base text-gray-600'>
+        <p className='font-satoshi text-base mb-14 text-gray-600'>
           Setiap kegiatan yang kami lakukan merupakan wujud nyata dari semangat
           kebersamaan dan dedikasi kami untuk menuju perubahan, mulai dari
           Banabung (Bagi Nasi Bungkus) yang membawa kepedulian sosial, Welcome

@@ -26,7 +26,7 @@ const QuotesKahima = () => {
           <span className='font-satoshi text-3xl font-light md:text-4xl lg:text-5xl'>
             “
           </span>
-          <span className='font-ligh font-adelphe text-xl leading-[2.0] md:text-2xl md:leading-[2.0] lg:text-3xl lg:leading-[2.0]'>
+          <span className='font-light font-adelphe text-xl leading-[2.0] md:text-2xl md:leading-[2.0] lg:text-3xl lg:leading-[2.0]'>
             35 tahun menjadi wadah aspirasi, kreativitas, pengembangan potensi
             hingga simbol pemersatu, dan tetap saja di balik itu semua,
           </span>
@@ -45,7 +45,7 @@ const QuotesKahima = () => {
 
         <Typography
           variant='h3'
-          className='font-libre text-sm md:text-xl lg:text-2xl'
+          className='font-adelphe font-bold italic md:text-xl lg:text-2xl'
           style={{
             marginBottom: 0,
             marginTop: 60,

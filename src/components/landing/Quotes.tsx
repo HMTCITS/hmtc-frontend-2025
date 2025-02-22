@@ -12,7 +12,7 @@ const Quotes: React.FC = () => {
         <div className='flex h-auto w-full flex-col items-start gap-[20px] lg:h-[208px] lg:w-[480px] lg:gap-[60px]'>
           {/* Paragraf Utama */}
           <div className='mb-[20px] flex h-[102px] w-full items-center justify-center lg:mb-0 lg:h-[102px] lg:w-[480px]'>
-            <p className='font-satoshi text-base italic leading-[20px] text-white md:leading-[28px] lg:text-2xl lg:leading-[34px]'>
+            <p className='font-satoshi font-medium italic leading-[20px] text-white md:leading-[28px] lg:text-2xl lg:leading-[34px]'>
               &quot;HMTC pada awalnya bertujuan menjadi wadah aspirasi dan
               kreativitas mahasiswa TC baik dalam akademis maupun non
               akademis&quot;
@@ -30,10 +30,10 @@ const Quotes: React.FC = () => {
               />
             </div>
             <div className='flex h-[52px] w-[158px] flex-col items-start gap-[2px]'>
-              <p className='font-libre-caslon-condensed text-[14px] font-[700] italic leading-[18px] text-white md:text-[16px] md:leading-[22px] lg:text-[20px] lg:leading-[28px]'>
+              <p className='font-adelphe text-[14px] font-[700] italic leading-[18px] text-white md:text-[16px] md:leading-[22px] lg:text-[20px] lg:leading-[28px]'>
                 - Tri Saksono Adi
               </p>
-              <p className='font-helvetica-neue text-[12px] text-base font-[400] leading-[16px] text-[#FFFFFFAA] md:text-base md:leading-[20px] lg:text-[16px] lg:leading-[22px]'>
+              <p className='font-helvetica-neue text-[12px] text-base font-[100] leading-[16px] text-[#FFFFFFAA] md:text-base md:leading-[20px] lg:text-[16px] lg:leading-[22px]'>
                 Ketua HMTC Pertama
               </p>
             </div>
@@ -55,14 +55,14 @@ const Quotes: React.FC = () => {
             {/* Baris Atas: "HMTC INCREMENTAL" dan Tanggal */}
             <div className='mt-[-25px] flex w-full flex-row items-center justify-between px-0 md:mt-[-5%]'>
               {/* Judul */}
-              <div className='font-satoshi-regular text-xs text-white lg:text-sm'>
+              <div className='font-satoshi text-xs text-white lg:text-sm'>
                 HMTC INCREMENTAL
               </div>
 
               {/* Garis + Tanggal */}
               <div className='flex flex-row items-center'>
                 <div className='h-[1px] w-[80px] border border-white md:w-[120px]'></div>
-                <p className='font-satoshi-regular ml-2 text-sm text-white lg:text-sm'>
+                <p className='font-satoshi ml-2 text-sm text-white lg:text-sm'>
                   29 06 2024
                 </p>
               </div>

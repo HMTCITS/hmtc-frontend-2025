@@ -17,7 +17,7 @@ const GalleryHMTC: React.FC = () => {
       ></div>
 
       <div className='pb-[50px] md:pb-[40px] lg:pb-[70px]'>
-        <h1 className='adelphe-fructidor left-0 w-full text-left text-3xl font-bold md:px-[10%] md:text-3xl lg:absolute lg:max-w-[70%] lg:text-5xl lg:leading-[1.2]'>
+        <h1 className='font-adelphe left-0 w-full text-left text-3xl font-bold md:px-[10%] md:text-3xl lg:absolute lg:max-w-[70%] lg:text-5xl lg:leading-[1.2]'>
           From Capturing Moments to Sharing Memories
         </h1>
       </div>
@@ -71,7 +71,7 @@ const GalleryHMTC: React.FC = () => {
       <div className='mr-4 mt-4 w-full max-w-7xl text-right md:mr-10 md:mt-6'>
         <a
           href='/gallery'
-          className='font-medium text-black underline underline-offset-4'
+          className='font-satoshi font-medium text-black underline underline-offset-4'
         >
           Explore Gallery HMTC &rarr;
         </a>

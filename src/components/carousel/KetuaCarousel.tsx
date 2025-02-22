@@ -63,14 +63,14 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
       ></div>
       <div className='z-10 flex w-full flex-col items-start gap-[20px] '>
         <div className='flex w-full flex-col items-start gap-[16px] '>
-          <h2 className='font-satoshi-medium text-base uppercase text-[#FFFFFF]'>
+          <h2 className='font-adelphe text-base uppercase text-[#FFFFFF]'>
             History of HMTC
           </h2>
-          <h1 className='w-full font-adelph-fructidor text-4xl font-bold leading-[40px] text-[#FFFFFF] lg:text-5xl lg:leading-[53px]'>
+          <h1 className='w-full font-adelphe text-4xl font-bold leading-[40px] text-[#FFFFFF] lg:text-5xl lg:leading-[53px]'>
             Get to Know The Chairman of HMTC
           </h1>
 
-          <p className='font-satoshi-regular text-sm leading-[20px] text-[#FFFFFF] lg:text-lg lg:leading-[25px]'>
+          <p className='font-satoshi text-justify text-base leading-[20px] text-[#FFFFFF] lg:text-lg lg:leading-[25px]'>
             Sejarah HMTC dibangun oleh para pemimpin visioner yang telah
             memberikan kontribusi besar dalam membentuk organisasi HMTC ini.
             Dengan dedikasi dan semangat kepemimpinan mereka, HMTC terus

@@ -40,13 +40,13 @@ const PeopleHMTC = () => {
       ></div>
       <div className='flex w-full max-w-[95%] flex-col items-center pt-4 lg:flex-row'>
         <div className='w-full px-6 lg:w-[65%] lg:px-0'>
-          <h1 className='text-gradient font-sans text-lg font-medium'>
+          <h1 className='text-gradient font-satoshi text-lg font-medium'>
             HMTC 2024 KUNCI TRANSFORMASI
           </h1>
-          <h2 className='adelphe-fructidor mt-3 text-3xl font-bold leading-tight lg:text-5xl lg:leading-[52.80px]'>
+          <h2 className='font-adelphe mt-3 text-3xl font-bold leading-tight lg:text-5xl lg:leading-[52.80px]'>
             The People Behind HMTC
           </h2>
-          <p className='mt-6 max-w-[90%] text-gray-600'>
+          <p className='font-satoshi text-justify text-base mt-6 lg:max-w-[75%] text-gray-600'>
             Di balik setiap langkah besar, ada individu-individu hebat yang
             bekerja dengan penuh dedikasi. Setiap anggota memiliki peran penting
             dalam mewujudkan visi transformasi HMTC dari merancang inovasi,
@@ -65,8 +65,10 @@ const PeopleHMTC = () => {
                 />
               </div>
               <div className='ml-4 h-auto w-full md:w-[438px]'>
-                <p className='font-bold text-gray-800'>9 Departments</p>
-                <p className='text-gray-600'>
+                <p className='font-bold font-satoshi text-base text-gray-800'>
+                  9 Departments
+                </p>
+                <p className='font-satoshi text-base text-gray-600'>
                   9 departemen HMTC yang saling berkolaborasi dalam menjalankan
                   berbagai terobosan program HMTC Kunci Transformasi.
                 </p>
@@ -83,8 +85,10 @@ const PeopleHMTC = () => {
                 />
               </div>
               <div className='ml-4 h-auto w-full md:w-[438px]'>
-                <p className='font-bold text-gray-800'>100+ People</p>
-                <p className='text-gray-600'>
+                <p className='font-bold font-satoshi text-base text-gray-800'>
+                  100+ People
+                </p>
+                <p className='font-satoshi text-base text-gray-600'>
                   Ratusan pengurus HMTC dengan semangat dan dedikasi tinggi
                   untuk terus membawa HMTC ke level yang lebih baik.
                 </p>
@@ -101,8 +105,10 @@ const PeopleHMTC = () => {
                 />
               </div>
               <div className='ml-4 w-full md:w-[438px]'>
-                <p className='font-bold text-gray-800'>20+ Proker</p>
-                <p className='text-gray-600'>
+                <p className='font-bold font-satoshi text-base text-gray-800'>
+                  20+ Proker
+                </p>
+                <p className='font-satoshi text-base text-gray-600'>
                   Dengan lebih dari 20 program kerja unggulan, HMTC 2024
                   berfokus untuk memberikan kontribusi nyata bagi mahasiswa dan
                   KM ITS
@@ -132,7 +138,7 @@ const PeopleHMTC = () => {
               </div>
             ))}
           </div>
-          <div className='absolute -bottom-8 left-4 text-black lg:left-0'>
+          <div className='font-satoshi absolute -bottom-8 left-4 text-black lg:left-0'>
             {String(currentIndex + 1).padStart(2, '0')} /{' '}
             {String(totalSlides).padStart(2, '0')}
           </div>
