@@ -1,3 +1,10 @@
+<!--
+Copyright (C) 2025 HMTC 2025
+
+This project is licensed under the GNU General Public License v3.
+For more details, see https://www.gnu.org/licenses/gpl-3.0.en.html.
+-->
+
 ## Getting Started
 
 ### 1. Clone the Repository
