@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 
-import Typography from '@/components/typography/Typography';
+import Typography from '@/components/Typography';
 
 interface TextComponentProps {
   text1: string;

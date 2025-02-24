@@ -19,7 +19,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import AnggotaCard from '@/components/cards/AnggotaCard';
 import { Anggota } from '@/constants/anggota';
-import cn from '@/lib/clsxm';
+import { cn } from '@/lib/utils';
 
 export default function Kepengurusan() {
   return (
@@ -59,7 +59,7 @@ export default function Kepengurusan() {
           className={cn(
             index % 2 === 0 ? 'lg:pr-20' : 'lg:pl-20',
             index === Anggota.length - 1 && 'lg:pl-0 lg:pr-20',
-            index === Anggota.length - 2 && 'lg:pl-20 lg:pr-0'
+            index === Anggota.length - 2 && 'lg:pl-20 lg:pr-0',
           )}
         >
           <AnggotaCard {...props} index={index} />

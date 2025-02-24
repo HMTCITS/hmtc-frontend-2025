@@ -3,7 +3,7 @@ import { get, RegisterOptions, useFormContext } from 'react-hook-form';
 import { IconType } from 'react-icons';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
 
-import cn from '@/lib/clsxm';
+import { cn } from '@/lib/utils';
 
 export type InputProps = {
   label: string | null;
@@ -61,7 +61,7 @@ export default function Input({
           'relative',
           withLabel && 'mt-1',
           addon && 'flex rounded-lg shadow-sm',
-          'text-mid md:text-mid'
+          'text-mid md:text-mid',
         )}
       >
         {addon && (
@@ -69,7 +69,7 @@ export default function Input({
             className={cn(
               'pointer-events-auto flex min-h-full items-center rounded-l-lg px-3.5',
               'bg-stone-100 text-stone-600',
-              'border border-r-0 border-gray-300'
+              'border border-r-0 border-gray-300',
             )}
           >
             <p>{addon}</p>
@@ -107,7 +107,7 @@ export default function Input({
               'border-red-500 caret-red-600 focus:border-red-500 focus:ring-red-500',
             LeftIcon && ['pl-10', inputWithLeftIconClassName],
             rightNode && 'pr-10',
-            addon && 'rounded-l-none shadow-none'
+            addon && 'rounded-l-none shadow-none',
           )}
           aria-describedby={id}
         />
@@ -120,7 +120,7 @@ export default function Input({
               'absolute right-0 top-1/2 mr-3 -translate-y-1/2',
               'flex h-6 w-6 items-center justify-center rounded-md',
               'focus:outline-none focus:ring focus:ring-stone-500',
-              'text-lg text-stone-400 hover:text-stone-500'
+              'text-lg text-stone-400 hover:text-stone-500',
             )}
           >
             {showPassword ? <HiEyeOff /> : <HiEye />}

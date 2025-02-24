@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ButtonLink from '@/components/links/ButtonLink';
-import Typography from '@/components/typography/Typography';
+import Typography from '@/components/Typography';
 
 const Everblue = () => {
   return (

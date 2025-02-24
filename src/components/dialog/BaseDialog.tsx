@@ -1,4 +1,4 @@
-import { Dialog, Transition } from '@headlessui/react';
+import { Dialog, DialogBackdrop, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import * as React from 'react';
 import {
@@ -70,7 +70,7 @@ export default function BaseDialog({
             leaveFrom='opacity-100'
             leaveTo='opacity-0'
           >
-            <Dialog.Overlay className='fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity' />
+            <DialogBackdrop className='fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity' />
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}
@@ -103,7 +103,7 @@ export default function BaseDialog({
                   className={clsx(
                     'flex flex-shrink-0 items-center justify-center rounded-full',
                     'mx-auto h-12 w-12 sm:mx-0 sm:h-10 sm:w-10',
-                    current.bg.light
+                    current.bg.light,
                   )}
                 >
                   <current.icon

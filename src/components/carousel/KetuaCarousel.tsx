@@ -1,3 +1,5 @@
+'use client';
+
 import { EmblaOptionsType } from 'embla-carousel';
 import AutoScroll from 'embla-carousel-auto-scroll';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -54,31 +56,35 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
   }, [emblaApi]);
 
   return (
-    <div className='relative isolate mb-[20px] flex w-full flex-col items-center gap-[10px] p-[20px] lg:mb-0 lg:w-[1512px] lg:p-[40px]'>
-      <div className='z-10 flex w-full flex-col items-start gap-[20px] lg:w-[1312px] lg:gap-[80px]'>
-        <div className='flex w-full flex-col items-start gap-[16px] lg:w-[1062px] lg:gap-[32px]'>
-          <h2 className='font-satoshi-medium text-base uppercase text-[#FFFFFF]'>
+    <div className='relative isolate mb-[20px] flex w-full flex-col items-center gap-[10px] p-[20px] lg:mb-0'>
+      <div
+        id='historyofhmtc'
+        className='flex flex-col items-center justify-center bg-white py-16'
+      ></div>
+      <div className='z-10 flex w-full flex-col items-start gap-[20px] '>
+        <div className='flex w-full flex-col items-start gap-[16px] '>
+          <h2 className='font-adelphe text-base uppercase text-[#FFFFFF]'>
             History of HMTC
           </h2>
-          <h1 className='w-full font-adelph-fructidor text-4xl font-bold leading-[40px] text-[#FFFFFF] lg:w-[617px] lg:text-5xl lg:leading-[53px]'>
+          <h1 className='w-full font-adelphe text-4xl font-bold leading-[40px] text-[#FFFFFF] lg:text-5xl lg:leading-[53px]'>
             Get to Know The Chairman of HMTC
           </h1>
 
-          <p className='font-satoshi-regular text-sm leading-[20px] text-[#FFFFFF] lg:text-lg lg:leading-[25px]'>
-            Ultricies lorem massa sagittis sit sed morbi in facilisis
-            ullamcorper. Ut vel ornare placerat sapien magnis lectus eget
-            volutpat aliquet. Proin sed viverra vitae magna justo ipsum.
-            Porttitor risus morbi laoreet purus eget consectetur in semper nisl.
-            Tincidunt blandit adipiscing nulla ipsum cursus tristique dui. Morbi
-            sagittis elit vitae pulvinar. A ultrices id mi amet facilisis
-            potenti. Velit tincidunt sit sed dolor mi commodo. Egestas sodales
-            id at tempus non vivamus convallis posuere.
+          <p className='font-satoshi text-justify text-base leading-[20px] text-[#FFFFFF] lg:text-lg lg:leading-[25px]'>
+            Sejarah HMTC dibangun oleh para pemimpin visioner yang telah
+            memberikan kontribusi besar dalam membentuk organisasi HMTC ini.
+            Dengan dedikasi dan semangat kepemimpinan mereka, HMTC terus
+            berkembang menjadi organisasi yang solid dan inovatif. Tiap periode
+            kepemimpinan terus membawa perubahan, tantangan, serta pencapaian
+            yang menjadi fondasi bagi generasi HMTC berikutnya, hingga kini,
+            Farrela Ranku Mahisa, Ketua HMTC 2024 Kabinet Kunci Transformasi
+            hadir untuk membawa transformasi HMTC kearah yang lebih baik.
           </p>
         </div>
       </div>
 
       <div
-        className='relative mt-10 h-[272.67px] w-full overflow-hidden lg:mt-20 lg:w-[1312px]'
+        className='relative mt-10 h-[272.67px] w-full overflow-hidden lg:mt-20 '
         ref={carouselRef}
       >
         <div className='embla__viewport' ref={emblaRef}>

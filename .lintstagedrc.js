@@ -1,13 +1,7 @@
 module.exports = {
-  // Lint & Prettify TS and JS files
-  '**/*.(ts|tsx|js)': () => [
-    `yarn format:write`,
-    `yarn lint`,
-    `yarn lint:fix`,
-    `yarn lint:strict`,
-    `yarn typecheck`,
+  '**/*.{ts,tsx,js}': (files) => [
+    `pnpm lint:strict ${files.join(' ')}`,
+    `pnpm format:write ${files.join(' ')}`,
   ],
-
-  // Prettify only Markdown and JSON files
-  '**/*.(md|json)': () => `yarn format:write`,
+  '**/*.{md,json}': (files) => `pnpm format:write ${files.join(' ')}`,
 };

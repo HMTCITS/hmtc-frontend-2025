@@ -1,5 +1,5 @@
 import { createSelectorHooks } from 'auto-zustand-selectors-hook';
-import produce from 'immer';
+import { produce } from 'immer';
 import { create } from 'zustand';
 
 import { DialogOptions } from '@/components/dialog/BaseDialog';
@@ -28,33 +28,37 @@ const useDialogStoreBase = create<DialogStoreType>((set) => ({
   },
   dialog: (options) => {
     set(
-      produce<DialogStoreType>((state) => {
+      produce<DialogStoreType>((state: DialogStoreType) => {
         state.open = true;
         state.state = { ...state.state, ...options };
-      })
+      }),
     );
     return new Promise<void>((resolve, reject) => {
       set(
-        produce<DialogStoreType>((state) => {
+        produce<DialogStoreType>((state: DialogStoreType) => {
           state.awaitingPromise = { resolve, reject };
-        })
+        }),
       );
     });
   },
   handleClose: () => {
     set(
-      produce<DialogStoreType>((state) => {
-        state.state.catchOnCancel && state.awaitingPromise?.reject?.();
+      produce<DialogStoreType>((state: DialogStoreType) => {
+        if (state.state.catchOnCancel && state.awaitingPromise.reject) {
+          state.awaitingPromise.reject();
+        }
         state.open = false;
-      })
+      }),
     );
   },
   handleSubmit: () => {
     set(
-      produce<DialogStoreType>((state) => {
-        state.awaitingPromise?.resolve?.();
+      produce<DialogStoreType>((state: DialogStoreType) => {
+        if (state.awaitingPromise.resolve) {
+          state.awaitingPromise.resolve();
+        }
         state.open = false;
-      })
+      }),
     );
   },
 }));
