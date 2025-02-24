@@ -78,4 +78,4 @@ jobs:
         run: pnpm install
 
       - name: 💅 Run Prettier Check
-        run: pnpm format:check
+        run: pnpm format:check format:write
