@@ -78,4 +78,7 @@ jobs:
         run: pnpm install
 
       - name: 💅 Run Prettier Check
-        run: pnpm format:check format:write
+        run: pnpm format:check
+
+      - name: 💅 Run Prettier write
+        run: pnpm format:write
