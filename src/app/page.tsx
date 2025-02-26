@@ -40,7 +40,7 @@ export default function Page() {
             </div>
             <div className='flex flex-col pb-12 pt-12 md:flex-row md:justify-center md:pb-20 md:pt-20'>
               <p className='invisible mt-4 font-satoshi text-sm sm:invisible sm:text-xl md:invisible md:mr-auto md:text-lg lg:visible'>
-                Justo aliquet aliquet <br />
+                APAAAAAA MASALAHNYA <br />
                 nulla ultrices etiam.
               </p>
               <h1 className='absolute start-[45%] font-libre text-5xl italic sm:text-8xl md:mr-auto md:text-7xl md:start-[55%] lg:start-[65%] lg:text-8xl'>
