@@ -34,14 +34,15 @@ export default function Page() {
                 Bersama Bersinergi <br />
               </h1>
               <p className='invisible absolute right-16 mt-4 font-satoshi sm:invisible md:invisible md:mt-0 md:text-lg lg:visible'>
-                Elementum mantis <br />
-                vulputate faucibus.
+                DUPSE! <br />
+                DUPSE!  <br />
+                DUPSE!
               </p>
             </div>
             <div className='flex flex-col pb-12 pt-12 md:flex-row md:justify-center md:pb-20 md:pt-20'>
               <p className='invisible mt-4 font-satoshi text-sm sm:invisible sm:text-xl md:invisible md:mr-auto md:text-lg lg:visible'>
-                APAAAAAA MASALAHNYA <br />
-                nulla ultrices etiam.
+                Jadikan Hari Ini  <br />
+                Pelajaran Untuk Nanti
               </p>
               <h1 className='absolute start-[45%] font-libre text-5xl italic sm:text-8xl md:mr-auto md:text-7xl md:start-[55%] lg:start-[65%] lg:text-8xl'>
                 Menjadi
@@ -52,7 +53,7 @@ export default function Page() {
                 <span className='font-libre italic'>Kunci Transformasi</span>
               </h1>
               <p className='invisible absolute bottom-[155px] right-[236px] mt-2 font-satoshi text-sm sm:invisible md:mt-0 md:pr-8 md:text-lg lg:visible lg:bottom-[140px] lg:right-[10px]'>
-                HMTC 2024
+                HMTC 2025
               </p>
             </div>
           </div>
