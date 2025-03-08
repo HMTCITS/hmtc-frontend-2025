@@ -10,7 +10,7 @@ const GalleryHMTC: React.FC = () => {
   ];
 
   return (
-    <section className='flex flex-col items-center justify-center bg-white p-8 pt-0 font-sans md:py-10 md:pt-[100px]'>
+    <section className='flex flex-col items-center justify-center bg-white p-8 pt-0 font-sans md:py-10 md:pt-[100px] lg:px-0'>
       <div
         id='gallery'
         className='flex flex-col items-center justify-center bg-white py-16'
@@ -22,7 +22,7 @@ const GalleryHMTC: React.FC = () => {
         </h1>
       </div>
 
-      <div className='relative flex h-auto w-full flex-wrap justify-center lg:h-[550px] lg:w-screen lg:overflow-hidden'>
+      <div className='relative flex h-auto w-full flex-wrap justify-center lg:h-[550px] lg:max-w-screen lg:overflow-hidden'>
         {/* Gambar 1 */}
         <div className='relative mb-6 h-[214px] w-[320px] md:w-[500px] lg:absolute lg:-left-[20%] lg:top-[40%] lg:h-[335px] lg:w-[501px]'>
           <Image
