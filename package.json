@@ -13,7 +13,7 @@
     "format:write": "prettier --write .",
     "format:check": "prettier --check .",
     "format": "pnpm run format:write && pnpm run lint:fix && pnpm run typecheck && pnpm run lint:strict",
-    "prepare": "husky install",
+    "prepare": "exec husky init",
     "test": "jest",
     "test:watch": "jest --watch"
   },

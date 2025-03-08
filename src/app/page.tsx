@@ -33,18 +33,18 @@ export default function Page() {
               <h1 className='font-libre text-4xl italic sm:text-8xl md:mr-auto md:text-8xl lg:text-7xl'>
                 Bersama Bersinergi <br />
               </h1>
-              <p className='invisible absolute right-16 mt-4 font-satoshi sm:invisible md:invisible md:mt-0 md:text-lg lg:visible'>
+              <p className='invisible absolute right-16 mt-4 font-satoshi md:mt-0 md:text-lg lg:visible'>
                 DUPSE! <br />
-                DUPSE!  <br />
+                DUPSE! <br />
                 DUPSE!
               </p>
             </div>
-            <div className='flex flex-col pb-12 pt-12 md:flex-row md:justify-center md:pb-20 md:pt-20'>
-              <p className='invisible mt-4 font-satoshi text-sm sm:invisible sm:text-xl md:invisible md:mr-auto md:text-lg lg:visible'>
-                Jadikan Hari Ini  <br />
+            <div className='flex flex-col pb-12 pt-12 md:flex-row md:justify-between md:pb-20 md:pt-20'>
+              <p className='invisible font-satoshi text-sm sm:text-xl md:text-lg lg:visible'>
+                Jadikan Hari Ini <br />
                 Pelajaran Untuk Nanti
               </p>
-              <h1 className='absolute start-[45%] font-libre text-5xl italic sm:text-8xl md:mr-auto md:text-7xl md:start-[55%] lg:start-[65%] lg:text-8xl'>
+              <h1 className='start-[45%] font-libre text-5xl italic sm:text-8xl md:text-7xl lg:text-8xl translate-x-16 max-sm:w-fit'>
                 Menjadi
               </h1>
             </div>
