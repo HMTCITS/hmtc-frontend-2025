@@ -27,10 +27,10 @@ export default function Page() {
           <div className='absolute inset-0 z-10 bg-black opacity-75'></div>
         </div>
 
-        <div className='relative z-20 mx-4 flex flex-col items-start p-6 pb-40 pt-[40%] sm:mx-6 md:mx-11 md:p-12'>
-          <div className='mt-20 space-y-8 md:mt-28'>
+        <div className='relative z-20 mx-4 flex flex-col items-start p-6 pb-20 lg:pb-40 sm:pt-16 lg:pt-20 sm:mx-3 md:mx-3 md:p-12'>
+          <div className='mt-20 sm:mt-12 lg:mt-20 space-y-8 md:mt-20'>
             <div className='flex flex-col md:flex-row md:items-center md:justify-between'>
-              <h1 className='font-libre text-4xl italic sm:text-8xl md:mr-auto md:text-8xl lg:text-7xl'>
+              <h1 className='font-libre text-3xl italic sm:text-4xl md:mr-auto md:text-5xl lg:text-7xl'>
                 Bersama Bersinergi <br />
               </h1>
               <p className='invisible absolute right-16 mt-4 font-satoshi md:mt-0 md:text-lg lg:visible'>
@@ -39,18 +39,18 @@ export default function Page() {
                 DUPSE!
               </p>
             </div>
-            <div className='flex flex-col pb-12 pt-12 md:flex-row md:justify-between md:pb-20 md:pt-20'>
-              <p className='invisible font-satoshi text-sm sm:text-xl md:text-lg lg:visible'>
+            <div className='flex py-12 flex-row justify-end lg:justify-between md:py-16 '>
+              <p className='max-lg:hidden font-satoshi text-sm sm:text-xl md:text-lg'>
                 Jadikan Hari Ini <br />
                 Pelajaran Untuk Nanti
               </p>
-              <h1 className='start-[45%] font-libre text-5xl italic sm:text-8xl md:text-7xl lg:text-8xl translate-x-16 max-sm:w-fit'>
+              <h1 className='start-[45%] font-libre text-4xl italic sm:text-5xl md:text-6xl lg:text-8xl max-md:translate-x-4 lg:-translate-x-14 max-sm:w-fit'>
                 Menjadi
               </h1>
             </div>
-            <div className='flex flex-col md:flex-row md:items-center md:justify-between'>
-              <h1 className='font-libre text-5xl leading-tight sm:text-8xl md:text-7xl lg:text-8xl'>
-                <span className='font-libre italic'>Kunci Transformasi</span>
+            <div className='flex flex-col md:flex-row md:items-center md:justify-between lg:mt-20'>
+              <h1 className='font-libre text-5xl leading-tight sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl italic'>
+                Kunci Transformasi
               </h1>
               <p className='invisible absolute bottom-[155px] right-[236px] mt-2 font-satoshi text-sm sm:invisible md:mt-0 md:pr-8 md:text-lg lg:visible lg:bottom-[140px] lg:right-[10px]'>
                 HMTC 2025
