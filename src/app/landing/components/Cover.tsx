@@ -15,8 +15,8 @@ export default function Cover() {
         <div className='absolute inset-0 z-10 bg-black opacity-75'></div>
       </div>
 
-      <div className='relative z-20 mx-4 flex flex-col items-start p-6 pb-20 lg:pb-40 sm:pt-16 lg:pt-20 sm:mx-3 md:mx-3 md:p-12'>
-        <div className='mt-20 sm:mt-12 lg:mt-20 space-y-8 md:mt-20'>
+      <div className='relative z-20 mx-4 flex flex-col items-start p-6 pb-20 lg:pb-24 sm:pt-16 lg:pt-20 sm:mx-3 md:mx-3 md:p-12'>
+        <div className='mt-20 sm:mt-12 lg:mt-20 md:mt-20'>
           <div className='flex flex-col md:flex-row md:items-center md:justify-between'>
             <Typography
               as='h1'
