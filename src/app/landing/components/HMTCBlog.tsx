@@ -4,6 +4,8 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image';
 import React, { useCallback, useEffect, useState } from 'react';
 
+import Typography from '@/components/Typography';
+
 const HMTCBlog: React.FC = () => {
   const [emblaRef, embla] = useEmblaCarousel({
     loop: false,
@@ -76,8 +78,12 @@ const HMTCBlog: React.FC = () => {
         className='my-0 flex flex-col items-center justify-center bg-white'
       ></div>
       <div className='container mx-auto p-6 lg:p-0'>
-        <h2
-          className='text-gradient font-satoshi text-lg font-medium'
+        <Typography
+          as='h2'
+          variant='h2'
+          font='satoshi'
+          weight='medium'
+          className='text-gradient text-lg'
           style={{
             background:
               'linear-gradient(263.67deg, #00AAE7 -8.55%, #0076C0 97.16%)',
@@ -88,10 +94,16 @@ const HMTCBlog: React.FC = () => {
           }}
         >
           HMTC BLOG
-        </h2>
-        <h1 className='mb-6 mt-3 w-full font-adelphe text-3xl font-bold md:w-[80%] md:text-5xl md:leading-[52.80px]'>
+        </Typography>
+        <Typography
+          as='h1'
+          variant='j1'
+          font='adelphe'
+          weight='bold'
+          className='mb-6 mt-3 w-full text-3xl md:w-[80%] md:text-5xl md:leading-[52.80px]'
+        >
           Delving into Stories, Insights, and the Latest Trends from HMTC
-        </h1>
+        </Typography>
 
         <div className='w-full max-w-7xl'>
           <div className='embla' ref={emblaRef}>
@@ -108,12 +120,24 @@ const HMTCBlog: React.FC = () => {
                       />
                     </div>
                     <div className='px-1 pt-4 lg:pt-4'>
-                      <h3 className='font-adelphe mb-3  text-xl font-bold'>
+                      <Typography
+                        as='h3'
+                        variant='h3'
+                        font='adelphe'
+                        weight='bold'
+                        className='mb-3 text-xl'
+                      >
                         {post.title}
-                      </h3>
-                      <p className='font-satoshi text-sm text-gray-600'>
+                      </Typography>
+                      <Typography
+                        as='p'
+                        variant='b4'
+                        font='satoshi'
+                        weight='regular'
+                        className='text-sm text-gray-600'
+                      >
                         {post.excerpt}
-                      </p>
+                      </Typography>
                     </div>
                   </a>
                 </div>

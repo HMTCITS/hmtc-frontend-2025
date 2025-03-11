@@ -9,35 +9,44 @@ import Input from '@/components/forms/Input';
 import Typography from '@/components/Typography';
 import AuthLayout from '@/layouts/AuthLayout';
 
-type LoginForm = {
+type RegisterForm = {
+  name: string;
   email: string;
   password: string;
 };
 
 export default function Page() {
-  const form = useForm<LoginForm>();
+  const form = useForm<RegisterForm>();
   const { handleSubmit } = form;
 
-  const onSubmit = (_data: LoginForm) => {
+  const onSubmit = (_data: RegisterForm) => {
     // console.log(data);
   };
 
   return (
     <AuthLayout>
-      <div className='space-y-4'>
+      <div className='space-y-3'>
         <Typography
+          as='h1'
           variant='j0'
           className='font-primary text-3xl md:text-4xl lg:text-5xl'
         >
-          Masuk
+          Daftar
         </Typography>
-        <Typography className='font-primary'>
-          Silakan masukkan informasi login untuk mengakses akun
+        <Typography as='p' className='font-primary'>
+          Silakan mengisi formulir di bawah ini untuk membuat akun baru
         </Typography>
       </div>
       <FormProvider {...form}>
-        <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
+        <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
           <div className='space-y-4'>
+            <Input
+              id='name'
+              label='Nama Lengkap'
+              placeholder='Masukkan nama lengkap Anda'
+              containerClassName='font-secondary'
+              validation={{ required: 'Nama lengkap tidak boleh kosong' }}
+            />
             <Input
               id='email'
               label='Email'
@@ -53,25 +62,21 @@ export default function Page() {
               validation={{ required: 'Kata sandi tidak boleh kosong' }}
             />
           </div>
-          <div className='flex items-center justify-end'>
-            <Link
-              href='/forgot-password'
-              className='text-end font-secondary text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
-            >
-              Lupa kata sandi?
-            </Link>
-          </div>
           <Button type='submit' className='w-full'>
-            Masuk
+            Daftar
           </Button>
         </form>
         <Typography as='div' className='space-x-1 text-center font-secondary'>
-          <span>Belum punya akun?</span>
+          <Typography as='span' variant='b2'>
+            Sudah punya akun?
+          </Typography>
           <Link
-            href='/register'
+            href='/login'
             className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
           >
-            Daftar
+            <Typography as='span' variant='b2'>
+              Masuk
+            </Typography>
           </Link>
         </Typography>
       </FormProvider>

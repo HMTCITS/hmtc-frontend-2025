@@ -26,13 +26,14 @@ export default function Page() {
     <AuthLayout>
       <div className='space-y-4'>
         <Typography
+          as='h1'
           variant='j0'
           className='font-primary text-3xl md:text-4xl lg:text-5xl'
         >
           {isSubmitted ? 'Periksa Email Anda' : 'Lupa Kata Sandi'}
         </Typography>
         {!isSubmitted && (
-          <Typography className='font-primary'>
+          <Typography as='p' className='font-primary'>
             Masukkan email untuk pemulihan kata sandi. Link untuk atur ulang
             kata sandi akan dikirimkan melalui email.
           </Typography>
@@ -40,16 +41,18 @@ export default function Page() {
       </div>
       {isSubmitted ? (
         <div className='space-y-6 font-primary'>
-          <Typography>
+          <Typography as='p'>
             Anda akan menerima tautan di email yang Anda berikan dan
             memungkinkan Anda memverifikasi resmi akun Anda.
           </Typography>
-          <Typography variant='h4'>example.test@gmail.com</Typography>
-          <Typography>
+          <Typography as='p' variant='h4'>
+            example.test@gmail.com
+          </Typography>
+          <Typography as='p'>
             Jika Anda tidak melihat email tersebut, periksa tempat lain yang
             mungkin ada, seperti folder sampah, spam, sosial, atau lainnya.
           </Typography>
-          <Typography>
+          <Typography as='p'>
             Anda tidak menerima email?{' '}
             <button className='text-end font-medium text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'>
               Kirim ulang tautan
@@ -73,12 +76,16 @@ export default function Page() {
             </form>
           </FormProvider>
           <Typography as='div' className='space-x-1 text-center font-secondary'>
-            <span>Ingat kata sandi Anda?</span>
+            <Typography as='span' className='text-inherit'>
+              Ingat kata sandi Anda?
+            </Typography>
             <Link
               href='/login'
               className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
             >
-              Masuk
+              <Typography as='span' className='text-inherit'>
+                Masuk
+              </Typography>
             </Link>
           </Typography>
         </>

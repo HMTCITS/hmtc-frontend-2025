@@ -69,7 +69,7 @@ export default function Navbar() {
               duration={500}
               className='cursor-pointer p-2.5 font-secondary text-white-main transition-colors duration-75 hover:text-base-nav'
             >
-              <Typography className='font-satoshi'>{name}</Typography>
+              <Typography font='satoshi'>{name}</Typography>
             </ScrollLink>
           ))}
         </nav>
@@ -106,7 +106,7 @@ export default function Navbar() {
                   className='text-base-white cursor-pointer'
                   onClick={closeSidebar}
                 >
-                  <Typography as='h6' className='font-satoshi'>
+                  <Typography as='h6' font='satoshi'>
                     {name}
                   </Typography>
                 </ScrollLink>

@@ -3,7 +3,9 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 
-const PeopleHMTC = () => {
+import Typography from '@/components/Typography';
+
+export default function PeopleHMTC() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const images = [
@@ -40,22 +42,40 @@ const PeopleHMTC = () => {
       ></div>
       <div className='flex w-full max-w-[95%] flex-col items-center pt-4 lg:flex-row'>
         <div className='w-full px-6 lg:w-[65%] lg:px-0'>
-          <h1 className='text-gradient font-satoshi text-lg font-medium'>
+          <Typography
+            as='h1'
+            variant='s1'
+            font='satoshi'
+            weight='medium'
+            className='text-gradient text-lg'
+          >
             HMTC 2024 KUNCI TRANSFORMASI
-          </h1>
-          <h2 className='font-adelphe mt-3 text-3xl font-bold leading-tight lg:text-5xl lg:leading-[52.80px]'>
+          </Typography>
+          <Typography
+            as='h2'
+            variant='j2'
+            font='adelphe'
+            weight='bold'
+            className='mt-3 text-3xl leading-tight lg:text-5xl lg:leading-[52.80px]'
+          >
             The People Behind HMTC
-          </h2>
-          <p className='font-satoshi text-justify text-base mt-6 lg:max-w-[75%] text-gray-600'>
+          </Typography>
+          <Typography
+            as='p'
+            variant='b2'
+            font='satoshi'
+            weight='regular'
+            className='text-justify text-base mt-6 lg:max-w-[75%] text-gray-600'
+          >
             Di balik setiap langkah besar, ada individu-individu hebat yang
             bekerja dengan penuh dedikasi. Setiap anggota memiliki peran penting
             dalam mewujudkan visi transformasi HMTC dari merancang inovasi,
             membangun kolaborasi, hingga menciptakan lingkungan yang lebih
             dinamis dan berdampak.
-          </p>
+          </Typography>
           <div className='mt-10 w-full space-y-4'>
             <div className='flex items-center'>
-              <div className=''>
+              <div>
                 <Image
                   width={200}
                   height={200}
@@ -65,17 +85,29 @@ const PeopleHMTC = () => {
                 />
               </div>
               <div className='ml-4 h-auto w-full md:w-[438px]'>
-                <p className='font-bold font-satoshi text-base text-gray-800'>
+                <Typography
+                  as='p'
+                  variant='b2'
+                  font='satoshi'
+                  weight='bold'
+                  className='text-base text-gray-800'
+                >
                   9 Departments
-                </p>
-                <p className='font-satoshi text-base text-gray-600'>
+                </Typography>
+                <Typography
+                  as='p'
+                  variant='b2'
+                  font='satoshi'
+                  weight='regular'
+                  className='text-base text-gray-600'
+                >
                   9 departemen HMTC yang saling berkolaborasi dalam menjalankan
                   berbagai terobosan program HMTC Kunci Transformasi.
-                </p>
+                </Typography>
               </div>
             </div>
             <div className='flex w-full items-center border-t border-gray-300 pt-4 lg:w-[438px]'>
-              <div className=''>
+              <div>
                 <Image
                   width={200}
                   height={200}
@@ -85,17 +117,29 @@ const PeopleHMTC = () => {
                 />
               </div>
               <div className='ml-4 h-auto w-full md:w-[438px]'>
-                <p className='font-bold font-satoshi text-base text-gray-800'>
+                <Typography
+                  as='p'
+                  variant='b2'
+                  font='satoshi'
+                  weight='bold'
+                  className='text-base text-gray-800'
+                >
                   100+ People
-                </p>
-                <p className='font-satoshi text-base text-gray-600'>
+                </Typography>
+                <Typography
+                  as='p'
+                  variant='b2'
+                  font='satoshi'
+                  weight='regular'
+                  className='text-base text-gray-600'
+                >
                   Ratusan pengurus HMTC dengan semangat dan dedikasi tinggi
                   untuk terus membawa HMTC ke level yang lebih baik.
-                </p>
+                </Typography>
               </div>
             </div>
             <div className='flex w-full items-center border-t border-gray-300 pt-4 lg:w-[438px]'>
-              <div className=''>
+              <div>
                 <Image
                   width={200}
                   height={200}
@@ -105,14 +149,26 @@ const PeopleHMTC = () => {
                 />
               </div>
               <div className='ml-4 w-full md:w-[438px]'>
-                <p className='font-bold font-satoshi text-base text-gray-800'>
+                <Typography
+                  as='p'
+                  variant='b2'
+                  font='satoshi'
+                  weight='bold'
+                  className='text-base text-gray-800'
+                >
                   20+ Proker
-                </p>
-                <p className='font-satoshi text-base text-gray-600'>
+                </Typography>
+                <Typography
+                  as='p'
+                  variant='b2'
+                  font='satoshi'
+                  weight='regular'
+                  className='text-base text-gray-600'
+                >
                   Dengan lebih dari 20 program kerja unggulan, HMTC 2024
                   berfokus untuk memberikan kontribusi nyata bagi mahasiswa dan
-                  KM ITS
-                </p>
+                  KM ITS.
+                </Typography>
               </div>
             </div>
           </div>
@@ -123,9 +179,7 @@ const PeopleHMTC = () => {
             {images.map((src, index) => (
               <div
                 key={index}
-                className={`carousel-item ${
-                  index === currentIndex ? 'active' : ''
-                }`}
+                className={`carousel-item ${index === currentIndex ? 'active' : ''}`}
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}
               >
                 <Image
@@ -138,10 +192,16 @@ const PeopleHMTC = () => {
               </div>
             ))}
           </div>
-          <div className='font-satoshi absolute -bottom-8 left-4 text-black lg:left-0'>
+          <Typography
+            as='p'
+            variant='b2'
+            font='satoshi'
+            weight='regular'
+            className='absolute -bottom-8 left-4 text-black lg:left-0'
+          >
             {String(currentIndex + 1).padStart(2, '0')} /{' '}
             {String(totalSlides).padStart(2, '0')}
-          </div>
+          </Typography>
           <div className='absolute -bottom-10 right-4 flex space-x-2 lg:right-0 lg:space-x-1'>
             <button
               onClick={scrollPrev}
@@ -160,6 +220,4 @@ const PeopleHMTC = () => {
       </div>
     </section>
   );
-};
-
-export default PeopleHMTC;
+}

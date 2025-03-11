@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 
-const Gallery = () => {
+export default function Gallery() {
   return (
     <div className='shadow-m w-full space-y-6 bg-[#212121] p-12 font-secondary text-white md:p-32'>
       <div className='grid w-full grid-cols-3 gap-x-8'>
@@ -58,6 +58,4 @@ const Gallery = () => {
       </div>
     </div>
   );
-};
-
-export default Gallery;
+}

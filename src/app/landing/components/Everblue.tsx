@@ -3,25 +3,30 @@ import React from 'react';
 import ButtonLink from '@/components/links/ButtonLink';
 import Typography from '@/components/Typography';
 
-const Everblue = () => {
+export default function Everblue() {
   return (
     <section className='flex w-full flex-col items-center justify-center gap-x-14 gap-y-6 py-10 md:py-24 lg:flex-col'>
       <div className='order-2 w-full space-y-6 text-black-main lg:order-1'>
         <Typography
+          as='h1'
           variant='k1'
           className='w-full font-primary text-[2rem] !leading-tight md:text-[2.75rem] xl:text-5xl'
         >
           Baca Everblue dong!
         </Typography>
-        <Typography className='font-secondary md:text-macro'>
-          <span className='font-semibold text-blue-main'>Everblue</span>{' '}
+        <Typography as='p' className='font-secondary md:text-macro'>
+          <Typography as='span' weight='semibold' className='text-blue-main'>
+            Everblue
+          </Typography>{' '}
           merupakan majalah yang menghadirkan informasi Topik teknologi,
           Pengalaman Civitas Akademik. Kabar terbaru seputar TC, atau apapun
           yang berkaitan dengan Teknik Informatika ITS.
         </Typography>
-        <Typography className='font-secondary md:text-macro'>
+        <Typography as='p' className='font-secondary md:text-macro'>
           Melalui media majalah ini,{' '}
-          <span className='font-semibold text-blue-main'>Everblue</span>{' '}
+          <Typography as='span' weight='semibold' className='text-blue-main'>
+            Everblue
+          </Typography>{' '}
           diharapkan dapat menjadi sumber informasi bagi mahasiswa departemen
           Teknik Informatika terkait perkembangan dan inovasi dalam dunia IT
           serta saluran yang efektif dan efisien dalam penyebaran informasi dan
@@ -48,6 +53,4 @@ const Everblue = () => {
       ></iframe>
     </section>
   );
-};
-
-export default Everblue;
+}

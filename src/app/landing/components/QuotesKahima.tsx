@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import Typography from '@/components/Typography';
 
-const QuotesKahima = () => {
+export default function QuotesKahima() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -23,13 +23,19 @@ const QuotesKahima = () => {
     >
       <main className='z-10 flex w-full flex-col items-center justify-center space-y-4 py-10 text-center lg:px-[10%] lg:py-[8%]'>
         <Typography variant='h1' className='text-2xl md:text-3xl lg:text-4xl'>
-          <span className='font-satoshi text-3xl font-light md:text-4xl lg:text-5xl'>
+          <Typography
+            as='span'
+            className='font-satoshi text-3xl font-light md:text-4xl lg:text-5xl text-inherit'
+          >
             “
-          </span>
-          <span className='font-light font-adelphe text-xl leading-[2.0] md:text-2xl md:leading-[2.0] lg:text-3xl lg:leading-[2.0]'>
+          </Typography>
+          <Typography
+            as='span'
+            className='font-light font-adelphe text-xl leading-[2.0] md:text-2xl md:leading-[2.0] lg:text-3xl lg:leading-[2.0] text-inherit'
+          >
             35 tahun menjadi wadah aspirasi, kreativitas, pengembangan potensi
             hingga simbol pemersatu, dan tetap saja di balik itu semua,
-          </span>
+          </Typography>
         </Typography>
 
         <Typography
@@ -38,9 +44,12 @@ const QuotesKahima = () => {
           style={{ marginTop: 35, lineHeight: '1.2' }}
         >
           HMTC adalah tentang dirimu.
-          <span className='font-adelphe text-3xl font-light md:text-4xl lg:text-5xl'>
+          <Typography
+            as='span'
+            className='font-adelphe text-3xl font-light md:text-4xl lg:text-5xl text-inherit'
+          >
             ”
-          </span>
+          </Typography>
         </Typography>
 
         <Typography
@@ -50,7 +59,7 @@ const QuotesKahima = () => {
             marginBottom: 0,
             marginTop: 60,
             lineHeight: '1.2',
-          }} /* Atur margin dan line-height */
+          }}
         >
           Farrela Ranku Mahhisa
         </Typography>
@@ -61,13 +70,11 @@ const QuotesKahima = () => {
             marginTop: 6,
             lineHeight: '1.2',
             opacity: 0.68,
-          }} /* Atur margin dan line-height */
+          }}
         >
           Ketua HMTC 2024
         </Typography>
       </main>
     </section>
   );
-};
-
-export default QuotesKahima;
+}

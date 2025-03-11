@@ -4,6 +4,8 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
+import Typography from '@/components/Typography';
+
 const LifeAtHMTC: React.FC = () => {
   const [options, setOptions] = useState({
     slidesToScroll: 3,
@@ -40,26 +42,43 @@ const LifeAtHMTC: React.FC = () => {
       image: '/images/lifeathmtc/life-2.png',
       link: 'https://www.instagram.com/p/C6-V7L4R-ko/?img_index=1',
     },
-    // Add more posts as needed
   ];
 
   return (
     <section className='flex flex-col items-center justify-center bg-white p-4 pt-28 font-sans'>
       <div className='w-full max-w-[90%] text-center lg:max-w-[65%]'>
-        <h2 className='text-gradient font-satoshi text-lg font-medium'>
+        <Typography
+          as='h2'
+          variant='h2'
+          font='satoshi'
+          weight='medium'
+          className='text-gradient text-lg'
+        >
           LIFE AT HMTC
-        </h2>
-        <h1 className='font-adelphe mb-5 mt-5 text-3xl font-bold lg:text-5xl'>
+        </Typography>
+        <Typography
+          as='h1'
+          variant='j1'
+          font='adelphe'
+          weight='bold'
+          className='mb-5 mt-5 text-3xl lg:text-5xl'
+        >
           All The Things We Do
-        </h1>
-        <p className='font-satoshi text-base mb-14 text-gray-600'>
+        </Typography>
+        <Typography
+          as='p'
+          variant='b2'
+          font='satoshi'
+          weight='regular'
+          className='text-base mb-14 text-gray-600'
+        >
           Setiap kegiatan yang kami lakukan merupakan wujud nyata dari semangat
           kebersamaan dan dedikasi kami untuk menuju perubahan, mulai dari
           Banabung (Bagi Nasi Bungkus) yang membawa kepedulian sosial, Welcome
           Party HMTC 2024 yang mempererat solidaritas, hingga HMTC Incremental
           yang menjadi langkah strategis dalam membangun organisasi yang lebih
           progresif.
-        </p>
+        </Typography>
       </div>
       <div className='w-full max-w-7xl md:px-12'>
         <div className='embla' ref={emblaRef}>
