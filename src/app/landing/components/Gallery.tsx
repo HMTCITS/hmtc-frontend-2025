@@ -1,25 +1,26 @@
-import Image from 'next/image';
 import React from 'react';
+
+import NextImage from '@/components/NextImage';
 
 export default function Gallery() {
   return (
     <div className='shadow-m w-full space-y-6 bg-[#212121] p-12 font-secondary text-white md:p-32'>
       <div className='grid w-full grid-cols-3 gap-x-8'>
         <div className='relative h-[600px]'>
-          <Image
-            src='/images/gallery/Wisuda3.JPG'
+          <NextImage
+            src='/gallery/Wisuda3.JPG'
             alt='gallery-1'
-            fill
+            layout='fill'
             className='object-cover'
             sizes='(max-width: 768px) 100vw, 400px'
             priority
           />
         </div>
         <div className='relative col-span-2 h-[500px]'>
-          <Image
-            src='/images/gallery/2.png'
+          <NextImage
+            src='/gallery/2.png'
             alt='gallery-2'
-            fill
+            layout='fill'
             className='object-cover'
             sizes='(max-width: 768px) 100vw, 500px'
           />
@@ -27,10 +28,10 @@ export default function Gallery() {
       </div>
 
       <div className='relative h-[600px] w-full'>
-        <Image
-          src='/images/gallery/Wisuda.JPG'
+        <NextImage
+          src='/gallery/Wisuda.JPG'
           alt='gallery-3'
-          fill
+          layout='fill'
           className='object-cover'
           sizes='(max-width: 768px) 100vw, 600px'
         />
@@ -38,19 +39,19 @@ export default function Gallery() {
 
       <div className='grid w-full grid-cols-3 gap-x-8'>
         <div className='relative col-span-2 h-[500px]'>
-          <Image
-            src='/images/gallery/HGTC.JPG'
+          <NextImage
+            src='/gallery/HGTC.JPG'
             alt='gallery-4'
-            fill
+            layout='fill'
             className='object-cover'
             sizes='(max-width: 768px) 100vw, 500px'
           />
         </div>
         <div className='relative h-[500px]'>
-          <Image
-            src='/images/gallery/5.png'
+          <NextImage
+            src='/gallery/5.png'
             alt='gallery-5'
-            fill
+            layout='fill'
             className='object-cover'
             sizes='(max-width: 768px) 100vw, 300px'
           />

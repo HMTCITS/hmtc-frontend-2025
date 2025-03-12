@@ -57,12 +57,8 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
 
   return (
     <div className='relative isolate mb-[20px] flex w-full flex-col items-center gap-[10px] p-[20px] lg:mb-0'>
-      <div
-        id='historyofhmtc'
-        className='flex flex-col items-center justify-center bg-white py-16'
-      ></div>
-      <div className='z-10 flex w-full flex-col items-start gap-[20px] '>
-        <div className='flex w-full flex-col items-start gap-[16px] '>
+      <div className='z-10 w-full'>
+        <div className='flex w-full flex-col items-start gap-8'>
           <h2 className='font-adelphe text-base uppercase text-[#FFFFFF]'>
             History of HMTC
           </h2>
@@ -88,7 +84,7 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
         ref={carouselRef}
       >
         <div className='embla__viewport' ref={emblaRef}>
-          <div className='flex'>
+          <div className='flex gap-6 justify-evenly px-6'>
             {slides.map((id, index) => (
               <div
                 className='embla__slide mx-3 h-[200px] w-[150px] flex-shrink-0 lg:h-[272.67px] lg:w-[194.5px]'

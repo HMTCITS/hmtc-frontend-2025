@@ -1,14 +1,14 @@
-import Image from 'next/image';
 import React from 'react';
 
+import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 
 const GalleryHMTC: React.FC = () => {
   const images = [
-    '/images/gallery/gallery-1.jpg',
-    '/images/gallery/gallery-2.jpg',
-    '/images/gallery/gallery-3.jpg',
-    '/images/gallery/gallery-4.jpg',
+    '/gallery/gallery-1.jpg',
+    '/gallery/gallery-2.jpg',
+    '/gallery/gallery-3.jpg',
+    '/gallery/gallery-4.jpg',
   ];
 
   return (
@@ -31,44 +31,44 @@ const GalleryHMTC: React.FC = () => {
       <div className='relative flex h-auto w-full flex-wrap justify-center lg:h-[550px] lg:max-w-screen lg:overflow-hidden'>
         {/* Gambar 1 */}
         <div className='relative mb-6 h-[214px] w-[320px] md:w-[500px] lg:absolute lg:-left-[20%] lg:top-[40%] lg:h-[335px] lg:w-[501px]'>
-          <Image
+          <NextImage
             src={images[0]}
             alt='Gallery image 1'
-            fill
-            className='object-cover'
+            layout='fill'
+            className='object-cover h-full'
             sizes='(max-width: 768px) 100vw, 500px'
           />
         </div>
 
         {/* Gambar 2 */}
         <div className='relative mb-6 h-[375px] w-[320px] md:w-[500px] lg:absolute lg:left-[19%] lg:top-[17%] lg:h-[375px] lg:w-[324px]'>
-          <Image
+          <NextImage
             src={images[1]}
             alt='Gallery image 2'
-            fill
-            className='object-cover'
+            layout='fill'
+            className='object-cover h-full'
             sizes='(max-width: 768px) 100vw, 375px'
           />
         </div>
 
         {/* Gambar 3 */}
         <div className='relative mb-6 h-[214px] w-[320px] md:w-[500px] lg:absolute lg:left-[44%] lg:top-[31%] lg:h-[372px] lg:w-[456px]'>
-          <Image
+          <NextImage
             src={images[2]}
             alt='Gallery image 3'
-            fill
-            className='object-cover'
+            layout='fill'
+            className='object-cover h-full'
             sizes='(max-width: 768px) 100vw, 450px'
           />
         </div>
 
         {/* Gambar 4 */}
         <div className='relative mb-6 h-[214px] w-[320px] md:w-[500px] lg:absolute lg:-right-[4%] lg:bottom-[40%] lg:h-[361px] lg:w-[357px]'>
-          <Image
+          <NextImage
             src={images[3]}
             alt='Gallery image 4'
-            fill
-            className='object-cover'
+            layout='fill'
+            className='object-cover h-full'
             sizes='(max-width: 768px) 100vw, 350px'
           />
         </div>

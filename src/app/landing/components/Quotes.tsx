@@ -1,16 +1,12 @@
 'use client';
-
-import Image from 'next/image';
 import React from 'react';
 
+import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 
 const Quotes: React.FC = () => {
   return (
     <div className='relative isolate flex h-auto w-full flex-col items-center justify-center gap-[10px] p-[20px] md:px-20'>
-      {/* Background Gradient */}
-      <div className='absolute h-full w-full'></div>
-
       <div className='z-10 flex h-auto w-full flex-col items-center gap-[20px] lg:h-[346px] lg:flex-row lg:gap-[90px]'>
         {/* Kontainer Teks dan Info */}
         <div className='flex h-auto w-full flex-col items-start gap-[20px] lg:h-[208px] lg:w-[480px] lg:gap-[60px]'>
@@ -32,11 +28,11 @@ const Quotes: React.FC = () => {
           {/* Info Penulis */}
           <div className='mb-[50px] flex h-auto w-full flex-row items-center gap-[16px] lg:mb-0 lg:h-[56px] lg:w-[230px]'>
             <div className='relative h-[56px] w-[56px] overflow-hidden rounded-full bg-[#784747]'>
-              <Image
-                src='/images/Quotes/fotoQuotes.png'
+              <NextImage
+                src='/Quotes/fotoQuotes.png'
                 alt='Quote Image'
-                fill
-                className='object-cover'
+                layout='fill'
+                className='object-cover h-full'
               />
             </div>
             <div className='flex h-[52px] w-[158px] flex-col items-start gap-[2px]'>
@@ -52,7 +48,7 @@ const Quotes: React.FC = () => {
               <Typography
                 as='p'
                 variant='b2'
-                font='adelphe'
+                font='poppins'
                 weight='regular'
                 className='text-[12px] text-base font-[100] leading-[16px] text-[#FFFFFFAA] md:text-base md:leading-[20px] lg:text-[16px] lg:leading-[22px]'
               >
@@ -64,11 +60,11 @@ const Quotes: React.FC = () => {
 
         {/* Gambar Besar dengan Teks di Atasnya */}
         <div className='relative flex h-[200px] w-full items-center justify-center md:h-[300px] lg:h-[346px] lg:w-[646px]'>
-          <Image
-            src='/images/Quotes/Quotes.png'
+          <NextImage
+            src='/Quotes/Quotes.png'
             alt='Quotes Background'
-            fill
-            className='rounded-none object-cover'
+            layout='fill'
+            className='rounded-none object-cover h-full w-full'
           />
 
           {/* Teks di Atas Gambar */}

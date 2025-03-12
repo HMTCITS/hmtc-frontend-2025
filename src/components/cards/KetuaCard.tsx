@@ -1,5 +1,7 @@
-import Image from 'next/image';
+'use client';
 import React from 'react';
+
+import NextImage from '@/components/NextImage';
 
 type EmblaCardProps = {
   imageIndex: number;
@@ -27,22 +29,19 @@ const EmblaCard: React.FC<EmblaCardProps> = ({ imageIndex }) => {
 
   return (
     <div className='flex h-[272.67px] w-[194.5px] flex-col items-start justify-center p-0'>
-      {}
       <div className='relative box-border h-[209.67px] w-[194.5px] border-[10px] border-b-0 border-white'>
-        <div className="absolute inset-0 bg-[url('/images/texturetastic-gray.png')] mix-blend-hard-light" />
+        <div className='absolute inset-0 mix-blend-hard-light' />
 
-        {}
-        <Image
-          src={`/images/ketua/ketua${imageIndex}.png`}
+        <NextImage
+          src={`/ketua/ketua${imageIndex}.png`}
           alt={`Ketua ${imageIndex + 1}`}
-          fill
-          className='object-cover object-center'
+          layout='fill'
+          className='object-cover object-center h-full'
           sizes='(max-width: 768px) 100vw, 194px'
           priority={imageIndex === 0}
         />
       </div>
 
-      {}
       <div className='flex h-[63px] w-[194.5px] flex-col items-center gap-[2px] bg-white px-[35px] py-[8px]'>
         <div className="w-[160px] text-center font-['Libre_Caslon_Condensed'] text-[17px] font-bold italic leading-[20px] text-[#121212]">
           {names[imageIndex]}

@@ -1,22 +1,21 @@
-import Image from 'next/image';
-
+import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 
 export default function About() {
   return (
     <div
       id='aboutus'
-      className='flex flex-col items-center justify-center bg-white py-8'
+      className='flex flex-col items-center justify-center bg-white pb-8 pt-16 lg:pt-24 px-10 md:px-16 lg:px-20'
     >
-      <div className='flex w-full flex-1 flex-col items-center justify-center px-10 pt-16 md:px-16 lg:px-20 lg:pt-40'>
+      <div className='flex w-full flex-1 flex-col items-center justify-center'>
         <div className='flex w-full flex-col items-center justify-between lg:flex-row'>
           <div className='flex justify-center lg:w-1/2'>
-            <Image
-              src='/images/fotbarhmtc2024.png'
+            <NextImage
+              src='/fotbarhmtc2024.png'
               alt='HMTC Informatics'
               width={550}
               height={400}
-              className='rounded-[15px] object-cover'
+              className='rounded-[15px] object-cover max-w-[500px] w-full'
               priority
               style={{ objectFit: 'cover' }}
             />

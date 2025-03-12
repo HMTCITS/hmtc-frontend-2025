@@ -1,9 +1,10 @@
-import Image from 'next/image';
+'use client';
 
 import Quotes from '@/app/landing/components/Quotes';
 import VisiMisi from '@/app/landing/components/VisiMisi';
 import KetuaCarousel from '@/components/carousel/KetuaCarousel';
 import Divider from '@/components/Divider';
+import NextImage from '@/components/NextImage';
 
 export default function ShowCase() {
   const slides = [0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6];
@@ -11,11 +12,11 @@ export default function ShowCase() {
   return (
     <div className='relative bg-gray-100'>
       <div className='relative h-screen w-full'>
-        <Image
-          src='/images/fotohmtc2024.png'
+        <NextImage
+          src='/fotohmtc2024.png'
           alt='fotohmtc'
-          fill
-          className='object-cover'
+          layout='fill'
+          className='object-cover h-full'
           priority
           style={{ objectFit: 'cover' }}
         />

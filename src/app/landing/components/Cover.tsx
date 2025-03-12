@@ -1,16 +1,15 @@
-import Image from 'next/image';
-
+import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 
 export default function Cover() {
   return (
     <div id='home' className='relative min-h-screen bg-black text-white'>
-      <div className='absolute inset-0 overflow-hidden'>
-        <Image
-          src='/images/halamandepan.png'
+      <div className='absolute inset-0 overflow-hidden h-full'>
+        <NextImage
+          src='halamandepan.png'
           alt='Background'
-          fill
-          className='z-0 object-cover object-center'
+          layout='fill'
+          className='z-0 object-cover object-center h-full'
         />
         <div className='absolute inset-0 z-10 bg-black opacity-75'></div>
       </div>

@@ -1,23 +1,22 @@
 'use client';
-
-import Image from 'next/image';
 import React, { useState } from 'react';
 
+import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 
 export default function PeopleHMTC() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const images = [
-    '/images/BPI01.png',
-    '/images/peoplehmtc/people-1.jpg',
-    '/images/peoplehmtc/people-2.jpg',
-    '/images/peoplehmtc/people-3.jpg',
-    '/images/peoplehmtc/people-4.jpg',
-    '/images/peoplehmtc/people-5.jpg',
-    '/images/peoplehmtc/people-6.jpg',
-    '/images/peoplehmtc/people-7.jpg',
-    '/images/peoplehmtc/people-8.jpg',
+    '/BPI01.png',
+    '/peoplehmtc/people-1.jpg',
+    '/peoplehmtc/people-2.jpg',
+    '/peoplehmtc/people-3.jpg',
+    '/peoplehmtc/people-4.jpg',
+    '/peoplehmtc/people-5.jpg',
+    '/peoplehmtc/people-6.jpg',
+    '/peoplehmtc/people-7.jpg',
+    '/peoplehmtc/people-8.jpg',
   ];
 
   const totalSlides = images.length;
@@ -37,11 +36,10 @@ export default function PeopleHMTC() {
   return (
     <section className='flex flex-col items-center justify-center bg-white font-sans md:px-[8%] md:py-24'>
       <div
+        className='flex w-full max-w-[95%] flex-col items-center pt-4 lg:flex-row'
         id='peoplebehindhmtc'
-        className='flex flex-col items-center justify-center bg-white py-6'
-      ></div>
-      <div className='flex w-full max-w-[95%] flex-col items-center pt-4 lg:flex-row'>
-        <div className='w-full px-6 lg:w-[65%] lg:px-0'>
+      >
+        <div className='w-full px-6 lg:w-[60%] lg:px-0'>
           <Typography
             as='h1'
             variant='s1'
@@ -76,7 +74,7 @@ export default function PeopleHMTC() {
           <div className='mt-10 w-full space-y-4'>
             <div className='flex items-center'>
               <div>
-                <Image
+                <NextImage
                   width={200}
                   height={200}
                   src='/icons/Frame.svg'
@@ -108,7 +106,7 @@ export default function PeopleHMTC() {
             </div>
             <div className='flex w-full items-center border-t border-gray-300 pt-4 lg:w-[438px]'>
               <div>
-                <Image
+                <NextImage
                   width={200}
                   height={200}
                   src='/icons/Frame (1).svg'
@@ -140,7 +138,7 @@ export default function PeopleHMTC() {
             </div>
             <div className='flex w-full items-center border-t border-gray-300 pt-4 lg:w-[438px]'>
               <div>
-                <Image
+                <NextImage
                   width={200}
                   height={200}
                   src='/icons/Frame (2).svg'
@@ -174,7 +172,7 @@ export default function PeopleHMTC() {
           </div>
         </div>
 
-        <div className='relative mt-8 w-full px-4 lg:mt-0 lg:w-[35%] lg:px-0'>
+        <div className='relative mt-8 w-full px-4 lg:mt-0 lg:w-[40%] lg:px-0'>
           <div className='carousel'>
             {images.map((src, index) => (
               <div
@@ -182,7 +180,7 @@ export default function PeopleHMTC() {
                 className={`carousel-item ${index === currentIndex ? 'active' : ''}`}
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}
               >
-                <Image
+                <NextImage
                   width={200}
                   height={200}
                   src={src}

@@ -1,5 +1,6 @@
-import Image, { StaticImageData } from 'next/image';
+import { StaticImageData } from 'next/legacy/image';
 
+import NextImage from '@/components/NextImage';
 import { DataAnggota } from '@/constants/anggota';
 import { cn } from '@/lib/utils';
 
@@ -19,10 +20,10 @@ export default function AnggotaCard({
       )}
     >
       <div className='relative h-[25rem] pt-6'>
-        <Image
+        <NextImage
           src={image as StaticImageData}
           alt='Foto Anggota'
-          fill
+          layout='fill'
           className='object-contain object-bottom'
         />
       </div>

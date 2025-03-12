@@ -1,7 +1,6 @@
 'use client';
 
-import Image from 'next/image';
-import * as React from 'react';
+import React from 'react';
 import {
   FaChevronDown,
   FaInstagram,
@@ -12,11 +11,12 @@ import {
 } from 'react-icons/fa';
 
 import BaseLink from '@/components/links/BaseLink';
+import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 import SocialCard from '@/layouts/components/Social';
 import { cn } from '@/lib/utils';
 
-//footer links
+// Footer links
 const SocialMedia = [
   {
     icon: FaTwitter,
@@ -40,7 +40,7 @@ const SocialMedia = [
   },
 ];
 
-//footer hmtc
+// Footer HMTC
 const ApaIni = [
   {
     label: 'Tentang kami',
@@ -56,7 +56,7 @@ const ApaIni = [
   },
 ];
 
-//footer akademik
+// Footer Akademik
 const Akademik = [
   {
     label: 'Bank Soal',
@@ -96,8 +96,8 @@ export default function Footer() {
       >
         <BaseLink href='/' className='flex items-center gap-x-4'>
           <div className='w-12'>
-            <Image
-              src='/images/logohmtc1.png'
+            <NextImage
+              src='/logohmtc1.png'
               alt='Logo'
               width={1440}
               height={1440}

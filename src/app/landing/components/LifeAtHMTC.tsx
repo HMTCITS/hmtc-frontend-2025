@@ -1,9 +1,8 @@
 'use client';
-
 import useEmblaCarousel from 'embla-carousel-react';
-import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
+import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 
 const LifeAtHMTC: React.FC = () => {
@@ -27,19 +26,19 @@ const LifeAtHMTC: React.FC = () => {
 
   const posts = [
     {
-      image: '/images/lifeathmtc/life-1.png',
+      image: '/lifeathmtc/life-1.png',
       link: 'https://www.instagram.com/p/C596sMVrDvM/?img_index=1',
     },
     {
-      image: '/images/lifeathmtc/life-2.png',
+      image: '/lifeathmtc/life-2.png',
       link: 'https://www.instagram.com/p/C6-V7L4R-ko/?img_index=1',
     },
     {
-      image: '/images/lifeathmtc/life-3.png',
+      image: '/lifeathmtc/life-3.png',
       link: 'https://www.instagram.com/p/C8ZRD8goAMg/?img_index=1',
     },
     {
-      image: '/images/lifeathmtc/life-2.png',
+      image: '/lifeathmtc/life-2.png',
       link: 'https://www.instagram.com/p/C6-V7L4R-ko/?img_index=1',
     },
   ];
@@ -82,17 +81,24 @@ const LifeAtHMTC: React.FC = () => {
       </div>
       <div className='w-full max-w-7xl md:px-12'>
         <div className='embla' ref={emblaRef}>
-          <div className='embla__container'>
+          <div className='embla__container gap-6 px-6'>
             {posts.map((post, index) => (
-              <div className='embla__slide' key={index}>
-                <a href={post.link} target='_blank' rel='noopener noreferrer'>
-                  <Image
-                    width={200}
-                    height={200}
-                    src={post.image}
-                    alt={`Post ${index + 1}`}
-                    className='h-full w-full object-cover'
-                  />
+              <div className='embla__slide lifeAtHmtc' key={index}>
+                <a
+                  href={post.link}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='flex'
+                >
+                  <div className='relative h-[530px] w-[425px] flex'>
+                    <NextImage
+                      src={post.image}
+                      alt={`Post ${index + 1}`}
+                      width={425}
+                      height={530}
+                      className='h-full w-full object-cover'
+                    />
+                  </div>
                 </a>
               </div>
             ))}

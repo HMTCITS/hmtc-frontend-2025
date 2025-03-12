@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import React from 'react';
 
+import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 
 interface TextComponentProps {
@@ -39,7 +39,7 @@ const VisiMisi: React.FC<TextComponentProps> = ({ text1, text2 }) => {
         */}
       </div>
       <div className='absolute left-0 top-0 -translate-x-[5%] -translate-y-[51%] opacity-10'>
-        <Image src='/images/bungaa.png' width={680} height={200} alt='bunga' />
+        <NextImage src='/bungaa.png' width={680} height={200} alt='bunga' />
       </div>
     </section>
   );

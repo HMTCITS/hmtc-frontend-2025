@@ -1,9 +1,8 @@
 'use client';
-
 import useEmblaCarousel from 'embla-carousel-react';
-import Image from 'next/image';
 import React, { useCallback, useEffect, useState } from 'react';
 
+import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 
 const HMTCBlog: React.FC = () => {
@@ -16,35 +15,35 @@ const HMTCBlog: React.FC = () => {
 
   const posts = [
     {
-      image: '/images/bloghmtc/blog-1.png',
+      image: '/bloghmtc/blog-1.png',
       title: 'Melukiskan Hikmah, Kembali Fitrah',
       excerpt:
         'Bulan Ramadhan buat aku adalah waktu yang spesial. Bukan cuma soal puasa, tapi juga tentang gimana orang-orang di lin..',
       link: 'https://www.instagram.com/p/C5j83s6yKTE/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
     },
     {
-      image: '/images/bloghmtc/blog-2.png',
+      image: '/bloghmtc/blog-2.png',
       title: 'Kartini: Simbol Perjuangan Perempuan Indonesia',
       excerpt:
         'Kartini bukan sekadar nama, dia adalah simbol perjuangan bagi semua perempuan di Indonesia. Melalui..',
       link: 'https://www.instagram.com/p/C6AM32Rycy8/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
     },
     {
-      image: '/images/bloghmtc/blog-3.png',
+      image: '/bloghmtc/blog-3.png',
       title: 'Bisnis Bagi Anak Muda di Era Digital',
       excerpt:
         'Menggali Peluang Bisnis di Era Digital! Anak muda punya potensi besar untuk menciptakan inovasi di dunia digital..',
       link: 'https://www.instagram.com/p/C7Dmkdtx9iD/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
     },
     {
-      image: '/images/bloghmtc/blog-4.png',
+      image: '/bloghmtc/blog-4.png',
       title: 'Idul Adha di Perantauan, Ngapain ya?',
       excerpt:
         'Idul Adha di Perantaun, Ngapain ya? Hari Raya Idul Adha selalu jadi momen yang ditunggu-tunggu umat Muslim di seluruh..',
       link: 'https://www.instagram.com/p/C8TQi0rC4OU/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
     },
     {
-      image: '/images/bloghmtc/blog-1.png',
+      image: '/bloghmtc/blog-1.png',
       title: 'Melukiskan Hikmah, Kembali Fitrah',
       excerpt:
         'Bulan Ramadhan buat aku adalah waktu yang spesial. Bukan cuma soal puasa, tapi juga tentang gimana orang-orang di lin...',
@@ -112,11 +111,11 @@ const HMTCBlog: React.FC = () => {
                 <div className='embla__slide-blog' key={index}>
                   <a href={post.link} target='_blank' rel='noopener noreferrer'>
                     <div className='relative h-[314px] w-full'>
-                      <Image
+                      <NextImage
                         src={post.image}
                         alt={post.title}
-                        fill
-                        className='object-contain'
+                        layout='fill'
+                        className='object-contain h-full'
                       />
                     </div>
                     <div className='px-1 pt-4 lg:pt-4'>

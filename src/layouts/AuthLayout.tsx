@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import * as React from 'react';
+import React from 'react';
 
+import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 import Layout from '@/layouts/Layout';
 
@@ -13,38 +13,39 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
     <Layout withFooter={false} withNavbar={false}>
       <main className='h-screen md:flex'>
         <section className='relative w-0 overflow-clip bg-gradient-to-br from-blue-600 to-blue-400 md:w-1/2'>
-          <Image
-            src='/images/bungaa.png'
+          <NextImage
+            src='/bungaa.png'
             width={1935}
             height={2009}
             alt='bunga'
             className='absolute right-0 top-0 w-[40rem] -translate-y-[45%] translate-x-[45%] opacity-20'
           />
-          <Image
-            src='/images/bungaa.png'
+          <NextImage
+            src='/bungaa.png'
             width={1935}
             height={2009}
             alt='bunga'
             className='absolute bottom-0 left-0 w-[40rem] -translate-x-[45%] translate-y-[45%] opacity-20'
           />
-          {/* <Image
-            src='/images/ornament.png'
+          {/*
+          <NextImage
+            src="/ornament.png"
             width={810}
             height={1095}
-            alt='bunga'
-            className='absolute left-0 w-[20rem] -translate-x-[45%] translate-y-[45%]'
+            alt="bunga"
+            className="absolute left-0 w-[20rem] -translate-x-[45%] translate-y-[45%]"
           /> */}
         </section>
         <section className='relative flex h-full min-h-screen w-full flex-col items-center justify-center overflow-y-auto overflow-x-clip px-8 md:w-1/2'>
-          <Image
-            src='/images/bungablue.png'
+          <NextImage
+            src='/bungablue.png'
             width={543}
             height={581}
             alt='bunga'
             className='fixed left-0 top-0 w-[20rem] -translate-x-[45%] -translate-y-[45%] opacity-20 md:hidden'
           />
-          <Image
-            src='/images/bungablue.png'
+          <NextImage
+            src='/bungablue.png'
             width={543}
             height={581}
             alt='bunga'
@@ -57,8 +58,8 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
             >
               HMTC
             </Typography>
-            <Image
-              src='/images/logohmtc.png'
+            <NextImage
+              src='/logohmtc.png'
               alt='logo'
               width={563}
               height={592}

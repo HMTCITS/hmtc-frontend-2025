@@ -1,12 +1,12 @@
 'use client';
 
-import Image from 'next/image';
 import * as React from 'react';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import { HiMenu } from 'react-icons/hi';
 import { Link as ScrollLink } from 'react-scroll';
 
 import Button from '@/components/buttons/Button';
+import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 import { NAVBAR_LINKS } from '@/constants/layout';
 import { cn } from '@/lib/utils';
@@ -46,11 +46,12 @@ export default function Navbar() {
           duration={500}
           className='relative h-20 w-28 cursor-pointer'
         >
-          <Image
-            src='/images/logohmtc2024.png'
+          <NextImage
+            src='/logohmtc2024.png'
             alt='Kunci Transformasi Logo'
-            fill
+            layout='fill'
             style={{ objectFit: 'contain' }}
+            className='h-full'
           />
         </ScrollLink>
 
@@ -87,8 +88,8 @@ export default function Navbar() {
       >
         <div className='z-10 flex flex-col items-center gap-14 px-4 py-24'>
           <ScrollLink to='home' smooth={true} duration={500} className='w-32'>
-            <Image
-              src='/images/logohmtc2024.png'
+            <NextImage
+              src='/logohmtc2024.png'
               alt=''
               width={700}
               height={730}
