@@ -1,4 +1,4 @@
-// app/throw-error/page.tsx
+// change this to page.tsx if you want to test it
 export default function ThrowErrorPage() {
   // Secara sengaja melempar error saat render
   throw new Error('Intentional error for testing internal server error page.');
