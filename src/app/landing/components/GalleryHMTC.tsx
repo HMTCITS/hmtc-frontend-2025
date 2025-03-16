@@ -4,82 +4,67 @@ import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 
 const GalleryHMTC: React.FC = () => {
-  const images = [
-    '/gallery/gallery-1.jpg',
-    '/gallery/gallery-2.jpg',
-    '/gallery/gallery-3.jpg',
-    '/gallery/gallery-4.jpg',
-  ];
-
   return (
-    <section className='flex flex-col items-center justify-center bg-white p-8 pt-0 font-sans md:py-10 md:pt-[100px] lg:px-0'>
-      <div
+    <section className='flex flex-col bg-white p-8 pt-0 font-sans md:py-10 md:pt-[100px] lg:px-0'>
+      <Typography
+        as='h1'
+        variant='j1'
+        className='font-adelphe left-0 w-full max-md:pt-20 max-md:text-center text-left text-3xl font-bold md:px-[10%] md:text-3xl lg:max-w-[70%] lg:text-5xl lg:leading-[1.2] pb-[50px] md:pb-[40px] lg:pb-[70px]'
         id='gallery'
-        className='flex flex-col items-center justify-center bg-white py-16'
-      ></div>
+      >
+        From Capturing Moments to Sharing Memories
+      </Typography>
 
-      <div className='pb-[50px] md:pb-[40px] lg:pb-[70px]'>
-        <Typography
-          as='h1'
-          variant='j1'
-          className='font-adelphe left-0 w-full text-left text-3xl font-bold md:px-[10%] md:text-3xl lg:absolute lg:max-w-[70%] lg:text-5xl lg:leading-[1.2]'
-        >
-          From Capturing Moments to Sharing Memories
-        </Typography>
-      </div>
-
-      <div className='relative flex h-auto w-full flex-wrap justify-center lg:h-[550px] lg:max-w-screen lg:overflow-hidden'>
-        {/* Gambar 1 */}
-        <div className='relative mb-6 h-[214px] w-[320px] md:w-[500px] lg:absolute lg:-left-[20%] lg:top-[40%] lg:h-[335px] lg:w-[501px]'>
+      <div className='relative lg:h-[510px]'>
+        <div className='lg:absolute flex h-auto w-full flex-wrap max-md:flex-col max-md:items-center justify-center lg:h-[600px] lg:max-w-[1440px] lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/5 lg:overflow-hidden'>
+          {/* Gambar 1 */}
           <NextImage
-            src={images[0]}
+            src='/gallery/gallery-1.jpg'
             alt='Gallery image 1'
-            layout='fill'
-            className='object-cover h-full'
-            sizes='(max-width: 768px) 100vw, 500px'
+            className='relative mb-6 w-[320px] md:w-[500px] lg:absolute lg:-left-[20%] lg:top-[45%] lg:w-[500px] lg:h-[335px]'
+            imgClassName='object-cover relative h-full'
+            width={500}
+            height={335}
           />
-        </div>
 
-        {/* Gambar 2 */}
-        <div className='relative mb-6 h-[375px] w-[320px] md:w-[500px] lg:absolute lg:left-[19%] lg:top-[17%] lg:h-[375px] lg:w-[324px]'>
+          {/* Gambar 2 */}
           <NextImage
-            src={images[1]}
+            src='/gallery/gallery-2.jpg'
             alt='Gallery image 2'
-            layout='fill'
-            className='object-cover h-full'
-            sizes='(max-width: 768px) 100vw, 375px'
+            className='mb-6 h-[375px] w-[320px] md:w-[500px] lg:absolute lg:left-[19%] lg:top-[30%] lg:h-[375px] lg:w-[325px]'
+            imgClassName='object-cover relative h-full'
+            width={325}
+            height={375}
           />
-        </div>
 
-        {/* Gambar 3 */}
-        <div className='relative mb-6 h-[214px] w-[320px] md:w-[500px] lg:absolute lg:left-[44%] lg:top-[31%] lg:h-[372px] lg:w-[456px]'>
+          {/* Gambar 3 */}
           <NextImage
-            src={images[2]}
+            src='/gallery/gallery-3.jpg'
             alt='Gallery image 3'
-            layout='fill'
-            className='object-cover h-full'
-            sizes='(max-width: 768px) 100vw, 450px'
+            className='mb-6 h-[214px] w-[320px] md:w-[500px] md:h-auto lg:absolute lg:left-[44%] lg:top-[40%] lg:h-[370px] lg:w-[455px]'
+            imgClassName='object-cover relative h-full'
+            width={455}
+            height={370}
           />
-        </div>
 
-        {/* Gambar 4 */}
-        <div className='relative mb-6 h-[214px] w-[320px] md:w-[500px] lg:absolute lg:-right-[4%] lg:bottom-[40%] lg:h-[361px] lg:w-[357px]'>
+          {/* Gambar 4 */}
           <NextImage
-            src={images[3]}
+            src='/gallery/gallery-4.jpg'
             alt='Gallery image 4'
-            layout='fill'
-            className='object-cover h-full'
-            sizes='(max-width: 768px) 100vw, 350px'
+            className='mb-6 h-[214px] w-[320px] md:w-[500px] md:h-auto lg:absolute lg:-right-[4%] lg:top-0 lg:h-[360px] lg:w-[355px]'
+            imgClassName='object-cover h-full relative'
+            width={355}
+            height={360}
           />
         </div>
       </div>
 
-      <div className='mr-4 mt-4 w-full max-w-7xl text-right md:mr-10 md:mt-6'>
+      <div className='flex justify-center mr-4 mt-4 w-full md:mr-10 md:mt-6'>
         <Typography
           as='a'
           href='/gallery'
           variant='b2'
-          className='font-satoshi font-medium text-black underline underline-offset-4'
+          className='font-satoshi font-medium text-black underline underline-offset-4 max-w-7xl w-full text-right'
         >
           Explore Gallery HMTC &rarr;
         </Typography>

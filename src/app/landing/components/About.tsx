@@ -9,15 +9,15 @@ export default function About() {
     >
       <div className='flex w-full flex-1 flex-col items-center justify-center'>
         <div className='flex w-full flex-col items-center justify-between lg:flex-row'>
-          <div className='flex justify-center lg:w-1/2'>
+          <div className='flex justify-center w-full lg:w-1/2'>
             <NextImage
               src='/fotbarhmtc2024.png'
               alt='HMTC Informatics'
               width={550}
               height={400}
               className='rounded-[15px] object-cover max-w-[500px] w-full'
+              imgClassName='object-cover'
               priority
-              style={{ objectFit: 'cover' }}
             />
           </div>
           <div className='mt-8 text-left md:pt-8 lg:ml-8 lg:mt-0 lg:w-1/2'>

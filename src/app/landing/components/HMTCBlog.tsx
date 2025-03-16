@@ -110,14 +110,14 @@ const HMTCBlog: React.FC = () => {
               {posts.map((post, index) => (
                 <div className='embla__slide-blog' key={index}>
                   <a href={post.link} target='_blank' rel='noopener noreferrer'>
-                    <div className='relative h-[314px] w-full'>
-                      <NextImage
-                        src={post.image}
-                        alt={post.title}
-                        layout='fill'
-                        className='object-contain h-full'
-                      />
-                    </div>
+                    <NextImage
+                      src={post.image}
+                      alt={post.title}
+                      className='relative h-[314px] w-full'
+                      imgClassName='object-cover'
+                      width={240}
+                      height={315}
+                    />
                     <div className='px-1 pt-4 lg:pt-4'>
                       <Typography
                         as='h3'

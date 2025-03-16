@@ -15,8 +15,6 @@ type NextImageProps = {
   blurClassName?: string;
   /** Alternative text for the image (required for accessibility) */
   alt: string;
-  /** Width of the image */
-  width?: string | number;
   /** Fallback image source if the primary image fails to load */
   onErrorSrc?: string;
   /** Marks the image as a high priority resource for loading */
@@ -30,8 +28,8 @@ type NextImageProps = {
   /** Enables Next.js image optimization (disabled for SVGs by default) */
   unoptimized?: boolean;
 } & (
-  | { width: string | number; height: string | number }
-  | { layout: 'fill'; width?: string | number; height?: string | number }
+  | { fill?: false; width: string | number; height: string | number }
+  | { fill: true; width?: never; height?: never }
 ) &
   Omit<ImageProps, 'src' | 'onLoadingComplete'> & {
     src: string | StaticImageData;
@@ -53,29 +51,30 @@ export default function NextImage({
   placeholderColor = 'gray-200',
   onLoadingComplete,
   unoptimized: userUnoptimized,
+  fill,
   ...rest
 }: NextImageProps) {
-  // Determine loading state for skeleton effect
+  // Tentukan status loading untuk skeleton effect
   const [status, setStatus] = React.useState<'loading' | 'complete' | 'error'>(
     useSkeleton ? 'loading' : 'complete',
   );
 
-  // Check if width is already set in className to avoid style conflicts
+  // Cek apakah lebar sudah didefinisikan lewat className
   const widthIsSet = className?.includes('w-') ?? false;
 
-  // Extract source URL string based on whether src is a string or StaticImageData
+  // Ekstrak source URL dari string atau StaticImageData
   const srcString = typeof src === 'string' ? src : src.src;
 
-  // Check if the image is an SVG to handle it appropriately
+  // Cek apakah gambar adalah SVG
   const isSvg = React.useMemo(
     () => srcString?.toLowerCase().endsWith('.svg'),
     [srcString],
   );
 
-  // Determine if image optimization should be disabled (for SVGs or when explicitly set)
+  // Tentukan apakah optimasi Next.js harus dimatikan (untuk SVG atau jika diminta)
   const unoptimized = userUnoptimized ?? (isVector || isSvg);
 
-  // Format the source URL based on settings
+  // Format URL gambar sesuai pengaturan
   const imageSrc = React.useMemo(() => {
     if (typeof src !== 'string') {
       return src;
@@ -91,16 +90,16 @@ export default function NextImage({
     return `/images${src.startsWith('/') ? src : `/${src}`}`;
   }, [src, serverStaticImg]);
 
-  // Determine if layout is fill
-  const isFillLayout = rest.layout === 'fill';
+  // Tentukan apakah mode fill aktif
+  const isFillLayout = fill === true;
 
-  // Handle successful image load
+  // Handler saat gambar berhasil dimuat
   const handleImageLoad = () => {
     setStatus('complete');
     onLoadingComplete?.();
   };
 
-  // Handle image load error
+  // Handler saat terjadi error saat memuat gambar
   const handleImageError = (
     e: React.SyntheticEvent<HTMLImageElement, Event>,
   ) => {
@@ -111,6 +110,7 @@ export default function NextImage({
     }
   };
 
+  // Bangun properti untuk <Image>
   const imageProps: ImageProps = {
     src: imageSrc,
     alt: alt || 'Image',
@@ -120,10 +120,11 @@ export default function NextImage({
     unoptimized,
     loading: priority ? 'eager' : 'lazy',
     className: cn(
-      imgClassName,
+      'w-full h-full',
       status === 'loading' &&
         cn('animate-pulse', `bg-${placeholderColor}`, blurClassName),
       isVector && 'drop-shadow-none',
+      imgClassName,
     ),
     ...rest,
   };
@@ -131,6 +132,11 @@ export default function NextImage({
   if (!isFillLayout) {
     imageProps.width = width;
     imageProps.height = height;
+  } else {
+    imageProps.fill = true;
+    if (!imageProps.sizes) {
+      imageProps.sizes = '100vw';
+    }
   }
 
   return (

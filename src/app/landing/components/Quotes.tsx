@@ -29,10 +29,11 @@ const Quotes: React.FC = () => {
           <div className='mb-[50px] flex h-auto w-full flex-row items-center gap-[16px] lg:mb-0 lg:h-[56px] lg:w-[230px]'>
             <div className='relative h-[56px] w-[56px] overflow-hidden rounded-full bg-[#784747]'>
               <NextImage
-                src='/Quotes/fotoQuotes.png'
+                src='Quotes/fotoQuotes.png'
                 alt='Quote Image'
-                layout='fill'
                 className='object-cover h-full'
+                width={56}
+                height={56}
               />
             </div>
             <div className='flex h-[52px] w-[158px] flex-col items-start gap-[2px]'>
@@ -59,16 +60,8 @@ const Quotes: React.FC = () => {
         </div>
 
         {/* Gambar Besar dengan Teks di Atasnya */}
-        <div className='relative flex h-[200px] w-full items-center justify-center md:h-[300px] lg:h-[346px] lg:w-[646px]'>
-          <NextImage
-            src='/Quotes/Quotes.png'
-            alt='Quotes Background'
-            layout='fill'
-            className='rounded-none object-cover h-full w-full'
-          />
-
-          {/* Teks di Atas Gambar */}
-          <div className='absolute inset-0 flex w-full flex-col justify-between'>
+        <div className='relative flex flex-col h-[200px] w-full items-center justify-center md:h-[300px] lg:h-[346px] lg:w-[646px] '>
+          <div className='flex w-full flex-col justify-between'>
             {/* Baris Atas: "HMTC INCREMENTAL" dan Tanggal */}
             <div className='mt-[-25px] flex w-full flex-row items-center justify-between px-0 md:mt-[-5%]'>
               {/* Judul */}
@@ -97,6 +90,16 @@ const Quotes: React.FC = () => {
               </div>
             </div>
           </div>
+          <NextImage
+            src='/Quotes/Quotes.png'
+            alt='Quotes Background'
+            className='rounded-none h-full w-full'
+            imgClassName='object-cover'
+            width={646}
+            height={311}
+          />
+
+          {/* Teks di Atas Gambar */}
         </div>
       </div>
     </div>

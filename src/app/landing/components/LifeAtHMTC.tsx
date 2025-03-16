@@ -90,13 +90,14 @@ const LifeAtHMTC: React.FC = () => {
                   rel='noopener noreferrer'
                   className='flex'
                 >
-                  <div className='relative h-[530px] w-[425px] flex'>
+                  <div className='relative h-[390px] md:h-[480px] lg:h-[530px] w-[425px] flex'>
                     <NextImage
                       src={post.image}
                       alt={`Post ${index + 1}`}
                       width={425}
                       height={530}
-                      className='h-full w-full object-cover'
+                      className='h-full w-full'
+                      imgClassName='object-cover'
                     />
                   </div>
                 </a>

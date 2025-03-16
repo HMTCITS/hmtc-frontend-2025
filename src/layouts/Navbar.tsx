@@ -34,7 +34,7 @@ export default function Navbar() {
       <div
         className={cn(
           'flex items-center justify-between bg-transparent min-[800px]:flex-row',
-          'px-6 py-1 min-[800px]:px-24',
+          'px-6 py-5.5 min-[800px]:px-24',
           isShift && [
             'bg-black shadow-sm backdrop-blur transition-colors duration-150',
           ],
@@ -44,14 +44,14 @@ export default function Navbar() {
           to='home'
           smooth={true}
           duration={500}
-          className='relative h-20 w-28 cursor-pointer'
+          className='relative h-7 w-28 cursor-pointer'
         >
           <NextImage
-            src='/logohmtc2024.png'
+            src='logohmtc2024.png'
             alt='Kunci Transformasi Logo'
-            layout='fill'
-            style={{ objectFit: 'contain' }}
-            className='h-full'
+            className='w-full h-full'
+            width={112}
+            height={28}
           />
         </ScrollLink>
 
@@ -89,8 +89,9 @@ export default function Navbar() {
         <div className='z-10 flex flex-col items-center gap-14 px-4 py-24'>
           <ScrollLink to='home' smooth={true} duration={500} className='w-32'>
             <NextImage
-              src='/logohmtc2024.png'
-              alt=''
+              src='logohmtc2024.png'
+              alt='Logo HMTC 2024'
+              className='w-full h-full'
               width={700}
               height={730}
             />

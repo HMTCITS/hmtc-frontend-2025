@@ -35,9 +35,9 @@ const EmblaCard: React.FC<EmblaCardProps> = ({ imageIndex }) => {
         <NextImage
           src={`/ketua/ketua${imageIndex}.png`}
           alt={`Ketua ${imageIndex + 1}`}
-          layout='fill'
-          className='object-cover object-center h-full'
-          sizes='(max-width: 768px) 100vw, 194px'
+          className='object-cover object-center w-full h-full'
+          width={175}
+          height={200}
           priority={imageIndex === 0}
         />
       </div>

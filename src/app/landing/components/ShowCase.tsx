@@ -15,10 +15,11 @@ export default function ShowCase() {
         <NextImage
           src='/fotohmtc2024.png'
           alt='fotohmtc'
-          layout='fill'
-          className='object-cover h-full'
+          className='object-cover w-full h-full'
           priority
           style={{ objectFit: 'cover' }}
+          width={1512}
+          height={735}
         />
       </div>
       <div className='flex h-full w-full items-center justify-center bg-[#121212] py-10 md:py-24'>

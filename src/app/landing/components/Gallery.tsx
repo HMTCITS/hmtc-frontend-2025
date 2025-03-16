@@ -10,7 +10,7 @@ export default function Gallery() {
           <NextImage
             src='/gallery/Wisuda3.JPG'
             alt='gallery-1'
-            layout='fill'
+            fill
             className='object-cover'
             sizes='(max-width: 768px) 100vw, 400px'
             priority
@@ -20,7 +20,7 @@ export default function Gallery() {
           <NextImage
             src='/gallery/2.png'
             alt='gallery-2'
-            layout='fill'
+            fill
             className='object-cover'
             sizes='(max-width: 768px) 100vw, 500px'
           />
@@ -31,7 +31,7 @@ export default function Gallery() {
         <NextImage
           src='/gallery/Wisuda.JPG'
           alt='gallery-3'
-          layout='fill'
+          fill
           className='object-cover'
           sizes='(max-width: 768px) 100vw, 600px'
         />
@@ -42,7 +42,7 @@ export default function Gallery() {
           <NextImage
             src='/gallery/HGTC.JPG'
             alt='gallery-4'
-            layout='fill'
+            fill
             className='object-cover'
             sizes='(max-width: 768px) 100vw, 500px'
           />
@@ -51,7 +51,7 @@ export default function Gallery() {
           <NextImage
             src='/gallery/5.png'
             alt='gallery-5'
-            layout='fill'
+            fill
             className='object-cover'
             sizes='(max-width: 768px) 100vw, 300px'
           />

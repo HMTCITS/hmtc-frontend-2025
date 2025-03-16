@@ -36,7 +36,7 @@ export default function PeopleHMTC() {
   return (
     <section className='flex flex-col items-center justify-center bg-white font-sans md:px-[8%] md:py-24'>
       <div
-        className='flex w-full max-w-[95%] flex-col items-center pt-4 lg:flex-row'
+        className='flex w-full max-w-[95%] flex-col items-center pt-4 lg:flex-row max-md:pt-12'
         id='peoplebehindhmtc'
       >
         <div className='w-full px-6 lg:w-[60%] lg:px-0'>

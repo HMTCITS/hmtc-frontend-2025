@@ -23,7 +23,7 @@ export default function AnggotaCard({
         <NextImage
           src={image as StaticImageData}
           alt='Foto Anggota'
-          layout='fill'
+          fill
           className='object-contain object-bottom'
         />
       </div>
