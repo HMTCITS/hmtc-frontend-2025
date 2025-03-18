@@ -5,22 +5,22 @@ export default function Cover() {
   return (
     <div
       id='home'
-      className='relative min-h-screen bg-black text-white overflow-hidden'
+      className='relative min-h-screen overflow-hidden bg-black text-white'
     >
-      <div className='overflow-hidden h-full min-h-screen'>
+      <div className='h-full min-h-screen overflow-hidden'>
         <NextImage
           src='halamandepan.png'
           alt='Background'
-          className='z-0 w-full h-full min-h-screen'
-          imgClassName='object-cover object-center min-h-screen'
+          className='z-0 h-full min-h-screen w-full'
+          imgClassName='min-h-screen object-cover object-center'
           width={1512}
           height={982}
         />
-        <div className='absolute inset-0 z-10 bg-black opacity-75 w-full h-full'></div>
+        <div className='absolute inset-0 z-10 h-full w-full bg-black opacity-75'></div>
       </div>
 
-      <div className='absolute top-0 z-20 mx-4 flex flex-col items-start p-6 pb-20 lg:pb-24 sm:pt-16 lg:pt-20 sm:mx-3 md:mx-3 md:p-12 w-full h-full justify-center'>
-        <div className='mt-20 sm:mt-12 lg:mt-20 md:mt-20 w-full max-lg:flex max-lg:flex-col max-lg:justify-between max-lg:h-[90%]'>
+      <div className='absolute top-0 z-20 mx-4 flex h-full w-full flex-col items-start justify-center p-6 pb-20 sm:mx-3 sm:pt-16 md:mx-3 md:p-12 lg:pt-20 lg:pb-24'>
+        <div className='mt-20 w-full max-lg:flex max-lg:h-[90%] max-lg:flex-col max-lg:justify-between sm:mt-12 md:mt-20 lg:mt-20'>
           <div className='flex flex-col md:flex-row md:items-center md:justify-between'>
             <Typography
               as='h1'
@@ -31,35 +31,14 @@ export default function Cover() {
             >
               Bersama Bersinergi <br />
             </Typography>
-            <Typography
-              as='p'
-              font='satoshi'
-              variant='b2'
-              weight='regular'
-              className='invisible absolute right-16 mt-4 md:mt-0 md:text-lg lg:visible'
-            >
-              DUPSE! <br />
-              DUPSE! <br />
-              DUPSE!
-            </Typography>
           </div>
-          <div className='flex py-12 flex-row justify-end lg:justify-between md:py-16'>
-            <Typography
-              as='p'
-              font='satoshi'
-              variant='b4'
-              weight='regular'
-              className='max-lg:hidden sm:text-xl md:text-lg'
-            >
-              Jadikan Hari Ini <br />
-              Pelajaran Untuk Nanti
-            </Typography>
+          <div className='flex flex-row justify-end py-12 md:py-16 lg:justify-end'>
             <Typography
               as='h1'
               font='libre'
               variant='j1'
               weight='bold'
-              className='italic sm:text-5xl md:text-6xl lg:text-8xl max-md:translate-x-4 lg:-translate-x-14 max-md:pr-6'
+              className='italic max-md:translate-x-4 max-md:pr-6 sm:text-5xl md:text-6xl lg:-translate-x-14 lg:text-8xl'
             >
               Menjadi
             </Typography>
@@ -73,15 +52,6 @@ export default function Cover() {
               className='text-5xl leading-tight italic sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl'
             >
               Kunci Transformasi
-            </Typography>
-            <Typography
-              as='p'
-              font='satoshi'
-              variant='b4'
-              weight='regular'
-              className='invisible absolute bottom-[155px] right-[236px] mt-2 sm:invisible md:mt-0 md:pr-8 md:text-lg lg:visible lg:bottom-[140px] lg:right-[10px]'
-            >
-              HMTC 2025
             </Typography>
           </div>
         </div>

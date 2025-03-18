@@ -64,7 +64,7 @@ export default function Page() {
           </Button>
         </form>
       </FormProvider>
-      <Typography as='div' className='space-x-1 text-center font-secondary'>
+      <Typography as='div' className='font-secondary space-x-1 text-center'>
         <Typography as='span' className='text-inherit'>
           Atau kembali ke
         </Typography>

@@ -15,7 +15,7 @@ export default function ShowCase() {
         <NextImage
           src='/fotohmtc2024.png'
           alt='fotohmtc'
-          className='object-cover w-full h-full'
+          className='h-full w-full object-cover'
           priority
           style={{ objectFit: 'cover' }}
           width={1512}

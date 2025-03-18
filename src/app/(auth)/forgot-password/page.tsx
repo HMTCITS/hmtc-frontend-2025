@@ -40,7 +40,7 @@ export default function Page() {
         )}
       </div>
       {isSubmitted ? (
-        <div className='space-y-6 font-primary'>
+        <div className='font-primary space-y-6'>
           <Typography as='p'>
             Anda akan menerima tautan di email yang Anda berikan dan
             memungkinkan Anda memverifikasi resmi akun Anda.
@@ -75,7 +75,7 @@ export default function Page() {
               </Button>
             </form>
           </FormProvider>
-          <Typography as='div' className='space-x-1 text-center font-secondary'>
+          <Typography as='div' className='font-secondary space-x-1 text-center'>
             <Typography as='span' className='text-inherit'>
               Ingat kata sandi Anda?
             </Typography>

@@ -1,0 +1,19 @@
+{
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "jsxSingleQuote": true,
+  "plugins": [
+    "prettier-plugin-tailwindcss"
+  ],
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "tailwindAttributes": [
+    "imgClassName"
+  ],
+  "tailwindFunctions": [
+    "cn",
+    "clsx"
+  ],
+  "tailwindStylesheet": "./src/styles/globals.css"
+}

@@ -60,7 +60,7 @@ const LifeAtHMTC: React.FC = () => {
           variant='j1'
           font='adelphe'
           weight='bold'
-          className='mb-5 mt-5 text-3xl lg:text-5xl'
+          className='mt-5 mb-5 text-3xl lg:text-5xl'
         >
           All The Things We Do
         </Typography>
@@ -69,7 +69,7 @@ const LifeAtHMTC: React.FC = () => {
           variant='b2'
           font='satoshi'
           weight='regular'
-          className='text-base mb-14 text-gray-600'
+          className='mb-14 text-base text-gray-600'
         >
           Setiap kegiatan yang kami lakukan merupakan wujud nyata dari semangat
           kebersamaan dan dedikasi kami untuk menuju perubahan, mulai dari
@@ -90,7 +90,7 @@ const LifeAtHMTC: React.FC = () => {
                   rel='noopener noreferrer'
                   className='flex'
                 >
-                  <div className='relative h-[390px] md:h-[480px] lg:h-[530px] w-[425px] flex'>
+                  <div className='relative flex h-[390px] w-[425px] md:h-[480px] lg:h-[530px]'>
                     <NextImage
                       src={post.image}
                       alt={`Post ${index + 1}`}

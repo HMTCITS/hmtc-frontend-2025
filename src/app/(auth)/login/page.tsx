@@ -57,7 +57,7 @@ export default function Page() {
           <div className='flex items-center justify-end'>
             <Link
               href='/forgot-password'
-              className='text-end font-secondary text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
+              className='font-secondary text-end text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
             >
               <Typography as='span' className='text-inherit'>
                 Lupa kata sandi?
@@ -68,7 +68,7 @@ export default function Page() {
             Masuk
           </Button>
         </form>
-        <Typography as='div' className='space-x-1 text-center font-secondary'>
+        <Typography as='div' className='font-secondary space-x-1 text-center'>
           <Typography as='span' className='text-inherit'>
             Belum punya akun?
           </Typography>

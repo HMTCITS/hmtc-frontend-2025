@@ -7,7 +7,7 @@ import Typography from '@/components/Typography';
 const Quotes: React.FC = () => {
   return (
     <div className='relative isolate flex h-auto w-full flex-col items-center justify-center gap-[10px] p-[20px] md:px-20'>
-      <div className='z-10 flex h-auto w-full flex-col items-center gap-[20px] lg:h-[346px] lg:flex-row lg:gap-[90px]'>
+      <div className='z-10 flex h-auto w-full flex-col items-center justify-center gap-[20px] lg:h-[346px] lg:flex-row lg:gap-[90px]'>
         {/* Kontainer Teks dan Info */}
         <div className='flex h-auto w-full flex-col items-start gap-[20px] lg:h-[208px] lg:w-[480px] lg:gap-[60px]'>
           {/* Paragraf Utama */}
@@ -17,7 +17,7 @@ const Quotes: React.FC = () => {
               variant='b2'
               font='satoshi'
               weight='medium'
-              className='italic leading-[20px] text-white md:leading-[28px] lg:text-2xl lg:leading-[34px]'
+              className='leading-[20px] text-white italic md:leading-[28px] lg:text-2xl lg:leading-[34px]'
             >
               &quot;HMTC pada awalnya bertujuan menjadi wadah aspirasi dan
               kreativitas mahasiswa TC baik dalam akademis maupun non
@@ -31,7 +31,7 @@ const Quotes: React.FC = () => {
               <NextImage
                 src='Quotes/fotoQuotes.png'
                 alt='Quote Image'
-                className='object-cover h-full'
+                className='h-full object-cover'
                 width={56}
                 height={56}
               />
@@ -42,7 +42,7 @@ const Quotes: React.FC = () => {
                 variant='b2'
                 font='adelphe'
                 weight='bold'
-                className='italic text-[14px] leading-[18px] text-white md:text-[16px] md:leading-[22px] lg:text-[20px] lg:leading-[28px]'
+                className='text-[14px] leading-[18px] text-white italic md:text-[16px] md:leading-[22px] lg:text-[20px] lg:leading-[28px]'
               >
                 - Tri Saksono Adi
               </Typography>
@@ -51,7 +51,7 @@ const Quotes: React.FC = () => {
                 variant='b2'
                 font='poppins'
                 weight='regular'
-                className='text-[12px] text-base font-[100] leading-[16px] text-[#FFFFFFAA] md:text-base md:leading-[20px] lg:text-[16px] lg:leading-[22px]'
+                className='text-base text-[12px] leading-[16px] font-[100] text-[#FFFFFFAA] md:text-base md:leading-[20px] lg:text-[16px] lg:leading-[22px]'
               >
                 Ketua HMTC Pertama
               </Typography>
@@ -60,40 +60,38 @@ const Quotes: React.FC = () => {
         </div>
 
         {/* Gambar Besar dengan Teks di Atasnya */}
-        <div className='relative flex flex-col h-[200px] w-full items-center justify-center md:h-[300px] lg:h-[346px] lg:w-[646px] '>
-          <div className='flex w-full flex-col justify-between'>
-            {/* Baris Atas: "HMTC INCREMENTAL" dan Tanggal */}
-            <div className='mt-[-25px] flex w-full flex-row items-center justify-between px-0 md:mt-[-5%]'>
-              {/* Judul */}
+        <div className='relative flex h-[200px] w-full flex-col items-center justify-center md:h-[300px] lg:h-[346px] lg:w-[646px]'>
+          {/* Baris Atas: "HMTC INCREMENTAL" dan Tanggal */}
+          <div className='mt-[-25px] flex w-full flex-row items-center justify-between px-0 md:mt-[-5%]'>
+            {/* Judul */}
+            <Typography
+              as='p'
+              variant='b2'
+              font='satoshi'
+              weight='regular'
+              className='text-xs text-white lg:text-sm'
+            >
+              HMTC INCREMENTAL
+            </Typography>
+
+            {/* Garis + Tanggal */}
+            <div className='flex flex-row items-center'>
+              <div className='h-[1px] w-[80px] border border-white md:w-[120px]'></div>
               <Typography
                 as='p'
                 variant='b2'
                 font='satoshi'
                 weight='regular'
-                className='text-xs text-white lg:text-sm'
+                className='ml-2 text-sm text-white lg:text-sm'
               >
-                HMTC INCREMENTAL
+                29 06 2024
               </Typography>
-
-              {/* Garis + Tanggal */}
-              <div className='flex flex-row items-center'>
-                <div className='h-[1px] w-[80px] border border-white md:w-[120px]'></div>
-                <Typography
-                  as='p'
-                  variant='b2'
-                  font='satoshi'
-                  weight='regular'
-                  className='ml-2 text-sm text-white lg:text-sm'
-                >
-                  29 06 2024
-                </Typography>
-              </div>
             </div>
           </div>
           <NextImage
             src='/Quotes/Quotes.png'
             alt='Quotes Background'
-            className='rounded-none h-full w-full'
+            className='h-full w-full rounded-none'
             imgClassName='object-cover'
             width={646}
             height={311}

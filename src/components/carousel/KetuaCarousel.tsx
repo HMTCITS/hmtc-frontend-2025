@@ -62,10 +62,10 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
     >
       <div className='z-10 w-full'>
         <div className='flex w-full flex-col items-start gap-8'>
-          <h2 className='font-adelphe text-base uppercase text-[#FFFFFF]'>
+          <h2 className='font-adelphe text-base text-[#FFFFFF] uppercase'>
             History of HMTC
           </h2>
-          <h1 className='w-full font-adelphe text-4xl font-bold leading-[40px] text-[#FFFFFF] lg:text-5xl lg:leading-[53px]'>
+          <h1 className='font-adelphe w-full text-4xl leading-[40px] font-bold text-[#FFFFFF] lg:text-5xl lg:leading-[53px]'>
             Get to Know The Chairman of HMTC
           </h1>
 
@@ -83,11 +83,11 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
       </div>
 
       <div
-        className='relative mt-10 h-[272.67px] w-full overflow-hidden lg:mt-20 '
+        className='relative mt-10 h-[272.67px] w-full overflow-hidden lg:mt-20'
         ref={carouselRef}
       >
         <div className='embla__viewport' ref={emblaRef}>
-          <div className='flex gap-6 justify-evenly px-6'>
+          <div className='flex justify-evenly gap-6 px-6'>
             {slides.map((id, index) => (
               <div
                 className='embla__slide mx-3 h-[200px] w-[150px] flex-shrink-0 lg:h-[272.67px] lg:w-[194.5px]'

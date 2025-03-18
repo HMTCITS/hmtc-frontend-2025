@@ -85,7 +85,7 @@ export default function Footer() {
     <footer
       className={cn(
         'bg-blue-1000 w-full px-6 py-12 md:px-24',
-        'flex flex-col items-center gap-6 bg-base-dark text-white md:gap-6',
+        'bg-base-dark flex flex-col items-center gap-6 text-white md:gap-6',
       )}
     >
       <div
@@ -108,7 +108,7 @@ export default function Footer() {
           <div>
             <Typography
               variant='h2'
-              className='flex flex-col font-inter text-sm'
+              className='font-inter flex flex-col text-sm'
             >
               <span>Kunci</span>
               <span>Transformasi.</span>
@@ -116,12 +116,12 @@ export default function Footer() {
           </div>
         </BaseLink>
 
-        <div className='grid grid-cols-2 gap-x-6 font-secondary'>
+        <div className='font-secondary grid grid-cols-2 gap-x-6'>
           <div className='flex w-full flex-col items-center gap-y-2.5 md:w-[187px] md:items-start'>
             <div onClick={toggleApaIni} className='flex items-center gap-2'>
               <Typography
                 variant='s2'
-                className='cursor-pointer font-secondary uppercase'
+                className='font-secondary cursor-pointer uppercase'
               >
                 hmtc
               </Typography>
@@ -146,7 +146,7 @@ export default function Footer() {
                 <BaseLink
                   key={index}
                   href={href}
-                  className='text-sm text-base-icon hover:text-white md:text-base'
+                  className='text-base-icon text-sm hover:text-white md:text-base'
                 >
                   {label}
                 </BaseLink>
@@ -157,7 +157,7 @@ export default function Footer() {
             <div onClick={toggleAkademik} className='flex items-center gap-2'>
               <Typography
                 variant='s2'
-                className='cursor-pointer font-secondary uppercase'
+                className='font-secondary cursor-pointer uppercase'
               >
                 akademik
               </Typography>
@@ -182,7 +182,7 @@ export default function Footer() {
                 <BaseLink
                   key={index}
                   href={href}
-                  className='text-sm text-base-icon hover:text-white md:text-base'
+                  className='text-base-icon text-sm hover:text-white md:text-base'
                 >
                   {label}
                 </BaseLink>
@@ -191,11 +191,11 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className='h-1 w-full border-t border-black-main'></div>
+      <div className='border-black-main h-1 w-full border-t'></div>
       <div className='flex w-full flex-col items-center justify-center gap-y-6 md:flex-row md:justify-between'>
         <Typography
           variant='s2'
-          className='order-2 font-secondary text-sm uppercase text-base-icon md:order-1 md:text-center'
+          className='font-secondary text-base-icon order-2 text-sm uppercase md:order-1 md:text-center'
         >
           &copy; HMTC ITS 2024 | KUNCI TRANSFORMASI
         </Typography>

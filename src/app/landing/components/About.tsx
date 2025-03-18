@@ -5,22 +5,22 @@ export default function About() {
   return (
     <div
       id='aboutus'
-      className='flex flex-col items-center justify-center bg-white pb-8 pt-16 lg:pt-24 px-10 md:px-16 lg:px-20'
+      className='flex flex-col items-center justify-center bg-white px-10 pt-16 pb-8 md:px-16 lg:px-20 lg:pt-24'
     >
       <div className='flex w-full flex-1 flex-col items-center justify-center'>
         <div className='flex w-full flex-col items-center justify-between lg:flex-row'>
-          <div className='flex justify-center w-full lg:w-1/2'>
+          <div className='flex w-full justify-center lg:w-1/2'>
             <NextImage
               src='/fotbarhmtc2024.png'
               alt='HMTC Informatics'
               width={550}
               height={400}
-              className='rounded-[15px] object-cover max-w-[500px] w-full'
+              className='w-full max-w-[500px] rounded-[15px] object-cover'
               imgClassName='object-cover'
               priority
             />
           </div>
-          <div className='mt-8 text-left md:pt-8 lg:ml-8 lg:mt-0 lg:w-1/2'>
+          <div className='mt-8 text-left md:pt-8 lg:mt-0 lg:ml-8 lg:w-1/2'>
             <Typography
               as='h2'
               font='satoshi'

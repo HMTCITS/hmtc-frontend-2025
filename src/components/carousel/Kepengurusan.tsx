@@ -46,19 +46,19 @@ export default function Kepengurusan() {
       }}
       modules={[Autoplay, Keyboard, Scrollbar, Navigation, Pagination]}
     >
-      <button className='swiper-button-next !h-12 !w-12 rounded-full bg-white p-2.5 ring-2 ring-base-dark hover:bg-gray-100'>
-        <FiChevronRight className='!text-xs text-base-dark' />
+      <button className='swiper-button-next ring-base-dark !h-12 !w-12 rounded-full bg-white p-2.5 ring-2 hover:bg-gray-100'>
+        <FiChevronRight className='text-base-dark !text-xs' />
       </button>
-      <button className='swiper-button-prev !h-12 !w-12 rounded-full bg-white p-2.5 ring-2 ring-base-dark hover:bg-gray-100'>
-        <FiChevronLeft className='!text-xs text-base-dark' />
+      <button className='swiper-button-prev ring-base-dark !h-12 !w-12 rounded-full bg-white p-2.5 ring-2 hover:bg-gray-100'>
+        <FiChevronLeft className='text-base-dark !text-xs' />
       </button>
       {Anggota.map(({ ...props }, index) => (
         <SwiperSlide
           key={index}
           className={cn(
             index % 2 === 0 ? 'lg:pr-20' : 'lg:pl-20',
-            index === Anggota.length - 1 && 'lg:pl-0 lg:pr-20',
-            index === Anggota.length - 2 && 'lg:pl-20 lg:pr-0',
+            index === Anggota.length - 1 && 'lg:pr-20 lg:pl-0',
+            index === Anggota.length - 2 && 'lg:pr-0 lg:pl-20',
           )}
         >
           <AnggotaCard {...props} index={index} />

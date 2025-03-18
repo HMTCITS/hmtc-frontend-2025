@@ -13,7 +13,7 @@ const VisiMisi: React.FC<TextComponentProps> = ({ text1, text2 }) => {
       <Typography
         as='h1'
         variant='i1'
-        className='mb-4 font-adelphe text-5xl font-bold leading-[28px] text-white md:text-5xl md:leading-[53px]'
+        className='font-adelphe mb-4 text-5xl leading-[28px] font-bold text-white md:text-5xl md:leading-[53px]'
       >
         {text1}
       </Typography>
@@ -21,7 +21,7 @@ const VisiMisi: React.FC<TextComponentProps> = ({ text1, text2 }) => {
         <Typography
           as='p'
           variant='s2'
-          className='h-auto w-full font-satoshi text-justify font-normal leading-[25px] text-gray-400 md:h-[100px] md:w-[334px] md:text-lg md:leading-[36px]'
+          className='font-satoshi h-auto w-full text-justify leading-[25px] font-normal text-gray-400 md:h-[100px] md:w-[334px] md:text-lg md:leading-[36px]'
         >
           {text2}
         </Typography>
@@ -32,7 +32,7 @@ const VisiMisi: React.FC<TextComponentProps> = ({ text1, text2 }) => {
               as='li'
               variant='s2'
               key={index}
-              className='w-full text-justify font-satoshi font-normal leading-[25px] text-gray-400 md:w-full md:text-lg md:leading-[36px]'
+              className='font-satoshi w-full text-justify leading-[25px] font-normal text-gray-400 md:w-full md:text-lg md:leading-[36px]'
             >
               {text}
             </Typography>

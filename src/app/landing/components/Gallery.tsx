@@ -4,7 +4,7 @@ import NextImage from '@/components/NextImage';
 
 export default function Gallery() {
   return (
-    <div className='shadow-m w-full space-y-6 bg-[#212121] p-12 font-secondary text-white md:p-32'>
+    <div className='shadow-m font-secondary w-full space-y-6 bg-[#212121] p-12 text-white md:p-32'>
       <div className='grid w-full grid-cols-3 gap-x-8'>
         <div className='relative h-[600px]'>
           <NextImage

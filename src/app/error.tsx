@@ -5,7 +5,7 @@ import Typography from '@/components/Typography';
 
 export default function Error() {
   return (
-    <main className='flex min-h-screen w-full flex-col items-center justify-center text-center gap-5 max-sm:px-5 py-10 bg-white'>
+    <main className='flex min-h-screen w-full flex-col items-center justify-center gap-5 bg-white py-10 text-center max-sm:px-5'>
       {/* Teks "ERROR" di atas 500 */}
       <Typography
         as='p'
@@ -22,7 +22,7 @@ export default function Error() {
         as='h1'
         variant='k0'
         font='libre'
-        className='font-bold bg-blue-gradient bg-clip-text text-transparent italic text-[160px] md:text-[200px] lg:text-[300px] leading-none'
+        className='bg-blue-gradient bg-clip-text text-[160px] leading-none font-bold text-transparent italic md:text-[200px] lg:text-[300px]'
       >
         500
       </Typography>
@@ -40,7 +40,7 @@ export default function Error() {
       {/* Tautan untuk kembali ke halaman utama */}
       <Link
         href='/'
-        className='transition-colors duration-150 hover:text-gray-400 text-xl md:text-xl lg:text-2xl font-satoshi font-medium border-b-gray-800 border-b-[1.5px]'
+        className='font-satoshi border-b-[1.5px] border-b-gray-800 text-xl font-medium transition-colors duration-150 hover:text-gray-400 md:text-xl lg:text-2xl'
       >
         &larr; Go back
       </Link>

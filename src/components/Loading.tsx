@@ -9,7 +9,7 @@ export default function LoadingFallback() {
     <div
       role='status'
       aria-label='Loading content...'
-      className='min-h-screen w-full flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 p-6'
+      className='flex min-h-screen w-full flex-col items-center justify-center bg-gray-50 p-6 dark:bg-gray-900'
     >
       <div className='w-full max-w-4xl space-y-8'>
         {/* Skeleton Header */}

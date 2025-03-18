@@ -66,7 +66,7 @@ export default function Page() {
             Daftar
           </Button>
         </form>
-        <Typography as='div' className='space-x-1 text-center font-secondary'>
+        <Typography as='div' className='font-secondary space-x-1 text-center'>
           <Typography as='span' variant='b2'>
             Sudah punya akun?
           </Typography>

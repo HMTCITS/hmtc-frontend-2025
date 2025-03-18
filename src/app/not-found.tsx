@@ -4,7 +4,7 @@ import Typography from '@/components/Typography';
 
 export default function NotFound() {
   return (
-    <main className='flex min-h-screen w-full flex-col items-center justify-center text-white text-center gap-5 max-sm:px-5 py-10 bg-[#201F1F]'>
+    <main className='flex min-h-screen w-full flex-col items-center justify-center gap-5 bg-[#201F1F] py-10 text-center text-white max-sm:px-5'>
       {/* Teks "ERROR" di atas 404 */}
       <Typography
         as='p'
@@ -21,7 +21,7 @@ export default function NotFound() {
         as='h1'
         variant='k0'
         font='libre'
-        className='font-bold bg-blue-gradient bg-clip-text text-transparent italic text-[160px] md:text-[200px] lg:text-[300px] leading-none md:leading-none'
+        className='bg-blue-gradient bg-clip-text text-[160px] leading-none font-bold text-transparent italic md:text-[200px] md:leading-none lg:text-[300px]'
       >
         404
       </Typography>
@@ -31,7 +31,7 @@ export default function NotFound() {
         as='p'
         variant='b1'
         font='adelphe'
-        className='mt-4 text-2xl  md:text-3xl lg:text-[40px]'
+        className='mt-4 text-2xl md:text-3xl lg:text-[40px]'
       >
         The page you&apos;re looking for does not exist.
       </Typography>
@@ -39,7 +39,7 @@ export default function NotFound() {
       {/* Tautan untuk kembali ke halaman sebelumnya atau utama */}
       <Link
         href='/'
-        className='transition-colors duration-150 hover:text-gray-400 text-xl md:text-xl lg:text-2xl font-satoshi font-medium border-b-white border-b-[1.5px]'
+        className='font-satoshi border-b-[1.5px] border-b-white text-xl font-medium transition-colors duration-150 hover:text-gray-400 md:text-xl lg:text-2xl'
       >
         &larr; Go back
       </Link>

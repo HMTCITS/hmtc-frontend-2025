@@ -71,11 +71,10 @@ const HMTCBlog: React.FC = () => {
   }, [embla, setScrollSnaps, onSelect]);
 
   return (
-    <section className='bg-white px-4 pb-24 pt-10 md:px-[10%] md:pt-24'>
-      <div
-        id='blog'
-        className='my-0 flex flex-col items-center justify-center bg-white'
-      ></div>
+    <section
+      className='bg-white px-4 pt-10 pb-24 md:px-[10%] md:pt-24'
+      id='blog'
+    >
       <div className='container mx-auto p-6 lg:p-0'>
         <Typography
           as='h2'
@@ -99,7 +98,7 @@ const HMTCBlog: React.FC = () => {
           variant='j1'
           font='adelphe'
           weight='bold'
-          className='mb-6 mt-3 w-full text-3xl md:w-[80%] md:text-5xl md:leading-[52.80px]'
+          className='mt-3 mb-6 w-full text-3xl md:w-[80%] md:text-5xl md:leading-[52.80px]'
         >
           Delving into Stories, Insights, and the Latest Trends from HMTC
         </Typography>

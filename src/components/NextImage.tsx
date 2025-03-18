@@ -120,7 +120,7 @@ export default function NextImage({
     unoptimized,
     loading: priority ? 'eager' : 'lazy',
     className: cn(
-      'w-full h-full',
+      'h-full w-full',
       status === 'loading' &&
         cn('animate-pulse', `bg-${placeholderColor}`, blurClassName),
       isVector && 'drop-shadow-none',

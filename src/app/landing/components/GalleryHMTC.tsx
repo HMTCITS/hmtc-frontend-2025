@@ -9,20 +9,20 @@ const GalleryHMTC: React.FC = () => {
       <Typography
         as='h1'
         variant='j1'
-        className='font-adelphe left-0 w-full max-md:pt-20 max-md:text-center text-left text-3xl font-bold md:px-[10%] md:text-3xl lg:max-w-[70%] lg:text-5xl lg:leading-[1.2] pb-[50px] md:pb-[40px] lg:pb-[70px]'
+        className='font-adelphe left-0 w-full pb-[50px] text-left text-3xl font-bold max-md:pt-20 max-md:text-center md:px-[10%] md:pb-[40px] md:text-3xl lg:max-w-[70%] lg:pb-[70px] lg:text-5xl lg:leading-[1.2]'
         id='gallery'
       >
         From Capturing Moments to Sharing Memories
       </Typography>
 
       <div className='relative lg:h-[510px]'>
-        <div className='lg:absolute flex h-auto w-full flex-wrap max-md:flex-col max-md:items-center justify-center lg:h-[600px] lg:max-w-[1440px] lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/5 lg:overflow-hidden'>
+        <div className='flex h-auto w-full flex-wrap justify-center max-md:flex-col max-md:items-center lg:absolute lg:left-1/2 lg:h-[600px] lg:max-w-[1440px] lg:-translate-x-1/2 lg:-translate-y-1/5 lg:overflow-hidden'>
           {/* Gambar 1 */}
           <NextImage
             src='/gallery/gallery-1.jpg'
             alt='Gallery image 1'
-            className='relative mb-6 w-[320px] md:w-[500px] lg:absolute lg:-left-[20%] lg:top-[45%] lg:w-[500px] lg:h-[335px]'
-            imgClassName='object-cover relative h-full'
+            className='relative mb-6 w-[320px] md:w-[500px] lg:absolute lg:top-[45%] lg:-left-[20%] lg:h-[335px] lg:w-[500px]'
+            imgClassName='relative h-full object-cover'
             width={500}
             height={335}
           />
@@ -31,8 +31,8 @@ const GalleryHMTC: React.FC = () => {
           <NextImage
             src='/gallery/gallery-2.jpg'
             alt='Gallery image 2'
-            className='mb-6 h-[375px] w-[320px] md:w-[500px] lg:absolute lg:left-[19%] lg:top-[30%] lg:h-[375px] lg:w-[325px]'
-            imgClassName='object-cover relative h-full'
+            className='mb-6 h-[375px] w-[320px] md:w-[500px] lg:absolute lg:top-[30%] lg:left-[19%] lg:h-[375px] lg:w-[325px]'
+            imgClassName='relative h-full object-cover'
             width={325}
             height={375}
           />
@@ -41,8 +41,8 @@ const GalleryHMTC: React.FC = () => {
           <NextImage
             src='/gallery/gallery-3.jpg'
             alt='Gallery image 3'
-            className='mb-6 h-[214px] w-[320px] md:w-[500px] md:h-auto lg:absolute lg:left-[44%] lg:top-[40%] lg:h-[370px] lg:w-[455px]'
-            imgClassName='object-cover relative h-full'
+            className='mb-6 h-[214px] w-[320px] md:h-auto md:w-[500px] lg:absolute lg:top-[40%] lg:left-[44%] lg:h-[370px] lg:w-[455px]'
+            imgClassName='relative h-full object-cover'
             width={455}
             height={370}
           />
@@ -51,20 +51,20 @@ const GalleryHMTC: React.FC = () => {
           <NextImage
             src='/gallery/gallery-4.jpg'
             alt='Gallery image 4'
-            className='mb-6 h-[214px] w-[320px] md:w-[500px] md:h-auto lg:absolute lg:-right-[4%] lg:top-0 lg:h-[360px] lg:w-[355px]'
-            imgClassName='object-cover h-full relative'
+            className='mb-6 h-[214px] w-[320px] md:h-auto md:w-[500px] lg:absolute lg:top-0 lg:-right-[4%] lg:h-[360px] lg:w-[355px]'
+            imgClassName='relative h-full object-cover'
             width={355}
             height={360}
           />
         </div>
       </div>
 
-      <div className='flex justify-center mr-4 mt-4 w-full md:mr-10 md:mt-6'>
+      <div className='mt-4 mr-4 flex w-full justify-center md:mt-6 md:mr-10'>
         <Typography
           as='a'
           href='/gallery'
           variant='b2'
-          className='font-satoshi font-medium text-black underline underline-offset-4 max-w-7xl w-full text-right'
+          className='font-satoshi w-full max-w-7xl text-right font-medium text-black underline underline-offset-4'
         >
           Explore Gallery HMTC &rarr;
         </Typography>

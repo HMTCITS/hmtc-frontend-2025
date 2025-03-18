@@ -15,7 +15,7 @@ export default function QuotesKahima() {
 
   return (
     <section
-      className='relative flex h-fit w-full justify-center overflow-hidden bg-blue-main px-10 py-16 text-white md:p-6'
+      className='bg-blue-main relative flex h-fit w-full justify-center overflow-hidden px-10 py-16 text-white md:p-6'
       style={{
         background:
           'linear-gradient(263.67deg, #00AAE7 -8.55%, #0076C0 97.16%)',
@@ -25,13 +25,13 @@ export default function QuotesKahima() {
         <Typography variant='h1' className='text-2xl md:text-3xl lg:text-4xl'>
           <Typography
             as='span'
-            className='font-satoshi text-3xl font-light md:text-4xl lg:text-5xl text-inherit'
+            className='font-satoshi text-3xl font-light text-inherit md:text-4xl lg:text-5xl'
           >
             “
           </Typography>
           <Typography
             as='span'
-            className='font-light font-adelphe text-xl leading-[2.0] md:text-2xl md:leading-[2.0] lg:text-3xl lg:leading-[2.0] text-inherit'
+            className='font-adelphe text-xl leading-[2.0] font-light text-inherit md:text-2xl md:leading-[2.0] lg:text-3xl lg:leading-[2.0]'
           >
             35 tahun menjadi wadah aspirasi, kreativitas, pengembangan potensi
             hingga simbol pemersatu, dan tetap saja di balik itu semua,
@@ -46,7 +46,7 @@ export default function QuotesKahima() {
           HMTC adalah tentang dirimu.
           <Typography
             as='span'
-            className='font-adelphe text-3xl font-light md:text-4xl lg:text-5xl text-inherit'
+            className='font-adelphe text-3xl font-light text-inherit md:text-4xl lg:text-5xl'
           >
             ”
           </Typography>

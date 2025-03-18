@@ -35,7 +35,7 @@ const EmblaCard: React.FC<EmblaCardProps> = ({ imageIndex }) => {
         <NextImage
           src={`/ketua/ketua${imageIndex}.png`}
           alt={`Ketua ${imageIndex + 1}`}
-          className='object-cover object-center w-full h-full'
+          className='h-full w-full object-cover object-center'
           width={175}
           height={200}
           priority={imageIndex === 0}
@@ -43,10 +43,10 @@ const EmblaCard: React.FC<EmblaCardProps> = ({ imageIndex }) => {
       </div>
 
       <div className='flex h-[63px] w-[194.5px] flex-col items-center gap-[2px] bg-white px-[35px] py-[8px]'>
-        <div className="w-[160px] text-center font-['Libre_Caslon_Condensed'] text-[17px] font-bold italic leading-[20px] text-[#121212]">
+        <div className="w-[160px] text-center font-['Libre_Caslon_Condensed'] text-[17px] leading-[20px] font-bold text-[#121212] italic">
           {names[imageIndex]}
         </div>
-        <div className="w-[96px] text-center font-['Inter'] text-[16px] font-normal leading-[19px] text-[#687083]">
+        <div className="w-[96px] text-center font-['Inter'] text-[16px] leading-[19px] font-normal text-[#687083]">
           {years[imageIndex]}
         </div>
       </div>

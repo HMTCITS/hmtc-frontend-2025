@@ -36,7 +36,7 @@ export default function PeopleHMTC() {
   return (
     <section className='flex flex-col items-center justify-center bg-white font-sans md:px-[8%] md:py-24'>
       <div
-        className='flex w-full max-w-[95%] flex-col items-center pt-4 lg:flex-row max-md:pt-12'
+        className='flex w-full max-w-[95%] flex-col items-center pt-4 max-md:pt-12 lg:flex-row'
         id='peoplebehindhmtc'
       >
         <div className='w-full px-6 lg:w-[60%] lg:px-0'>
@@ -63,7 +63,7 @@ export default function PeopleHMTC() {
             variant='b2'
             font='satoshi'
             weight='regular'
-            className='text-justify text-base mt-6 lg:max-w-[75%] text-gray-600'
+            className='mt-6 text-justify text-base text-gray-600 lg:max-w-[75%]'
           >
             Di balik setiap langkah besar, ada individu-individu hebat yang
             bekerja dengan penuh dedikasi. Setiap anggota memiliki peran penting
@@ -200,7 +200,7 @@ export default function PeopleHMTC() {
             {String(currentIndex + 1).padStart(2, '0')} /{' '}
             {String(totalSlides).padStart(2, '0')}
           </Typography>
-          <div className='absolute -bottom-10 right-4 flex space-x-2 lg:right-0 lg:space-x-1'>
+          <div className='absolute right-4 -bottom-10 flex space-x-2 lg:right-0 lg:space-x-1'>
             <button
               onClick={scrollPrev}
               className='px-1 py-2 text-xl text-gray-500 hover:text-black'
