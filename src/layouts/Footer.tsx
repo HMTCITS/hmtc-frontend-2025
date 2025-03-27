@@ -14,6 +14,7 @@ import { Link as ScrollLink } from 'react-scroll';
 import BaseLink from '@/components/links/BaseLink';
 import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
+import { NAVBAR_LINKS as ApaIni } from '@/constants/layout';
 import SocialCard from '@/layouts/components/Social';
 import { cn } from '@/lib/utils';
 
@@ -38,22 +39,6 @@ const SocialMedia = [
   {
     icon: FaLine,
     href: 'https://tr.ee/T1xoSC0squ',
-  },
-];
-
-// Footer HMTC
-const ApaIni = [
-  {
-    label: 'Tentang kami',
-    href: '#aboutus',
-  },
-  {
-    label: 'Kepengurusan',
-    href: '#kepengurusan',
-  },
-  {
-    label: 'Informasi',
-    href: '#akademik',
   },
 ];
 
@@ -143,19 +128,20 @@ export default function Footer() {
                   : 'max-h-0 opacity-0 md:max-h-96 md:opacity-100',
               )}
             >
-              {ApaIni.map(({ label, href }, index) => (
+              {ApaIni.map(({ name, href, offset }, index) => (
                 <ScrollLink
                   key={index}
                   to={href.replace('#', '')}
                   smooth={true}
                   duration={500}
+                  offset={offset}
                   className='font-secondary text-white-main hover:text-base-nav cursor-pointer transition-colors duration-75'
                 >
                   <Typography
                     font='poppins'
                     className='text-base-icon text-sm hover:text-white md:text-base'
                   >
-                    {label}
+                    {name}
                   </Typography>
                 </ScrollLink>
               ))}

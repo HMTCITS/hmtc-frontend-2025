@@ -1,9 +1,14 @@
 export const NAVBAR_LINKS = [
-  { id: 1, name: 'About Us', href: '#aboutus' },
-  { id: 2, name: 'History of HMTC', href: '#historyofhmtc' },
-  { id: 3, name: 'People Behind HMTC', href: '#peoplebehindhmtc' },
-  { id: 4, name: 'Gallery', href: '#gallery' },
-  { id: 5, name: 'Blog', href: '#blog' },
+  { id: 1, name: 'About Us', href: '#aboutus', offset: -50 },
+  { id: 2, name: 'History of HMTC', href: '#historyofhmtc', offset: -50 },
+  {
+    id: 3,
+    name: 'People Behind HMTC',
+    href: '#peoplebehindhmtc',
+    offset: -100,
+  },
+  { id: 4, name: 'Gallery', href: '#gallery', offset: -100 },
+  { id: 5, name: 'Blog', href: '#blog', offset: 0 },
 ];
 
 export const Misi = [

@@ -62,12 +62,13 @@ export default function Navbar() {
         />
 
         <nav className='hidden items-center gap-6 min-[800px]:flex'>
-          {NAVBAR_LINKS.map(({ id, name, href }) => (
+          {NAVBAR_LINKS.map(({ id, name, href, offset }) => (
             <ScrollLink
               key={id}
               to={href.replace('#', '')}
               smooth={true}
               duration={500}
+              offset={offset}
               className='font-secondary text-white-main hover:text-base-nav cursor-pointer p-2.5 transition-colors duration-75'
             >
               <Typography font='satoshi'>{name}</Typography>
