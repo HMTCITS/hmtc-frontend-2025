@@ -24,7 +24,7 @@ export default function About() {
             <Typography
               as='h2'
               font='satoshi'
-              variant='h2'
+              variant='h1'
               weight='regular'
               className='text-xl text-blue-600'
             >

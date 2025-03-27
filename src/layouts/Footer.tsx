@@ -9,6 +9,7 @@ import {
   FaTwitter,
   FaYoutube,
 } from 'react-icons/fa';
+import { Link as ScrollLink } from 'react-scroll';
 
 import BaseLink from '@/components/links/BaseLink';
 import NextImage from '@/components/NextImage';
@@ -143,13 +144,20 @@ export default function Footer() {
               )}
             >
               {ApaIni.map(({ label, href }, index) => (
-                <BaseLink
+                <ScrollLink
                   key={index}
-                  href={href}
-                  className='text-base-icon text-sm hover:text-white md:text-base'
+                  to={href.replace('#', '')}
+                  smooth={true}
+                  duration={500}
+                  className='font-secondary text-white-main hover:text-base-nav cursor-pointer transition-colors duration-75'
                 >
-                  {label}
-                </BaseLink>
+                  <Typography
+                    font='poppins'
+                    className='text-base-icon text-sm hover:text-white md:text-base'
+                  >
+                    {label}
+                  </Typography>
+                </ScrollLink>
               ))}
             </div>
           </div>
@@ -179,13 +187,20 @@ export default function Footer() {
               )}
             >
               {Akademik.map(({ label, href }, index) => (
-                <BaseLink
+                <ScrollLink
                   key={index}
-                  href={href}
-                  className='text-base-icon text-sm hover:text-white md:text-base'
+                  to={href.replace('#', '')}
+                  smooth={true}
+                  duration={500}
+                  className='font-secondary text-white-main hover:text-base-nav cursor-pointer transition-colors duration-75'
                 >
-                  {label}
-                </BaseLink>
+                  <Typography
+                    font='poppins'
+                    className='text-base-icon text-sm hover:text-white md:text-base'
+                  >
+                    {label}
+                  </Typography>
+                </ScrollLink>
               ))}
             </div>
           </div>
