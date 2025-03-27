@@ -103,56 +103,62 @@ const HMTCBlog: React.FC = () => {
           Delving into Stories, Insights, and the Latest Trends from HMTC
         </Typography>
 
-        <div className='w-full max-w-7xl'>
-          <div className='embla' ref={emblaRef}>
-            <div className='embla__container'>
-              {posts.map((post, index) => (
-                <div className='embla__slide-blog' key={index}>
-                  <a href={post.link} target='_blank' rel='noopener noreferrer'>
-                    <NextImage
-                      src={post.image}
-                      alt={post.title}
-                      className='relative h-[314px] w-full'
-                      imgClassName='object-cover'
-                      width={240}
-                      height={315}
-                    />
-                    <div className='px-1 pt-4 lg:pt-4'>
-                      <Typography
-                        as='h3'
-                        variant='h3'
-                        font='adelphe'
-                        weight='bold'
-                        className='mb-3 text-xl'
-                      >
-                        {post.title}
-                      </Typography>
-                      <Typography
-                        as='p'
-                        variant='b4'
-                        font='satoshi'
-                        weight='regular'
-                        className='text-sm text-gray-600'
-                      >
-                        {post.excerpt}
-                      </Typography>
-                    </div>
-                  </a>
-                </div>
-              ))}
+        <div className='flex w-full flex-col items-center justify-center'>
+          <div className='w-full max-w-7xl'>
+            <div className='embla' ref={emblaRef}>
+              <div className='embla__container'>
+                {posts.map((post, index) => (
+                  <div className='embla__slide-blog' key={index}>
+                    <a
+                      href={post.link}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      <NextImage
+                        src={post.image}
+                        alt={post.title}
+                        className='relative h-[314px] w-full'
+                        imgClassName='object-cover'
+                        width={240}
+                        height={315}
+                      />
+                      <div className='px-1 pt-4 lg:pt-4'>
+                        <Typography
+                          as='h3'
+                          variant='h3'
+                          font='adelphe'
+                          weight='bold'
+                          className='mb-3 text-xl'
+                        >
+                          {post.title}
+                        </Typography>
+                        <Typography
+                          as='p'
+                          variant='b4'
+                          font='satoshi'
+                          weight='regular'
+                          className='text-sm text-gray-600'
+                        >
+                          {post.excerpt}
+                        </Typography>
+                      </div>
+                    </a>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-        <div className='mt-8 flex justify-center'>
-          {scrollSnaps.map((_, index) => (
-            <button
-              key={index}
-              className={`mx-1 h-2 w-2 rounded-full ${
-                index === selectedIndex ? 'bg-black' : 'bg-gray-300'
-              }`}
-              onClick={() => scrollTo(index)}
-            />
-          ))}
+          <div className='mt-8 flex justify-center'>
+            {scrollSnaps.map((_, index) => (
+              <button
+                key={index}
+                className={`mx-1 h-2 w-2 rounded-full ${
+                  index === selectedIndex ? 'bg-black' : 'bg-gray-300'
+                }`}
+                onClick={() => scrollTo(index)}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -3,24 +3,21 @@ import Typography from '@/components/Typography';
 
 export default function Cover() {
   return (
-    <div
-      id='home'
-      className='relative min-h-screen overflow-hidden bg-black text-white'
-    >
-      <div className='h-full min-h-screen overflow-hidden'>
+    <div id='home' className='relative overflow-hidden bg-black text-white'>
+      <div className='h-full overflow-hidden'>
         <NextImage
           src='halamandepan.png'
           alt='Background'
-          className='z-0 h-full min-h-screen w-full'
-          imgClassName='min-h-screen object-cover object-center'
+          className='z-0 h-screen min-h-[415px] w-full sm:min-h-[470px] lg:min-h-[768px] xl:min-h-[890px] 2xl:min-h-[768px]'
+          imgClassName='h-full w-full object-cover object-center'
           width={1512}
           height={982}
         />
         <div className='absolute inset-0 z-10 h-full w-full bg-black opacity-75'></div>
       </div>
 
-      <div className='absolute top-0 z-20 mx-4 flex h-full w-full flex-col items-start justify-center p-6 pb-20 sm:mx-3 sm:pt-16 md:mx-3 md:p-12 lg:pt-20 lg:pb-24'>
-        <div className='mt-20 w-full max-lg:flex max-lg:h-[90%] max-lg:flex-col max-lg:justify-between sm:mt-12 md:mt-20 lg:mt-20'>
+      <div className='absolute top-0 z-20 flex h-full w-full items-center justify-center'>
+        <div className='m-10 w-full max-lg:flex max-lg:flex-col max-lg:justify-between lg:mx-16 lg:my-20'>
           <div className='flex flex-col md:flex-row md:items-center md:justify-between'>
             <Typography
               as='h1'
@@ -38,7 +35,7 @@ export default function Cover() {
               font='libre'
               variant='j1'
               weight='bold'
-              className='italic max-md:translate-x-4 max-md:pr-6 sm:text-5xl md:text-6xl lg:-translate-x-14 lg:text-8xl'
+              className='italic max-md:pr-6 sm:text-5xl md:text-6xl lg:text-8xl'
             >
               Menjadi
             </Typography>
