@@ -2,8 +2,6 @@ import '@/styles/globals.css';
 import '@/styles/embla.css';
 
 import Providers from '@/app/providers';
-import Footer from '@/layouts/Footer';
-import Navbar from '@/layouts/Navbar';
 import {
   adelphe,
   inter,
@@ -32,9 +30,7 @@ export default function RootLayout({
           'scroll-smooth',
         )}
       >
-        <Navbar />
         <Providers>{children}</Providers>
-        <Footer />
       </body>
     </html>
   );

@@ -1,7 +1,6 @@
 'use client';
 
-import Image from 'next/image';
-import * as React from 'react';
+import React from 'react';
 import {
   FaChevronDown,
   FaInstagram,
@@ -10,13 +9,16 @@ import {
   FaTwitter,
   FaYoutube,
 } from 'react-icons/fa';
+import { Link as ScrollLink } from 'react-scroll';
 
 import BaseLink from '@/components/links/BaseLink';
+import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
+import { NAVBAR_LINKS as ApaIni } from '@/constants/layout';
 import SocialCard from '@/layouts/components/Social';
 import { cn } from '@/lib/utils';
 
-//footer links
+// Footer links
 const SocialMedia = [
   {
     icon: FaTwitter,
@@ -40,23 +42,7 @@ const SocialMedia = [
   },
 ];
 
-//footer hmtc
-const ApaIni = [
-  {
-    label: 'Tentang kami',
-    href: '#aboutus',
-  },
-  {
-    label: 'Kepengurusan',
-    href: '#kepengurusan',
-  },
-  {
-    label: 'Informasi',
-    href: '#akademik',
-  },
-];
-
-//footer akademik
+// Footer Akademik
 const Akademik = [
   {
     label: 'Bank Soal',
@@ -85,7 +71,7 @@ export default function Footer() {
     <footer
       className={cn(
         'bg-blue-1000 w-full px-6 py-12 md:px-24',
-        'flex flex-col items-center gap-6 bg-base-dark text-white md:gap-6',
+        'bg-base-dark flex flex-col items-center gap-6 text-white md:gap-6',
       )}
     >
       <div
@@ -96,8 +82,8 @@ export default function Footer() {
       >
         <BaseLink href='/' className='flex items-center gap-x-4'>
           <div className='w-12'>
-            <Image
-              src='/images/logohmtc1.png'
+            <NextImage
+              src='/logohmtc1.png'
               alt='Logo'
               width={1440}
               height={1440}
@@ -108,7 +94,7 @@ export default function Footer() {
           <div>
             <Typography
               variant='h2'
-              className='flex flex-col font-inter text-sm'
+              className='font-inter flex flex-col text-sm'
             >
               <span>Kunci</span>
               <span>Transformasi.</span>
@@ -116,12 +102,12 @@ export default function Footer() {
           </div>
         </BaseLink>
 
-        <div className='grid grid-cols-2 gap-x-6 font-secondary'>
+        <div className='font-secondary grid grid-cols-2 gap-x-6'>
           <div className='flex w-full flex-col items-center gap-y-2.5 md:w-[187px] md:items-start'>
             <div onClick={toggleApaIni} className='flex items-center gap-2'>
               <Typography
                 variant='s2'
-                className='cursor-pointer font-secondary uppercase'
+                className='font-secondary cursor-pointer uppercase'
               >
                 hmtc
               </Typography>
@@ -142,14 +128,22 @@ export default function Footer() {
                   : 'max-h-0 opacity-0 md:max-h-96 md:opacity-100',
               )}
             >
-              {ApaIni.map(({ label, href }, index) => (
-                <BaseLink
+              {ApaIni.map(({ name, href, offset }, index) => (
+                <ScrollLink
                   key={index}
-                  href={href}
-                  className='text-sm text-base-icon hover:text-white md:text-base'
+                  to={href.replace('#', '')}
+                  smooth={true}
+                  duration={500}
+                  offset={offset}
+                  className='font-secondary text-white-main hover:text-base-nav cursor-pointer transition-colors duration-75'
                 >
-                  {label}
-                </BaseLink>
+                  <Typography
+                    font='poppins'
+                    className='text-base-icon text-sm hover:text-white md:text-base'
+                  >
+                    {name}
+                  </Typography>
+                </ScrollLink>
               ))}
             </div>
           </div>
@@ -157,7 +151,7 @@ export default function Footer() {
             <div onClick={toggleAkademik} className='flex items-center gap-2'>
               <Typography
                 variant='s2'
-                className='cursor-pointer font-secondary uppercase'
+                className='font-secondary cursor-pointer uppercase'
               >
                 akademik
               </Typography>
@@ -179,23 +173,30 @@ export default function Footer() {
               )}
             >
               {Akademik.map(({ label, href }, index) => (
-                <BaseLink
+                <ScrollLink
                   key={index}
-                  href={href}
-                  className='text-sm text-base-icon hover:text-white md:text-base'
+                  to={href.replace('#', '')}
+                  smooth={true}
+                  duration={500}
+                  className='font-secondary text-white-main hover:text-base-nav cursor-pointer transition-colors duration-75'
                 >
-                  {label}
-                </BaseLink>
+                  <Typography
+                    font='poppins'
+                    className='text-base-icon text-sm hover:text-white md:text-base'
+                  >
+                    {label}
+                  </Typography>
+                </ScrollLink>
               ))}
             </div>
           </div>
         </div>
       </div>
-      <div className='h-1 w-full border-t border-black-main'></div>
+      <div className='border-black-main h-1 w-full border-t'></div>
       <div className='flex w-full flex-col items-center justify-center gap-y-6 md:flex-row md:justify-between'>
         <Typography
           variant='s2'
-          className='order-2 font-secondary text-sm uppercase text-base-icon md:order-1 md:text-center'
+          className='font-secondary text-base-icon order-2 text-sm uppercase md:order-1 md:text-center'
         >
           &copy; HMTC ITS 2024 | KUNCI TRANSFORMASI
         </Typography>

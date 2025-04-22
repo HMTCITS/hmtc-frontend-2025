@@ -4,6 +4,126 @@ import { cn } from '@/lib/utils';
 
 /**
  * Maps typography variant keys to Tailwind CSS classes.
+ *
+ * ## Variant Documentation (px → rem, weight in integer)
+ *
+ * ### k0
+ * - Base Size: `text-4xl` ≈ 36px ≈ 2.25rem
+ * - Weight: **bold** (700)
+ * - Leading: **leading-none** (line-height: 1)
+ * - md: `text-[80px]` = 80px = 5rem
+ *
+ * ### k1
+ * - Base Size: `text-[2rem]` = 32px = 2rem
+ * - Weight: **extrabold** (800)
+ * - Leading: **leading-tight** (≈1.25)
+ * - md: `text-[3.25rem]` ≈ 52px ≈ 3.25rem
+ *
+ * ### k2
+ * - Base Size: `text-4xl` ≈ 36px ≈ 2.25rem
+ * - Weight: **bold** (700)
+ * - md: `text-[3.25rem]` ≈ 52px ≈ 3.25rem
+ *
+ * ### j0
+ * - Base Size: (default `text-base` ≈ 16px = 1rem)
+ * - md: `text-5xl` ≈ 48px = 3rem
+ * - Weight: **bold** (700)
+ *
+ * ### j1
+ * - Base Size: `text-4xl` ≈ 36px ≈ 2.25rem
+ * - Weight: **bold** (700)
+ *
+ * ### j2
+ * - Base Size: `text-3xl` ≈ 30px ≈ 1.875rem
+ * - Weight: **bold** (700)
+ *
+ * ### i1
+ * - Base Size: (default `text-base` ≈ 16px = 1rem)
+ * - md: `text-2xl` ≈ 24px ≈ 1.5rem
+ * - Weight: **bold** (700)
+ *
+ * ### i2
+ * - Base Size: `text-xl` ≈ 20px ≈ 1.25rem
+ * - Weight: **bold** (700)
+ *
+ * ### h1
+ * - Base Size: (default `text-base` ≈ 16px = 1rem)
+ * - md: `text-2xl` ≈ 24px ≈ 1.5rem
+ * - Weight: **semibold** (600)
+ *
+ * ### h2
+ * - Base Size: `text-lg` ≈ 18px ≈ 1.125rem
+ * - Weight: **semibold** (600)
+ * - md: `text-xl` ≈ 20px ≈ 1.25rem
+ *
+ * ### h3
+ * - Base Size: `text-lg` ≈ 18px ≈ 1.125rem
+ * - Weight: **semibold** (600)
+ *
+ * ### h4
+ * - Base Size: `text-base` ≈ 16px = 1rem
+ * - Weight: **semibold** (600)
+ *
+ * ### h5
+ * - Base Size: `text-sm` ≈ 14px = 0.875rem
+ * - Weight: **semibold** (600)
+ *
+ * ### s0
+ * - Base Size: (default `text-base` ≈ 16px = 1rem)
+ * - Weight: **medium** (500)
+ * - md: `text-xl` ≈ 20px ≈ 1.25rem
+ *
+ * ### s1
+ * - Base Size: (default `text-base` ≈ 16px = 1rem)
+ * - Weight: **medium** (500)
+ * - md: `text-lg` ≈ 18px ≈ 1.125rem
+ *
+ * ### s2
+ * - Base Size: (default `text-base` ≈ 16px = 1rem)
+ * - Weight: **medium** (500)
+ * - md: `text-base` (tetap 16px = 1rem, tidak berubah secara signifikan)
+ *
+ * ### s3
+ * - Base Size: `text-sm` ≈ 14px = 0.875rem
+ * - Weight: **medium** (500)
+ *
+ * ### s4
+ * - Base Size: `text-xs` ≈ 12px = 0.75rem
+ * - Weight: **medium** (500)
+ *
+ * ### b1
+ * - Base Size: (default `text-base` ≈ 16px = 1rem)
+ * - Weight: **normal** (400)
+ * - md: `text-lg` ≈ 18px ≈ 1.125rem
+ *
+ * ### b2
+ * - Base Size: `text-base` ≈ 16px = 1rem
+ * - Weight: **normal** (400)
+ *
+ * ### b3
+ * - Base Size: `text-base` ≈ 16px = 1rem
+ * - Weight: **light** (300)
+ *
+ * ### b4
+ * - Base Size: `text-sm` ≈ 14px = 0.875rem
+ * - Weight: **normal** (400)
+ *
+ * ### b5
+ * - Base Size: `text-sm` ≈ 14px = 0.875rem
+ * - Weight: **light** (300)
+ *
+ * ### c0
+ * - Base Size: `text-xs` ≈ 12px = 0.75rem
+ * - Weight: **normal** (400)
+ *
+ * ### c1
+ * - Base Size: `text-xs` ≈ 12px = 0.75rem
+ * - Weight: **light** (300)
+ *
+ * ### c2
+ * - Base Size: `text-[11px]` = 11px ≈ 0.6875rem
+ * - Leading: `leading-[14px]` ≈ 0.875rem line-height
+ * - Weight: **normal** (400) by default
  */
 const TYPOGRAPHY_VARIANT_CLASSES = {
   k0: 'text-4xl font-bold leading-none md:text-[80px]',
@@ -67,8 +187,6 @@ const FONT_WEIGHT_CLASSES = {
 
 export type FontWeight = keyof typeof FONT_WEIGHT_CLASSES;
 
-///////////////////////////////////////////////////////////////////////////////
-
 /**
  * Props for the Typography component.
  *
@@ -85,18 +203,20 @@ export type TypographyProps<T extends React.ElementType> = {
    */
   children: React.ReactNode;
   /**
-   * Font weight. Acceptable values: 'thin', 'extralight', 'light', 'regular', 'medium', 'semibold', 'bold', 'extrabold', 'black'.
+   * Font weight. Acceptable values: 'thin', 'extralight', 'light', 'regular',
+   * 'medium', 'semibold', 'bold', 'extrabold', 'black'.
    * @default 'regular'
    */
   weight?: FontWeight;
   /**
-   * Font family. Acceptable values: 'poppins', 'satoshi', 'adelphe', 'libre', 'inter', 'playfair'.
+   * Font family. Acceptable values: 'poppins', 'satoshi', 'adelphe', 'libre',
+   * 'inter', 'playfair'.
    * @default 'poppins'
    */
   font?: FontFamily;
   /**
    * Typography variant determines the text size and style.
-   * Acceptable values are defined in TypographyVariant.
+   * Acceptable values are defined in {@link TYPOGRAPHY_VARIANT_CLASSES}.
    * @default 'b2'
    */
   variant?: TypographyVariant;
@@ -108,8 +228,6 @@ export type TypographyProps<T extends React.ElementType> = {
   React.ComponentPropsWithoutRef<T>,
   'as' | 'children' | 'weight' | 'font' | 'variant' | 'className'
 >;
-
-///////////////////////////////////////////////////////////////////////////////
 
 /**
  * Typography component for consistent text styling.
@@ -130,7 +248,6 @@ export default function Typography<T extends React.ElementType = 'p'>({
 }: TypographyProps<T>) {
   const Component = as || 'p';
 
-  // Compose the final className from the variant, font family, font weight, and any additional classes.
   const classes = cn(
     TYPOGRAPHY_VARIANT_CLASSES[variant],
     FONT_FAMILY_CLASSES[font],

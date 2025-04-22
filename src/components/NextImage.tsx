@@ -1,85 +1,40 @@
 'use client';
-
-import Image, { ImageProps } from 'next/image';
+import Image, { ImageProps, StaticImageData } from 'next/image';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
-/**
- * Props for the NextImage component.
- *
- * When using `layout="fill"`, the `height` prop becomes optional.
- */
-export type NextImageProps = {
-  /**
-   * Enable a skeleton loading effect (with a pulse animation).
-   * Avoid using for images with transparent backgrounds.
-   *
-   * @default false
-   */
+type NextImageProps = {
+  /** Enable skeleton loading animation while image loads */
   useSkeleton?: boolean;
-  /**
-   * Additional className for the underlying image element.
-   */
+  /** Additional className for the image element */
   imgClassName?: string;
-  /**
-   * If true, the image source is already a server static path.
-   * Otherwise, `/images` will be prepended to the src.
-   *
-   * @default false
-   */
+  /** If true, uses the src directly without '/images' prefix */
   serverStaticImg?: boolean;
-  /**
-   * Additional className applied when the image is in a loading (blur) state.
-   */
+  /** Custom className for the blur placeholder */
   blurClassName?: string;
-  /**
-   * Alternative text for the image.
-   */
+  /** Alternative text for the image (required for accessibility) */
   alt: string;
-  /**
-   * Width of the image. When a width CSS class (e.g. `w-`) is not provided in `className`,
-   * an inline style will be set using this value.
-   */
-  width: string | number;
+  /** Fallback image source if the primary image fails to load */
+  onErrorSrc?: string;
+  /** Marks the image as a high priority resource for loading */
+  priority?: boolean;
+  /** Use vector format for SVG images (preserves quality) */
+  isVector?: boolean;
+  /** Custom placeholder color (Tailwind class without the bg- prefix) */
+  placeholderColor?: string;
+  /** Optional callback when image successfully loads */
+  onLoadingComplete?: () => void;
+  /** Enables Next.js image optimization (disabled for SVGs by default) */
+  unoptimized?: boolean;
 } & (
-  | { height: string | number; layout?: never }
-  | { layout: 'fill'; height?: string | number }
+  | { fill?: false; width: string | number; height: string | number }
+  | { fill: true; width?: never; height?: never }
 ) &
-  Omit<ImageProps, 'alt' | 'width' | 'height' | 'layout'>;
+  Omit<ImageProps, 'src' | 'onLoadingComplete'> & {
+    src: string | StaticImageData;
+  };
 
-/**
- * NextImage is a wrapper around Next.js’ Image component.
- *
- * It optimizes image rendering by optionally displaying a skeleton loading state,
- * and prepending a base path for non-server static images.
- *
- * @param props - NextImageProps
- * @returns A figure element containing a Next.js Image.
- *
- * @example
- * ```tsx
- * // Standard image with skeleton
- * <NextImage
- *   src="/example.jpg"
- *   alt="Example image"
- *   width={400}
- *   height={300}
- *   useSkeleton
- * />
- *
- * @example
- * // Image using layout fill (height is optional)
- * <div className="relative h-64 w-full">
- *   <NextImage
- *     src="/banner.jpg"
- *     alt="Banner image"
- *     layout="fill"
- *     objectFit="cover"
- *   />
- * </div>
- * ```
- */
 export default function NextImage({
   useSkeleton = false,
   serverStaticImg = false,
@@ -90,48 +45,146 @@ export default function NextImage({
   className,
   imgClassName,
   blurClassName,
-  layout,
+  onErrorSrc,
+  priority = false,
+  isVector = false,
+  placeholderColor = 'gray-200',
+  onLoadingComplete,
+  unoptimized: userUnoptimized,
+  fill,
   ...rest
 }: NextImageProps) {
-  // Set initial status to 'loading' if skeleton is enabled; otherwise complete.
-  const [status, setStatus] = React.useState(
+  // Tentukan status loading untuk skeleton effect
+  const [status, setStatus] = React.useState<'loading' | 'complete' | 'error'>(
     useSkeleton ? 'loading' : 'complete',
   );
 
-  // If a width CSS class is not provided in className, set inline style.
+  // Cek apakah lebar sudah didefinisikan lewat className
   const widthIsSet = className?.includes('w-') ?? false;
-  const figureStyle = !widthIsSet
-    ? { width: typeof width === 'number' ? `${width}px` : width }
-    : undefined;
 
-  // Prepend base path to the image src if necessary.
-  const imageSrc = serverStaticImg ? src : `/images${src}`;
+  // Ekstrak source URL dari string atau StaticImageData
+  const srcString = typeof src === 'string' ? src : src.src;
 
-  // Convert width and height to numbers.
-  const resolvedWidth: number =
-    typeof width === 'string' ? parseInt(width, 10) : width;
-  const resolvedHeight: number | undefined =
-    height != null
-      ? typeof height === 'string'
-        ? parseInt(height, 10)
-        : height
-      : undefined;
+  // Cek apakah gambar adalah SVG
+  const isSvg = React.useMemo(
+    () => srcString?.toLowerCase().endsWith('.svg'),
+    [srcString],
+  );
+
+  // Tentukan apakah optimasi Next.js harus dimatikan (untuk SVG atau jika diminta)
+  const unoptimized = userUnoptimized ?? (isVector || isSvg);
+
+  // Format URL gambar sesuai pengaturan
+  const imageSrc = React.useMemo(() => {
+    if (typeof src !== 'string') {
+      return src;
+    }
+    if (
+      src.startsWith('data:') ||
+      src.startsWith('http') ||
+      src.startsWith('/icons') ||
+      serverStaticImg
+    ) {
+      return src;
+    }
+    return `/images${src.startsWith('/') ? src : `/${src}`}`;
+  }, [src, serverStaticImg]);
+
+  // Tentukan apakah mode fill aktif
+  const isFillLayout = fill === true;
+
+  // Handler saat gambar berhasil dimuat
+  const handleImageLoad = () => {
+    setStatus('complete');
+    onLoadingComplete?.();
+  };
+
+  // Handler saat terjadi error saat memuat gambar
+  const handleImageError = (
+    e: React.SyntheticEvent<HTMLImageElement, Event>,
+  ) => {
+    setStatus('error');
+    if (onErrorSrc) {
+      const imgElement = e.currentTarget as HTMLImageElement;
+      imgElement.src = onErrorSrc;
+    }
+  };
+
+  // Bangun properti untuk <Image>
+  const imageProps: ImageProps = {
+    src: imageSrc,
+    alt: alt || 'Image',
+    priority,
+    onLoad: handleImageLoad,
+    onError: handleImageError,
+    unoptimized,
+    loading: priority ? 'eager' : 'lazy',
+    className: cn(
+      'h-full w-full',
+      status === 'loading' &&
+        cn('animate-pulse', `bg-${placeholderColor}`, blurClassName),
+      isVector && 'drop-shadow-none',
+      imgClassName,
+    ),
+    ...rest,
+  };
+
+  if (!isFillLayout) {
+    imageProps.width = width;
+    imageProps.height = height;
+  } else {
+    imageProps.fill = true;
+    if (!imageProps.sizes) {
+      imageProps.sizes = '100vw';
+    }
+  }
 
   return (
-    <figure style={figureStyle} className={className}>
-      <Image
-        className={cn(
-          imgClassName,
-          status === 'loading' && cn('animate-pulse bg-red-50', blurClassName),
-        )}
-        src={imageSrc}
-        width={resolvedWidth}
-        height={resolvedHeight}
-        alt={alt}
-        layout={layout}
-        onLoadingComplete={() => setStatus('complete')}
-        {...rest}
-      />
+    <figure
+      style={
+        !widthIsSet && !isFillLayout && typeof width === 'number'
+          ? { width: `${width}px` }
+          : undefined
+      }
+      className={cn('relative', className)}
+    >
+      <Image {...imageProps} />
+
+      {status === 'error' && !onErrorSrc && (
+        <div
+          className='absolute inset-0 flex items-center justify-center rounded border border-gray-200 bg-gray-100'
+          style={{ width, height }}
+        >
+          <Image
+            src='/icons/ban.svg'
+            width={64}
+            height={64}
+            alt='Error indicator'
+            className='h-1/4 w-1/4'
+          />
+        </div>
+      )}
     </figure>
   );
 }
+
+export const ImageSizes = {
+  Square: {
+    sm: { width: 64, height: 64 },
+    md: { width: 128, height: 128 },
+    lg: { width: 256, height: 256 },
+    xl: { width: 512, height: 512 },
+  },
+  Widescreen: {
+    sm: { width: 256, height: 144 },
+    md: { width: 640, height: 360 },
+    lg: { width: 1280, height: 720 },
+    xl: { width: 1920, height: 1080 },
+  },
+  Standard: {
+    sm: { width: 256, height: 192 },
+    md: { width: 640, height: 480 },
+    lg: { width: 1024, height: 768 },
+    xl: { width: 1600, height: 1200 },
+  },
+};

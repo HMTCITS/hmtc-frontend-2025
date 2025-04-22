@@ -99,7 +99,7 @@ export default function Input({
             'flex w-full rounded-md shadow-sm',
             'min-h-[2.25rem] md:min-h-[2.5rem]',
             'text-typo-dark border border-gray-300 px-3.5 py-0 caret-stone-600',
-            'ring-stone-400 focus:outline-none focus:ring-2 focus:ring-offset-2',
+            'ring-stone-400 focus:ring-2 focus:ring-offset-2 focus:outline-none',
             (readOnly || disabled) && [
               'cursor-not-allowed border-gray-300 bg-gray-100 focus:border-gray-300 focus:ring-0',
             ],
@@ -117,9 +117,9 @@ export default function Input({
             type='button'
             onClick={togglePassword}
             className={cn(
-              'absolute right-0 top-1/2 mr-3 -translate-y-1/2',
+              'absolute top-1/2 right-0 mr-3 -translate-y-1/2',
               'flex h-6 w-6 items-center justify-center rounded-md',
-              'focus:outline-none focus:ring focus:ring-stone-500',
+              'focus:ring focus:ring-stone-500 focus:outline-none',
               'text-lg text-stone-400 hover:text-stone-500',
             )}
           >

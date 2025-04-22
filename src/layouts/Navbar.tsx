@@ -1,12 +1,12 @@
 'use client';
 
-import Image from 'next/image';
 import * as React from 'react';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import { HiMenu } from 'react-icons/hi';
 import { Link as ScrollLink } from 'react-scroll';
 
 import Button from '@/components/buttons/Button';
+import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 import { NAVBAR_LINKS } from '@/constants/layout';
 import { cn } from '@/lib/utils';
@@ -34,7 +34,7 @@ export default function Navbar() {
       <div
         className={cn(
           'flex items-center justify-between bg-transparent min-[800px]:flex-row',
-          'px-6 py-1 min-[800px]:px-24',
+          'px-6 py-5.5 min-[800px]:px-24',
           isShift && [
             'bg-black shadow-sm backdrop-blur transition-colors duration-150',
           ],
@@ -44,13 +44,14 @@ export default function Navbar() {
           to='home'
           smooth={true}
           duration={500}
-          className='relative h-20 w-28 cursor-pointer'
+          className='relative h-7 w-28 cursor-pointer'
         >
-          <Image
-            src='/images/logohmtc2024.png'
+          <NextImage
+            src='logohmtc2024.png'
             alt='Kunci Transformasi Logo'
-            fill
-            style={{ objectFit: 'contain' }}
+            className='h-full w-full'
+            width={112}
+            height={28}
           />
         </ScrollLink>
 
@@ -61,15 +62,16 @@ export default function Navbar() {
         />
 
         <nav className='hidden items-center gap-6 min-[800px]:flex'>
-          {NAVBAR_LINKS.map(({ id, name, href }) => (
+          {NAVBAR_LINKS.map(({ id, name, href, offset }) => (
             <ScrollLink
               key={id}
               to={href.replace('#', '')}
               smooth={true}
               duration={500}
-              className='cursor-pointer p-2.5 font-secondary text-white-main transition-colors duration-75 hover:text-base-nav'
+              offset={offset}
+              className='font-secondary text-white-main hover:text-base-nav cursor-pointer p-2.5 transition-colors duration-75'
             >
-              <Typography className='font-satoshi'>{name}</Typography>
+              <Typography font='satoshi'>{name}</Typography>
             </ScrollLink>
           ))}
         </nav>
@@ -77,7 +79,7 @@ export default function Navbar() {
 
       <nav
         className={cn(
-          'fixed left-0 top-0 h-full w-full bg-black-main text-white',
+          'bg-black-main fixed top-0 left-0 h-full w-full text-white',
           'transition duration-200 ease-in-out',
           'grid grid-rows-2 min-[800px]:hidden',
           isSidebarOpen
@@ -87,9 +89,10 @@ export default function Navbar() {
       >
         <div className='z-10 flex flex-col items-center gap-14 px-4 py-24'>
           <ScrollLink to='home' smooth={true} duration={500} className='w-32'>
-            <Image
-              src='/images/logohmtc2024.png'
-              alt=''
+            <NextImage
+              src='logohmtc2024.png'
+              alt='Logo HMTC 2024'
+              className='h-full w-full'
               width={700}
               height={730}
             />
@@ -106,7 +109,7 @@ export default function Navbar() {
                   className='text-base-white cursor-pointer'
                   onClick={closeSidebar}
                 >
-                  <Typography as='h6' className='font-satoshi'>
+                  <Typography as='h6' font='satoshi'>
                     {name}
                   </Typography>
                 </ScrollLink>
@@ -119,7 +122,7 @@ export default function Navbar() {
           <Button
             size='large'
             icon={FaArrowLeftLong}
-            className='z-10 rounded-md bg-white text-xl font-bold text-black-main hover:bg-gray-200'
+            className='text-black-main z-10 rounded-md bg-white text-xl font-bold hover:bg-gray-200'
             onClick={closeSidebar}
           />
           <div className='relative h-1/2'></div>

@@ -11,9 +11,13 @@
 
 .embla__slide {
   position: relative;
-  min-width: 30%; /* Adjust this percentage to show the desired number of slides per view */
+  min-width: 10%; /* Adjust this percentage to show the desired number of slides per view */
   padding: 0 10px;
   box-sizing: border-box;
+}
+
+.embla__slide.lifeAtHmtc {
+  min-width: 40%;
 }
 
 .embla__slide-blog {
@@ -30,11 +34,17 @@
     padding: 0 10px;
     box-sizing: border-box;
   }
+  .embla__slide {
+    min-width: 25%;
+  }
+  .embla__slide.lifeAtHmtc {
+    min-width: 50%;
+  }
 }
 
 @media (max-width: 768px) {
   .embla__slide {
-    min-width: 90%; /* 90% for mobile screens */
+    min-width: 40%;
     flex: 0 0 var(--slide-size);
     padding-left: var(--slide-spacing);
   }
@@ -43,6 +53,15 @@
     min-width: 50%; /* Adjust this percentage to show the desired number of slides per view */
     padding: 0 10;
     box-sizing: border-box;
+  }
+  .embla__slide.lifeAtHmtc {
+    min-width: 60%;
+  }
+}
+
+@media (max-width: 640px) {
+  .embla__slide.lifeAtHmtc {
+    min-width: 70%;
   }
 }
 
@@ -53,89 +72,11 @@
     padding: 0 10;
     box-sizing: border-box;
   }
-}
-
-.embla__slide-profile {
-  position: relative;
-  min-width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.embla__slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.embla__button {
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 10px;
-}
-
-.embla__button:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.embla {
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-}
-
-.embla__container {
-  display: flex;
-  height: 100%;
-}
-
-.embla__slide {
-  position: relative;
-  min-width: 30%; /* Adjust this percentage to show the desired number of slides per view */
-  padding: 0 10px;
-  box-sizing: border-box;
-}
-
-.embla__slide-blog {
-  position: relative;
-  min-width: 25%; /* Adjust this percentage to show the desired number of slides per view */
-  padding: 0 10px;
-  box-sizing: border-box;
-}
-
-@media (max-width: 1024px) {
-  .embla__slide-blog {
-    position: relative;
-    min-width: 50%; /* Adjust this percentage to show the desired number of slides per view */
-    padding: 0 10px;
-    box-sizing: border-box;
-  }
-}
-
-@media (max-width: 768px) {
   .embla__slide {
-    min-width: 90%; /* 90% for mobile screens */
-    flex: 0 0 var(--slide-size);
-    padding-left: var(--slide-spacing);
+    min-width: 60%;
   }
-  .embla__slide-blog {
-    position: relative;
-    min-width: 50%; /* Adjust this percentage to show the desired number of slides per view */
-    padding: 0 10;
-    box-sizing: border-box;
-  }
-}
-
-@media (max-width: 500px) {
-  .embla__slide-blog {
-    position: relative;
-    min-width: 100%; /* Adjust this percentage to show the desired number of slides per view */
-    padding: 0 10;
-    box-sizing: border-box;
+  .embla__slide.lifeAtHmtc {
+    min-width: 100%;
   }
 }
 

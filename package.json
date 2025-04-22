@@ -13,12 +13,14 @@
     "format:write": "prettier --write .",
     "format:check": "prettier --check .",
     "format": "pnpm run format:write && pnpm run lint:fix && pnpm run typecheck && pnpm run lint:strict",
-    "prepare": "husky install",
+    "prepare": "husky init",
     "test": "jest",
     "test:watch": "jest --watch"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
+    "@radix-ui/react-slot": "^1.2.0",
+    "@sentry/nextjs": "^9.13.0",
     "@tanstack/react-query": "^5.66.7",
     "@tanstack/react-query-devtools": "^5.66.7",
     "auto-zustand-selectors-hook": "^3.0.1",
@@ -74,6 +76,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
     "postcss": "8.5.2",
-    "prettier": "^3.5.1"
+    "prettier": "^3.5.1",
+    "prettier-plugin-tailwindcss": "^0.6.11"
   }
 }
