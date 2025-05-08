@@ -153,14 +153,20 @@ export default function NextImage({
       {status === 'error' && !onErrorSrc && (
         <div
           className='absolute inset-0 flex items-center justify-center rounded border border-gray-200 bg-gray-100'
-          style={{ width, height }}
+          style={
+            !isFillLayout &&
+            typeof width === 'number' &&
+            typeof height === 'number'
+              ? { width: `${width}px`, height: `${height}px` }
+              : undefined
+          }
         >
           <Image
             src='/icons/ban.svg'
-            width={64}
-            height={64}
+            fill
             alt='Error indicator'
-            className='h-1/4 w-1/4'
+            className='object-contain'
+            unoptimized
           />
         </div>
       )}
