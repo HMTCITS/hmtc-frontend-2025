@@ -109,7 +109,7 @@ export default function PeopleHMTC() {
                 <NextImage
                   width={200}
                   height={200}
-                  src='/icons/Frame (1).svg'
+                  src='/icons/Frame_1.svg'
                   alt='People Icon'
                   className='h-6 w-6'
                 />
@@ -141,7 +141,7 @@ export default function PeopleHMTC() {
                 <NextImage
                   width={200}
                   height={200}
-                  src='/icons/Frame (2).svg'
+                  src='/icons/Frame_2.svg'
                   alt='Proker Icon'
                   className='h-6 w-6'
                 />

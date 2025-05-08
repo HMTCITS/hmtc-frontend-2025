@@ -116,6 +116,15 @@ const nextConfig = {
 
     return config;
   },
+  images: {
+    dangerouslyAllowSVG: true,
+    formats: ['image/avif', 'image/webp'],
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    // If you're using remote domains
+    domains: [],
+    // Path prefixes that should be allowed
+    remotePatterns: [],
+  },
 };
 
 module.exports = nextConfig;
