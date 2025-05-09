@@ -1,0 +1,32 @@
+name: 'CI/CD Deploy'
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+
+      - name: Add host to known_hosts
+        run: |
+          # ensure DEPLOY_HOST secret is set in repo settings
+          if [ -z "${{ secrets.DEPLOY_HOST }}" ]; then
+            echo "ERROR: DEPLOY_HOST is not defined!" >&2
+            exit 1
+          fi
+          ssh-keyscan -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Deploy Frontend Only
+        run: |
+          ssh deploy@"${{ secrets.DEPLOY_HOST }}" \
+            '/opt/deployment/scripts/deploy.sh frontend'
