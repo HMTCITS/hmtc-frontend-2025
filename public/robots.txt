@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://hmtc-its.com
+
+# Sitemaps
+Sitemap: https://hmtc-its.com/sitemap.xml
