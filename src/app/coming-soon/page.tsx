@@ -1,7 +1,13 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 
 import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
+
+export const metadata: Metadata = {
+  title: 'Coming Soon • HMTC ITS',
+  robots: { index: false, follow: false },
+};
 
 export default function ComingSoon() {
   return (
