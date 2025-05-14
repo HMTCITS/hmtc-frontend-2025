@@ -1,144 +1,189 @@
-# robots.txt for hmtc-its.com
-# Allow all bots by default, except AI-related bots
-
+# *
 User-agent: *
-Disallow:
-Sitemap: https://hmtc-its.com/sitemap.xml
+Allow: /
 
-# —————————————————————
-# Block specific AI-related bots
-# —————————————————————
+# AI2Bot
 User-agent: AI2Bot
 Disallow: /
 
+# Amazonbot
 User-agent: Amazonbot
 Disallow: /
 
+# amazon-kendra
 User-agent: amazon-kendra
 Disallow: /
 
+# anthropic-ai
 User-agent: anthropic-ai
 Disallow: /
 
+# Applebot
 User-agent: Applebot
 Disallow: /
 
+# Applebot-Extended
 User-agent: Applebot-Extended
 Disallow: /
 
+# AwarioRssBot
 User-agent: AwarioRssBot
 Disallow: /
 
+# AwarioSmartBot
 User-agent: AwarioSmartBot
 Disallow: /
 
+# Brightbot
 User-agent: Brightbot
 Disallow: /
 
+# Bytespider
 User-agent: Bytespider
 Disallow: /
 
+# ChatGPT-User
 User-agent: ChatGPT-User
 Disallow: /
 
+# ClaudeBot
 User-agent: ClaudeBot
 Disallow: /
 
+# Diffbot
 User-agent: Diffbot
 Disallow: /
 
+# DuckAssistBot
 User-agent: DuckAssistBot
 Disallow: /
 
+# FacebookBot
 User-agent: FacebookBot
 Disallow: /
 
+# FriendlyCrawler
 User-agent: FriendlyCrawler
 Disallow: /
 
+# Google-Extended
 User-agent: Google-Extended
 Disallow: /
 
+# GPTBot
 User-agent: GPTBot
 Disallow: /
 
+# iaskspider/2.0
 User-agent: iaskspider/2.0
 Disallow: /
 
+# ICC-Crawler
 User-agent: ICC-Crawler
 Disallow: /
 
+# img2dataset
 User-agent: img2dataset
 Disallow: /
 
+# Kangaroo Bot
 User-agent: Kangaroo Bot
 Disallow: /
 
+# LinerBot
 User-agent: LinerBot
 Disallow: /
 
+# MachineLearningForPeaceBot
 User-agent: MachineLearningForPeaceBot
 Disallow: /
 
+# Meltwater
 User-agent: Meltwater
 Disallow: /
 
+# meta-externalagent
 User-agent: meta-externalagent
 Disallow: /
 
+# meta-externalfetcher
 User-agent: meta-externalfetcher
 Disallow: /
 
+# Nicecrawler
 User-agent: Nicecrawler
 Disallow: /
 
+# OAI-SearchBot
 User-agent: OAI-SearchBot
 Disallow: /
 
+# omgili
 User-agent: omgili
 Disallow: /
 
+# omgilibot
 User-agent: omgilibot
 Disallow: /
 
+# PanguBot
 User-agent: PanguBot
 Disallow: /
 
+# PerplexityBot
 User-agent: PerplexityBot
 Disallow: /
 
+# Perplexity-User
 User-agent: Perplexity-User
 Disallow: /
 
+# PetalBot
 User-agent: PetalBot
 Disallow: /
 
+# PiplBot
 User-agent: PiplBot
 Disallow: /
 
+# QualifiedBot
 User-agent: QualifiedBot
 Disallow: /
 
+# Scoop.it
 User-agent: Scoop.it
 Disallow: /
 
+# Seekr
 User-agent: Seekr
 Disallow: /
 
+# SemrushBot-OCOB
 User-agent: SemrushBot-OCOB
 Disallow: /
 
+# Sidetrade indexer bot
 User-agent: Sidetrade indexer bot
 Disallow: /
 
+# Timpibot
 User-agent: Timpibot
 Disallow: /
 
+# VelenPublicWebCrawler
 User-agent: VelenPublicWebCrawler
 Disallow: /
 
+# Webzio-Extended
 User-agent: Webzio-Extended
 Disallow: /
 
+# YouBot
 User-agent: YouBot
 Disallow: /
+
+# Host
+Host: https://hmtc-its.com
+
+# Sitemaps
+Sitemap: https://hmtc-its.com/sitemap.xml

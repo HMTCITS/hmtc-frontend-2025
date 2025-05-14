@@ -7,7 +7,7 @@ import Navbar from '@/layouts/Navbar';
 export const metadata: Metadata = {
   title: { default: 'Beranda', template: '%s • HMTC ITS' },
   description:
-    'Selamat datang di HMTC ITS – workplace teknologi kreatif mahasiswa ITS.',
+    'Selamat datang di Himpunan Mahasiswa Teknik Komputer (HMTC) ITS — workshop, galeri, blog, dan komunitas mahasiswa.',
   alternates: { canonical: 'https://hmtc-its.com' },
   robots: { index: true, follow: true },
 };

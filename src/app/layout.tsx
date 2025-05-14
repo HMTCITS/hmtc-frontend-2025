@@ -91,10 +91,10 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: '/favicon.ico',
-    apple: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    other: [{ rel: 'mask-icon', url: '/favicon.ico', color: '#ff6600' }],
+    icon: '/favicon.ico?v=2',
+    apple: '/favicon.ico?v=2',
+    shortcut: '/favicon.ico?v=2',
+    other: [{ rel: 'mask-icon', url: '/favicon.ico?v=2', color: '#ff6600' }],
   },
 
   openGraph: {
