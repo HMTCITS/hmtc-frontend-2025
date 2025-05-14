@@ -196,7 +196,6 @@ module.exports = {
         disallow: '/',
       },
     ],
-    additionalSitemaps: ['https://hmtc-its.com/sitemap.xml'],
   },
   priority: 0.7,
 };
