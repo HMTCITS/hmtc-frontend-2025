@@ -26,14 +26,57 @@ export const metadata: Metadata = {
     'HMTC ITS • Organisasi Mahasiswa Teknologi dan Kreativitas di ITS—workshop, galeri, blog, dan komunitas mahasiswa.',
 
   applicationName: 'HMTC ITS',
+
   keywords: [
+    // versi capital
     'HMTC',
     'HMTC ITS',
     'Himpunan Mahasiswa Teknik Komputer',
+    'Himpunan Mahasiswa Teknik Komputer ITS',
     'Institut Teknologi Sepuluh Nopember',
     'ITS',
-    'Himpunan Mahasiswa Teknik Komputer ITS',
+
+    // versi lowercase
+    'hmtc',
+    'hmtc its',
+    'himpunan mahasiswa teknik komputer',
+    'himpunan mahasiswa teknik komputer its',
+    'institut teknologi sepuluh nopember',
+    'its',
+
+    // long-tail & variasi bahasa Indonesia
+    'hmtc its website resmi',
+    'komunitas mahasiswa teknik komputer its',
+    'kegiatan hmtc its',
+    'agenda hmtc its',
+    'acara hmtc its',
+    'blog hmtc its',
+    'berita hmtc its',
+    'profil hmtc its',
+    'struktur organisasi hmtc its',
+    'visi misi hmtc its',
+    'kontak hmtc its',
+    'pengumuman hmtc its',
+    'pengurus hmtc its',
+    'galeri hmtc its',
+    'dokumentasi hmtc its',
+
+    // long-tail & variasi bahasa Inggris
+    'computer engineering student association its',
+    'hmtc student community its',
+    'hmTC ITS events',
+    'hmTC workshop its',
+    'hmTC competition its',
+    'technical computer student association its',
+
+    // tech & domain-specific
+    'hmtc-its.com',
+    'sitemap hmtc its',
+    'favicon hmtc its',
+    'seo nextjs hmtc its',
+    'nextjs metadata hmtc its',
   ],
+
   authors: [
     {
       name: 'HMTC ITS',
