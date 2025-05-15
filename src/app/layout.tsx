@@ -4,6 +4,7 @@ import '@/styles/embla.css';
 import type { Metadata } from 'next';
 
 import Providers from '@/app/providers';
+import JsonLd from '@/components/JsonLd';
 import {
   adelphe,
   inter,
@@ -18,7 +19,8 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://hmtc-its.com'),
 
   title: {
-    default: 'Beranda',
+    default:
+      'HMTC ITS | Himpunan Mahasiswa Teknik Komputer Institut Teknologi Sepuluh Nopember',
     template: '%s | HMTC ITS',
   },
 
@@ -97,6 +99,7 @@ export const metadata: Metadata = {
 
   icons: {
     icon: [
+      { url: '/favicon.ico', sizes: 'any', type: 'image/png' },
       { url: '/favicon16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon32x32.png', sizes: '32x32', type: 'image/png' },
       { url: '/favicon48x48.png', sizes: '48x48', type: 'image/png' },
@@ -164,6 +167,10 @@ export default function RootLayout({
           'scroll-smooth',
         )}
       >
+        <JsonLd
+          title='HMTC ITS - Himpunan Mahasiswa Teknik Komputer'
+          description='Himpunan Mahasiswa Teknik Komputer ITS - wadah kreativitas dan kegiatan mahasiswa.'
+        />
         <Providers>{children}</Providers>
       </body>
     </html>
