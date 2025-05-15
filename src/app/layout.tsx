@@ -18,14 +18,23 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://hmtc-its.com'),
 
   title: {
-    default: 'HMTC ITS',
+    default: 'Beranda',
     template: '%s | HMTC ITS',
   },
 
   description:
-    'HMTC ITS • Organisasi Mahasiswa Teknologi dan Kreativitas di ITS—workshop, galeri, blog, dan komunitas mahasiswa.',
+    'Selamat datang di Himpunan Mahasiswa Teknik Komputer (HMTC) ITS — workshop, galeri, blog, dan komunitas mahasiswa.',
 
   applicationName: 'HMTC ITS',
+
+  authors: [
+    {
+      name: 'HMTC ITS',
+      url: 'https://arek.its.ac.id/hmtc/',
+    },
+  ],
+
+  publisher: 'Institut Teknologi Sepuluh Nopember',
 
   keywords: [
     // versi capital
@@ -77,17 +86,13 @@ export const metadata: Metadata = {
     'nextjs metadata hmtc its',
   ],
 
-  authors: [
-    {
-      name: 'HMTC ITS',
-      url: 'https://arek.its.ac.id/hmtc/',
-    },
-  ],
-
-  publisher: 'Institut Teknologi Sepuluh Nopember',
-
   alternates: {
     canonical: 'https://hmtc-its.com',
+  },
+
+  robots: {
+    index: true,
+    follow: true,
   },
 
   icons: {
@@ -127,14 +132,17 @@ export const metadata: Metadata = {
     locale: 'id_ID',
   },
 
+  twitter: {
+    card: 'summary_large_image',
+    title: 'HMTC ITS',
+    description:
+      'Organisasi Mahasiswa Teknologi dan Kreativitas di ITS—workshop, galeri, blog, komunitas.',
+    images: ['https://hmtc-its.com/images/halamandepan.png'],
+  },
+
   other: {
     instagram: ['https://www.instagram.com/hmtc_its/'],
     'university-profile': ['https://arek.its.ac.id/hmtc/'],
-  },
-
-  robots: {
-    index: true,
-    follow: true,
   },
 };
 
