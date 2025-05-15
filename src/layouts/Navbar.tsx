@@ -48,10 +48,12 @@ export default function Navbar() {
         >
           <NextImage
             src='logohmtc2024.png'
-            alt='Kunci Transformasi Logo'
-            className='h-full w-full'
+            alt='Logo HMTC ITS 2024'
             width={112}
             height={28}
+            className='h-full w-full'
+            quality={80}
+            priority={false}
           />
         </ScrollLink>
 
@@ -91,10 +93,11 @@ export default function Navbar() {
           <ScrollLink to='home' smooth={true} duration={500} className='w-32'>
             <NextImage
               src='logohmtc2024.png'
-              alt='Logo HMTC 2024'
-              className='h-full w-full'
+              alt='Logo HMTC ITS 2024'
               width={700}
               height={730}
+              className='h-full w-full'
+              quality={80}
             />
           </ScrollLink>
 

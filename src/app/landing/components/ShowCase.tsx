@@ -14,9 +14,8 @@ export default function ShowCase() {
       <div className='relative h-screen w-full'>
         <NextImage
           src='/fotohmtc2024.png'
-          alt='fotohmtc'
+          alt='Foto HMTC 2024'
           className='h-full w-full object-cover'
-          priority
           style={{ objectFit: 'cover' }}
           width={1512}
           height={735}

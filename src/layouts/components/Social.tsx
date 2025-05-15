@@ -13,7 +13,7 @@ export default function SocialCard({
     <ButtonLink
       variant='light'
       href={href}
-      className='full rounded text-black'
+      className='full rounded text-black hover:bg-text-black'
       icon={Icon}
     />
   );

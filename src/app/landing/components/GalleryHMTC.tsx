@@ -22,7 +22,7 @@ const GalleryHMTC: React.FC = () => {
           {/* Gambar 1 */}
           <NextImage
             src='/gallery/gallery-1.jpg'
-            alt='Gallery image 1'
+            alt='Foto Wisuda TC 2024'
             className='relative mb-6 w-[320px] md:w-[500px] lg:absolute lg:top-[45%] lg:-left-[20%] lg:h-[335px] lg:w-[500px]'
             imgClassName='relative h-full object-cover'
             width={500}
@@ -32,7 +32,7 @@ const GalleryHMTC: React.FC = () => {
           {/* Gambar 2 */}
           <NextImage
             src='/gallery/gallery-2.jpg'
-            alt='Gallery image 2'
+            alt='Foto Wisuda TC 2024'
             className='mb-6 h-[375px] w-[320px] md:w-[500px] lg:absolute lg:top-[30%] lg:left-[19%] lg:h-[375px] lg:w-[325px]'
             imgClassName='relative h-full object-cover'
             width={325}
@@ -42,7 +42,7 @@ const GalleryHMTC: React.FC = () => {
           {/* Gambar 3 */}
           <NextImage
             src='/gallery/gallery-3.jpg'
-            alt='Gallery image 3'
+            alt='Foto Wisuda TC 2024'
             className='mb-6 h-[214px] w-[320px] md:h-auto md:w-[500px] lg:absolute lg:top-[40%] lg:left-[44%] lg:h-[370px] lg:w-[455px]'
             imgClassName='relative h-full object-cover'
             width={455}
@@ -52,7 +52,7 @@ const GalleryHMTC: React.FC = () => {
           {/* Gambar 4 */}
           <NextImage
             src='/gallery/gallery-4.jpg'
-            alt='Gallery image 4'
+            alt='Foto Wisuda TC 2024'
             className='mb-6 h-[214px] w-[320px] md:h-auto md:w-[500px] lg:absolute lg:top-0 lg:-right-[4%] lg:h-[360px] lg:w-[355px]'
             imgClassName='relative h-full object-cover'
             width={355}

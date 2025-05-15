@@ -93,7 +93,7 @@ const LifeAtHMTC: React.FC = () => {
                   <div className='relative flex h-[390px] w-[425px] md:h-[480px] lg:h-[530px]'>
                     <NextImage
                       src={post.image}
-                      alt={`Post ${index + 1}`}
+                      alt={`Post ${index + 1} Kehidupan Sehari hari anak TC`}
                       width={425}
                       height={530}
                       className='h-full w-full'

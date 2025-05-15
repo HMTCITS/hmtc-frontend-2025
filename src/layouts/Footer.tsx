@@ -70,8 +70,8 @@ export default function Footer() {
   return (
     <footer
       className={cn(
-        'bg-blue-1000 w-full px-6 py-12 md:px-24',
-        'bg-base-dark flex flex-col items-center gap-6 text-white md:gap-6',
+        'w-full px-6 py-12 md:px-24',
+        'flex flex-col items-center gap-6 bg-text-black text-white md:gap-6',
       )}
     >
       <div
@@ -84,11 +84,12 @@ export default function Footer() {
           <div className='w-12'>
             <NextImage
               src='/logohmtc1.png'
-              alt='Logo'
+              alt='Logo HTMC ITS 2024'
               width={1440}
               height={1440}
-              priority
               className='h-[55.09px] w-[48.62px]'
+              quality={80}
+              priority={false}
             />
           </div>
           <div>

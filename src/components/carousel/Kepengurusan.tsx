@@ -46,11 +46,11 @@ export default function Kepengurusan() {
       }}
       modules={[Autoplay, Keyboard, Scrollbar, Navigation, Pagination]}
     >
-      <button className='swiper-button-next ring-base-dark !h-12 !w-12 rounded-full bg-white p-2.5 ring-2 hover:bg-gray-100'>
-        <FiChevronRight className='text-base-dark !text-xs' />
+      <button className='swiper-button-next !h-12 !w-12 rounded-full bg-white p-2.5 ring-2 ring-text-black hover:bg-gray-100'>
+        <FiChevronRight className='!text-xs text-text-black' />
       </button>
-      <button className='swiper-button-prev ring-base-dark !h-12 !w-12 rounded-full bg-white p-2.5 ring-2 hover:bg-gray-100'>
-        <FiChevronLeft className='text-base-dark !text-xs' />
+      <button className='swiper-button-prev !h-12 !w-12 rounded-full bg-white p-2.5 ring-2 ring-text-black hover:bg-gray-100'>
+        <FiChevronLeft className='!text-xs text-text-black' />
       </button>
       {Anggota.map(({ ...props }, index) => (
         <SwiperSlide

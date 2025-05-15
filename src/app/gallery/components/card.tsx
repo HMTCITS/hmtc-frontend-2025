@@ -23,7 +23,7 @@ export default function Card({ item }: CardProps) {
         />
         <NextImage
           src='/gallery/WavyCardGallery.svg'
-          alt=''
+          alt='Gelombang Card Gallery'
           isVector
           width={296}
           height={22}
@@ -50,10 +50,6 @@ export default function Card({ item }: CardProps) {
         <div className='mt-4 flex justify-end'>
           <Link
             href={item.link}
-            onClick={(e) => {
-              e.preventDefault();
-              alert(`Detail ID ${item.id}`);
-            }}
             className='flex items-center gap-2 border-b text-[#00AAE7] hover:text-[#0085b8]'
           >
             <Typography variant='b3' font='satoshi'>
