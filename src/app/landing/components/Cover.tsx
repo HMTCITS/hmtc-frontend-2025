@@ -7,11 +7,12 @@ export default function Cover() {
       <div className='h-full overflow-hidden'>
         <NextImage
           src='halamandepan.png'
-          alt='Background'
+          alt='Background Beranda HMTC 2025'
           className='z-0 h-screen min-h-[415px] w-full sm:min-h-[470px] lg:min-h-[768px] xl:min-h-[890px] 2xl:min-h-[768px]'
           imgClassName='h-full w-full object-cover object-center'
           width={1512}
           height={982}
+          priority
         />
         <div className='absolute inset-0 z-10 h-full w-full bg-black opacity-75'></div>
       </div>

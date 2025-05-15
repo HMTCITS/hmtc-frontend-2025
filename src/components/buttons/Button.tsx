@@ -93,12 +93,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               'hover:bg-zinc-100 disabled:bg-zinc-200',
             ],
             variant === 'netral' && [
-              'text-base-dark bg-white',
+              'bg-white text-text-black',
               'ring-2 ring-black-main',
               'hover:bg-zinc-100 disabled:bg-zinc-200',
             ],
             variant === 'light' && [
-              'text-base-dark bg-white',
+              'bg-white text-text-black',
               'hover:bg-base-subtle hover:text-white disabled:bg-zinc-200',
             ],
           ],
@@ -114,7 +114,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
               variant === 'primary' && 'text-white',
               variant === 'secondary' && 'text-orange-main',
-              variant === 'netral' && 'text-base-dark',
+              variant === 'netral' && 'text-text-black',
             )}
           >
             <ImSpinner2 className='animate-spin' />

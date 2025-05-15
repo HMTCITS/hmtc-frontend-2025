@@ -9,17 +9,16 @@ export default function Gallery() {
         <div className='relative h-[600px]'>
           <NextImage
             src='/gallery/Wisuda3.JPG'
-            alt='gallery-1'
+            alt='Foto Wisuda TC 2024'
             fill
             className='object-cover'
             sizes='(max-width: 768px) 100vw, 400px'
-            priority
           />
         </div>
         <div className='relative col-span-2 h-[500px]'>
           <NextImage
             src='/gallery/2.png'
-            alt='gallery-2'
+            alt='Foto Wisuda TC 2024'
             fill
             className='object-cover'
             sizes='(max-width: 768px) 100vw, 500px'
@@ -30,7 +29,7 @@ export default function Gallery() {
       <div className='relative h-[600px] w-full'>
         <NextImage
           src='/gallery/Wisuda.JPG'
-          alt='gallery-3'
+          alt='Foto Wisuda TC 2024'
           fill
           className='object-cover'
           sizes='(max-width: 768px) 100vw, 600px'
@@ -41,7 +40,7 @@ export default function Gallery() {
         <div className='relative col-span-2 h-[500px]'>
           <NextImage
             src='/gallery/HGTC.JPG'
-            alt='gallery-4'
+            alt='Foto Wisuda TC 2024'
             fill
             className='object-cover'
             sizes='(max-width: 768px) 100vw, 500px'
@@ -50,7 +49,7 @@ export default function Gallery() {
         <div className='relative h-[500px]'>
           <NextImage
             src='/gallery/5.png'
-            alt='gallery-5'
+            alt='Foto Wisuda TC 2024'
             fill
             className='object-cover'
             sizes='(max-width: 768px) 100vw, 300px'

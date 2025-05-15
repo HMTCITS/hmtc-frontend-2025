@@ -12,12 +12,13 @@ export default function About() {
           <div className='flex w-full justify-center lg:w-1/2'>
             <NextImage
               src='/fotbarhmtc2024.png'
-              alt='HMTC Informatics'
+              alt='Foto bersama dengan HMTC 2024'
               width={550}
               height={400}
               className='w-full max-w-[500px] rounded-[15px] object-cover'
               imgClassName='object-cover'
-              priority
+              quality={90}
+              priority={false}
             />
           </div>
           <div className='mt-8 text-left md:pt-8 lg:mt-0 lg:ml-8 lg:w-1/2'>
