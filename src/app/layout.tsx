@@ -91,10 +91,23 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: '/favicon.ico?v=2',
-    apple: '/favicon.ico?v=2',
-    shortcut: '/favicon.ico?v=2',
-    other: [{ rel: 'mask-icon', url: '/favicon.ico?v=2', color: '#ff6600' }],
+    icon: [
+      { url: '/favicon16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon48x48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/favicon64x64.png', sizes: '64x64', type: 'image/png' },
+      { url: '/favicon128x128.png', sizes: '128x128', type: 'image/png' },
+      { url: '/favicon256x256.png', sizes: '256x256', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon-180x180.png',
+    shortcut: '/favicon256x256.png',
+    other: [
+      {
+        rel: 'mask-icon',
+        url: '/favicon256x256.png',
+        color: '#ff6600',
+      },
+    ],
   },
 
   openGraph: {
