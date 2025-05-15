@@ -40,7 +40,7 @@ export default function Error() {
       {/* Tautan untuk kembali ke halaman utama */}
       <Link
         href='/'
-        className='font-satoshi border-b-[1.5px] border-b-gray-800 text-xl font-medium transition-colors duration-150 hover:text-gray-400 md:text-xl lg:text-2xl'
+        className='border-b-[1.5px] border-b-gray-800 font-satoshi text-xl font-medium transition-colors duration-150 hover:text-gray-400 md:text-xl lg:text-2xl'
       >
         &larr; Go back
       </Link>

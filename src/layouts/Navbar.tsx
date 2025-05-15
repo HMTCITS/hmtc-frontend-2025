@@ -69,7 +69,7 @@ export default function Navbar() {
               smooth={true}
               duration={500}
               offset={offset}
-              className='font-secondary text-white-main hover:text-base-nav cursor-pointer p-2.5 transition-colors duration-75'
+              className='font-secondary hover:text-base-nav cursor-pointer p-2.5 text-white-main transition-colors duration-75'
             >
               <Typography font='satoshi'>{name}</Typography>
             </ScrollLink>
@@ -79,7 +79,7 @@ export default function Navbar() {
 
       <nav
         className={cn(
-          'bg-black-main fixed top-0 left-0 h-full w-full text-white',
+          'fixed top-0 left-0 h-full w-full bg-black-main text-white',
           'transition duration-200 ease-in-out',
           'grid grid-rows-2 min-[800px]:hidden',
           isSidebarOpen
@@ -122,7 +122,7 @@ export default function Navbar() {
           <Button
             size='large'
             icon={FaArrowLeftLong}
-            className='text-black-main z-10 rounded-md bg-white text-xl font-bold hover:bg-gray-200'
+            className='z-10 rounded-md bg-white text-xl font-bold text-black-main hover:bg-gray-200'
             onClick={closeSidebar}
           />
           <div className='relative h-1/2'></div>

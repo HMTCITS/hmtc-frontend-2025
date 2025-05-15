@@ -94,7 +94,7 @@ export default function Footer() {
           <div>
             <Typography
               variant='h2'
-              className='font-inter flex flex-col text-sm'
+              className='flex flex-col font-inter text-sm'
             >
               <span>Kunci</span>
               <span>Transformasi.</span>
@@ -135,7 +135,7 @@ export default function Footer() {
                   smooth={true}
                   duration={500}
                   offset={offset}
-                  className='font-secondary text-white-main hover:text-base-nav cursor-pointer transition-colors duration-75'
+                  className='font-secondary hover:text-base-nav cursor-pointer text-white-main transition-colors duration-75'
                 >
                   <Typography
                     font='poppins'
@@ -178,7 +178,7 @@ export default function Footer() {
                   to={href.replace('#', '')}
                   smooth={true}
                   duration={500}
-                  className='font-secondary text-white-main hover:text-base-nav cursor-pointer transition-colors duration-75'
+                  className='font-secondary hover:text-base-nav cursor-pointer text-white-main transition-colors duration-75'
                 >
                   <Typography
                     font='poppins'
@@ -192,7 +192,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className='border-black-main h-1 w-full border-t'></div>
+      <div className='h-1 w-full border-t border-black-main'></div>
       <div className='flex w-full flex-col items-center justify-center gap-y-6 md:flex-row md:justify-between'>
         <Typography
           variant='s2'
