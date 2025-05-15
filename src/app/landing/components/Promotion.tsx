@@ -11,7 +11,7 @@ interface TextComponentProps {
 
 const VisiMisi: React.FC<TextComponentProps> = ({ text1, text2 }) => {
   return (
-    <section className='bg-orange-main font-primary relative flex h-fit w-full justify-center overflow-hidden text-white'>
+    <section className='font-primary relative flex h-fit w-full justify-center overflow-hidden bg-orange-main text-white'>
       <div className='flex w-full flex-col justify-between gap-y-6 px-6 py-10 md:w-4/5 md:flex-row md:px-0 md:py-20'>
         <div className='w-full space-y-8'>
           <Typography as='h1' variant='k1' className='max-w-xl'>

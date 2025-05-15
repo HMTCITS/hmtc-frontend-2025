@@ -40,7 +40,7 @@ export default function ComingSoon() {
 
         <Link
           href='/'
-          className='font-satoshi mt-3 border-b-[1.5px] border-b-white text-sm font-medium transition-colors duration-150 hover:text-gray-400 md:text-base lg:mt-4 lg:text-xl'
+          className='mt-3 border-b-[1.5px] border-b-white font-satoshi text-sm font-medium transition-colors duration-150 hover:text-gray-400 md:text-base lg:mt-4 lg:text-xl'
         >
           &larr; Go back
         </Link>

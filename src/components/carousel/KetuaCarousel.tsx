@@ -65,11 +65,11 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
           <h2 className='font-adelphe text-base text-[#FFFFFF] uppercase'>
             History of HMTC
           </h2>
-          <h1 className='font-adelphe w-full text-4xl leading-[40px] font-bold text-[#FFFFFF] lg:text-5xl lg:leading-[53px]'>
+          <h1 className='w-full font-adelphe text-4xl leading-[40px] font-bold text-[#FFFFFF] lg:text-5xl lg:leading-[53px]'>
             Get to Know The Chairman of HMTC
           </h1>
 
-          <p className='font-satoshi text-justify text-base leading-[20px] text-[#FFFFFF] lg:text-lg lg:leading-[25px]'>
+          <p className='text-justify font-satoshi text-base leading-[20px] text-[#FFFFFF] lg:text-lg lg:leading-[25px]'>
             Sejarah HMTC dibangun oleh para pemimpin visioner yang telah
             memberikan kontribusi besar dalam membentuk organisasi HMTC ini.
             Dengan dedikasi dan semangat kepemimpinan mereka, HMTC terus

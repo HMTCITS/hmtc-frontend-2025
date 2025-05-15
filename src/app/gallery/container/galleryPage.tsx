@@ -145,7 +145,7 @@ export default function GalleryPage() {
       <NavbarGallery />
 
       <main className='relative min-h-screen bg-white'>
-        <div className='mx-auto max-w-7xl px-4 py-10 pt-36'>
+        <div className='mx-auto max-w-7xl px-[60px] py-10 pt-36 pb-10'>
           <div className='mb-7 text-center'>
             <Typography
               variant='s0'

@@ -6,7 +6,7 @@ import Typography from '@/components/Typography';
 export default function Everblue() {
   return (
     <section className='flex w-full flex-col items-center justify-center gap-x-14 gap-y-6 py-10 md:py-24 lg:flex-col'>
-      <div className='text-black-main order-2 w-full space-y-6 lg:order-1'>
+      <div className='order-2 w-full space-y-6 text-black-main lg:order-1'>
         <Typography
           as='h1'
           variant='k1'
