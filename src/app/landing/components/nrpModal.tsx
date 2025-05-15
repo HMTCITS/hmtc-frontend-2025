@@ -46,7 +46,7 @@ export default function RestrictedModal({
         // landing → push along the ?nrp param
         router.push(`/gallery?nrp=${encodeURIComponent(nrp)}`);
       } else {
-        // in‐gallery: hide modal and notify parent
+        // in-gallery: hide modal and notify parent
         setIsOpen(false);
         onAuthorized?.(nrp);
       }
@@ -65,7 +65,7 @@ export default function RestrictedModal({
       {isLandingPage && (
         <Typography
           variant='b2'
-          className='font-satoshi w-full max-w-7xl cursor-pointer text-right font-medium text-black underline underline-offset-4'
+          className='w-full max-w-7xl cursor-pointer text-right font-satoshi font-medium text-black underline underline-offset-4'
           onClick={() => {
             setStep('input');
             setIsOpen(true);

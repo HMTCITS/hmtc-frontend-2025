@@ -3,13 +3,15 @@ import React from 'react';
 import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 
+import RestrictedModal from './nrpModal';
+
 const GalleryHMTC: React.FC = () => {
   return (
     <section className='flex flex-col bg-white p-8 pt-0 font-sans md:py-10 md:pt-[100px] lg:px-0'>
       <Typography
         as='h1'
         variant='j1'
-        className='font-adelphe left-0 w-full pb-[50px] text-left text-3xl font-bold max-md:pt-20 max-md:text-center md:px-[10%] md:pb-[40px] md:text-3xl lg:max-w-[70%] lg:pb-[70px] lg:text-5xl lg:leading-[1.2]'
+        className='left-0 w-full pb-[50px] text-left font-adelphe text-3xl font-bold max-md:pt-20 max-md:text-center md:px-[10%] md:pb-[40px] md:text-3xl lg:max-w-[70%] lg:pb-[70px] lg:text-5xl lg:leading-[1.2]'
         id='gallery'
       >
         From Capturing Moments to Sharing Memories
@@ -60,14 +62,7 @@ const GalleryHMTC: React.FC = () => {
       </div>
 
       <div className='mt-4 mr-4 flex w-full justify-center md:mt-6 md:mr-10'>
-        <Typography
-          as='a'
-          href='/gallery'
-          variant='b2'
-          className='font-satoshi w-full max-w-7xl text-right font-medium text-black underline underline-offset-4'
-        >
-          Explore Gallery HMTC &rarr;
-        </Typography>
+        <RestrictedModal isLandingPage={true} initialOpen={false} />
       </div>
     </section>
   );

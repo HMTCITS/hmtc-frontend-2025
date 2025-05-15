@@ -23,7 +23,6 @@ export default function NavbarGallery() {
 
   return (
     <header className='fixed top-0 z-[100] w-full'>
-      {/* Top bar */}
       <div
         className={cn(
           'flex items-center justify-between px-6 py-5.5 min-[800px]:px-24',
@@ -32,7 +31,6 @@ export default function NavbarGallery() {
             : 'bg-transparent',
         )}
       >
-        {/* Logo always links home */}
         <Link href='/' scroll={false} className='relative h-7 w-28'>
           <NextImage
             src='logohmtc2024black.png'
@@ -44,14 +42,12 @@ export default function NavbarGallery() {
           />
         </Link>
 
-        {/* Mobile menu button */}
         <Button
           icon={HiMenu}
           className='ml-auto min-[800px]:hidden'
           onClick={() => setIsSidebarOpen(true)}
         />
 
-        {/* Desktop nav */}
         <nav className='hidden items-center gap-6 min-[800px]:flex'>
           {NAVBAR_LINKS.map(({ id, name, href }) => {
             const anchor = href.replace('#', '');
@@ -60,7 +56,7 @@ export default function NavbarGallery() {
                 key={id}
                 href={`/#${anchor}`}
                 scroll={false}
-                className='font-secondary text-white-main hover:text-base-nav p-2.5 transition-colors duration-75'
+                className='font-secondary hover:text-base-nav p-2.5 text-white-main transition-colors duration-75'
               >
                 <Typography
                   font='satoshi'
@@ -77,17 +73,15 @@ export default function NavbarGallery() {
         </nav>
       </div>
 
-      {/* Mobile sidebar */}
       <nav
         className={cn(
-          'bg-black-main fixed top-0 left-0 grid h-full w-full grid-rows-2 text-white transition-transform duration-200 ease-in-out min-[800px]:hidden',
+          'fixed top-0 left-0 grid h-full w-full grid-rows-2 bg-black-main text-white transition-transform duration-200 ease-in-out min-[800px]:hidden',
           isSidebarOpen
             ? 'translate-x-0 opacity-100'
             : '-translate-x-full opacity-0',
         )}
       >
         <div className='flex flex-col items-center gap-14 px-4 py-24'>
-          {/* Logo in sidebar */}
           <Link
             href='/'
             scroll={false}
@@ -104,7 +98,6 @@ export default function NavbarGallery() {
             />
           </Link>
 
-          {/* Sidebar links */}
           <div className='flex flex-col items-center gap-8'>
             {NAVBAR_LINKS.map(({ id, name, href }) => {
               const anchor = href.replace('#', '');
@@ -132,12 +125,11 @@ export default function NavbarGallery() {
           </div>
         </div>
 
-        {/* Close button */}
         <div className='flex flex-col items-center justify-end pb-10'>
           <Button
             size='large'
             icon={FaArrowLeftLong}
-            className='text-black-main rounded-md bg-white text-xl font-bold hover:bg-gray-200'
+            className='rounded-md bg-white text-xl font-bold text-black-main hover:bg-gray-200'
             onClick={() => setIsSidebarOpen(false)}
           />
         </div>
