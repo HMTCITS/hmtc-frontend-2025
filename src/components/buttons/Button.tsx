@@ -86,7 +86,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           [
             variant === 'primary' && [
               'bg-blue-main text-white',
-              'hover:bg-blue-dark-1 disabled:bg-blue-dark-2',
+              'hover:bg-black-300 disabled:bg-black-400',
             ],
             variant === 'secondary' && [
               'bg-white text-orange-main',
@@ -99,7 +99,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             ],
             variant === 'light' && [
               'bg-white text-text-black',
-              'hover:bg-base-subtle hover:text-white disabled:bg-zinc-200',
+              'hover:bg-black-200 hover:text-white disabled:bg-zinc-200',
             ],
           ],
           isLoading &&
