@@ -1,135 +1,105 @@
-/**
- * Next.js Production Configuration
- *
- * This configuration sets:
- * - Security Headers to improve security (CSP, HSTS, XSS Protection, etc.)
- * - React Strict Mode and SWC Minification for improved performance and development experience
- * - ESLint to run only on the 'src' directory
- * - Custom Webpack rules to optimize SVG imports:
- *    - Uses the default file loader for SVG files imported with query ?url
- *    - Converts other SVG imports into React components using @svgr/webpack
- *
- * Note: For improved security, consider using a nonce‑based approach for inline scripts.
- */
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+/** Compile-time: bangun CSP dengan 'unsafe-eval' hanya di dev */
+const scriptSrc =
+  process.env.NODE_ENV === 'development'
+    ? "'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com"
+    : "'self' 'unsafe-inline' https://static.cloudflareinsights.com";
 
 const ContentSecurityPolicy = `
   default-src 'self';
   connect-src 'self' https://api.hmtc-its.com;
-  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com;
+  script-src ${scriptSrc};
   style-src 'self' 'unsafe-inline';
+  img-src 'self' data: https:;
   object-src 'none';
   base-uri 'self';
   frame-ancestors 'self';
   manifest-src 'self';
-`;
+`
+  .replace(/\s{2,}/g, ' ')
+  .trim();
 
 const securityHeaders = [
-  {
-    key: 'X-DNS-Prefetch-Control',
-    value: 'on',
-  },
+  { key: 'X-DNS-Prefetch-Control', value: 'on' },
   {
     key: 'Strict-Transport-Security',
     value: 'max-age=63072000; includeSubDomains; preload',
   },
-  {
-    key: 'X-XSS-Protection',
-    value: '1; mode=block',
-  },
-  {
-    key: 'X-Content-Type-Options',
-    value: 'nosniff',
-  },
-  {
-    key: 'Referrer-Policy',
-    value: 'no-referrer-when-downgrade',
-  },
+  { key: 'X-XSS-Protection', value: '1; mode=block' },
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  { key: 'Referrer-Policy', value: 'no-referrer-when-downgrade' },
   {
     key: 'Permissions-Policy',
     value: 'accelerometer=(), camera=(), gyroscope=(), microphone=(), usb=()',
   },
   {
     key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\n/g, '').trim(),
+    value: ContentSecurityPolicy,
   },
 ];
 
-// Bundle Analyzer
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-});
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Disable the "X-Powered-By" header for security
   poweredByHeader: false,
-
-  // Enable React Strict Mode to help identify potential issues
   reactStrictMode: true,
 
-  // Enable SWC minification for performance (uncomment if desired)
-  swcMinify: true,
-
-  // Run ESLint only on the 'src' directory
-  eslint: {
-    dirs: ['src'],
+  compiler: {
+    styledComponents: true,
+    removeConsole: process.env.NODE_ENV === 'production',
   },
 
-  // Apply security headers to every route
+  eslint: { dirs: ['src'] },
+
+  /** Hanya pasang security headers di production, skip di dev */
   async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: securityHeaders,
-      },
-    ];
+    if (process.env.NODE_ENV === 'production') {
+      return [{ source: '/(.*)', headers: securityHeaders }];
+    }
+    return [];
   },
 
-  // Custom Webpack configuration for optimized SVG imports
   webpack(config) {
-    // Find the default file loader rule for SVG files
-    const fileLoaderRule = config.module.rules.find(
-      (rule) => rule.test && rule.test.test && rule.test.test('.svg'),
+    // Exclude .svg dari rule bawaan
+    const assetRule = config.module.rules.find(
+      (rule) => rule.test instanceof RegExp && rule.test.test('.svg'),
     );
-
-    // Add custom rules:
-    // 1. If a SVG is imported with ?url, use the default file loader
-    // 2. Otherwise, transform SVGs into React components using @svgr/webpack
-    config.module.rules.push(
-      {
-        ...fileLoaderRule,
-        test: /\.svg$/i,
-        resourceQuery: /url/, // Handle *.svg?url
-      },
-      {
-        test: /\.svg$/i,
-        issuer: { not: /\.(css|scss|sass)$/ },
-        resourceQuery: { not: /url/ }, // Ignore *.svg?url
-        loader: '@svgr/webpack',
-        options: {
-          dimensions: false,
-          titleProp: true,
-        },
-      },
-    );
-
-    // Modify the default file loader rule to ignore SVG files
-    if (fileLoaderRule) {
-      fileLoaderRule.exclude = fileLoaderRule.exclude
-        ? [...fileLoaderRule.exclude, /\.svg$/i]
-        : [/\.svg$/i];
+    if (assetRule) {
+      assetRule.exclude = /\.svg$/i;
     }
-
+    // SVGR loader
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: { and: [/\.[jt]sx?$/] },
+      use: [
+        {
+          loader: '@svgr/webpack',
+          options: {
+            prettier: false,
+            svgo: true,
+            svgoConfig: { plugins: [{ removeViewBox: false }] },
+            titleProp: true,
+            ref: true,
+          },
+        },
+      ],
+    });
     return config;
   },
+
   images: {
     dangerouslyAllowSVG: true,
     formats: ['image/avif', 'image/webp'],
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    // If you're using remote domains
-    domains: [],
-    // Path prefixes that should be allowed
-    remotePatterns: [],
+    domains: ['hmtc-its.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.cloudflareinsights.com',
+      },
+    ],
   },
 };
 
