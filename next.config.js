@@ -15,7 +15,7 @@
 const ContentSecurityPolicy = `
   default-src 'self';
   connect-src 'self' https://api.hmtc-its.com;
-  script-src 'self' 'unsafe-inline' 'unsafe-eval';
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com;
   style-src 'self' 'unsafe-inline';
   object-src 'none';
   base-uri 'self';
