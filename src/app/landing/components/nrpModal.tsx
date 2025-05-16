@@ -8,9 +8,9 @@ import {
   Transition,
   TransitionChild,
 } from '@headlessui/react';
+import { CircleX } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { Fragment, useState } from 'react';
-import { HiOutlineX } from 'react-icons/hi';
 
 import { validateNrp } from '@/app/gallery/hooks/useValidateNrp';
 import Typography from '@/components/Typography';
@@ -116,7 +116,7 @@ export default function RestrictedModal({
                   onClick={() => setIsOpen(false)}
                   className='absolute top-4 right-4 cursor-pointer'
                 >
-                  <HiOutlineX color='#00AAE7' size={28} />
+                  <CircleX color='#00AAE7' size={28} />
                 </button>
 
                 <DialogTitle>

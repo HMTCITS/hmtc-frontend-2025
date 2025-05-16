@@ -1,14 +1,14 @@
 'use client';
 
-import React from 'react';
 import {
-  FaChevronDown,
-  FaInstagram,
-  FaLine,
-  FaLinkedinIn,
-  FaTwitter,
-  FaYoutube,
-} from 'react-icons/fa';
+  ChevronDown,
+  Instagram,
+  Link2,
+  Linkedin,
+  Twitter,
+  Youtube,
+} from 'lucide-react';
+import React from 'react';
 import { Link as ScrollLink } from 'react-scroll';
 
 import BaseLink from '@/components/links/BaseLink';
@@ -21,23 +21,23 @@ import { cn } from '@/lib/utils';
 // Footer links
 const SocialMedia = [
   {
-    icon: FaTwitter,
+    icon: Twitter,
     href: 'https://twitter.com/hmtc_its',
   },
   {
-    icon: FaInstagram,
+    icon: Instagram,
     href: 'https://www.instagram.com/hmtc_its/',
   },
   {
-    icon: FaYoutube,
+    icon: Youtube,
     href: 'https://www.youtube.com/@bluepresshmtc',
   },
   {
-    icon: FaLinkedinIn,
+    icon: Linkedin,
     href: 'https://www.linkedin.com/company/himpunan-mahasiswa-teknik-computer-informatika/',
   },
   {
-    icon: FaLine,
+    icon: Link2,
     href: 'https://tr.ee/T1xoSC0squ',
   },
 ];
@@ -112,7 +112,7 @@ export default function Footer() {
               >
                 hmtc
               </Typography>
-              <FaChevronDown
+              <ChevronDown
                 className={cn(
                   'text-white md:hidden',
                   'transition-transform duration-200 ease-in-out',
@@ -156,7 +156,7 @@ export default function Footer() {
               >
                 akademik
               </Typography>
-              <FaChevronDown
+              <ChevronDown
                 className={cn(
                   'text-white md:hidden',
                   'transition-transform duration-200 ease-in-out',

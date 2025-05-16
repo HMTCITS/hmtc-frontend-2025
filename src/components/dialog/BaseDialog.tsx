@@ -1,12 +1,7 @@
 import { Dialog, DialogBackdrop, Transition } from '@headlessui/react';
 import clsx from 'clsx';
+import { CircleAlert, CircleCheck, CircleX, TriangleAlert } from 'lucide-react';
 import * as React from 'react';
-import {
-  HiExclamationCircle,
-  HiOutlineCheck,
-  HiOutlineExclamation,
-  HiOutlineX,
-} from 'react-icons/hi';
 
 import Button from '@/components/buttons/Button';
 
@@ -92,7 +87,7 @@ export default function BaseDialog({
             <div className='z-auto inline-block w-full transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:max-w-lg sm:p-6 sm:align-middle'>
               <div className='absolute top-0 right-0 hidden pt-4 pr-4 sm:block'>
                 <Button
-                  icon={HiOutlineX}
+                  icon={CircleX}
                   size='small'
                   variant='secondary'
                   onClick={onClose}
@@ -149,7 +144,7 @@ const colorVariant = {
     text: {
       primary: 'text-green-500',
     },
-    icon: HiOutlineCheck,
+    icon: CircleCheck,
   },
   warning: {
     bg: {
@@ -158,7 +153,7 @@ const colorVariant = {
     text: {
       primary: 'text-yellow-500',
     },
-    icon: HiOutlineExclamation,
+    icon: CircleAlert,
   },
   danger: {
     bg: {
@@ -167,6 +162,6 @@ const colorVariant = {
     text: {
       primary: 'text-red-500',
     },
-    icon: HiExclamationCircle,
+    icon: TriangleAlert,
   },
 };

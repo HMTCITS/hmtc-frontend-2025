@@ -1,8 +1,7 @@
 'use client';
 
+import { Menu, MoveLeft } from 'lucide-react';
 import * as React from 'react';
-import { FaArrowLeftLong } from 'react-icons/fa6';
-import { HiMenu } from 'react-icons/hi';
 import { Link as ScrollLink } from 'react-scroll';
 
 import Button from '@/components/buttons/Button';
@@ -58,7 +57,7 @@ export default function Navbar() {
         </ScrollLink>
 
         <Button
-          icon={HiMenu}
+          icon={Menu}
           className='ml-auto min-[800px]:hidden'
           onClick={openSidebar}
         />
@@ -124,7 +123,7 @@ export default function Navbar() {
         <div className='flex flex-col items-center justify-end gap-0'>
           <Button
             size='large'
-            icon={FaArrowLeftLong}
+            icon={MoveLeft}
             className='z-10 rounded-md bg-white text-xl font-bold text-black-main hover:bg-gray-200'
             onClick={closeSidebar}
           />

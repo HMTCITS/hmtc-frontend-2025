@@ -1,4 +1,4 @@
-import { IconType } from 'react-icons';
+import { LucideIcon } from 'lucide-react';
 
 import ButtonLink from '@/components/links/ButtonLink';
 
@@ -6,7 +6,7 @@ export default function SocialCard({
   icon: Icon,
   href,
 }: {
-  icon: IconType;
+  icon: LucideIcon;
   href: string;
 }) {
   return (

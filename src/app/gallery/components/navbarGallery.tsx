@@ -1,9 +1,9 @@
 'use client';
 
+import { MoveLeft } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import Link from 'next/link';
 import * as React from 'react';
-import { FaArrowLeftLong } from 'react-icons/fa6';
-import { HiMenu } from 'react-icons/hi';
 
 import Button from '@/components/buttons/Button';
 import NextImage from '@/components/NextImage';
@@ -43,7 +43,7 @@ export default function NavbarGallery() {
         </Link>
 
         <Button
-          icon={HiMenu}
+          icon={Menu}
           className='ml-auto min-[800px]:hidden'
           onClick={() => setIsSidebarOpen(true)}
         />
@@ -128,7 +128,7 @@ export default function NavbarGallery() {
         <div className='flex flex-col items-center justify-end pb-10'>
           <Button
             size='large'
-            icon={FaArrowLeftLong}
+            icon={MoveLeft}
             className='rounded-md bg-white text-xl font-bold text-black-main hover:bg-gray-200'
             onClick={() => setIsSidebarOpen(false)}
           />

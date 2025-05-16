@@ -1,7 +1,7 @@
+import { LucideIcon } from 'lucide-react';
+import { Eye, EyeClosed } from 'lucide-react';
 import * as React from 'react';
 import { get, RegisterOptions, useFormContext } from 'react-hook-form';
-import { IconType } from 'react-icons';
-import { HiEye, HiEyeOff } from 'react-icons/hi';
 
 import { cn } from '@/lib/utils';
 
@@ -15,7 +15,7 @@ export type InputProps = {
   // disabling error msg not error validation
   hideError?: boolean;
   validation?: RegisterOptions;
-  leftIcon?: IconType | string;
+  leftIcon?: LucideIcon | string;
   inputWithLeftIconClassName?: string;
   rightNode?: React.ReactNode;
   addon?: string;
@@ -123,7 +123,7 @@ export default function Input({
               'text-lg text-stone-400 hover:text-stone-500',
             )}
           >
-            {showPassword ? <HiEyeOff /> : <HiEye />}
+            {showPassword ? <EyeClosed /> : <Eye />}
           </button>
         )}
         {rightNode && (
