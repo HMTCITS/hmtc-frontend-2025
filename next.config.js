@@ -68,7 +68,7 @@ const nextConfig = {
   reactStrictMode: true,
 
   // Enable SWC minification for performance (uncomment if desired)
-  // swcMinify: true,
+  swcMinify: true,
 
   // Run ESLint only on the 'src' directory
   eslint: {
