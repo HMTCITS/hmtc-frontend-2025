@@ -93,7 +93,6 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
     formats: ['image/avif', 'image/webp'],
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    domains: ['hmtc-its.com'],
     remotePatterns: [
       {
         protocol: 'https',

@@ -1,47 +1,30 @@
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
-import react from 'eslint-plugin-react';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
-import unusedImports from 'eslint-plugin-unused-imports';
-import queryPlugin from '@tanstack/eslint-plugin-query';
-import globals from 'globals';
-import tsParser from '@typescript-eslint/parser';
+import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import js from '@eslint/js';
-import { FlatCompat } from '@eslint/eslintrc';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import unusedImports from 'eslint-plugin-unused-imports';
+import globals from 'globals';
 
-// Create the __filename and __dirname equivalents for ES Modules.
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Create a compatibility layer for flat config using the recommended settings.
 const compat = new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
 });
 
 export default [
-  // Standard ESLint and plugin configs.
   ...compat.extends(
     'eslint:recommended',
+    'next/core-web-vitals',
     'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
     'prettier',
   ),
-  // Extend Next.js specific rules via string-based references.
-  ...compat.extends(
-    'plugin:@next/next/recommended',
-    'plugin:@next/next/core-web-vitals',
-  ),
-  // Main project configuration.
   {
     plugins: {
-      '@typescript-eslint': typescriptEslint,
-      react,
       'simple-import-sort': simpleImportSort,
       'unused-imports': unusedImports,
-      '@tanstack/query': queryPlugin,
     },
     languageOptions: {
       globals: {
@@ -49,14 +32,6 @@ export default [
         ...globals.node,
         React: 'writable',
         JSX: 'readonly',
-      },
-      parser: tsParser,
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
       },
     },
     settings: {
@@ -66,14 +41,16 @@ export default [
     },
     rules: {
       'react/prop-types': 'off',
-      'no-unused-vars': 'off',
       'no-console': 'warn',
       'react/display-name': 'off',
       'react/react-in-jsx-scope': 'off',
-      'simple-import-sort/imports': 'warn',
-      'simple-import-sort/exports': 'warn',
+      '@next/next/no-html-link-for-pages': 'warn',
+
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
+
+      'simple-import-sort/imports': 'warn',
+      'simple-import-sort/exports': 'warn',
       'unused-imports/no-unused-imports': 'warn',
       'unused-imports/no-unused-vars': [
         'warn',
@@ -84,11 +61,8 @@ export default [
           argsIgnorePattern: '^_',
         },
       ],
-      // Next.js specific rule override.
-      '@next/next/no-html-link-for-pages': 'warn',
     },
   },
-  // Define files and directories to ignore.
   {
     ignores: [
       '**/.lintstagedrc.js',
