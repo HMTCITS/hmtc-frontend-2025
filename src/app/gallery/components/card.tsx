@@ -18,6 +18,7 @@ export default function Card({ item }: CardProps) {
           alt={item.title}
           width={item.width}
           height={item.height}
+          useSkeleton
           className='h-full w-full transition-transform duration-300 group-hover:scale-105'
           imgClassName='object-cover'
         />
@@ -27,6 +28,7 @@ export default function Card({ item }: CardProps) {
           isVector
           width={296}
           height={22}
+          priority
           className='absolute bottom-0 left-1/2 w-[103%] -translate-x-1/2'
           imgClassName='w-full'
         />

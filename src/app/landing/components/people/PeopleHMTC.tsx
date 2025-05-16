@@ -186,6 +186,7 @@ export default function PeopleHMTC() {
                   src={src}
                   alt={`Profile image ${index + 1}`}
                   className='h-full w-full object-cover'
+                  quality={75}
                 />
               </div>
             ))}

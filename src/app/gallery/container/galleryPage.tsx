@@ -9,7 +9,7 @@ import NavbarGallery from '@/app/gallery/components/navbarGallery';
 import SearchBarGallery from '@/app/gallery/components/searchBar';
 import { validateNrp } from '@/app/gallery/hooks/useValidateNrp';
 import Loading from '@/app/gallery/loading';
-import RestrictedModal from '@/app/landing/components/nrpModal';
+import RestrictedModal from '@/app/landing/components/gallery/nrpModal';
 import Typography from '@/components/Typography';
 import {
   Pagination,

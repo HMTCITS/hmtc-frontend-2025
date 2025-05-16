@@ -84,7 +84,7 @@ const LazySection: React.FC<LazySectionProps> = ({
     );
     io.observe(ref.current);
     return () => io.disconnect();
-  }, [threshold, once, forceVisible]);
+  }, [threshold, once, forceVisible, onVisible]);
 
   const Skeleton = fallback ?? (
     <div

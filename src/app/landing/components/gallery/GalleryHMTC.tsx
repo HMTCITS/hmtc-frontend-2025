@@ -1,5 +1,6 @@
 import React from 'react';
 
+import RestrictedModal from '@/app/landing/components/gallery/nrpModal';
 import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 
@@ -21,7 +22,7 @@ const GalleryHMTC: React.FC = () => {
           <NextImage
             src='/gallery/gallery-1.jpg'
             alt='Foto Wisuda TC 2024'
-            className='relative mb-6 w-[320px] md:w-[500px] lg:absolute lg:top-[45%] lg:-left-[20%] lg:h-[335px] lg:w-[500px]'
+            className='relative mb-6 h-full w-full max-w-[415px] md:max-w-[500px] lg:absolute lg:top-[45%] lg:-left-[20%] lg:h-[335px] lg:max-w-[500px]'
             imgClassName='relative h-full object-cover'
             width={500}
             height={335}
@@ -31,7 +32,7 @@ const GalleryHMTC: React.FC = () => {
           <NextImage
             src='/gallery/gallery-2.jpg'
             alt='Foto Wisuda TC 2024'
-            className='mb-6 h-[375px] w-[320px] md:w-[500px] lg:absolute lg:top-[30%] lg:left-[19%] lg:h-[375px] lg:w-[325px]'
+            className='mb-6 w-full max-w-[415px] md:max-w-[500px] lg:absolute lg:top-[30%] lg:left-[19%] lg:max-w-[325px]'
             imgClassName='relative h-full object-cover'
             width={325}
             height={375}
@@ -41,7 +42,7 @@ const GalleryHMTC: React.FC = () => {
           <NextImage
             src='/gallery/gallery-3.jpg'
             alt='Foto Wisuda TC 2024'
-            className='mb-6 h-[214px] w-[320px] md:h-auto md:w-[500px] lg:absolute lg:top-[40%] lg:left-[44%] lg:h-[370px] lg:w-[455px]'
+            className='mb-6 w-full max-w-[415px] md:max-w-[500px] lg:absolute lg:top-[40%] lg:left-[44%] lg:w-[455px]'
             imgClassName='relative h-full object-cover'
             width={455}
             height={370}
@@ -51,12 +52,15 @@ const GalleryHMTC: React.FC = () => {
           <NextImage
             src='/gallery/gallery-4.jpg'
             alt='Foto Wisuda TC 2024'
-            className='mb-6 h-[214px] w-[320px] md:h-auto md:w-[500px] lg:absolute lg:top-0 lg:-right-[4%] lg:h-[360px] lg:w-[355px]'
+            className='mb-6 w-full max-w-[415px] md:max-w-[500px] lg:absolute lg:top-0 lg:-right-[4%] lg:w-[355px]'
             imgClassName='relative h-full object-cover'
             width={355}
             height={360}
           />
         </div>
+      </div>
+      <div className='mt-4 mr-4 flex w-full justify-center md:mt-6 md:mr-10'>
+        <RestrictedModal isLandingPage={true} initialOpen={false} />
       </div>
     </section>
   );

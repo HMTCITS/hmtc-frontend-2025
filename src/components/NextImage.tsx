@@ -275,8 +275,8 @@ export default function NextImage({
       }
       className={cn('relative', className)}
     >
+      {/* eslint-disable-next-line jsx-a11y/alt-text */}
       <Image {...imageProps} />
-
       {status === 'error' && !onErrorSrc && (
         <div
           className='absolute inset-0 flex items-center justify-center rounded border border-gray-200 bg-gray-100'
@@ -291,7 +291,7 @@ export default function NextImage({
           <Image
             src='/icons/ban.svg'
             fill
-            alt='Error indicator'
+            alt=''
             className='object-contain'
             unoptimized
           />

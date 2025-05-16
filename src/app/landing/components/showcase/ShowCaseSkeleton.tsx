@@ -1,7 +1,7 @@
 import Divider from '@/components/Divider';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export default function CoverSkeleton() {
+export default function ShowCaseSkeleton() {
   return (
     <div className='relative bg-gray-100'>
       <div className='flex w-full items-center justify-center bg-[#121212] px-12 py-18 sm:p-18 md:p-24'>
