@@ -1,35 +1,30 @@
-'use client';
-
-import Quotes from '@/app/landing/components/Quotes';
-import VisiMisi from '@/app/landing/components/VisiMisi';
+import Quotes from '@/app/landing/components/cover/Quotes';
+import VisiMisi from '@/app/landing/components/cover/VisiMisi';
 import KetuaCarousel from '@/components/carousel/KetuaCarousel';
 import Divider from '@/components/Divider';
 import NextImage from '@/components/NextImage';
 
 export default function ShowCase() {
-  const slides = [0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6];
-
   return (
     <div className='relative bg-gray-100'>
-      <div className='relative h-screen w-full'>
-        <NextImage
-          src='/fotohmtc2024.png'
-          alt='Foto HMTC 2024'
-          className='h-full w-full object-cover'
-          style={{ objectFit: 'cover' }}
-          width={1512}
-          height={735}
-        />
-      </div>
-      <div className='flex h-full w-full items-center justify-center bg-[#121212] py-10 md:py-24'>
-        <div className='flex w-full flex-col justify-between gap-x-6 gap-y-6 px-6 md:w-[90%] md:px-0 lg:flex-row lg:gap-x-32'>
-          <div>
+      <NextImage
+        src='/fotohmtc2024.png'
+        alt='Foto HMTC 2024'
+        className='relative h-screen w-full object-cover'
+        style={{ objectFit: 'cover' }}
+        width={1512}
+        height={735}
+      />
+      <div className='flex w-full items-center justify-center bg-[#121212] px-12 py-18 sm:p-18 md:p-24'>
+        <div className='flex w-full flex-col justify-between gap-x-6 gap-y-12 md:px-0 lg:flex-row lg:gap-x-27'>
+          <div className='max-w-[335px]'>
             <VisiMisi
               text1='Vision'
               text2='Transformasi HMTC sebagai Pionir Utama Elemen Teknik Informatika Demi Mewujudkan Organisasi Yang Berdampak dan Berkualitas'
             />
           </div>
-          <div>
+
+          <div className='max-w-[870px]'>
             <VisiMisi
               text1='Mission'
               text2={[
@@ -41,17 +36,11 @@ export default function ShowCase() {
           </div>
         </div>
       </div>
-      <div className='flex h-full w-full bg-[#121212] py-10 md:py-24'>
-        <div className='flex w-full flex-col gap-x-6 gap-y-6 px-6'>
-          <Quotes />
-        </div>
+      <div className='flex w-full bg-[#121212] px-12 py-18 sm:p-18 md:p-24'>
+        <Quotes />
       </div>
-      <div className='flex h-full w-full items-center bg-[#121212] px-4 py-10 md:px-20 md:py-24 lg:px-[8%]'>
-        <div className='flex w-full flex-col justify-between'>
-          <div className='relative w-full'>
-            <KetuaCarousel slides={slides} options={{ loop: true }} />
-          </div>
-        </div>
+      <div className='relative flex w-full items-center bg-[#121212] px-12 py-18 sm:p-18 md:p-24 lg:px-[8%]'>
+        <KetuaCarousel options={{ loop: true }} />
       </div>
       <Divider id='kepengurusan' />
     </div>

@@ -119,12 +119,13 @@
   --radius-xl: 0.75rem;
 
   /* Font families */
-  --font-poppins: 'Poppins', sans-serif;
-  --font-satoshi: 'Satoshi', sans-serif;
-  --font-adelphe: 'Adelphe', serif;
-  --font-libre-caslon: 'Libre Caslon', serif;
-  --font-inter: 'Inter', sans-serif;
-  --font-playfair-display: 'Playfair Display', serif;
+  --font-poppins: var(--font-poppins);
+  --font-satoshi: var(--font-satoshi);
+  --font-adelphe: var(--font-adelphe);
+  --font-libre: var(--font-libreCaslon);
+  --font-inter: var(--font-inter);
+  --font-helveticaNeue: var(--font-helveticaNeue);
+  --font-playfair-display: var(--font-PlayfairDisplay);
 
   /* Original color variants */
   --color-white-light-1: #ffffff;

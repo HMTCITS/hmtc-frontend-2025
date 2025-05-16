@@ -14,19 +14,17 @@ export default function Navbar() {
   const [isShift, setIsShift] = React.useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
+  React.useLayoutEffect(() => {
+    const handleScroll = () => {
+      setIsShift(window.scrollY >= 10);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const openSidebar = () => setIsSidebarOpen(true);
   const closeSidebar = () => setIsSidebarOpen(false);
-
-  const handleScroll = () => {
-    setIsShift(window.scrollY >= 10);
-  };
-
-  React.useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   return (
     <header className={cn('fixed top-0 z-[100] w-full')}>
@@ -52,7 +50,7 @@ export default function Navbar() {
             height={28}
             className='h-full w-full'
             quality={80}
-            priority={false}
+            priority
           />
         </ScrollLink>
 
@@ -97,6 +95,7 @@ export default function Navbar() {
               height={730}
               className='h-full w-full'
               quality={80}
+              priority
             />
           </ScrollLink>
 

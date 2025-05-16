@@ -8,11 +8,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import KetuaCard from '../cards/KetuaCard';
 
 type PropType = {
-  slides: number[];
   options?: EmblaOptionsType;
 };
 
-const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
+const EmblaCarousel: React.FC<PropType> = ({ options }) => {
+  const slides = [0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6];
   const autoScrollOptions = {
     playOnInit: true,
     delay: 4000,
@@ -57,7 +57,7 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
 
   return (
     <div
-      className='relative isolate mb-[20px] flex w-full flex-col items-center gap-[10px] p-[20px] lg:mb-0'
+      className='relative mb-[20px] flex w-full flex-col items-center gap-[10px] lg:mb-0'
       id='historyofhmtc'
     >
       <div className='z-10 w-full'>
