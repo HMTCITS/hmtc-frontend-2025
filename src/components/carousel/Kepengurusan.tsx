@@ -3,8 +3,8 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import * as React from 'react';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 // import required modules
 import {
   Autoplay,
@@ -47,10 +47,10 @@ export default function Kepengurusan() {
       modules={[Autoplay, Keyboard, Scrollbar, Navigation, Pagination]}
     >
       <button className='swiper-button-next !h-12 !w-12 rounded-full bg-white p-2.5 ring-2 ring-text-black hover:bg-gray-100'>
-        <FiChevronRight className='!text-xs text-text-black' />
+        <ChevronRight className='!text-xs text-text-black' />
       </button>
       <button className='swiper-button-prev !h-12 !w-12 rounded-full bg-white p-2.5 ring-2 ring-text-black hover:bg-gray-100'>
-        <FiChevronLeft className='!text-xs text-text-black' />
+        <ChevronLeft className='!text-xs text-text-black' />
       </button>
       {Anggota.map(({ ...props }, index) => (
         <SwiperSlide

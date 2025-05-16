@@ -3,8 +3,6 @@ import React from 'react';
 import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 
-import RestrictedModal from './nrpModal';
-
 const GalleryHMTC: React.FC = () => {
   return (
     <section className='flex flex-col bg-white p-8 pt-0 font-sans md:py-10 md:pt-[100px] lg:px-0'>
@@ -59,10 +57,6 @@ const GalleryHMTC: React.FC = () => {
             height={360}
           />
         </div>
-      </div>
-
-      <div className='mt-4 mr-4 flex w-full justify-center md:mt-6 md:mr-10'>
-        <RestrictedModal isLandingPage={true} initialOpen={false} />
       </div>
     </section>
   );

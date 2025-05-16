@@ -47,82 +47,82 @@ export const adelphe = localFont({
 export const helveticaNeue = localFont({
   src: [
     {
-      path: '../../public/fonts/helevtica-neue/HelveticaNeueBlack.otf',
+      path: '../../public/fonts/helevtica-neue/HelveticaNeueBlack.woff2',
       weight: '900',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/helevtica-neue/HelveticaNeueBlackItalic.otf',
+      path: '../../public/fonts/helevtica-neue/HelveticaNeueBlackItalic.woff2',
       weight: '900',
       style: 'italic',
     },
     {
-      path: '../../public/fonts/helevtica-neue/HelveticaNeueBold.otf',
+      path: '../../public/fonts/helevtica-neue/HelveticaNeueBold.woff2',
       weight: '700',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/helevtica-neue/HelveticaNeueBoldItalic.otf',
+      path: '../../public/fonts/helevtica-neue/HelveticaNeueBoldItalic.woff2',
       weight: '700',
       style: 'italic',
     },
     {
-      path: '../../public/fonts/helevtica-neue/HelveticaNeueHeavy.otf',
+      path: '../../public/fonts/helevtica-neue/HelveticaNeueHeavy.woff2',
       weight: '800',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/helevtica-neue/HelveticaNeueHeavyItalic.otf',
+      path: '../../public/fonts/helevtica-neue/HelveticaNeueHeavyItalic.woff2',
       weight: '800',
       style: 'italic',
     },
     {
-      path: '../../public/fonts/helevtica-neue/HelveticaNeueItalic.ttf',
+      path: '../../public/fonts/helevtica-neue/HelveticaNeueItalic.woff2',
       weight: '400',
       style: 'italic',
     },
     {
-      path: '../../public/fonts/helevtica-neue/HelveticaNeueLight.otf',
+      path: '../../public/fonts/helevtica-neue/HelveticaNeueLight.woff2',
       weight: '300',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/helevtica-neue/HelveticaNeueLightItalic.otf',
+      path: '../../public/fonts/helevtica-neue/HelveticaNeueLightItalic.woff2',
       weight: '300',
       style: 'italic',
     },
     {
-      path: '../../public/fonts/helevtica-neue/HelveticaNeueMedium.otf',
+      path: '../../public/fonts/helevtica-neue/HelveticaNeueMedium.woff2',
       weight: '500',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/helevtica-neue/HelveticaNeueMediumItalic.otf',
+      path: '../../public/fonts/helevtica-neue/HelveticaNeueMediumItalic.woff2',
       weight: '500',
       style: 'italic',
     },
     {
-      path: '../../public/fonts/helevtica-neue/HelveticaNeueRoman.otf',
+      path: '../../public/fonts/helevtica-neue/HelveticaNeueRoman.woff2',
       weight: '400',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/helevtica-neue/HelveticaNeueThin.otf',
+      path: '../../public/fonts/helevtica-neue/HelveticaNeueThin.woff2',
       weight: '100',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/helevtica-neue/HelveticaNeueThinItalic.otf',
+      path: '../../public/fonts/helevtica-neue/HelveticaNeueThinItalic.woff2',
       weight: '100',
       style: 'italic',
     },
     {
-      path: '../../public/fonts/helevtica-neue/HelveticaNeueUltraLight.otf',
+      path: '../../public/fonts/helevtica-neue/HelveticaNeueUltraLight.woff2',
       weight: '200',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/helevtica-neue/HelveticaNeueUltraLightItalic.otf',
+      path: '../../public/fonts/helevtica-neue/HelveticaNeueUltraLightItalic.woff2',
       weight: '200',
       style: 'italic',
     },

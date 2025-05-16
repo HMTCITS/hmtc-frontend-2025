@@ -1,6 +1,6 @@
 'use client';
+import { Search } from 'lucide-react';
 import React from 'react';
-import { IoIosSearch } from 'react-icons/io';
 
 interface SearchBarGalleryProps {
   value: string;
@@ -16,7 +16,7 @@ export default function SearchBarGallery({
         type='button'
         className='cursor-pointer text-[#32323280] hover:text-french-blue-100'
       >
-        <IoIosSearch size={31} />
+        <Search size={31} />
       </button>
       <input
         type='text'
