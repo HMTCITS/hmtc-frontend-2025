@@ -149,7 +149,7 @@ export default function Footer() {
                     key={index}
                     href={href}
                     aria-label={`Menuju halaman ${name}`}
-                    className='font-secondary hover:text-base-nav cursor-pointer p-2.5 text-white-main transition-colors duration-75'
+                    className='font-secondary hover:text-base-nav cursor-pointer text-white-main transition-colors duration-75'
                   >
                     <Typography font='satoshi'>{name}</Typography>
                   </Link>
