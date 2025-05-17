@@ -45,4 +45,13 @@ export const galleryItems: GalleryItem[] = [
     width: 540,
     height: 360,
   },
+  {
+    id: 5,
+    date: 'Minggu, 16 Mei 2025',
+    title: 'Reveal Kabinet 2025',
+    image: '/gallery/revealKabinet.png',
+    link: 'https://drive.google.com/drive/folders/1rQZvBYfEGWTZ2pC1v8XL8UTXHPRfDGv4?usp=drive_link',
+    width: 640,
+    height: 960,
+  },
 ];
