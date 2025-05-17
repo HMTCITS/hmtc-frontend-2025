@@ -13,6 +13,7 @@ export default function SearchBarGallery({
   return (
     <div className='relative flex w-full max-w-[415px] gap-3 rounded-full border border-b-french-blue-100 px-4 py-3.5 shadow-md'>
       <button
+        aria-label='Seacrh gallery'
         type='button'
         className='cursor-pointer text-[#32323280] hover:text-french-blue-100'
       >

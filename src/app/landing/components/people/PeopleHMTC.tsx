@@ -203,12 +203,14 @@ export default function PeopleHMTC() {
           </Typography>
           <div className='absolute right-4 -bottom-10 flex space-x-2 lg:right-0 lg:space-x-1'>
             <button
+              aria-label='Backward'
               onClick={scrollPrev}
               className='px-1 py-2 text-xl text-gray-500 hover:text-black'
             >
               ←
             </button>
             <button
+              aria-label='Forward'
               onClick={scrollNext}
               className='px-1 py-2 text-xl text-black hover:text-gray-500'
             >

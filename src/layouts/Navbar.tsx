@@ -7,7 +7,7 @@ import { Link as ScrollLink } from 'react-scroll';
 import Button from '@/components/buttons/Button';
 import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
-import { NAVBAR_LINKS } from '@/constants/layout';
+import { NAVBAR_LINKS } from '@/contents/layout';
 import { cn } from '@/lib/utils';
 
 export default function Navbar() {
@@ -38,6 +38,7 @@ export default function Navbar() {
         )}
       >
         <ScrollLink
+          aria-label='Back to home'
           to='home'
           smooth={true}
           duration={500}
@@ -64,6 +65,7 @@ export default function Navbar() {
         <nav className='hidden items-center gap-6 min-[800px]:flex'>
           {NAVBAR_LINKS.map(({ id, name, href, offset }) => (
             <ScrollLink
+              aria-label='Scroll to section'
               key={id}
               to={href.replace('#', '')}
               smooth={true}
@@ -88,7 +90,13 @@ export default function Navbar() {
         )}
       >
         <div className='z-10 flex flex-col items-center gap-14 px-4 py-24'>
-          <ScrollLink to='home' smooth={true} duration={500} className='w-32'>
+          <ScrollLink
+            aria-label='Back to home'
+            to='home'
+            smooth={true}
+            duration={500}
+            className='w-32'
+          >
             <NextImage
               src='logohmtc2024.png'
               alt='Logo HMTC ITS 2024'
@@ -104,6 +112,7 @@ export default function Navbar() {
             <div className='flex flex-col items-center gap-8'>
               {NAVBAR_LINKS.map(({ id, name, href }) => (
                 <ScrollLink
+                  aria-label='Scroll to section'
                   key={id}
                   to={href.replace('#', '')}
                   smooth={true}

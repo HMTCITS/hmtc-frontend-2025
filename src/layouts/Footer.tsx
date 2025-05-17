@@ -14,7 +14,7 @@ import { Link as ScrollLink } from 'react-scroll';
 import BaseLink from '@/components/links/BaseLink';
 import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
-import { NAVBAR_LINKS as ApaIni } from '@/constants/layout';
+import { NAVBAR_LINKS as ApaIni } from '@/contents/layout';
 import SocialCard from '@/layouts/components/Social';
 import { cn } from '@/lib/utils';
 
@@ -132,6 +132,7 @@ export default function Footer() {
               {ApaIni.map(({ name, href, offset }, index) => (
                 <ScrollLink
                   key={index}
+                  aria-label='scroll to section'
                   to={href.replace('#', '')}
                   smooth={true}
                   duration={500}
@@ -176,6 +177,7 @@ export default function Footer() {
               {Akademik.map(({ label, href }, index) => (
                 <ScrollLink
                   key={index}
+                  aria-label='scroll to section'
                   to={href.replace('#', '')}
                   smooth={true}
                   duration={500}

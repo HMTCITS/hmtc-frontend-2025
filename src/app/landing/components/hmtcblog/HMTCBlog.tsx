@@ -110,6 +110,7 @@ const HMTCBlog: React.FC = () => {
                 {posts.map((post, index) => (
                   <div className='embla__slide-blog' key={index}>
                     <a
+                      aria-label='Open blog post'
                       href={post.link}
                       target='_blank'
                       rel='noopener noreferrer'
@@ -151,6 +152,7 @@ const HMTCBlog: React.FC = () => {
           <div className='mt-8 flex justify-center'>
             {scrollSnaps.map((_, index) => (
               <button
+                aria-label='Scroll to slide'
                 key={index}
                 className={`mx-1 h-2 w-2 rounded-full ${
                   index === selectedIndex ? 'bg-black' : 'bg-gray-300'

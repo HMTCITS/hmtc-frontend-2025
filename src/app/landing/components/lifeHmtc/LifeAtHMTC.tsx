@@ -85,6 +85,7 @@ const LifeAtHMTC: React.FC = () => {
             {posts.map((post, index) => (
               <div className='embla__slide lifeAtHmtc' key={index}>
                 <a
+                  aria-label='Open post'
                   href={post.link}
                   target='_blank'
                   rel='noopener noreferrer'

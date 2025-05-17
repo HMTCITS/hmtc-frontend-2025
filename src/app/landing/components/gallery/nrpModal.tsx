@@ -113,6 +113,7 @@ export default function RestrictedModal({
                 }}
               >
                 <button
+                  aria-label='Close Modal'
                   onClick={() => setIsOpen(false)}
                   className='absolute top-4 right-4 cursor-pointer'
                 >
@@ -157,6 +158,7 @@ export default function RestrictedModal({
                         />
 
                         <button
+                          aria-label='Submit form modal'
                           type='submit'
                           disabled={isLoading}
                           className='mt-6 w-fit cursor-pointer border-b border-black pb-0.5 text-xl font-medium disabled:opacity-50'
@@ -185,6 +187,7 @@ export default function RestrictedModal({
                         and try again.
                       </Typography>
                       <button
+                        aria-label='Try again form modal'
                         onClick={handleTryAgain}
                         className='mt-6 w-fit cursor-pointer border-b border-black pb-0.5 text-xl font-medium'
                       >

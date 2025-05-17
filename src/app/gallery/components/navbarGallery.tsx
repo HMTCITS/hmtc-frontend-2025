@@ -31,7 +31,12 @@ export default function NavbarGallery() {
             : 'bg-transparent',
         )}
       >
-        <Link href='/' scroll={false} className='relative h-7 w-28'>
+        <Link
+          aria-label='Back to home'
+          href='/'
+          scroll={false}
+          className='relative h-7 w-28'
+        >
           <NextImage
             src='logohmtc2024black.png'
             alt='Kunci Transformasi Logo'
@@ -43,6 +48,7 @@ export default function NavbarGallery() {
         </Link>
 
         <Button
+          aria-label='Buka menu sidebar'
           icon={Menu}
           className='ml-auto min-[800px]:hidden'
           onClick={() => setIsSidebarOpen(true)}
@@ -55,6 +61,7 @@ export default function NavbarGallery() {
               <Link
                 key={id}
                 href={`/#${anchor}`}
+                aria-label='Scroll to section'
                 scroll={false}
                 className='font-secondary hover:text-base-nav p-2.5 text-white-main transition-colors duration-75'
               >
@@ -84,6 +91,7 @@ export default function NavbarGallery() {
         <div className='flex flex-col items-center gap-14 px-4 py-24'>
           <Link
             href='/'
+            aria-label='Back to home'
             scroll={false}
             onClick={() => setIsSidebarOpen(false)}
             className='w-32'
@@ -105,6 +113,7 @@ export default function NavbarGallery() {
                 <Link
                   key={id}
                   href={`/#${anchor}`}
+                  aria-label='Scroll to section'
                   scroll={false}
                   onClick={() => setIsSidebarOpen(false)}
                   className='text-base-white'
@@ -127,6 +136,7 @@ export default function NavbarGallery() {
 
         <div className='flex flex-col items-center justify-end pb-10'>
           <Button
+            aria-label='Buka menu sidebar'
             size='large'
             icon={MoveLeft}
             className='rounded-md bg-white text-xl font-bold text-black-main hover:bg-gray-200'
