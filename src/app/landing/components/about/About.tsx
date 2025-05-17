@@ -3,10 +3,7 @@ import Typography from '@/components/Typography';
 
 export default function About() {
   return (
-    <div
-      id='aboutus'
-      className='flex flex-col items-center justify-center bg-white px-12 pt-16 pb-8 sm:px-18 md:px-24 lg:px-20 lg:pt-24'
-    >
+    <div className='flex flex-col items-center justify-center bg-white px-12 pt-16 pb-8 sm:px-18 md:px-24 lg:px-20 lg:pt-24'>
       <div className='flex w-full flex-col items-center justify-center md:gap-8 lg:gap-14 xl:flex-row xl:gap-21'>
         <NextImage
           src='/fotbarhmtc2024.png'

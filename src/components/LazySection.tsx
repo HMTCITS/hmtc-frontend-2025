@@ -34,6 +34,7 @@ type LazySectionProps = {
    * Optional className for outer wrapper
    */
   className?: string;
+  id?: string;
 };
 
 const DEFAULT_HEIGHT = 300;
@@ -47,6 +48,7 @@ const LazySection: React.FC<LazySectionProps> = ({
   forceVisible = false,
   skeletonHeight,
   className,
+  id,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(forceVisible);
@@ -103,7 +105,7 @@ const LazySection: React.FC<LazySectionProps> = ({
   );
 
   return (
-    <div ref={ref} className={className} style={{ minHeight: 0 }}>
+    <div ref={ref} id={id || ''} className={className} style={{ minHeight: 0 }}>
       {visible ? children : Skeleton}
     </div>
   );

@@ -1,7 +1,6 @@
 import Quotes from '@/app/landing/components/cover/Quotes';
 import VisiMisi from '@/app/landing/components/cover/VisiMisi';
 import KetuaCarousel from '@/components/carousel/KetuaCarousel';
-import Divider from '@/components/Divider';
 import NextImage from '@/components/NextImage';
 
 export default function ShowCase() {
@@ -42,7 +41,6 @@ export default function ShowCase() {
       <div className='relative flex w-full items-center bg-[#121212] px-12 py-18 sm:p-18 md:p-24 lg:px-[8%]'>
         <KetuaCarousel options={{ loop: true }} />
       </div>
-      <Divider id='kepengurusan' />
     </div>
   );
 }

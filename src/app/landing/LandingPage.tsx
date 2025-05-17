@@ -42,16 +42,31 @@ export default function LandingPage() {
   return (
     <main className='relative scroll-smooth'>
       <Cover />
-      <LazySection fallback={<AboutSkeleton />} once={true} threshold={0.4}>
+      <LazySection
+        fallback={<AboutSkeleton />}
+        once={true}
+        threshold={0.4}
+        id='aboutus'
+      >
         <About />
       </LazySection>
 
-      <LazySection fallback={<ShowCaseSkeleton />} once={true} threshold={0.25}>
+      <LazySection
+        fallback={<ShowCaseSkeleton />}
+        once={true}
+        threshold={0.25}
+        id='historyofhmtc'
+      >
         <ShowCase />
       </LazySection>
 
       <div className='relative mx-auto w-full'>
-        <LazySection fallback={<PeopleSkeleton />} once={true} threshold={0.4}>
+        <LazySection
+          fallback={<PeopleSkeleton />}
+          once={true}
+          threshold={0.4}
+          id='peoplebehindhmtc'
+        >
           <PeopleHMTC />
         </LazySection>
 
@@ -62,13 +77,19 @@ export default function LandingPage() {
         >
           <LifeAtHMTC />
         </LazySection>
-        <LazySection fallback={<GallerySkeleton />} once={true} threshold={0.4}>
+        <LazySection
+          fallback={<GallerySkeleton />}
+          once={true}
+          threshold={0.4}
+          id='gallery'
+        >
           <GalleryHMTC />
         </LazySection>
         <LazySection
           fallback={<HMTCBlogSkeleton />}
           once={true}
           threshold={0.4}
+          id='blog'
         >
           <HMTCBlog />
         </LazySection>

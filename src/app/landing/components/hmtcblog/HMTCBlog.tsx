@@ -71,10 +71,7 @@ const HMTCBlog: React.FC = () => {
   }, [embla, setScrollSnaps, onSelect]);
 
   return (
-    <section
-      className='bg-white px-4 pt-10 pb-24 md:px-[10%] md:pt-24'
-      id='blog'
-    >
+    <section className='bg-white px-4 pt-10 pb-24 md:px-[10%] md:pt-24'>
       <div className='container mx-auto p-6 lg:p-0'>
         <Typography
           as='h2'

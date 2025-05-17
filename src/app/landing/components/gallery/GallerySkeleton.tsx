@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export default function GallerySkeleton() {
   return (
-    <section className='flex flex-col bg-white p-8 pt-0 font-sans md:py-10 md:pt-[100px] lg:px-0'>
+    <section className='flex flex-col overflow-hidden bg-white p-8 pt-0 font-sans md:py-10 md:pt-[100px] lg:px-0'>
       <div className='w-full pb-[50px] text-left max-md:pt-20 max-md:text-center md:px-[10%] md:pb-[40px] lg:max-w-[70%] lg:pb-[70px]'>
         <Skeleton className='mx-auto h-12 w-[80%] max-w-[600px] md:mx-0' />
       </div>
