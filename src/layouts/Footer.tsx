@@ -8,6 +8,7 @@ import {
   Twitter,
   Youtube,
 } from 'lucide-react';
+import Link from 'next/link';
 import React from 'react';
 import { Link as ScrollLink } from 'react-scroll';
 
@@ -129,24 +130,35 @@ export default function Footer() {
                   : 'max-h-0 opacity-0 md:max-h-96 md:opacity-100',
               )}
             >
-              {ApaIni.map(({ name, href, offset }, index) => (
-                <ScrollLink
-                  key={index}
-                  aria-label='scroll to section'
-                  to={href.replace('#', '')}
-                  smooth={true}
-                  duration={500}
-                  offset={offset}
-                  className='font-secondary hover:text-base-nav cursor-pointer text-white-main transition-colors duration-75'
-                >
-                  <Typography
-                    font='poppins'
-                    className='text-base-icon text-sm hover:text-white md:text-base'
+              {ApaIni.map(({ name, href, offset }, index) =>
+                href.startsWith('#') ? (
+                  <ScrollLink
+                    key={index}
+                    aria-label='scroll to section'
+                    to={href.replace('#', '')}
+                    smooth={true}
+                    duration={500}
+                    offset={offset}
+                    className='font-secondary hover:text-base-nav cursor-pointer text-white-main transition-colors duration-75'
                   >
-                    {name}
-                  </Typography>
-                </ScrollLink>
-              ))}
+                    <Typography
+                      font='poppins'
+                      className='text-base-icon text-sm hover:text-white md:text-base'
+                    >
+                      {name}
+                    </Typography>
+                  </ScrollLink>
+                ) : (
+                  <Link
+                    key={index}
+                    href={href}
+                    aria-label={`Navigate to ${name}`}
+                    className='font-secondary hover:text-base-nav cursor-pointer p-2.5 text-white-main transition-colors duration-75'
+                  >
+                    <Typography font='satoshi'>{name}</Typography>
+                  </Link>
+                ),
+              )}
             </div>
           </div>
           <div className='flex w-full flex-col items-center gap-y-2.5 md:w-[187px] md:items-start'>
