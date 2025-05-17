@@ -3,6 +3,7 @@
 import { Menu, MoveLeft } from 'lucide-react';
 import * as React from 'react';
 import { Link as ScrollLink } from 'react-scroll';
+import Link from 'next/link';
 
 import Button from '@/components/buttons/Button';
 import NextImage from '@/components/NextImage';
@@ -63,22 +64,34 @@ export default function Navbar() {
         />
 
         <nav className='hidden items-center gap-6 min-[800px]:flex'>
-          {NAVBAR_LINKS.map(({ id, name, href, offset }) => (
-            <ScrollLink
-              aria-label='Scroll to section'
-              key={id}
-              to={href.replace('#', '')}
-              smooth={true}
-              duration={500}
-              offset={offset}
-              className='font-secondary hover:text-base-nav cursor-pointer p-2.5 text-white-main transition-colors duration-75'
-            >
-              <Typography font='satoshi'>{name}</Typography>
-            </ScrollLink>
-          ))}
+          {NAVBAR_LINKS.map(({ id, name, href, offset }) =>
+            href.startsWith('#') ? (
+              <ScrollLink
+                key={id}
+                to={href.replace('#', '')}
+                smooth={true}
+                duration={500}
+                offset={offset}
+                aria-label={`Scroll to ${name}`}
+                className='font-secondary hover:text-base-nav cursor-pointer p-2.5 text-white-main transition-colors duration-75'
+              >
+                <Typography font='satoshi'>{name}</Typography>
+              </ScrollLink>
+            ) : (
+              <Link
+                key={id}
+                href={href}
+                aria-label={`Navigate to ${name}`}
+                className='font-secondary hover:text-base-nav cursor-pointer p-2.5 text-white-main transition-colors duration-75'
+              >
+                <Typography font='satoshi'>{name}</Typography>
+              </Link>
+            ),
+          )}
         </nav>
       </div>
 
+      {/* Sidebar mobile */}
       <nav
         className={cn(
           'fixed top-0 left-0 h-full w-full bg-black-main text-white',
@@ -109,8 +122,8 @@ export default function Navbar() {
           </ScrollLink>
 
           <div className='flex flex-col items-center gap-8'>
-            <div className='flex flex-col items-center gap-8'>
-              {NAVBAR_LINKS.map(({ id, name, href }) => (
+            {NAVBAR_LINKS.map(({ id, name, href }) =>
+              href.startsWith('#') ? (
                 <ScrollLink
                   aria-label='Scroll to section'
                   key={id}
@@ -124,8 +137,19 @@ export default function Navbar() {
                     {name}
                   </Typography>
                 </ScrollLink>
-              ))}
-            </div>
+              ) : (
+                <Link
+                  key={id}
+                  href={href}
+                  className='text-base-white cursor-pointer'
+                  onClick={closeSidebar}
+                >
+                  <Typography as='h6' font='satoshi'>
+                    {name}
+                  </Typography>
+                </Link>
+              ),
+            )}
           </div>
         </div>
 
