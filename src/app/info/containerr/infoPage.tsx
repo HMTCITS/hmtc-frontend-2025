@@ -88,7 +88,7 @@ export default function InfoPage() {
       <h1 className='mb-1 text-center text-2xl font-bold text-white'>
         HMTC ITS
       </h1>
-      <p className='mb-6 text-center text-base font-normal text-white'>
+      <p className='mb-6 text-center text-lg font-normal text-white'>
         Himpunan Mahasiswa Teknik Computer-Informatika ITS
       </p>
 
@@ -98,7 +98,7 @@ export default function InfoPage() {
           <Link
             key={idx}
             href={link.url}
-            className='block w-full rounded-full border border-white/50 py-4 text-center text-base font-normal text-white transition-all duration-200 hover:bg-white hover:text-blue-900'
+            className='block w-full rounded-full border border-white/50 py-4 text-center font-poppins text-base font-normal text-white transition-all duration-200 hover:bg-white hover:text-blue-900'
           >
             {link.label}
           </Link>
