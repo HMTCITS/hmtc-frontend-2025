@@ -1,24 +1,84 @@
-import About from '@/app/landing/components/About';
-import Cover from '@/app/landing/components/Cover';
-import GalleryHMTC from '@/app/landing/components/GalleryHMTC';
-import HMTCBlog from '@/app/landing/components/HMTCBlog';
-import LifeAtHMTC from '@/app/landing/components/LifeAtHMTC';
-import PeopleHMTC from '@/app/landing/components/PeopleHMTC';
-import QuotesKahima from '@/app/landing/components/QuotesKahima';
-import ShowCase from '@/app/landing/components/ShowCase';
+import dynamic from 'next/dynamic';
+
+import AboutSkeleton from '@/app/landing/components/about/AboutSkeleton';
+import Cover from '@/app/landing/components/cover/Cover';
+import GallerySkeleton from '@/app/landing/components/gallery/GallerySkeleton';
+import HMTCBlogSkeleton from '@/app/landing/components/hmtcblog/HMTCBlogSkeleton';
+import LifeAtHMTCSkeleton from '@/app/landing/components/lifeHmtc/LifeAtHMTCSkeleton';
+import PeopleSkeleton from '@/app/landing/components/people/PeopleHMTCSkeleton';
+import QuotesKahimaSkeleton from '@/app/landing/components/quotesKahima/QuotesKahimaSkeleton';
+import ShowCase from '@/app/landing/components/showcase/ShowCase';
+import ShowCaseSkeleton from '@/app/landing/components/showcase/ShowCaseSkeleton';
+import LazySection from '@/components/LazySection';
+
+const About = dynamic(() => import('./components/about/About'), {
+  ssr: true,
+});
+
+const PeopleHMTC = dynamic(() => import('./components/people/PeopleHMTC'), {
+  ssr: true,
+});
+
+const LifeAtHMTC = dynamic(() => import('./components/lifeHmtc/LifeAtHMTC'), {
+  ssr: true,
+});
+
+const GalleryHMTC = dynamic(() => import('./components/gallery/GalleryHMTC'), {
+  ssr: true,
+});
+
+const HMTCBlog = dynamic(() => import('./components/hmtcblog/HMTCBlog'), {
+  ssr: true,
+});
+
+const QuotesKahima = dynamic(
+  () => import('./components/quotesKahima/QuotesKahima'),
+  {
+    ssr: true,
+  },
+);
 
 export default function LandingPage() {
   return (
     <main className='relative scroll-smooth'>
       <Cover />
-      <About />
-      <ShowCase />
+      <LazySection fallback={<AboutSkeleton />} once={true} threshold={0.4}>
+        <About />
+      </LazySection>
+
+      <LazySection fallback={<ShowCaseSkeleton />} once={true} threshold={0.25}>
+        <ShowCase />
+      </LazySection>
+
       <div className='relative mx-auto w-full'>
-        <PeopleHMTC />
-        <LifeAtHMTC />
-        <GalleryHMTC />
-        <HMTCBlog />
-        <QuotesKahima />
+        <LazySection fallback={<PeopleSkeleton />} once={true} threshold={0.4}>
+          <PeopleHMTC />
+        </LazySection>
+
+        <LazySection
+          fallback={<LifeAtHMTCSkeleton />}
+          once={true}
+          threshold={0.4}
+        >
+          <LifeAtHMTC />
+        </LazySection>
+        <LazySection fallback={<GallerySkeleton />} once={true} threshold={0.4}>
+          <GalleryHMTC />
+        </LazySection>
+        <LazySection
+          fallback={<HMTCBlogSkeleton />}
+          once={true}
+          threshold={0.4}
+        >
+          <HMTCBlog />
+        </LazySection>
+        <LazySection
+          fallback={<QuotesKahimaSkeleton />}
+          once={true}
+          threshold={0.4}
+        >
+          <QuotesKahima />
+        </LazySection>
       </div>
     </main>
   );

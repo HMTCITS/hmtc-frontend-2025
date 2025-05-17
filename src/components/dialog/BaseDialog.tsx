@@ -87,6 +87,7 @@ export default function BaseDialog({
             <div className='z-auto inline-block w-full transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:max-w-lg sm:p-6 sm:align-middle'>
               <div className='absolute top-0 right-0 hidden pt-4 pr-4 sm:block'>
                 <Button
+                  aria-label='Close Modal'
                   icon={CircleX}
                   size='small'
                   variant='secondary'
@@ -121,10 +122,19 @@ export default function BaseDialog({
                 </div>
               </div>
               <div className='mt-5 flex w-full flex-col gap-3 sm:mt-4 sm:flex sm:flex-row-reverse'>
-                <Button onClick={onSubmit} variant='primary'>
+                <Button
+                  aria-label='Submit Modal'
+                  onClick={onSubmit}
+                  variant='primary'
+                >
                   {submitText}
                 </Button>
-                <Button type='button' onClick={onClose} variant='secondary'>
+                <Button
+                  aria-label='Cansel Button'
+                  type='button'
+                  onClick={onClose}
+                  variant='secondary'
+                >
                   {cancelText}
                 </Button>
               </div>

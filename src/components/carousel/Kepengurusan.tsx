@@ -46,10 +46,16 @@ export default function Kepengurusan() {
       }}
       modules={[Autoplay, Keyboard, Scrollbar, Navigation, Pagination]}
     >
-      <button className='swiper-button-next !h-12 !w-12 rounded-full bg-white p-2.5 ring-2 ring-text-black hover:bg-gray-100'>
+      <button
+        aria-label='Backward'
+        className='swiper-button-next !h-12 !w-12 rounded-full bg-white p-2.5 ring-2 ring-text-black hover:bg-gray-100'
+      >
         <ChevronRight className='!text-xs text-text-black' />
       </button>
-      <button className='swiper-button-prev !h-12 !w-12 rounded-full bg-white p-2.5 ring-2 ring-text-black hover:bg-gray-100'>
+      <button
+        aria-label='Forward'
+        className='swiper-button-prev !h-12 !w-12 rounded-full bg-white p-2.5 ring-2 ring-text-black hover:bg-gray-100'
+      >
         <ChevronLeft className='!text-xs text-text-black' />
       </button>
       {Anggota.map(({ ...props }, index) => (

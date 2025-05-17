@@ -2,129 +2,6 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
-/**
- * Maps typography variant keys to Tailwind CSS classes.
- *
- * ## Variant Documentation (px → rem, weight in integer)
- *
- * ### k0
- * - Base Size: `text-4xl` ≈ 36px ≈ 2.25rem
- * - Weight: **bold** (700)
- * - Leading: **leading-none** (line-height: 1)
- * - md: `text-[80px]` = 80px = 5rem
- *
- * ### k1
- * - Base Size: `text-[2rem]` = 32px = 2rem
- * - Weight: **extrabold** (800)
- * - Leading: **leading-tight** (≈1.25)
- * - md: `text-[3.25rem]` ≈ 52px ≈ 3.25rem
- *
- * ### k2
- * - Base Size: `text-4xl` ≈ 36px ≈ 2.25rem
- * - Weight: **bold** (700)
- * - md: `text-[3.25rem]` ≈ 52px ≈ 3.25rem
- *
- * ### j0
- * - Base Size: (default `text-base` ≈ 16px = 1rem)
- * - md: `text-5xl` ≈ 48px = 3rem
- * - Weight: **bold** (700)
- *
- * ### j1
- * - Base Size: `text-4xl` ≈ 36px ≈ 2.25rem
- * - Weight: **bold** (700)
- *
- * ### j2
- * - Base Size: `text-3xl` ≈ 30px ≈ 1.875rem
- * - Weight: **bold** (700)
- *
- * ### i1
- * - Base Size: (default `text-base` ≈ 16px = 1rem)
- * - md: `text-2xl` ≈ 24px ≈ 1.5rem
- * - Weight: **bold** (700)
- *
- * ### i2
- * - Base Size: `text-xl` ≈ 20px ≈ 1.25rem
- * - Weight: **bold** (700)
- *
- * ### h1
- * - Base Size: (default `text-base` ≈ 16px = 1rem)
- * - md: `text-2xl` ≈ 24px ≈ 1.5rem
- * - Weight: **semibold** (600)
- *
- * ### h2
- * - Base Size: `text-lg` ≈ 18px ≈ 1.125rem
- * - Weight: **semibold** (600)
- * - md: `text-xl` ≈ 20px ≈ 1.25rem
- *
- * ### h3
- * - Base Size: `text-lg` ≈ 18px ≈ 1.125rem
- * - Weight: **semibold** (600)
- *
- * ### h4
- * - Base Size: `text-base` ≈ 16px = 1rem
- * - Weight: **semibold** (600)
- *
- * ### h5
- * - Base Size: `text-sm` ≈ 14px = 0.875rem
- * - Weight: **semibold** (600)
- *
- * ### s0
- * - Base Size: (default `text-base` ≈ 16px = 1rem)
- * - Weight: **medium** (500)
- * - md: `text-xl` ≈ 20px ≈ 1.25rem
- *
- * ### s1
- * - Base Size: (default `text-base` ≈ 16px = 1rem)
- * - Weight: **medium** (500)
- * - md: `text-lg` ≈ 18px ≈ 1.125rem
- *
- * ### s2
- * - Base Size: (default `text-base` ≈ 16px = 1rem)
- * - Weight: **medium** (500)
- * - md: `text-base` (tetap 16px = 1rem, tidak berubah secara signifikan)
- *
- * ### s3
- * - Base Size: `text-sm` ≈ 14px = 0.875rem
- * - Weight: **medium** (500)
- *
- * ### s4
- * - Base Size: `text-xs` ≈ 12px = 0.75rem
- * - Weight: **medium** (500)
- *
- * ### b1
- * - Base Size: (default `text-base` ≈ 16px = 1rem)
- * - Weight: **normal** (400)
- * - md: `text-lg` ≈ 18px ≈ 1.125rem
- *
- * ### b2
- * - Base Size: `text-base` ≈ 16px = 1rem
- * - Weight: **normal** (400)
- *
- * ### b3
- * - Base Size: `text-base` ≈ 16px = 1rem
- * - Weight: **light** (300)
- *
- * ### b4
- * - Base Size: `text-sm` ≈ 14px = 0.875rem
- * - Weight: **normal** (400)
- *
- * ### b5
- * - Base Size: `text-sm` ≈ 14px = 0.875rem
- * - Weight: **light** (300)
- *
- * ### c0
- * - Base Size: `text-xs` ≈ 12px = 0.75rem
- * - Weight: **normal** (400)
- *
- * ### c1
- * - Base Size: `text-xs` ≈ 12px = 0.75rem
- * - Weight: **light** (300)
- *
- * ### c2
- * - Base Size: `text-[11px]` = 11px ≈ 0.6875rem
- * - Leading: `leading-[14px]` ≈ 0.875rem line-height
- * - Weight: **normal** (400) by default
- */
 const TYPOGRAPHY_VARIANT_CLASSES = {
   k0: 'text-4xl font-bold leading-none md:text-[80px]',
   k1: 'text-[2rem] font-extrabold leading-tight md:text-[3.25rem]',
@@ -165,6 +42,7 @@ const FONT_FAMILY_CLASSES = {
   adelphe: 'font-adelphe',
   libre: 'font-libre',
   inter: 'font-inter',
+  helveticaNeue: 'font-helveticaNeue',
   playfair: 'font-playfairDisplay',
 } as const;
 
@@ -230,12 +108,62 @@ export type TypographyProps<T extends React.ElementType> = {
 >;
 
 /**
- * Typography component for consistent text styling.
+ * # Typography Component
+ *
+ * Component for consistent text styling across the application.
  *
  * @example
  * <Typography as="h1" weight="bold" font="poppins" variant="k1" className="mb-4">
  *   Hello World!
  * </Typography>
+ *
+ * ## Variant Quick Reference Table
+ *
+ * | Category | Variant | Base Size         | MD Size            | Weight    | Use Case                  |
+ * |----------|---------|-------------------|-------------------|-----------|---------------------------|
+ * | **K**    | k0      | 36px (text-4xl)   | 80px              | Bold      | Hero titles               |
+ * |          | k1      | 32px (2rem)       | 52px (3.25rem)    | ExtraBold | Main headings             |
+ * |          | k2      | 36px (text-4xl)   | 52px (3.25rem)    | Bold      | Section headings          |
+ * | **J**    | j0      | 16px (text-base)  | 48px (text-5xl)   | Bold      | Responsive headings       |
+ * |          | j1      | 36px (text-4xl)   | -                 | Bold      | Fixed large headings      |
+ * |          | j2      | 30px (text-3xl)   | -                 | Bold      | Medium-large headings     |
+ * | **I**    | i1      | 16px (text-base)  | 24px (text-2xl)   | Bold      | Emphasized text           |
+ * |          | i2      | 20px (text-xl)    | -                 | Bold      | Sub-headings              |
+ * | **H**    | h1      | 16px (text-base)  | 24px (text-2xl)   | SemiBold  | Section sub-headings      |
+ * |          | h2      | 18px (text-lg)    | 20px (text-xl)    | SemiBold  | Card titles               |
+ * |          | h3      | 18px (text-lg)    | -                 | SemiBold  | Strong paragraph headers  |
+ * |          | h4      | 16px (text-base)  | -                 | SemiBold  | Small headers             |
+ * |          | h5      | 14px (text-sm)    | -                 | SemiBold  | Caption headers           |
+ * | **S**    | s0      | 16px (text-base)  | 20px (text-xl)    | Medium    | Featured paragraphs       |
+ * |          | s1      | 16px (text-base)  | 18px (text-lg)    | Medium    | Emphasized body text      |
+ * |          | s2      | 16px (text-base)  | 16px (text-base)  | Medium    | Standard medium text      |
+ * |          | s3      | 14px (text-sm)    | -                 | Medium    | Small emphasized text     |
+ * |          | s4      | 12px (text-xs)    | -                 | Medium    | Small labels              |
+ * | **B**    | b1      | 16px (text-base)  | 18px (text-lg)    | Normal    | Main body text           |
+ * |          | b2      | 16px (text-base)  | -                 | Normal    | Standard paragraphs       |
+ * |          | b3      | 16px (text-base)  | -                 | Light     | Body text light           |
+ * |          | b4      | 14px (text-sm)    | -                 | Normal    | Small body text           |
+ * |          | b5      | 14px (text-sm)    | -                 | Light     | Small light text          |
+ * | **C**    | c0      | 12px (text-xs)    | -                 | Normal    | Caption text              |
+ * |          | c1      | 12px (text-xs)    | -                 | Light     | Caption text light        |
+ * |          | c2      | 11px              | -                 | Normal    | Fine print                |
+ *
+ * ## Font Weight Reference
+ * - Light: 300
+ * - Normal: 400
+ * - Medium: 500
+ * - SemiBold: 600
+ * - Bold: 700
+ * - ExtraBold: 800
+ *
+ * ## Categories Explained
+ * - K: Largest headings (hero, main page titles)
+ * - J: Large headings (page sections)
+ * - I: Medium headings (subsections)
+ * - H: Small headings (components, cards)
+ * - S: Medium weight text (emphasized paragraphs)
+ * - B: Normal body text (paragraphs)
+ * - C: Caption text (smallest text elements)
  */
 export default function Typography<T extends React.ElementType = 'p'>({
   as,
