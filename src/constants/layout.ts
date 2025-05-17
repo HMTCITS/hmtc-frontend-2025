@@ -9,6 +9,7 @@ export const NAVBAR_LINKS = [
   },
   { id: 4, name: 'Gallery', href: '#gallery', offset: -100 },
   { id: 5, name: 'Blog', href: '#blog', offset: 0 },
+  { id: 6, name: 'Info', href: '/info' },
 ];
 
 export const Misi = [
