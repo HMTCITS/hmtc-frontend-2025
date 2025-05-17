@@ -56,10 +56,7 @@ const EmblaCarousel: React.FC<PropType> = ({ options }) => {
   }, [emblaApi]);
 
   return (
-    <div
-      className='relative mb-[20px] flex w-full flex-col items-center gap-[10px] lg:mb-0'
-      id='historyofhmtc'
-    >
+    <div className='relative mb-[20px] flex w-full flex-col items-center gap-[10px] lg:mb-0'>
       <div className='z-10 w-full'>
         <div className='flex w-full flex-col items-start gap-8'>
           <h2 className='font-adelphe text-base text-[#FFFFFF] uppercase'>

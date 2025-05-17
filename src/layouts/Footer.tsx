@@ -8,8 +8,8 @@ import {
   Twitter,
   Youtube,
 } from 'lucide-react';
+import Link from 'next/link';
 import React from 'react';
-import { Link as ScrollLink } from 'react-scroll';
 
 import BaseLink from '@/components/links/BaseLink';
 import NextImage from '@/components/NextImage';
@@ -18,55 +18,54 @@ import { NAVBAR_LINKS as ApaIni } from '@/contents/layout';
 import SocialCard from '@/layouts/components/Social';
 import { cn } from '@/lib/utils';
 
-// Footer links
 const SocialMedia = [
-  {
-    icon: Twitter,
-    href: 'https://twitter.com/hmtc_its',
-  },
-  {
-    icon: Instagram,
-    href: 'https://www.instagram.com/hmtc_its/',
-  },
-  {
-    icon: Youtube,
-    href: 'https://www.youtube.com/@bluepresshmtc',
-  },
+  { icon: Twitter, href: 'https://twitter.com/hmtc_its' },
+  { icon: Instagram, href: 'https://www.instagram.com/hmtc_its/' },
+  { icon: Youtube, href: 'https://www.youtube.com/@bluepresshmtc' },
   {
     icon: Linkedin,
     href: 'https://www.linkedin.com/company/himpunan-mahasiswa-teknik-computer-informatika/',
   },
-  {
-    icon: Link2,
-    href: 'https://tr.ee/T1xoSC0squ',
-  },
+  { icon: Link2, href: 'https://tr.ee/T1xoSC0squ' },
 ];
 
-// Footer Akademik
 const Akademik = [
-  {
-    label: 'Bank Soal',
-    href: '#akademik',
-  },
-  {
-    label: 'Silabus',
-    href: '#akademik',
-  },
-  {
-    label: 'MBKM',
-    href: '#akademik',
-  },
-  {
-    label: 'Kalender Akademik',
-    href: '#akademik',
-  },
+  { label: 'Bank Soal', href: '#akademik', offset: -80 },
+  { label: 'Silabus', href: '#akademik', offset: -80 },
+  { label: 'MBKM', href: '#akademik', offset: -80 },
+  { label: 'Kalender Akademik', href: '#akademik', offset: -80 },
 ];
+
+function handleSmoothAnchorClick(
+  e: React.MouseEvent<HTMLAnchorElement>,
+  offset: number = 0,
+) {
+  const href = e.currentTarget.getAttribute('href');
+  if (href && href.startsWith('#')) {
+    e.preventDefault();
+    const id = href.slice(1);
+    const target = document.getElementById(id);
+    if (target) {
+      const rect = target.getBoundingClientRect();
+      const scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0;
+      window.scrollTo({
+        top: rect.top + scrollTop + offset,
+        behavior: 'smooth',
+      });
+    }
+  }
+}
 
 export default function Footer() {
   const [isApaIniOpen, setIsApaIniOpen] = React.useState(false);
   const [isAkademikOpen, setIsAkademikOpen] = React.useState(false);
   const toggleApaIni = () => setIsApaIniOpen((prev) => !prev);
   const toggleAkademik = () => setIsAkademikOpen((prev) => !prev);
+
   return (
     <footer
       className={cn(
@@ -84,7 +83,7 @@ export default function Footer() {
           <div className='w-12'>
             <NextImage
               src='/logohmtc1.png'
-              alt='Logo HTMC ITS 2024'
+              alt='Logo HMTC ITS 2024'
               width={1440}
               height={1440}
               className='h-[55.09px] w-[48.62px]'
@@ -129,24 +128,33 @@ export default function Footer() {
                   : 'max-h-0 opacity-0 md:max-h-96 md:opacity-100',
               )}
             >
-              {ApaIni.map(({ name, href, offset }, index) => (
-                <ScrollLink
-                  key={index}
-                  aria-label='scroll to section'
-                  to={href.replace('#', '')}
-                  smooth={true}
-                  duration={500}
-                  offset={offset}
-                  className='font-secondary hover:text-base-nav cursor-pointer text-white-main transition-colors duration-75'
-                >
-                  <Typography
-                    font='poppins'
-                    className='text-base-icon text-sm hover:text-white md:text-base'
+              {ApaIni.map(({ name, href, offset }, index) =>
+                href.startsWith('#') ? (
+                  <a
+                    key={index}
+                    href={href}
+                    aria-label={`Scroll ke bagian ${name}`}
+                    className='font-secondary hover:text-base-nav cursor-pointer text-white-main transition-colors duration-75'
+                    onClick={(e) => handleSmoothAnchorClick(e, offset ?? -80)}
                   >
-                    {name}
-                  </Typography>
-                </ScrollLink>
-              ))}
+                    <Typography
+                      font='poppins'
+                      className='text-base-icon text-sm hover:text-white md:text-base'
+                    >
+                      {name}
+                    </Typography>
+                  </a>
+                ) : (
+                  <Link
+                    key={index}
+                    href={href}
+                    aria-label={`Menuju halaman ${name}`}
+                    className='font-secondary hover:text-base-nav cursor-pointer p-2.5 text-white-main transition-colors duration-75'
+                  >
+                    <Typography font='satoshi'>{name}</Typography>
+                  </Link>
+                ),
+              )}
             </div>
           </div>
           <div className='flex w-full flex-col items-center gap-y-2.5 md:w-[187px] md:items-start'>
@@ -174,14 +182,13 @@ export default function Footer() {
                   : 'max-h-0 opacity-0 md:max-h-96 md:opacity-100',
               )}
             >
-              {Akademik.map(({ label, href }, index) => (
-                <ScrollLink
+              {Akademik.map(({ label, href, offset }, index) => (
+                <a
                   key={index}
-                  aria-label='scroll to section'
-                  to={href.replace('#', '')}
-                  smooth={true}
-                  duration={500}
+                  href={href}
+                  aria-label={`Scroll ke bagian ${label}`}
                   className='font-secondary hover:text-base-nav cursor-pointer text-white-main transition-colors duration-75'
+                  onClick={(e) => handleSmoothAnchorClick(e, offset ?? -80)}
                 >
                   <Typography
                     font='poppins'
@@ -189,13 +196,15 @@ export default function Footer() {
                   >
                     {label}
                   </Typography>
-                </ScrollLink>
+                </a>
               ))}
             </div>
           </div>
         </div>
       </div>
+
       <div className='h-1 w-full border-t border-black-main'></div>
+
       <div className='flex w-full flex-col items-center justify-center gap-y-6 md:flex-row md:justify-between'>
         <Typography
           variant='s2'
