@@ -3,7 +3,6 @@
 import { Menu, MoveLeft } from 'lucide-react';
 import Link from 'next/link';
 import * as React from 'react';
-import { Link as ScrollLink } from 'react-scroll';
 
 import Button from '@/components/buttons/Button';
 import NextImage from '@/components/NextImage';
@@ -11,11 +10,26 @@ import Typography from '@/components/Typography';
 import { NAVBAR_LINKS } from '@/contents/layout';
 import { cn } from '@/lib/utils';
 
+function scrollToId(id: string, offset = 0) {
+  const target = document.getElementById(id);
+  if (!target) return;
+  const rect = target.getBoundingClientRect();
+  const scrollTop =
+    window.pageYOffset ||
+    document.documentElement.scrollTop ||
+    document.body.scrollTop ||
+    0;
+  window.scrollTo({
+    top: rect.top + scrollTop + offset,
+    behavior: 'smooth',
+  });
+}
+
 export default function Navbar() {
   const [isShift, setIsShift] = React.useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
-  const handleScroll = React.useCallback(() => {
+  const handleScroll = React.useCallback(function handleNavbarScroll() {
     const shouldShift = window.scrollY >= 10;
     setIsShift((prev) => (prev !== shouldShift ? shouldShift : prev));
   }, []);
@@ -26,8 +40,22 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
-  const openSidebar: () => void = () => setIsSidebarOpen(true);
-  const closeSidebar: () => void = () => setIsSidebarOpen(false);
+  function openSidebar() {
+    setIsSidebarOpen(true);
+  }
+  function closeSidebar() {
+    setIsSidebarOpen(false);
+  }
+
+  const handleAnchorClick = (
+    e: React.MouseEvent,
+    target: string,
+    offset?: number,
+  ) => {
+    e.preventDefault();
+    closeSidebar();
+    scrollToId(target, offset);
+  };
 
   return (
     <header className='fixed top-0 z-[100] w-full'>
@@ -38,12 +66,12 @@ export default function Navbar() {
           isShift && 'bg-black shadow-sm backdrop-blur',
         )}
       >
-        <ScrollLink
-          to='home'
-          smooth
-          duration={500}
+        <a
+          href='#home'
           aria-label='Kembali ke beranda HMTC ITS'
           className='relative h-7 w-28 cursor-pointer'
+          tabIndex={0}
+          onClick={(e) => handleAnchorClick(e, 'home', 0)}
         >
           <NextImage
             src='logohmtc2024.png'
@@ -54,7 +82,7 @@ export default function Navbar() {
             quality={80}
             className='h-full w-full'
           />
-        </ScrollLink>
+        </a>
 
         <Button
           icon={Menu}
@@ -66,22 +94,23 @@ export default function Navbar() {
         <nav className='hidden items-center gap-6 min-lg:flex'>
           {NAVBAR_LINKS.map(({ id, name, href, offset }) =>
             href.startsWith('#') ? (
-              <ScrollLink
+              <a
                 key={id}
-                to={href.replace('#', '')}
-                smooth={true}
-                duration={500}
-                offset={offset}
-                aria-label={`Scroll to ${name}`}
+                href={href}
+                aria-label={`Scroll ke ${name}`}
                 className='font-secondary hover:text-base-nav cursor-pointer p-2.5 text-white-main transition-colors duration-75'
+                tabIndex={0}
+                onClick={(e) =>
+                  handleAnchorClick(e, href.replace('#', ''), offset)
+                }
               >
                 <Typography font='satoshi'>{name}</Typography>
-              </ScrollLink>
+              </a>
             ) : (
               <Link
                 key={id}
                 href={href}
-                aria-label={`Navigate to ${name}`}
+                aria-label={`Menuju halaman ${name}`}
                 className='font-secondary hover:text-base-nav cursor-pointer p-2.5 text-white-main transition-colors duration-75'
               >
                 <Typography font='satoshi'>{name}</Typography>
@@ -91,7 +120,6 @@ export default function Navbar() {
         </nav>
       </div>
 
-      {/* Sidebar mobile */}
       <nav
         aria-label='Navigasi seluler'
         className={cn(
@@ -102,13 +130,12 @@ export default function Navbar() {
         )}
       >
         <div className='z-10 flex flex-col items-center gap-14 px-4 py-24'>
-          <ScrollLink
-            to='home'
-            smooth
-            duration={500}
+          <a
+            href='#home'
             aria-label='Kembali ke beranda HMTC ITS'
             className='w-32'
-            onClick={closeSidebar}
+            onClick={(e) => handleAnchorClick(e, 'home')}
+            tabIndex={0}
           >
             <NextImage
               src='logohmtc2024.png'
@@ -119,29 +146,31 @@ export default function Navbar() {
               quality={80}
               className='h-full w-full'
             />
-          </ScrollLink>
+          </a>
 
           <div className='flex flex-col items-center gap-8'>
-            {NAVBAR_LINKS.map(({ id, name, href }) =>
+            {NAVBAR_LINKS.map(({ id, name, href, offset }) =>
               href.startsWith('#') ? (
-                <ScrollLink
-                  aria-label='Scroll to section'
+                <a
                   key={id}
-                  to={href.replace('#', '')}
-                  smooth={true}
-                  duration={500}
+                  href={href}
+                  aria-label={`Scroll ke ${name}`}
                   className='text-base-white cursor-pointer'
-                  onClick={closeSidebar}
+                  onClick={(e) =>
+                    handleAnchorClick(e, href.replace('#', ''), offset)
+                  }
+                  tabIndex={0}
                 >
                   <Typography as='h6' font='satoshi'>
                     {name}
                   </Typography>
-                </ScrollLink>
+                </a>
               ) : (
                 <Link
                   key={id}
                   href={href}
                   className='text-base-white cursor-pointer'
+                  aria-label={`Menuju halaman ${name}`}
                   onClick={closeSidebar}
                 >
                   <Typography as='h6' font='satoshi'>
