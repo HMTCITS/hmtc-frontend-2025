@@ -8,15 +8,15 @@ export default function PeopleHMTC() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const images = [
-    '/peoplehmtc/kahima_2025.webp',
-    '/peoplehmtc/cmi_2025.webp',
-    '/peoplehmtc/ea_2025.webp',
-    '/peoplehmtc/edd_2025.webp',
-    '/peoplehmtc/ia_2025.webp',
-    '/peoplehmtc/srd_2025.webp',
-    '/peoplehmtc/ssd_2025.webp',
-    '/peoplehmtc/sti_2025.webp',
-    '/peoplehmtc/swrt_2025.webp',
+    '/peoplehmtc/kahima_2025.jpg',
+    '/peoplehmtc/cmi_2025.jpg',
+    '/peoplehmtc/ea_2025.jpg',
+    '/peoplehmtc/edd_2025.jpg',
+    '/peoplehmtc/ia_2025.jpg',
+    '/peoplehmtc/srd_2025.jpg',
+    '/peoplehmtc/ssd_2025.jpg',
+    '/peoplehmtc/sti_2025.jpg',
+    '/peoplehmtc/swrt_2025.jpg',
   ];
 
   const totalSlides = images.length;
