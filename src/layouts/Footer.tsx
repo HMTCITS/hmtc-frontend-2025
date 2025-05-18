@@ -107,7 +107,7 @@ export default function Footer() {
             <div onClick={toggleApaIni} className='flex items-center gap-2'>
               <Typography
                 variant='s2'
-                className='font-secondary cursor-pointer uppercase'
+                className='font-secondary cursor-pointer pb-5 uppercase'
               >
                 hmtc
               </Typography>
@@ -161,7 +161,7 @@ export default function Footer() {
             <div onClick={toggleAkademik} className='flex items-center gap-2'>
               <Typography
                 variant='s2'
-                className='font-secondary cursor-pointer uppercase'
+                className='font-secondary cursor-pointer pb-5 uppercase'
               >
                 akademik
               </Typography>
