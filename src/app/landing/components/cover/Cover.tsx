@@ -27,7 +27,7 @@ export default function Cover() {
               weight='regular'
               className='opacity-60 sm:text-4xl md:mr-auto md:text-5xl lg:text-7xl'
             >
-              Bersama Bersinergi <br />
+              Terangi Haluan <br />
             </Typography>
           </div>
           <div className='flex flex-row justify-end py-12 md:py-16 lg:justify-end'>
@@ -38,7 +38,7 @@ export default function Cover() {
               weight='bold'
               className='opacity-86 max-md:pr-6 sm:text-5xl md:text-6xl lg:text-8xl'
             >
-              Menjadi
+              Bersama
             </Typography>
           </div>
           <div className='flex flex-col md:flex-row md:items-center md:justify-between lg:mt-20'>
@@ -47,9 +47,9 @@ export default function Cover() {
               font='libre'
               variant='j0'
               weight='bold'
-              className='text-5xl leading-tight italic sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl'
+              className='text-5xl leading-tight italic sm:text-6xl md:text-7xl lg:text-8xl xl:text-8xl'
             >
-              Kunci Transformasi
+              Suar Peradaban
             </Typography>
           </div>
         </div>
