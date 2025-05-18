@@ -25,13 +25,14 @@ export default function QuotesKahima() {
         <Typography variant='h1' className='text-2xl md:text-3xl lg:text-4xl'>
           <Typography
             as='span'
-            className='font-satoshi text-3xl font-light text-inherit md:text-4xl lg:text-5xl'
+            className='text-3xl font-light text-inherit md:text-4xl lg:text-5xl'
           >
             “
           </Typography>
           <Typography
             as='span'
-            className='font-adelphe text-xl leading-[2.0] font-light text-inherit md:text-2xl md:leading-[2.0] lg:text-3xl lg:leading-[2.0]'
+            font='adelphe'
+            className='text-xl leading-[2.0] font-light text-inherit md:text-2xl md:leading-[2.0] lg:text-3xl lg:leading-[2.0]'
           >
             35 tahun menjadi wadah aspirasi, kreativitas, pengembangan potensi
             hingga simbol pemersatu, dan tetap saja di balik itu semua,
@@ -40,13 +41,15 @@ export default function QuotesKahima() {
 
         <Typography
           variant='h2'
-          className='font-adelphe text-2xl font-bold md:text-3xl lg:text-5xl'
+          font='adelphe'
+          className='text-2xl font-bold md:text-3xl lg:text-5xl'
           style={{ marginTop: 35, lineHeight: '1.2' }}
         >
           HMTC adalah tentang dirimu.
           <Typography
             as='span'
-            className='font-adelphe text-3xl font-light text-inherit md:text-4xl lg:text-5xl'
+            font='adelphe'
+            className='text-3xl font-light text-inherit md:text-4xl lg:text-5xl'
           >
             ”
           </Typography>
@@ -54,7 +57,8 @@ export default function QuotesKahima() {
 
         <Typography
           variant='h3'
-          className='font-adelphe font-bold italic md:text-xl lg:text-2xl'
+          font='adelphe'
+          className='font-bold italic md:text-xl lg:text-2xl'
           style={{
             marginBottom: 0,
             marginTop: 60,
@@ -65,7 +69,7 @@ export default function QuotesKahima() {
         </Typography>
         <Typography
           variant='h4'
-          className='font-satoshi text-xs font-light md:text-sm lg:text-base'
+          className='text-xs font-light md:text-sm lg:text-base'
           style={{
             marginTop: 6,
             lineHeight: '1.2',

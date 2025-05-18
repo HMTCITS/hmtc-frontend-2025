@@ -94,7 +94,7 @@ export default function Footer() {
           <div>
             <Typography
               variant='h2'
-              className='flex flex-col font-satoshi text-base font-bold'
+              className='flex flex-col text-base font-bold'
             >
               <span>Suar</span>
               <span>Peradaban</span>
@@ -137,10 +137,7 @@ export default function Footer() {
                     className='font-secondary hover:text-base-nav cursor-pointer text-white-main transition-colors duration-75'
                     onClick={(e) => handleSmoothAnchorClick(e, offset ?? -80)}
                   >
-                    <Typography
-                      font='satoshi'
-                      className='text-base-icon text-sm hover:text-white md:text-base'
-                    >
+                    <Typography className='text-base-icon text-sm hover:text-white md:text-base'>
                       {name}
                     </Typography>
                   </a>
@@ -151,7 +148,7 @@ export default function Footer() {
                     aria-label={`Menuju halaman ${name}`}
                     className='font-secondary hover:text-base-nav cursor-pointer text-white-main transition-colors duration-75'
                   >
-                    <Typography font='satoshi'>{name}</Typography>
+                    <Typography>{name}</Typography>
                   </Link>
                 ),
               )}
@@ -190,10 +187,7 @@ export default function Footer() {
                   className='font-secondary hover:text-base-nav cursor-pointer text-white-main transition-colors duration-75'
                   onClick={(e) => handleSmoothAnchorClick(e, offset ?? -80)}
                 >
-                  <Typography
-                    font='satoshi'
-                    className='text-base-icon text-sm hover:text-white md:text-base'
-                  >
+                  <Typography className='text-base-icon text-sm hover:text-white md:text-base'>
                     {label}
                   </Typography>
                 </a>
@@ -208,7 +202,7 @@ export default function Footer() {
       <div className='flex w-full flex-col items-center justify-center gap-y-6 md:flex-row md:justify-between'>
         <Typography
           variant='s2'
-          className='font-secondary text-base-icon order-2 font-satoshi text-sm uppercase md:order-1 md:text-center'
+          className='font-secondary text-base-icon order-2 text-sm uppercase md:order-1 md:text-center'
         >
           &copy; HMTC ITS 2025 | SUAR PERADABAN
         </Typography>

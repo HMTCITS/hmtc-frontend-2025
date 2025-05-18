@@ -19,7 +19,6 @@ export default function About() {
         <div className='mt-8 max-w-[615px] text-left lg:mt-0'>
           <Typography
             as='h2'
-            font='satoshi'
             variant='k2'
             weight='regular'
             className='text-2xl text-blue-600 max-xl:text-center sm:text-3xl xl:text-2xl'
@@ -37,7 +36,6 @@ export default function About() {
           </Typography>
           <Typography
             as='p'
-            font='satoshi'
             variant='s1'
             weight='regular'
             className='mt-6 text-justify text-sm text-gray-700 sm:text-lg md:mt-8'
@@ -47,7 +45,6 @@ export default function About() {
           </Typography>
           <Typography
             as='p'
-            font='satoshi'
             variant='s1'
             weight='regular'
             className='mt-4 text-justify text-sm text-gray-700 sm:text-lg'

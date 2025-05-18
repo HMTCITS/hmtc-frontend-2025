@@ -66,7 +66,6 @@ export default function NavbarGallery() {
                 className='font-secondary hover:text-base-nav p-2.5 text-white-main transition-colors duration-75'
               >
                 <Typography
-                  font='satoshi'
                   weight='medium'
                   className={cn(
                     name === 'Gallery' ? 'text-black' : 'text-zinc-600',
@@ -120,7 +119,6 @@ export default function NavbarGallery() {
                 >
                   <Typography
                     as='h6'
-                    font='satoshi'
                     weight='medium'
                     className={cn(
                       name === 'Gallery'

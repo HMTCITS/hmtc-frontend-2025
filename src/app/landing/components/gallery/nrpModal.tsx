@@ -180,7 +180,6 @@ export default function RestrictedModal({
                       <Typography
                         variant='s0'
                         className='mt-2.5 max-w-[530px] text-center text-[#F93232] italic max-md:text-lg'
-                        font='satoshi'
                         weight='regular'
                       >
                         The NRP you provided does not grant access. Please check

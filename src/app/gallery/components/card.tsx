@@ -41,7 +41,6 @@ export default function Card({ item }: CardProps) {
           </Typography>
           <Typography
             variant='h3'
-            font='satoshi'
             weight='bold'
             className='mt-1 line-clamp-2 overflow-hidden'
           >
