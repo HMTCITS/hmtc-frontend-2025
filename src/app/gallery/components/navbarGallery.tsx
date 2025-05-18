@@ -25,7 +25,7 @@ export default function NavbarGallery() {
     <header className='fixed top-0 z-[100] w-full'>
       <div
         className={cn(
-          'flex items-center justify-between px-6 py-5.5 min-[800px]:px-24',
+          'flex items-center justify-between px-6 py-5.5 min-lg:px-24',
           isShift
             ? 'bg-white shadow-sm backdrop-blur transition-colors duration-150'
             : 'bg-transparent',
@@ -35,10 +35,10 @@ export default function NavbarGallery() {
           aria-label='Back to home'
           href='/'
           scroll={false}
-          className='relative h-7 w-28'
+          className='relative h-13 w-28'
         >
           <NextImage
-            src='logohmtc2024black.png'
+            src='logo-hmtc2025-navbar-black.png'
             alt='Kunci Transformasi Logo'
             className='h-full w-full'
             width={112}
@@ -50,11 +50,11 @@ export default function NavbarGallery() {
         <Button
           aria-label='Buka menu sidebar'
           icon={Menu}
-          className='ml-auto min-[800px]:hidden'
+          className='ml-auto min-lg:hidden'
           onClick={() => setIsSidebarOpen(true)}
         />
 
-        <nav className='hidden items-center gap-6 min-[800px]:flex'>
+        <nav className='hidden items-center gap-6 min-lg:flex'>
           {NAVBAR_LINKS.map(({ id, name, href }) => {
             const anchor = href.replace('#', '');
             return (
@@ -82,7 +82,7 @@ export default function NavbarGallery() {
 
       <nav
         className={cn(
-          'fixed top-0 left-0 grid h-full w-full grid-rows-2 bg-black-main text-white transition-transform duration-200 ease-in-out min-[800px]:hidden',
+          'fixed top-0 left-0 grid h-full w-full grid-rows-2 bg-black-main text-white transition-transform duration-200 ease-in-out min-lg:hidden',
           isSidebarOpen
             ? 'translate-x-0 opacity-100'
             : '-translate-x-full opacity-0',
@@ -97,7 +97,7 @@ export default function NavbarGallery() {
             className='w-32'
           >
             <NextImage
-              src='logohmtc2024black.png'
+              src='logo-hmtc2025-navbar.png'
               alt='Logo HMTC 2024'
               className='h-full w-full'
               width={700}
@@ -123,7 +123,9 @@ export default function NavbarGallery() {
                     font='satoshi'
                     weight='medium'
                     className={cn(
-                      name === 'Gallery' ? 'text-black' : 'text-zinc-600',
+                      name === 'Gallery'
+                        ? 'text-text-white'
+                        : 'text-text-disabled',
                     )}
                   >
                     {name}

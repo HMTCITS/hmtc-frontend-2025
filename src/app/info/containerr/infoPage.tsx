@@ -7,10 +7,6 @@ const links = [
   { label: 'Request Media Partner', url: 'http://intip.in/FormMedparHMTC2025' },
   { label: 'Instagram', url: 'https://www.instagram.com/hmtc_its' },
   { label: 'WhatsApp OA', url: 'http://wa.me/6285124014965' },
-  {
-    label: 'Line OA',
-    url: 'https://liff.line.me/1645278921-kWRPP32q/?accountId=ycp2851v',
-  },
   { label: 'Twitter', url: 'https://twitter.com/hmtc_its' },
   { label: 'Facebook', url: 'https://www.facebook.com/HMTCFTEIC' },
   { label: 'Youtube', url: 'https://www.youtube.com/c/bluepresshmtc' },
@@ -29,7 +25,6 @@ export const metadata: Metadata = {
     'Media Sosial HMTC',
     'Instagram HMTC ITS',
     'WhatsApp HMTC',
-    'Line OA HMTC',
     'Twitter HMTC',
     'Facebook HMTC',
     'YouTube HMTC',

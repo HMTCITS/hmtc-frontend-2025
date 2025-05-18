@@ -19,7 +19,7 @@ export default function ShowCase() {
           <div className='max-w-[335px]'>
             <VisiMisi
               text1='Vision'
-              text2='Transformasi HMTC sebagai Pionir Utama Elemen Teknik Informatika Demi Mewujudkan Organisasi Yang Berdampak dan Berkualitas'
+              text2='Terwujudnya relevansi HMTC yang berdasar berdampak bagi mahasiswa Teknik Informatika ITS melalui pergerakan yang holistik dan esensial'
             />
           </div>
 
@@ -27,9 +27,9 @@ export default function ShowCase() {
             <VisiMisi
               text1='Mission'
               text2={[
-                'Mengimplementasi program transformasi yang inovatif untuk meningkatkan daya saing dan memperbaiki kondisi HMTC sebagai organisasi di Teknik Informatika.',
-                'Menginisiasi dan mempelopori seluruh aspek pergerakan mahasiswa Teknik Informatika untuk menciptakan lingkungan yang dinamis dan kolaboratif.',
-                'Mengevaluasi dan mengoptimalkan aksi HMTC untuk menciptakan keberdampakan yang signifikan dan berkualitas di seluruh lapisan Teknik Informatika.',
+                'Menginisiasi pergerakan HMTC yang berdasar berdampak demi meningkatnya relevansi HMTC pada mahasiswa Teknik Informatika.',
+                'Menguatkan peran HMTC sebagai advokat yang holistik guna menciptakan citra HMTC yang positif.',
+                'Menciptakan landasan HMTC yang esensial demi terbentuknya HMTC yang berkelanjutan.',
               ]}
             />
           </div>
