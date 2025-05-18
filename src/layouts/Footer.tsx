@@ -103,11 +103,11 @@ export default function Footer() {
         </BaseLink>
 
         <div className='font-secondary grid grid-cols-2 gap-x-6'>
-          <div className='flex w-full flex-col items-center gap-y-2.5 md:w-[187px] md:items-start'>
+          <div className='flex w-full flex-col items-start gap-y-2.5 md:w-[187px]'>
             <div onClick={toggleApaIni} className='flex items-center gap-2'>
               <Typography
                 variant='s2'
-                className='font-secondary cursor-pointer pb-5 uppercase'
+                className='font-secondary cursor-pointer uppercase md:pb-5'
               >
                 hmtc
               </Typography>
@@ -121,7 +121,7 @@ export default function Footer() {
             </div>
             <div
               className={cn(
-                'flex flex-col items-center gap-3 md:items-start',
+                'flex flex-col items-start gap-3',
                 'overflow-y-hidden transition-all duration-300 ease-in-out',
                 isApaIniOpen
                   ? 'max-h-96 opacity-100'
@@ -157,11 +157,11 @@ export default function Footer() {
               )}
             </div>
           </div>
-          <div className='flex w-full flex-col items-center gap-y-2.5 md:w-[187px] md:items-start'>
+          <div className='flex w-full flex-col items-start gap-y-2.5 md:w-[187px]'>
             <div onClick={toggleAkademik} className='flex items-center gap-2'>
               <Typography
                 variant='s2'
-                className='font-secondary cursor-pointer pb-5 uppercase'
+                className='font-secondary cursor-pointer uppercase md:pb-5'
               >
                 akademik
               </Typography>
@@ -175,7 +175,7 @@ export default function Footer() {
             </div>
             <div
               className={cn(
-                'flex flex-col items-center gap-3 md:items-start',
+                'flex flex-col items-start gap-3',
                 'overflow-y-hidden transition-all duration-300 ease-in-out',
                 isAkademikOpen
                   ? 'max-h-96 opacity-100'
