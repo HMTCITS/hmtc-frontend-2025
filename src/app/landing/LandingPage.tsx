@@ -6,7 +6,7 @@ import GallerySkeleton from '@/app/landing/components/gallery/GallerySkeleton';
 import HMTCBlogSkeleton from '@/app/landing/components/hmtcblog/HMTCBlogSkeleton';
 import LifeAtHMTCSkeleton from '@/app/landing/components/lifeHmtc/LifeAtHMTCSkeleton';
 import PeopleSkeleton from '@/app/landing/components/people/PeopleHMTCSkeleton';
-import QuotesKahimaSkeleton from '@/app/landing/components/quotesKahima/QuotesKahimaSkeleton';
+// import QuotesKahimaSkeleton from '@/app/landing/components/quotesKahima/QuotesKahimaSkeleton';
 import ShowCase from '@/app/landing/components/showcase/ShowCase';
 import ShowCaseSkeleton from '@/app/landing/components/showcase/ShowCaseSkeleton';
 import LazySection from '@/components/LazySection';
@@ -31,12 +31,12 @@ const HMTCBlog = dynamic(() => import('./components/hmtcblog/HMTCBlog'), {
   ssr: true,
 });
 
-const QuotesKahima = dynamic(
-  () => import('./components/quotesKahima/QuotesKahima'),
-  {
-    ssr: true,
-  },
-);
+// const QuotesKahima = dynamic(
+//   () => import('./components/quotesKahima/QuotesKahima'),
+//   {
+//     ssr: true,
+//   },
+// );
 
 export default function LandingPage() {
   return (
@@ -93,13 +93,13 @@ export default function LandingPage() {
         >
           <HMTCBlog />
         </LazySection>
-        <LazySection
+        {/* <LazySection
           fallback={<QuotesKahimaSkeleton />}
           once={true}
           threshold={0.4}
         >
           <QuotesKahima />
-        </LazySection>
+        </LazySection> */}
       </div>
     </main>
   );
