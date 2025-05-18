@@ -5,14 +5,7 @@ import type { Metadata } from 'next';
 
 import Providers from '@/app/providers';
 import JsonLd from '@/components/JsonLd';
-import {
-  adelphe,
-  inter,
-  libreCaslon,
-  playfairDisplay,
-  poppins,
-  satoshi,
-} from '@/lib/font';
+import { adelphe, satoshi } from '@/lib/font';
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
@@ -156,17 +149,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='id'>
-      <body
-        className={cn(
-          playfairDisplay.variable,
-          poppins.variable,
-          adelphe.variable,
-          inter.variable,
-          satoshi.variable,
-          libreCaslon.variable,
-          'scroll-smooth',
-        )}
-      >
+      <body className={cn(adelphe.variable, satoshi.variable, 'scroll-smooth')}>
         <JsonLd
           title='HMTC ITS - Himpunan Mahasiswa Teknik Komputer'
           description='Himpunan Mahasiswa Teknik Komputer ITS - wadah kreativitas dan kegiatan mahasiswa.'
