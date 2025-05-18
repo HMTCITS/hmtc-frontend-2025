@@ -8,15 +8,15 @@ export default function PeopleHMTC() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const images = [
-    '/BPI01.png',
-    '/peoplehmtc/people-1.jpg',
-    '/peoplehmtc/people-2.jpg',
-    '/peoplehmtc/people-3.jpg',
-    '/peoplehmtc/people-4.jpg',
-    '/peoplehmtc/people-5.jpg',
-    '/peoplehmtc/people-6.jpg',
-    '/peoplehmtc/people-7.jpg',
-    '/peoplehmtc/people-8.jpg',
+    '/peoplehmtc/kahima_2025.webp',
+    '/peoplehmtc/cmi_2025.webp',
+    '/peoplehmtc/ea_2025.webp',
+    '/peoplehmtc/edd_2025.webp',
+    '/peoplehmtc/ia_2025.webp',
+    '/peoplehmtc/srd_2025.webp',
+    '/peoplehmtc/ssd_2025.webp',
+    '/peoplehmtc/sti_2025.webp',
+    '/peoplehmtc/swrt_2025.webp',
   ];
 
   const totalSlides = images.length;
@@ -44,7 +44,7 @@ export default function PeopleHMTC() {
             weight='medium'
             className='text-gradient text-lg'
           >
-            HMTC 2024 KUNCI TRANSFORMASI
+            HMTC 2025 SUAR PERADABAN
           </Typography>
           <Typography
             as='h2'
@@ -97,7 +97,7 @@ export default function PeopleHMTC() {
                   className='text-base text-gray-600'
                 >
                   9 departemen HMTC yang saling berkolaborasi dalam menjalankan
-                  berbagai terobosan program HMTC Kunci Transformasi.
+                  berbagai terobosan program HMTC Suar Peradaban.
                 </Typography>
               </div>
             </div>
@@ -160,7 +160,7 @@ export default function PeopleHMTC() {
                   weight='regular'
                   className='text-base text-gray-600'
                 >
-                  Dengan lebih dari 20 program kerja unggulan, HMTC 2024
+                  Dengan lebih dari 20 program kerja unggulan, HMTC 2025
                   berfokus untuk memberikan kontribusi nyata bagi mahasiswa dan
                   KM ITS.
                 </Typography>

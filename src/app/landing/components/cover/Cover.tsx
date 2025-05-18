@@ -49,7 +49,7 @@ export default function Cover() {
               weight='bold'
               className='text-5xl leading-tight italic sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl'
             >
-              Kunci Transformasi
+              Suar Peradaban
             </Typography>
           </div>
         </div>

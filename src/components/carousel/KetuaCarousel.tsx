@@ -73,7 +73,7 @@ const EmblaCarousel: React.FC<PropType> = ({ options }) => {
             berkembang menjadi organisasi yang solid dan inovatif. Tiap periode
             kepemimpinan terus membawa perubahan, tantangan, serta pencapaian
             yang menjadi fondasi bagi generasi HMTC berikutnya, hingga kini,
-            Farrela Ranku Mahisa, Ketua HMTC 2024 Kabinet Kunci Transformasi
+            Wildan Fauzy Maulana Hasyim, Ketua HMTC 2025 Kabinet Suar Peradaban
             hadir untuk membawa transformasi HMTC kearah yang lebih baik.
           </p>
         </div>
