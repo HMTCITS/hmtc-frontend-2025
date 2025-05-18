@@ -69,7 +69,7 @@ export default function Navbar() {
         <a
           href='#home'
           aria-label='Kembali ke beranda HMTC ITS'
-          className='relative h-10 w-28 cursor-pointer'
+          className='relative h-13 w-28 cursor-pointer'
           tabIndex={0}
           onClick={(e) => handleAnchorClick(e, 'home', 0)}
         >

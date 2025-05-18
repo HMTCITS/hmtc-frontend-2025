@@ -35,7 +35,7 @@ export default function NavbarGallery() {
           aria-label='Back to home'
           href='/'
           scroll={false}
-          className='relative h-7 w-28'
+          className='relative h-13 w-28'
         >
           <NextImage
             src='logo-hmtc2025-navbar-black.png'
