@@ -26,14 +26,14 @@ const SocialMedia = [
     icon: Linkedin,
     href: 'https://www.linkedin.com/company/himpunan-mahasiswa-teknik-computer-informatika/',
   },
-  { icon: Link2, href: 'https://tr.ee/T1xoSC0squ' },
+  { icon: Link2, href: '/info' },
 ];
 
 const Akademik = [
-  { label: 'Bank Soal', href: '#akademik', offset: -80 },
-  { label: 'Silabus', href: '#akademik', offset: -80 },
-  { label: 'MBKM', href: '#akademik', offset: -80 },
-  { label: 'Kalender Akademik', href: '#akademik', offset: -80 },
+  { label: 'Bank Soal', href: '/coming-soon', offset: -80 },
+  { label: 'Silabus', href: '/coming-soon', offset: -80 },
+  { label: 'MBKM', href: '/coming-soon', offset: -80 },
+  { label: 'Kalender Akademik', href: '/coming-soon', offset: -80 },
 ];
 
 function handleSmoothAnchorClick(
@@ -79,14 +79,14 @@ export default function Footer() {
           'md:min-h-[240px] md:flex-row md:items-start md:justify-between',
         )}
       >
-        <BaseLink href='/' className='flex items-center gap-x-4'>
+        <BaseLink href='/' className='flex items-center gap-x-1'>
           <div className='w-12'>
             <NextImage
-              src='/logohmtc1.png'
-              alt='Logo HMTC ITS 2024'
+              src='/logo-hmtc2025-footer.png'
+              alt='Logo HMTC ITS 2025'
               width={1440}
               height={1440}
-              className='h-[55.09px] w-[48.62px]'
+              className='h-[100px] w-[35px]'
               quality={80}
               priority={false}
             />
@@ -94,10 +94,10 @@ export default function Footer() {
           <div>
             <Typography
               variant='h2'
-              className='flex flex-col font-inter text-sm'
+              className='flex flex-col font-satoshi text-base font-bold'
             >
-              <span>Kunci</span>
-              <span>Transformasi.</span>
+              <span>Suar</span>
+              <span>Peradaban</span>
             </Typography>
           </div>
         </BaseLink>
@@ -138,7 +138,7 @@ export default function Footer() {
                     onClick={(e) => handleSmoothAnchorClick(e, offset ?? -80)}
                   >
                     <Typography
-                      font='poppins'
+                      font='satoshi'
                       className='text-base-icon text-sm hover:text-white md:text-base'
                     >
                       {name}
@@ -191,7 +191,7 @@ export default function Footer() {
                   onClick={(e) => handleSmoothAnchorClick(e, offset ?? -80)}
                 >
                   <Typography
-                    font='poppins'
+                    font='satoshi'
                     className='text-base-icon text-sm hover:text-white md:text-base'
                   >
                     {label}
@@ -203,14 +203,14 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className='h-1 w-full border-t border-black-main'></div>
+      {/* <div className='h-1 w-full border-t border-black-main'></div> */}
 
       <div className='flex w-full flex-col items-center justify-center gap-y-6 md:flex-row md:justify-between'>
         <Typography
           variant='s2'
-          className='font-secondary text-base-icon order-2 text-sm uppercase md:order-1 md:text-center'
+          className='font-secondary text-base-icon order-2 font-satoshi text-sm uppercase md:order-1 md:text-center'
         >
-          &copy; HMTC ITS 2024 | KUNCI TRANSFORMASI
+          &copy; HMTC ITS 2025 | SUAR PERADABAN
         </Typography>
         <div className='order-1 flex items-center gap-x-4 md:order-2'>
           {SocialMedia.map(({ icon: Icon, href }, index) => (

@@ -14,7 +14,6 @@ export const metadata: Metadata = {
     'Media Sosial HMTC',
     'Instagram HMTC ITS',
     'WhatsApp HMTC',
-    'Line OA HMTC',
     'Twitter HMTC',
     'Facebook HMTC',
     'YouTube HMTC',

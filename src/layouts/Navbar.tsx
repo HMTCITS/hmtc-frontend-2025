@@ -69,18 +69,18 @@ export default function Navbar() {
         <a
           href='#home'
           aria-label='Kembali ke beranda HMTC ITS'
-          className='relative h-7 w-28 cursor-pointer'
+          className='relative h-10 w-28 cursor-pointer'
           tabIndex={0}
           onClick={(e) => handleAnchorClick(e, 'home', 0)}
         >
           <NextImage
-            src='logohmtc2024.png'
-            alt='Logo HMTC ITS 2024'
-            width={112}
-            height={28}
+            src='logo-hmtc2025-navbar.png'
+            alt='Logo HMTC ITS 2025'
+            width={100}
+            height={20}
             priority
             quality={80}
-            className='h-full w-full'
+            className='w-full'
           />
         </a>
 
@@ -138,8 +138,8 @@ export default function Navbar() {
             tabIndex={0}
           >
             <NextImage
-              src='logohmtc2024.png'
-              alt='Logo HMTC ITS 2024'
+              src='logo-hmtc2025-navbar.png'
+              alt='Logo HMTC ITS 2025'
               width={128}
               height={34}
               priority
@@ -182,7 +182,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        <div className='flex flex-col items-center justify-end gap-0'>
+        <div className='flex flex-col items-center justify-end gap-0 pt-32'>
           <Button
             size='large'
             icon={MoveLeft}
