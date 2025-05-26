@@ -93,7 +93,7 @@ export default function InfoPage() {
           <Link
             key={idx}
             href={link.url}
-            className='block w-full rounded-full border border-white/50 py-4 text-center font-poppins text-base font-normal text-white transition-all duration-200 hover:bg-white hover:text-blue-900'
+            className='font-poppins block w-full rounded-full border border-white/50 py-4 text-center text-base font-normal text-white transition-all duration-200 hover:bg-white hover:text-blue-900'
           >
             {link.label}
           </Link>
