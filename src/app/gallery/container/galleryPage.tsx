@@ -35,7 +35,7 @@ export default function GalleryPage() {
   }, [nrpParam]);
 
   // PAGINATION & SEARCH STATE ───────────────────────────────
-  const itemsPerPage = 9;
+  const itemsPerPage = 8;
   const [page, setPage] = useState(1);
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -126,13 +126,17 @@ export default function GalleryPage() {
               setPage(p);
             }}
             className={cn(
-              '!mb-0 flex h-10 w-10 items-center justify-center rounded-full hover:bg-gray-200',
+              '!mb-0 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full hover:bg-gray-200',
               page === p
                 ? '!bg-[#01263C] !text-white'
                 : 'bg-transparent text-[#01263C]',
             )}
           >
-            <Typography variant='h3' font='adelphe'>
+            <Typography
+              variant='h3'
+              font='adelphe'
+              className='translate-y-0.5 leading-none'
+            >
               {p}
             </Typography>
           </PaginationLink>
@@ -179,7 +183,7 @@ export default function GalleryPage() {
           </div>
 
           {totalPages > 1 && (
-            <Pagination className='mt-8 justify-end'>
+            <Pagination className='mt-8 cursor-pointer justify-end'>
               <PaginationContent>
                 <PaginationItem className='mr-6'>
                   <PaginationLink
@@ -194,7 +198,7 @@ export default function GalleryPage() {
 
                 {paginationItems}
 
-                <PaginationItem className='ml-6'>
+                <PaginationItem className='ml-6 cursor-pointer'>
                   <PaginationLink
                     onClick={(e) => {
                       e.preventDefault();
