@@ -66,7 +66,7 @@ export const galleryItems: GalleryItem[] = [
   {
     id: 7,
     date: 'Sabtu, 24 Mei 2025',
-    title: 'TCoference 2025',
+    title: 'TConference 2025',
     image: '/gallery/tConference.jpg',
     link: 'https://drive.google.com/drive/folders/1tfpjLBcLiS4ZQuYl_HRSQ7htZuuHdcz9?usp=drive_link',
     width: 640,
