@@ -19,7 +19,7 @@ const LAYERS: Layer[] = [
     src: '/cover/topMercusuar.svg',
     baseSize: [106, 75],
     z: 30,
-    offsetY: 7,
+    offsetY: 10,
   },
   {
     key: 'middle',
@@ -41,24 +41,47 @@ export default function Mercusuar() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'slow(0.7, 0.7, false)' } });
+      const tl = gsap.timeline({
+        defaults: {
+          ease: 'power2.out', // Smoother easing for organic movement
+          transformOrigin: '50% 100%', // Origin at bottom center
+        },
+      });
 
-      tl.fromTo(
+      // Set initial state - all lighthouse parts are hidden
+      gsap.set('.lighthouse-layer', {
+        width: 0,
+        opacity: 0,
+        y: 50, // Start from below
+        scale: 0.8, // Slightly smaller for "emerging" effect
+      });
+
+      // Staggered animation for each layer
+      tl.to('.lighthouse-layer', {
+        opacity: 1,
+        y: 0,
+        width: (i) => `${LAYERS[i].baseSize[0] * 1.2}px`,
+        scale: 1.1, // Slightly overshoot
+        duration: 1.2,
+        stagger: {
+          each: 0.3,
+          from: 'start',
+          ease: 'power1.in', // Accelerating stagger
+        },
+      }).to(
         '.lighthouse-layer',
         {
-          width: 0,
-          transformOrigin: '50% 100%',
+          width: (i) => `${LAYERS[i].baseSize[0]}px`,
+          scale: 1,
+          duration: 0.8,
+          stagger: {
+            each: 0.2,
+            from: 'start',
+          },
+          ease: 'elastic.out(0.5, 0.3)', // Bouncy, settling effect
         },
-        {
-          width: (i) => `${LAYERS[i].baseSize[0] * 1.2}px`,
-          duration: 1,
-          stagger: { each: 0.25, from: 'start' },
-        },
-      ).to('.lighthouse-layer', {
-        width: (i) => `${LAYERS[i].baseSize[0]}px`,
-        duration: 1,
-        stagger: { each: 0.45, from: 'end' },
-      });
+        '-=0.5',
+      ); // Overlap with previous animation
     }, ref);
 
     return () => ctx.revert();
@@ -78,8 +101,8 @@ export default function Mercusuar() {
             width={w * 1.3}
             height={h * 1.3}
             priority
-            className={`${offsetY ? `${offsetY > 0 ? 'mb-' + offsetY / 2 : '-mb-' + -offsetY / 2}` : ''} z-${z} `}
-            imgClassName={`lighthouse-layer w-0 ${key} mx-auto max-w-[200%] transform`}
+            className={`${offsetY ? `${offsetY > 0 ? 'mb-' + offsetY / 2 : '-mb-' + -offsetY / 2}` : ''} z-${z}`}
+            imgClassName={`lighthouse-layer ${key} mx-auto max-w-[200%] transform overflow-hidden`}
           />
         ))}
       </div>
