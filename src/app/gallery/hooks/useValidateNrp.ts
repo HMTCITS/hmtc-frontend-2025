@@ -11,7 +11,7 @@ export async function validateNrp(nrp: string): Promise<boolean> {
   }
 
   try {
-    const res = await api.get<ApiResponse<ValidateData>>('/user/getuser', {
+    const res = await api.get<ApiResponse<ValidateData>>('/auth/getuser', {
       params: { nrp },
     });
 
