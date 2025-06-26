@@ -59,9 +59,9 @@ export default function LoginForm() {
               href='/forgot-password'
               className='font-satoshi text-end text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
             >
-              <Typography as='span' className='text-inherit'>
+              {/* <Typography as='span' className='text-inherit'>
                 Lupa kata sandi?
-              </Typography>
+              </Typography> */}
             </Link>
           </div>
           <Button type='submit' className='w-full font-satoshi font-bold rounded-md'>
