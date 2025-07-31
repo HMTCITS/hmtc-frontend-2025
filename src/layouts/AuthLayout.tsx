@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Typography from '@/components/Typography';
 
 type AuthLayoutProps = {
   children: React.ReactNode;
