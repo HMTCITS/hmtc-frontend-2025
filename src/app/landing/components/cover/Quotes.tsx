@@ -12,7 +12,6 @@ const Quotes: React.FC = () => {
           <Typography
             as='p'
             variant='b2'
-            font='satoshi'
             className='text-xs leading-5 text-white italic sm:text-base md:text-base md:leading-7 lg:text-2xl lg:leading-8.5'
           >
             &quot;HMTC pada awalnya bertujuan menjadi wadah aspirasi dan
@@ -33,7 +32,7 @@ const Quotes: React.FC = () => {
             <Typography
               as='p'
               variant='b2'
-              font='libre'
+              font='adelphe'
               weight='bold'
               className='text-xs leading-4.5 text-white italic md:text-base md:leading-5.5 lg:text-xl lg:leading-[28px]'
             >
@@ -42,7 +41,7 @@ const Quotes: React.FC = () => {
             <Typography
               as='p'
               variant='b2'
-              font='helveticaNeue'
+              font='adelphe'
               weight='regular'
               className='text-xs leading-4 font-[100] text-white opacity-68 md:text-base md:leading-[20px] lg:text-base lg:leading-[22px]'
             >
@@ -57,7 +56,6 @@ const Quotes: React.FC = () => {
           <Typography
             as='p'
             variant='b2'
-            font='satoshi'
             weight='regular'
             className='text-xs text-white lg:text-sm'
           >
@@ -69,7 +67,6 @@ const Quotes: React.FC = () => {
             <Typography
               as='p'
               variant='b2'
-              font='satoshi'
               weight='regular'
               className='ml-2 text-sm text-white lg:text-sm'
             >

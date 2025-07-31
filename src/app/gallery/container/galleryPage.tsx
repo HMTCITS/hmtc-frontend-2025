@@ -153,7 +153,6 @@ export default function GalleryPage() {
           <div className='mb-7 text-center'>
             <Typography
               variant='s0'
-              font='satoshi'
               className='text-[#00AAE7] uppercase'
               weight='medium'
             >

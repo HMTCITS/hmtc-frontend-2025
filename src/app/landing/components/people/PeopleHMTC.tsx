@@ -40,7 +40,6 @@ export default function PeopleHMTC() {
           <Typography
             as='h1'
             variant='s1'
-            font='satoshi'
             weight='medium'
             className='text-gradient text-lg'
           >
@@ -58,7 +57,6 @@ export default function PeopleHMTC() {
           <Typography
             as='p'
             variant='b2'
-            font='satoshi'
             weight='regular'
             className='mt-6 text-justify text-base text-gray-600 lg:max-w-[75%]'
           >
@@ -83,7 +81,6 @@ export default function PeopleHMTC() {
                 <Typography
                   as='p'
                   variant='b2'
-                  font='satoshi'
                   weight='bold'
                   className='text-base text-gray-800'
                 >
@@ -92,7 +89,6 @@ export default function PeopleHMTC() {
                 <Typography
                   as='p'
                   variant='b2'
-                  font='satoshi'
                   weight='regular'
                   className='text-base text-gray-600'
                 >
@@ -115,7 +111,6 @@ export default function PeopleHMTC() {
                 <Typography
                   as='p'
                   variant='b2'
-                  font='satoshi'
                   weight='bold'
                   className='text-base text-gray-800'
                 >
@@ -124,7 +119,6 @@ export default function PeopleHMTC() {
                 <Typography
                   as='p'
                   variant='b2'
-                  font='satoshi'
                   weight='regular'
                   className='text-base text-gray-600'
                 >
@@ -147,7 +141,6 @@ export default function PeopleHMTC() {
                 <Typography
                   as='p'
                   variant='b2'
-                  font='satoshi'
                   weight='bold'
                   className='text-base text-gray-800'
                 >
@@ -156,7 +149,6 @@ export default function PeopleHMTC() {
                 <Typography
                   as='p'
                   variant='b2'
-                  font='satoshi'
                   weight='regular'
                   className='text-base text-gray-600'
                 >
@@ -191,7 +183,6 @@ export default function PeopleHMTC() {
           <Typography
             as='p'
             variant='b2'
-            font='satoshi'
             weight='regular'
             className='absolute -bottom-8 left-4 text-black lg:left-0'
           >

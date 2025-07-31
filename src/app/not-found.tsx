@@ -9,7 +9,6 @@ export default function NotFound() {
       <Typography
         as='p'
         variant='i2'
-        font='satoshi'
         weight='medium'
         className='mb-2 tracking-wide text-gray-300'
       >
@@ -20,7 +19,7 @@ export default function NotFound() {
       <Typography
         as='h1'
         variant='k0'
-        font='libre'
+        font='adelphe'
         className='bg-blue-gradient bg-clip-text text-[160px] leading-none font-bold text-transparent italic md:text-[200px] md:leading-none lg:text-[300px]'
       >
         404

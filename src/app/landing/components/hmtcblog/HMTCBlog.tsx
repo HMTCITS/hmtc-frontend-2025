@@ -76,7 +76,6 @@ const HMTCBlog: React.FC = () => {
         <Typography
           as='h2'
           variant='h2'
-          font='satoshi'
           weight='medium'
           className='text-gradient text-lg'
           style={{
@@ -133,7 +132,6 @@ const HMTCBlog: React.FC = () => {
                         <Typography
                           as='p'
                           variant='b4'
-                          font='satoshi'
                           weight='regular'
                           className='text-sm text-gray-600'
                         >

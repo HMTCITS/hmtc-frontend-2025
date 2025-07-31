@@ -49,7 +49,6 @@ const LifeAtHMTC: React.FC = () => {
         <Typography
           as='h2'
           variant='h2'
-          font='satoshi'
           weight='medium'
           className='text-gradient text-lg'
         >
@@ -67,7 +66,6 @@ const LifeAtHMTC: React.FC = () => {
         <Typography
           as='p'
           variant='b2'
-          font='satoshi'
           weight='regular'
           className='mb-14 text-base text-gray-600'
         >

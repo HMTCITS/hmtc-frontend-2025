@@ -169,7 +169,7 @@ export default function Typography<T extends React.ElementType = 'p'>({
   as,
   children,
   weight = 'regular',
-  font = 'poppins',
+  font = 'satoshi',
   variant = 'b2',
   className,
   ...rest

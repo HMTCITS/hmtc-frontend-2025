@@ -24,7 +24,7 @@ export default function SearchBarGallery({
         placeholder='Search for gallery...'
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className='!mb-0 w-full font-poppins text-base placeholder:text-gray-400 focus:outline-none'
+        className='font-poppins !mb-0 w-full text-base placeholder:text-gray-400 focus:outline-none'
       />
     </div>
   );

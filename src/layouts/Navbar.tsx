@@ -104,7 +104,7 @@ export default function Navbar() {
                   handleAnchorClick(e, href.replace('#', ''), offset)
                 }
               >
-                <Typography font='satoshi'>{name}</Typography>
+                <Typography>{name}</Typography>
               </a>
             ) : (
               <Link
@@ -113,7 +113,7 @@ export default function Navbar() {
                 aria-label={`Menuju halaman ${name}`}
                 className='font-secondary hover:text-base-nav cursor-pointer p-2.5 text-white-main transition-colors duration-75'
               >
-                <Typography font='satoshi'>{name}</Typography>
+                <Typography>{name}</Typography>
               </Link>
             ),
           )}
@@ -161,9 +161,7 @@ export default function Navbar() {
                   }
                   tabIndex={0}
                 >
-                  <Typography as='h6' font='satoshi'>
-                    {name}
-                  </Typography>
+                  <Typography as='h6'>{name}</Typography>
                 </a>
               ) : (
                 <Link
@@ -173,9 +171,7 @@ export default function Navbar() {
                   aria-label={`Menuju halaman ${name}`}
                   onClick={closeSidebar}
                 >
-                  <Typography as='h6' font='satoshi'>
-                    {name}
-                  </Typography>
+                  <Typography as='h6'>{name}</Typography>
                 </Link>
               ),
             )}
