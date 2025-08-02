@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs';
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { GetServerSidePropsContext } from 'next/types';
 import Cookies from 'universal-cookie';
@@ -59,6 +60,10 @@ api.interceptors.request.use(
     if (!isBrowser) {
       // Server-side: pastikan ssrContext telah diatur.
       if (!ssrContext || !ssrContext.req) {
+        
+        // Log ke sentry
+        Sentry.captureException('SSR Context not set.');
+        
         throw new Error(
           'API context not found. Please call setApiContext(context) in your server-side code before making API calls.',
         );

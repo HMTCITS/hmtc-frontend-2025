@@ -4,7 +4,9 @@ import type {
   AxiosRequestHeaders,
   InternalAxiosRequestConfig,
 } from 'axios';
+import { redirect } from 'next/navigation';
 import { GetServerSidePropsContext } from 'next/types';
+import { toast } from 'react-hot-toast';
 import Cookies from 'universal-cookie';
 
 import { transformApiError } from './api.utils';
@@ -39,7 +41,29 @@ export function applyInterceptors(
   instance.interceptors.response.use(
     (response) => response,
     (error) => {
-      Sentry.captureException(error);
+
+      /** 
+       * Error Handling
+       */
+      switch (error.response?.status)
+      {
+        case 401:
+          toast.error('Silakan login kembali.')
+          redirect('/login');
+          break;
+
+        case 403:
+          toast.error('Akses ditolak.')
+          break;
+
+        case 400:
+          break;
+
+        default:
+          Sentry.captureException(error);
+          break;
+      }
+
       return Promise.reject(transformApiError(error));
     },
   );
