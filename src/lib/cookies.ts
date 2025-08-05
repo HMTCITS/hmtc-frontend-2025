@@ -13,6 +13,16 @@ export const getToken = (): string | undefined => {
 };
 
 /**
+ * Mengambil refresh token dari cookie.
+ * 
+ * Untuk sekarang, fungsi hanya berjalan sebagai placeholder,
+ * sampai implementasi yang benar dilakukan.
+ */
+export const getRefreshToken = (): string | undefined => {
+  return undefined;
+};
+
+/**
  * Menyimpan token ke dalam cookie.
  *
  * Opsi cookie telah disesuaikan untuk environment production.

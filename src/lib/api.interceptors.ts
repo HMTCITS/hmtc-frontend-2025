@@ -10,7 +10,7 @@ import { toast } from 'react-hot-toast';
 import Cookies from 'universal-cookie';
 
 import { transformApiError } from './api.utils';
-import { getToken } from './cookies';
+import { getRefreshToken, getToken, setToken } from './cookies';
 
 export function applyInterceptors(
   instance: AxiosInstance,
@@ -40,7 +40,35 @@ export function applyInterceptors(
 
   instance.interceptors.response.use(
     (response) => response,
-    (error) => {
+    async (error) => {
+      /**
+       * Refresh Token Handling 
+       */
+      const originalRequest = error.config;
+      if (error.response?.status === 401 && originalRequest.url != '/auth/refresh') {
+        if (!originalRequest._retry) {
+          originalRequest._retry = true;
+
+          try {
+            const refreshToken = getRefreshToken();
+
+            const response = await instance.post('/auth/refresh', { refreshToken })
+            const { accessToken: newAccessToken } = response.data;
+
+            setToken(newAccessToken);
+
+            instance.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+            originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+
+            return instance(originalRequest);
+          } 
+          catch (refreshError) {
+            Sentry.captureException(refreshError);
+            toast.error('Sesi Anda telah berakhir. Silakan login kembali.');
+            redirect('/login');
+          }
+        }
+      }
 
       /** 
        * Error Handling
