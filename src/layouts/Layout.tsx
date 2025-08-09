@@ -5,6 +5,7 @@ import Footer from '@/layouts/Footer';
 import Navbar from '@/layouts/Navbar';
 import { cn } from '@/lib/utils';
 import useDialogStore from '@/store/useDialogStore';
+
 type LayoutOpt = {
   children: React.ReactNode;
   withFooter?: boolean;
