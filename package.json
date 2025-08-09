@@ -34,7 +34,6 @@
     "embla-carousel": "^8.5.2",
     "embla-carousel-auto-scroll": "^8.5.2",
     "embla-carousel-react": "^8.5.2",
-    "eslint": "9.20.1",
     "immer": "10.1.1",
     "lightningcss": "^1.30.1",
     "lucide-react": "^0.475.0",
@@ -52,6 +51,7 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.7.3",
     "universal-cookie": "^7.2.2",
+    "zod": "^4.0.16",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
@@ -76,6 +76,7 @@
     "axios-mock-adapter": "^2.1.0",
     "cross-env": "^7.0.3",
     "cssnano": "^7.0.6",
+    "eslint": "9.20.1",
     "eslint-config-next": "15.1.7",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-jsx-a11y": "^6.10.2",
