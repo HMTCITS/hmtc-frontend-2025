@@ -15,7 +15,7 @@ import * as Sentry from '@sentry/nextjs';
 import axios, { AxiosInstance } from 'axios';
 import type { GetServerSidePropsContext } from 'next/types';
 
-import { applyInterceptors } from '../api.interceptors';
+import { applyInterceptors } from '@/lib/api/api.interceptors';
 
 export const baseURL =
   process.env.NEXT_PUBLIC_RUN_MODE === 'development'
