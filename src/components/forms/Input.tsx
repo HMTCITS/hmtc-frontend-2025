@@ -1,5 +1,4 @@
-import { LucideIcon } from 'lucide-react';
-import { Eye, EyeClosed } from 'lucide-react';
+import { Eye, EyeClosed,LucideIcon  } from 'lucide-react';
 import * as React from 'react';
 import { get, RegisterOptions, useFormContext } from 'react-hook-form';
 
