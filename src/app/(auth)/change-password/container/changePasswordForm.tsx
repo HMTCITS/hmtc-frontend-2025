@@ -28,13 +28,13 @@ export default function ChangePasswordForm() {
         <Typography
           as='h1'
           variant='j0'
-          className='font-satoshi font-semibold text-3xl md:text-4xl lg:text-5xl'
+          className='font-adelphe text-3xl font-bold md:text-4xl lg:text-5xl'
         >
-          Atur Ulang Kata Sandi
+          Reset your password account
         </Typography>
-        <Typography as='p' className='font-satoshi mb-2 text-slate-600'>
-          Masukkan email untuk pemulihan kata sandi. Link untuk atur ulang kata
-          sandi akan dikirimkan melalui email.
+        <Typography as='p' className='mb-2 font-satoshi text-slate-600'>
+          Enter your email to recover your password. A link to reset your
+          password will be sent via email.
         </Typography>
       </div>
       <FormProvider {...form}>
@@ -42,38 +42,38 @@ export default function ChangePasswordForm() {
           <div className='space-y-4'>
             <Input
               id='password'
-              label='Kata Sandi'
-              placeholder='Masukkan kata sandi Anda'
+              label='Password'
+              placeholder='Enter your password'
               containerClassName='font-satoshi'
-              validation={{ required: 'Kata sandi tidak boleh kosong' }}
+              validation={{ required: 'Password is required' }}
             />
             <Input
               id='password_confirm'
-              label='Konfirmasi Kata Sandi'
-              placeholder='Masukkan kembali kata sandi Anda'
+              label='Confirm Password'
+              placeholder='Re-enter your password'
               containerClassName='font-satoshi'
               validation={{
-                required: 'Konfirmasi Kata sandi tidak boleh kosong',
+                required: 'Confirm Password is required',
                 validate: (value) =>
-                  value === wpassword || 'Kata sandi berbeda',
+                  value === wpassword || 'Passwords do not match',
               }}
             />
           </div>
-          <Button type='submit' className='w-full font-satoshi rounded-md'>
-            Ubah Kata Sandi
+          <Button type='submit' className='w-full rounded-md font-satoshi'>
+            Change Password
           </Button>
         </form>
       </FormProvider>
-      <Typography as='div' className='font-satoshi space-x-1 text-center'>
+      <Typography as='div' className='space-x-1 text-center font-satoshi'>
         <Typography as='span' className='text-inherit'>
-          Kembali ke
+          Back to
         </Typography>
         <Link
-          href='/'
+          href='/login'
           className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
         >
           <Typography as='span' className='text-inherit'>
-            Halaman Utama
+            Login Page
           </Typography>
         </Link>
       </Typography>

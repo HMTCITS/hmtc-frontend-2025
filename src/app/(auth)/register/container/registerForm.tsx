@@ -67,12 +67,12 @@ export default function RegisterForm() {
         <Typography
           as='h1'
           variant='j0'
-          className='font-satoshi text-3xl font-semibold md:text-4xl lg:text-5xl'
+          className='font-adelphe text-3xl font-bold md:text-4xl lg:text-5xl'
         >
-          Daftar
+          Register
         </Typography>
         <Typography as='p' className='mb-2 font-satoshi text-slate-600'>
-          Isi NRP dan nama departemen untuk membuat akun baru
+          Please complete the form below to create your new account
         </Typography>
       </div>
 
@@ -80,33 +80,63 @@ export default function RegisterForm() {
         <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
           <div className='space-y-4'>
             <Input
-              id='nrp'
-              label='NRP'
-              placeholder='Masukkan NRP (10 digit)'
+              id='full_name'
+              label='Full Name'
+              placeholder='Enter your full name'
               containerClassName='font-satoshi'
               validation={{
-                required: 'NRP tidak boleh kosong',
+                required: 'Name cannot be empty',
+                minLength: {
+                  value: 5,
+                  message: 'Full name must be at least 5 characters',
+                },
                 pattern: {
-                  value: /^\d{10}$/,
-                  message: 'NRP harus 10 digit',
+                  value: /^[a-zA-Z\s]+$/,
+                  message: 'Full name must only contain letters and spaces',
                 },
               }}
-              inputMode='numeric'
-              autoComplete='username'
+              inputMode='text'
+              autoComplete='name'
             />
+
             <Input
-              id='departement_name'
-              label='Nama Departemen'
-              placeholder='Contoh: Creative Media Information'
+              id='email'
+              label='Email'
+              placeholder='Enter your email'
               containerClassName='font-satoshi'
               validation={{
-                required: 'Nama departemen tidak boleh kosong',
+                required: 'Email cannot be empty',
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                  message: 'Email is not valid',
+                },
                 maxLength: {
-                  value: 100,
-                  message: 'Nama departemen maksimal 100 karakter',
+                  value: 254,
+                  message: 'Email address is too long',
                 },
               }}
-              autoComplete='organization'
+              autoComplete='email'
+            />
+
+            <Input
+              id='password'
+              label='Password'
+              placeholder='Enter your password'
+              type='password'
+              containerClassName='font-satoshi'
+              validation={{
+                required: 'Password cannot be empty',
+                minLength: {
+                  value: 8,
+                  message: 'Password must be at least 8 characters',
+                },
+                pattern: {
+                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                  message:
+                    'Password must contain at least one letter and one number',
+                },
+              }}
+              autoComplete='new-password'
             />
           </div>
 
@@ -115,20 +145,20 @@ export default function RegisterForm() {
             className='w-full rounded-md font-satoshi font-bold'
             disabled={registerMutation.isPending}
           >
-            {registerMutation.isPending ? 'Memproses…' : 'Daftar'}
+            {registerMutation.isPending ? 'Processing...' : 'Register'}
           </Button>
         </form>
 
         <Typography as='div' className='space-x-1 text-center font-satoshi'>
           <Typography as='span' variant='b2'>
-            Sudah punya akun?
+            Already have an account?
           </Typography>
           <Link
             href='/login'
             className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
           >
             <Typography as='span' variant='b2'>
-              Masuk
+              Login
             </Typography>
           </Link>
         </Typography>

@@ -15,7 +15,8 @@ import { api } from '@/lib/api/api';
 import { buildPayload } from '@/lib/api/api.utils';
 
 type LoginFormTypes = {
-  nrp: string;
+  email: string;
+  password: string;
 };
 
 type LoginSuccessResponse = {
@@ -29,7 +30,7 @@ export default function LoginForm() {
 
   const form = useForm<LoginFormTypes>({
     mode: 'onSubmit',
-    defaultValues: { nrp: '' },
+    defaultValues: { email: '', password: '' },
   });
   const { handleSubmit } = form;
 
@@ -38,7 +39,8 @@ export default function LoginForm() {
       values: LoginFormTypes,
     ): Promise<LoginSuccessResponse> => {
       const { data, headers } = buildPayload('/auth/login', {
-        nrp: values.nrp,
+        email: values.email,
+        password: values.password,
       });
       const res = await api.post('/auth/login', data, { headers });
       return res.data as LoginSuccessResponse;
@@ -66,12 +68,12 @@ export default function LoginForm() {
         <Typography
           as='h1'
           variant='j0'
-          className='font-satoshi text-3xl font-semibold md:text-4xl lg:text-5xl'
+          className='font-adelphe text-3xl font-bold md:text-4xl lg:text-5xl'
         >
           Login
         </Typography>
         <Typography as='p' className='mb-2 font-satoshi text-slate-600'>
-          Masukkan NRP untuk mengakses akun
+          Type in your email and password, then dive back in
         </Typography>
       </div>
 
@@ -79,19 +81,35 @@ export default function LoginForm() {
         <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
           <div className='space-y-4'>
             <Input
-              id='nrp'
-              label='NRP'
-              placeholder='Masukkan NRP (10 digit)'
+              id='email'
+              label='Email'
+              placeholder='Masukkan email Anda'
               containerClassName='font-satoshi'
               validation={{
-                required: 'NRP tidak boleh kosong',
+                required: 'Email tidak boleh kosong',
                 pattern: {
-                  value: /^\d{10}$/,
-                  message: 'NRP harus 10 digit',
+                  value: /^\S+@\S+\.\S+$/,
+                  message: 'Email tidak valid',
                 },
               }}
-              inputMode='numeric'
+              inputMode='email'
               autoComplete='username'
+            />
+            
+            <Input
+              id='password'
+              label='Password'
+              placeholder='Masukkan password Anda'
+              type='password'
+              containerClassName='font-satoshi'
+              validation={{
+                required: 'Password tidak boleh kosong',
+                pattern: {
+                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                  message: 'Password harus terdiri dari minimal 8 karakter, dan mengandung huruf serta angka',
+                },
+              }}
+              autoComplete='current-password'
             />
           </div>
 
@@ -100,20 +118,20 @@ export default function LoginForm() {
             className='w-full rounded-md font-satoshi font-bold'
             disabled={loginMutation.isPending}
           >
-            {loginMutation.isPending ? 'Memproses…' : 'Login'}
+            {loginMutation.isPending ? 'Processing…' : 'Login'}
           </Button>
         </form>
 
         <Typography as='div' className='font-secondary space-x-1 text-center'>
           <Typography as='span' className='text-inherit'>
-            Belum punya akun?
+            Don&apos;t have an account?
           </Typography>
           <Link
             href='/register'
             className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
           >
             <Typography as='span' className='text-inherit'>
-              Daftar
+              Register now
             </Typography>
           </Link>
         </Typography>
