@@ -45,14 +45,14 @@ export default function RegisterForm() {
       return res.data as RegisterResponse;
     },
     onSuccess: (res) => {
-      toast.success(res?.message || 'Registrasi berhasil. Silakan login.');
+      toast.success(res?.message || 'Registration success. Please login.');
       router.push('/login');
     },
     onError: (err: any) => {
       const message: string =
         err?.response?.data?.message ||
         err?.message ||
-        'Registrasi gagal. Silakan coba lagi.';
+        'Registration Failed. Please try again.';
       toast.error(message);
     },
   });
@@ -63,7 +63,7 @@ export default function RegisterForm() {
 
   return (
     <AuthLayout>
-      <div className='space-y-3'>
+      <div className='py-4'>
         <Typography
           as='h1'
           variant='j0'
@@ -150,14 +150,14 @@ export default function RegisterForm() {
         </form>
 
         <Typography as='div' className='space-x-1 text-center font-satoshi'>
-          <Typography as='span' variant='b2'>
+          <Typography as='span' className='text-inherit' variant='s3'>
             Already have an account?
           </Typography>
           <Link
             href='/login'
             className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
           >
-            <Typography as='span' variant='b2'>
+            <Typography as='span' className='text-inherit' variant='s3'>
               Login
             </Typography>
           </Link>

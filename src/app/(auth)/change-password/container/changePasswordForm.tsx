@@ -24,7 +24,7 @@ export default function ChangePasswordForm() {
 
   return (
     <AuthLayout>
-      <div className='space-y-4'>
+      <div className='py-4'>
         <Typography
           as='h1'
           variant='j0'
@@ -65,14 +65,14 @@ export default function ChangePasswordForm() {
         </form>
       </FormProvider>
       <Typography as='div' className='space-x-1 text-center font-satoshi'>
-        <Typography as='span' className='text-inherit'>
+        <Typography as='span' className='text-inherit' variant='s3'>
           Back to
         </Typography>
         <Link
           href='/login'
           className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
         >
-          <Typography as='span' className='text-inherit'>
+          <Typography as='span' className='text-inherit' variant='s3'>
             Login Page
           </Typography>
         </Link>

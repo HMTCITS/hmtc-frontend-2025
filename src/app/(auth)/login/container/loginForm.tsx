@@ -46,14 +46,14 @@ export default function LoginForm() {
       return res.data as LoginSuccessResponse;
     },
     onSuccess: (res) => {
-      toast.success(res?.message || 'Login berhasil');
+      toast.success(res?.message || 'Login Success');
       router.push('/');
     },
     onError: (err: any) => {
       const message: string =
         err?.response?.data?.message ||
         err?.message ||
-        'Login gagal. Silakan coba lagi.';
+        'Login failed. Please try again.';
       toast.error(message);
     },
   });
@@ -64,7 +64,7 @@ export default function LoginForm() {
 
   return (
     <AuthLayout>
-      <div className='space-y-4'>
+      <div className='py-4'>
         <Typography
           as='h1'
           variant='j0'
@@ -95,22 +95,33 @@ export default function LoginForm() {
               inputMode='email'
               autoComplete='username'
             />
-            
-            <Input
-              id='password'
-              label='Password'
-              placeholder='Masukkan password Anda'
-              type='password'
-              containerClassName='font-satoshi'
-              validation={{
-                required: 'Password tidak boleh kosong',
-                pattern: {
-                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                  message: 'Password harus terdiri dari minimal 8 karakter, dan mengandung huruf serta angka',
-                },
-              }}
-              autoComplete='current-password'
-            />
+
+            <div className='flex flex-col items-end space-y-2'>
+              <Input
+                id='password'
+                label='Password'
+                placeholder='Masukkan password Anda'
+                type='password'
+                containerClassName='font-satoshi w-full'
+                validation={{
+                  required: 'Password tidak boleh kosong',
+                  pattern: {
+                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                    message:
+                      'Password harus terdiri dari minimal 8 karakter, dan mengandung huruf serta angka',
+                  },
+                }}
+                autoComplete='current-password'
+              />
+              <Link
+                href='/change-password'
+                className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
+              >
+                <Typography as='span' className='text-inherit' variant='s3'>
+                  Forgot Password?
+                </Typography>
+              </Link>
+            </div>
           </div>
 
           <Button
@@ -123,14 +134,14 @@ export default function LoginForm() {
         </form>
 
         <Typography as='div' className='font-secondary space-x-1 text-center'>
-          <Typography as='span' className='text-inherit'>
+          <Typography as='span' className='text-inherit' variant='s3'>
             Don&apos;t have an account?
           </Typography>
           <Link
             href='/register'
             className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
           >
-            <Typography as='span' className='text-inherit'>
+            <Typography as='span' className='text-inherit' variant='s3'>
               Register now
             </Typography>
           </Link>
