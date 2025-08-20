@@ -15,8 +15,9 @@ import { api } from '@/lib/api/api';
 import { buildPayload } from '@/lib/api/api.utils';
 
 type RegisterFormTypes = {
-  nrp: string;
-  departement_name: string;
+  full_name: string;
+  email: string;
+  password: string;
 };
 
 type RegisterResponse = {
@@ -29,7 +30,7 @@ export default function RegisterForm() {
   const router = useRouter();
   const form = useForm<RegisterFormTypes>({
     mode: 'onSubmit',
-    defaultValues: { nrp: '', departement_name: '' },
+    defaultValues: { full_name: '', email: '', password: '' },
   });
   const { handleSubmit } = form;
 
@@ -38,8 +39,9 @@ export default function RegisterForm() {
       values: RegisterFormTypes,
     ): Promise<RegisterResponse> => {
       const { data, headers } = buildPayload('/user/register', {
-        nrp: values.nrp,
-        departement_name: values.departement_name,
+        full_name: values.full_name,
+        email: values.email,
+        password: values.password,
       });
       const res = await api.post('/user/register', data, { headers });
       return res.data as RegisterResponse;
