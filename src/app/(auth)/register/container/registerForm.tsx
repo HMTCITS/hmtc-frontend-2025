@@ -65,7 +65,7 @@ export default function RegisterForm() {
 
   return (
     <AuthLayout>
-      <div className='py-4'>
+      <div className='grid gap-[16px]'>
         <Typography
           as='h1'
           variant='j0'
@@ -73,98 +73,101 @@ export default function RegisterForm() {
         >
           Register
         </Typography>
-        <Typography as='p' className='mb-2 font-satoshi text-slate-600'>
+        <Typography as='p' className='font-satoshi text-slate-600'>
           Please complete the form below to create your new account
         </Typography>
-      </div>
 
-      <FormProvider {...form}>
-        <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
-          <div className='space-y-4'>
-            <Input
-              id='full_name'
-              label='Full Name'
-              placeholder='Enter your full name'
-              containerClassName='font-satoshi'
-              validation={{
-                required: 'Name cannot be empty',
-                minLength: {
-                  value: 5,
-                  message: 'Full name must be at least 5 characters',
-                },
-                pattern: {
-                  value: /^[a-zA-Z\s]+$/,
-                  message: 'Full name must only contain letters and spaces',
-                },
-              }}
-              inputMode='text'
-              autoComplete='name'
-            />
+        <FormProvider {...form}>
+          <form onSubmit={handleSubmit(onSubmit)} className='grid gap-[16px]'>
+            <div className='grid gap-[12px]'>
+              <Input
+                id='full_name'
+                label='Full Name'
+                placeholder='Enter your full name'
+                containerClassName='font-satoshi'
+                validation={{
+                  required: 'Name cannot be empty',
+                  minLength: {
+                    value: 5,
+                    message: 'Full name must be at least 5 characters',
+                  },
+                  pattern: {
+                    value: /^[a-zA-Z\s]+$/,
+                    message: 'Full name must only contain letters and spaces',
+                  },
+                }}
+                inputMode='text'
+                autoComplete='name'
+              />
 
-            <Input
-              id='email'
-              label='Email'
-              placeholder='Enter your email'
-              containerClassName='font-satoshi'
-              validation={{
-                required: 'Email cannot be empty',
-                pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                  message: 'Email is not valid',
-                },
-                maxLength: {
-                  value: 254,
-                  message: 'Email address is too long',
-                },
-              }}
-              autoComplete='email'
-            />
+              <Input
+                id='email'
+                label='Email'
+                placeholder='Enter your email'
+                containerClassName='font-satoshi'
+                validation={{
+                  required: 'Email cannot be empty',
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    message: 'Email is not valid',
+                  },
+                  maxLength: {
+                    value: 254,
+                    message: 'Email address is too long',
+                  },
+                }}
+                autoComplete='email'
+              />
 
-            <Input
-              id='password'
-              label='Password'
-              placeholder='Enter your password'
-              type='password'
-              containerClassName='font-satoshi'
-              validation={{
-                required: 'Password cannot be empty',
-                minLength: {
-                  value: 8,
-                  message: 'Password must be at least 8 characters',
-                },
-                pattern: {
-                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                  message:
-                    'Password must contain at least one letter and one number',
-                },
-              }}
-              autoComplete='new-password'
-            />
-          </div>
+              <Input
+                id='password'
+                label='Password'
+                placeholder='Enter your password'
+                type='password'
+                containerClassName='font-satoshi'
+                validation={{
+                  required: 'Password cannot be empty',
+                  minLength: {
+                    value: 8,
+                    message: 'Password must be at least 8 characters',
+                  },
+                  pattern: {
+                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                    message:
+                      'Password must contain at least one letter and one number',
+                  },
+                }}
+                autoComplete='new-password'
+              />
+            </div>
 
-          <Button
-            type='submit'
-            className='w-full rounded-md font-satoshi font-bold'
-            disabled={registerMutation.isPending}
-          >
-            {registerMutation.isPending ? 'Processing...' : 'Register'}
-          </Button>
-        </form>
+            <Button
+              type='submit'
+              className='w-full rounded-xl font-satoshi font-bold'
+              disabled={registerMutation.isPending}
+            >
+              {registerMutation.isPending ? 'Processing...' : 'Register'}
+            </Button>
+          </form>
 
-        <Typography as='div' className='space-x-1 text-center font-satoshi'>
-          <Typography as='span' className='text-inherit' variant='s3'>
-            Already have an account?
-          </Typography>
-          <Link
-            href='/login'
-            className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
+          <Typography
+            as='div'
+            className='space-x-1 text-center font-satoshi font-medium'
           >
             <Typography as='span' className='text-inherit' variant='s3'>
-              Login
+              Have an account?
             </Typography>
-          </Link>
-        </Typography>
-      </FormProvider>
+            <Link
+              href='/login'
+              className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
+            >
+              <Typography as='span' className='text-inherit' variant='s3'>
+                Login
+              </Typography>
+            </Link>
+          </Typography>
+        </FormProvider>
+      </div>
     </AuthLayout>
   );
 }

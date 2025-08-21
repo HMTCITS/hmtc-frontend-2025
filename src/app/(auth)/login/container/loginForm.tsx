@@ -64,7 +64,7 @@ export default function LoginForm() {
 
   return (
     <AuthLayout>
-      <div className='py-4'>
+      <div className='grid gap-[16px]'>
         <Typography
           as='h1'
           variant='j0'
@@ -72,81 +72,84 @@ export default function LoginForm() {
         >
           Login
         </Typography>
-        <Typography as='p' className='mb-2 font-satoshi text-slate-600'>
+        <Typography as='p' className='font-satoshi text-slate-600'>
           Type in your email and password, then dive back in
         </Typography>
-      </div>
 
-      <FormProvider {...form}>
-        <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
-          <div className='space-y-4'>
-            <Input
-              id='email'
-              label='Email'
-              placeholder='Masukkan email Anda'
-              containerClassName='font-satoshi'
-              validation={{
-                required: 'Email tidak boleh kosong',
-                pattern: {
-                  value: /^\S+@\S+\.\S+$/,
-                  message: 'Email tidak valid',
-                },
-              }}
-              inputMode='email'
-              autoComplete='username'
-            />
-
-            <div className='flex flex-col items-end space-y-2'>
+        <FormProvider {...form}>
+          <form onSubmit={handleSubmit(onSubmit)} className='grid gap-[16px]'>
+            <div className='grid gap-y-[12px]'>
               <Input
-                id='password'
-                label='Password'
-                placeholder='Masukkan password Anda'
-                type='password'
-                containerClassName='font-satoshi w-full'
+                id='email'
+                label='Email'
+                placeholder='Masukkan email Anda'
+                containerClassName='font-satoshi'
                 validation={{
-                  required: 'Password tidak boleh kosong',
+                  required: 'Email tidak boleh kosong',
                   pattern: {
-                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                    message:
-                      'Password harus terdiri dari minimal 8 karakter, dan mengandung huruf serta angka',
+                    value: /^\S+@\S+\.\S+$/,
+                    message: 'Email tidak valid',
                   },
                 }}
-                autoComplete='current-password'
+                inputMode='email'
+                autoComplete='username'
               />
-              <Link
-                href='/change-password'
-                className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
-              >
-                <Typography as='span' className='text-inherit' variant='s3'>
-                  Forgot Password?
-                </Typography>
-              </Link>
+
+              <div className='flex flex-col items-end space-y-[12px]'>
+                <Input
+                  id='password'
+                  label='Password'
+                  placeholder='Masukkan password Anda'
+                  type='password'
+                  containerClassName='font-satoshi w-full'
+                  validation={{
+                    required: 'Password tidak boleh kosong',
+                    pattern: {
+                      value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                      message:
+                        'Password harus terdiri dari minimal 8 karakter, dan mengandung huruf serta angka',
+                    },
+                  }}
+                  autoComplete='current-password'
+                />
+                <Link
+                  href='/change-password'
+                  className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
+                >
+                  <Typography as='span' className='text-inherit' variant='s3'>
+                    Forgot Password?
+                  </Typography>
+                </Link>
+              </div>
             </div>
-          </div>
 
-          <Button
-            type='submit'
-            className='w-full rounded-md font-satoshi font-bold'
-            disabled={loginMutation.isPending}
-          >
-            {loginMutation.isPending ? 'Processing…' : 'Login'}
-          </Button>
-        </form>
+            <Button
+              type='submit'
+              className='w-full rounded-xl font-satoshi font-bold'
+              disabled={loginMutation.isPending}
+            >
+              {loginMutation.isPending ? 'Processing…' : 'Login'}
+            </Button>
+          </form>
 
-        <Typography as='div' className='font-secondary space-x-1 text-center'>
-          <Typography as='span' className='text-inherit' variant='s3'>
-            Don&apos;t have an account?
-          </Typography>
-          <Link
-            href='/register'
-            className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
+          <Typography
+            as='div'
+            className='space-x-1 text-center font-satoshi font-medium'
           >
             <Typography as='span' className='text-inherit' variant='s3'>
-              Register now
+              Don&apos;t have an account?
             </Typography>
-          </Link>
-        </Typography>
-      </FormProvider>
+            <Link
+              href='/register'
+              className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
+            >
+              <Typography as='span' className='text-inherit' variant='s3'>
+                Register now
+              </Typography>
+            </Link>
+          </Typography>
+        </FormProvider>
+      </div>
     </AuthLayout>
   );
 }

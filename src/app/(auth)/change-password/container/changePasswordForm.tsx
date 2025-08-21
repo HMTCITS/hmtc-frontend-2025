@@ -24,7 +24,7 @@ export default function ChangePasswordForm() {
 
   return (
     <AuthLayout>
-      <div className='py-4'>
+      <div className='grid gap-[16px]'>
         <Typography
           as='h1'
           variant='j0'
@@ -36,47 +36,47 @@ export default function ChangePasswordForm() {
           Enter your email to recover your password. A link to reset your
           password will be sent via email.
         </Typography>
-      </div>
-      <FormProvider {...form}>
-        <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
-          <div className='space-y-4'>
-            <Input
-              id='password'
-              label='Password'
-              placeholder='Enter your password'
-              containerClassName='font-satoshi'
-              validation={{ required: 'Password is required' }}
-            />
-            <Input
-              id='password_confirm'
-              label='Confirm Password'
-              placeholder='Re-enter your password'
-              containerClassName='font-satoshi'
-              validation={{
-                required: 'Confirm Password is required',
-                validate: (value) =>
-                  value === wpassword || 'Passwords do not match',
-              }}
-            />
-          </div>
-          <Button type='submit' className='w-full rounded-md font-satoshi'>
-            Change Password
-          </Button>
-        </form>
-      </FormProvider>
-      <Typography as='div' className='space-x-1 text-center font-satoshi'>
-        <Typography as='span' className='text-inherit' variant='s3'>
-          Back to
-        </Typography>
-        <Link
-          href='/login'
-          className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
-        >
+        <FormProvider {...form}>
+          <form onSubmit={handleSubmit(onSubmit)} className='grid gap-[16px]'>
+            <div className='grid gap-y-[12px]'>
+              <Input
+                id='password'
+                label='Password'
+                placeholder='Enter your password'
+                containerClassName='font-satoshi'
+                validation={{ required: 'Password is required' }}
+              />
+              <Input
+                id='password_confirm'
+                label='Confirm Password'
+                placeholder='Re-enter your password'
+                containerClassName='font-satoshi'
+                validation={{
+                  required: 'Confirm Password is required',
+                  validate: (value) =>
+                    value === wpassword || 'Passwords do not match',
+                }}
+              />
+            </div>
+            <Button type='submit' className='w-full rounded-xl font-satoshi'>
+              Change Password
+            </Button>
+          </form>
+        </FormProvider>
+        <Typography as='div' className='space-x-1 text-center font-satoshi font-medium'>
           <Typography as='span' className='text-inherit' variant='s3'>
-            Login Page
+            Back to
           </Typography>
-        </Link>
-      </Typography>
+          <Link
+            href='/login'
+            className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
+          >
+            <Typography as='span' className='text-inherit' variant='s3'>
+              Login Page
+            </Typography>
+          </Link>
+        </Typography>
+      </div>
     </AuthLayout>
   );
 }
