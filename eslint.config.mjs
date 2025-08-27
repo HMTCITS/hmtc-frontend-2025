@@ -76,6 +76,7 @@ export default [
       '**/node_modules/',
       '**/.next/',
       '**/next.config.js',
+      '**/next-env.d.ts'
     ],
   },
 ];
