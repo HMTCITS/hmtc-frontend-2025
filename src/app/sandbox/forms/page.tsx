@@ -1,7 +1,7 @@
 'use client';
 import { Lock, Mail } from 'lucide-react';
 import React from 'react';
-import { FormProvider,useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import Button from '@/components/buttons/Button';
 import Input from '@/components/forms/Input';

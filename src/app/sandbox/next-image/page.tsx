@@ -1,4 +1,5 @@
-import NextImage, { ImageSizes } from '@/components/NextImage';
+import NextImage from '@/components/NextImage';
+import { ImageSizes } from '@/constants/components/image-sizes';
 
 export default function NextImageSandbox() {
   return (

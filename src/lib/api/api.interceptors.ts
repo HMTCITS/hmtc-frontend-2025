@@ -3,12 +3,11 @@
  * -------------------------------------------------------
  * - Response: Auto refresh (single-flight) + retry 1x
  * - SSR lanjutan: forward Set-Cookie dari refresh ke ctx.res
- * - Error mapping (401/403/400/others) + Sentry
+ * - Error mapping (401/403/400/others)
  * - Request: biarkan Content-Type diatur di layer pemanggil via buildPayload,
  *   namun aman jika sudah di-set manual (tidak di-override di sini).
  */
 
-import * as Sentry from '@sentry/nextjs';
 import type { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import type { GetServerSidePropsContext } from 'next/types';
 
@@ -90,7 +89,7 @@ export function applyInterceptors(instance: AxiosInstance, opts?: ApplyOpts) {
           // 403 → No permission (UI tangani pesan)
           // 400 → Validasi (message sudah dinormalisasi oleh transformApiError di bawah)
           if (status && status >= 500) {
-            Sentry.captureException(error);
+            dynamicCapture(error);
           }
           return Promise.reject(transformApiError(error));
         }
@@ -181,9 +180,17 @@ export function applyInterceptors(instance: AxiosInstance, opts?: ApplyOpts) {
           isRefreshing = false;
         }
       } catch (e) {
-        Sentry.captureException(e);
+        dynamicCapture(e);
         return Promise.reject(error);
       }
     },
   );
+}
+
+// Dynamic capture to avoid bundling Node instrumentation into client chunks
+function dynamicCapture(error: unknown) {
+  if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line no-console
+    console.warn('[capture]', error);
+  }
 }
