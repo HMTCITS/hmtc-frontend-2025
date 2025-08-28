@@ -2,6 +2,7 @@
 import Image, { ImageProps, StaticImageData } from 'next/image';
 import * as React from 'react';
 
+import { ImageSizes as _ImageSizes } from '@/constants/components/image-sizes';
 import { cn } from '@/lib/utils';
 
 type NextImageProps = {
@@ -301,23 +302,8 @@ export default function NextImage({
   );
 }
 
-export const ImageSizes = {
-  Square: {
-    sm: { width: 64, height: 64 },
-    md: { width: 128, height: 128 },
-    lg: { width: 256, height: 256 },
-    xl: { width: 512, height: 512 },
-  },
-  Widescreen: {
-    sm: { width: 256, height: 144 },
-    md: { width: 640, height: 360 },
-    lg: { width: 1280, height: 720 },
-    xl: { width: 1920, height: 1080 },
-  },
-  Standard: {
-    sm: { width: 256, height: 192 },
-    md: { width: 640, height: 480 },
-    lg: { width: 1024, height: 768 },
-    xl: { width: 1600, height: 1200 },
-  },
-};
+/**
+ * Deprecated: Import size presets from '@/components/image-sizes' directly in Server Components.
+ * Re-export kept for backwards compatibility but will be undefined in RSC (client boundary).
+ */
+export const ImageSizes = _ImageSizes;

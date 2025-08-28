@@ -152,5 +152,5 @@ export const galleryItems: GalleryItem[] = [
     link: 'https://drive.google.com/drive/folders/1ay4aaDzR3xS2da-ytGg6yzRz9EimZsFQ?usp=sharing',
     width: 400,
     height: 600,
-  }
+  },
 ];

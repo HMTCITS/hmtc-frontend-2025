@@ -1,4 +1,4 @@
-import { Eye, EyeClosed, Info, LucideIcon  } from 'lucide-react';
+import { Eye, EyeClosed, Info, LucideIcon } from 'lucide-react';
 import * as React from 'react';
 import { get, RegisterOptions, useFormContext } from 'react-hook-form';
 
@@ -102,8 +102,7 @@ export default function Input({
             (readOnly || disabled) && [
               'cursor-not-allowed border-gray-300 bg-gray-100 focus:border-gray-300 focus:ring-0',
             ],
-            error &&
-              '',
+            error && '',
             LeftIcon && ['pl-10', inputWithLeftIconClassName],
             rightNode && 'pr-10',
             addon && 'rounded-l-none shadow-none',
