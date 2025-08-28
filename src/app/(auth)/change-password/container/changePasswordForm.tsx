@@ -63,7 +63,10 @@ export default function ChangePasswordForm() {
             </Button>
           </form>
         </FormProvider>
-        <Typography as='div' className='space-x-1 text-center font-satoshi font-medium'>
+        <Typography
+          as='div'
+          className='space-x-1 text-center font-satoshi font-medium'
+        >
           <Typography as='span' className='text-inherit' variant='s3'>
             Back to
           </Typography>

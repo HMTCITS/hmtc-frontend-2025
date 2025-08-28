@@ -1,6 +1,7 @@
 'use client';
-import LazySection from '@/components/LazySection';
 import React, { useState } from 'react';
+
+import LazySection from '@/components/LazySection';
 
 export default function LazySectionSandbox() {
   const [count, setCount] = useState(0);

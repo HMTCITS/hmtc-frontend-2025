@@ -1,8 +1,9 @@
 'use client';
 import React, { useState } from 'react';
+
+import Button from '@/components/buttons/Button';
 import BaseDialog, { DialogOptions } from '@/components/dialog/BaseDialog';
 import ConfirmDialog from '@/components/dialog/ConfirmModal';
-import Button from '@/components/buttons/Button';
 
 export default function DialogsSandbox() {
   const [open, setOpen] = useState(false);

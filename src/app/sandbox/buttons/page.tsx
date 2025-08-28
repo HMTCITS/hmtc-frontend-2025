@@ -1,6 +1,7 @@
 'use client';
-import { Loader2, ArrowRight, Check, X } from 'lucide-react';
+import { ArrowRight, Check, Loader2, X } from 'lucide-react';
 import React from 'react';
+
 import Button from '@/components/buttons/Button';
 
 export default function ButtonsSandbox() {

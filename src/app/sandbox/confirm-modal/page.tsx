@@ -1,8 +1,9 @@
 'use client';
-import React, { useState } from 'react';
-import { ConfirmModal } from '@/components/ui/confirm-modal';
-import { Button } from '@/components/ui/button';
 import { Check, Loader2, Trash2 } from 'lucide-react';
+import React, { useState } from 'react';
+
+import { Button } from '@/components/ui/button';
+import { ConfirmModal } from '@/components/ui/confirm-modal';
 
 export default function ConfirmModalSandbox() {
   const [open, setOpen] = useState(false);

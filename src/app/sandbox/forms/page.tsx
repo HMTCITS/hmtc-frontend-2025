@@ -1,9 +1,10 @@
 'use client';
+import { Lock, Mail } from 'lucide-react';
 import React from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
-import Input from '@/components/forms/Input';
+import { FormProvider,useForm } from 'react-hook-form';
+
 import Button from '@/components/buttons/Button';
-import { Mail, Lock, User } from 'lucide-react';
+import Input from '@/components/forms/Input';
 
 export default function FormsSandbox() {
   const methods = useForm({

@@ -11,7 +11,6 @@
  * - Gunakan createApi() (tanpa ctx) di client.
  */
 
-import * as Sentry from '@sentry/nextjs';
 import axios, { AxiosInstance } from 'axios';
 import type { GetServerSidePropsContext } from 'next/types';
 
@@ -62,8 +61,24 @@ export function createApi(opts?: CreateApiOptions): AxiosInstance {
         }),
     });
   } catch (e) {
-    // Jangan memblokir pembuatan instance bila interceptor gagal dipasang
-    Sentry.captureException(e);
+    // Jangan memblokir pembuatan instance bila interceptor gagal dipasang.
+    // Hindari static import Sentry di client agar tidak menarik dependency Node instrumentation (require-in-the-middle)
+    if (typeof window === 'undefined') {
+      // Server side: laporkan ke Sentry secara dinamis
+      import('@sentry/nextjs')
+        .then((Sentry) => {
+          Sentry.captureException(e);
+        })
+        .catch(() => {
+          // fallback diam
+        });
+    } else {
+      // Client: fallback logging ringan saja
+      if (process.env.NODE_ENV !== 'production') {
+        // eslint-disable-next-line no-console
+        console.warn('[api] interceptor setup error (non-blocking)', e);
+      }
+    }
   }
 
   return instance;
