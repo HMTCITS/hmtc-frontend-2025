@@ -1,7 +1,6 @@
 'use client';
 
-import { MoveLeft } from 'lucide-react';
-import { Menu } from 'lucide-react';
+import { Menu, MoveLeft } from 'lucide-react';
 import Link from 'next/link';
 import * as React from 'react';
 

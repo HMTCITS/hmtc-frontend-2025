@@ -1,4 +1,4 @@
-import { api } from '@/lib/api';
+import { api } from '@/lib/api/api';
 import type { ApiResponse } from '@/types/api';
 
 interface ValidateData {

@@ -24,59 +24,62 @@ export default function ChangePasswordForm() {
 
   return (
     <AuthLayout>
-      <div className='space-y-4'>
+      <div className='grid gap-[16px]'>
         <Typography
           as='h1'
           variant='j0'
-          className='font-satoshi font-semibold text-3xl md:text-4xl lg:text-5xl'
+          className='font-adelphe text-3xl font-bold md:text-4xl lg:text-5xl'
         >
-          Atur Ulang Kata Sandi
+          Reset your password account
         </Typography>
-        <Typography as='p' className='font-satoshi mb-2 text-slate-600'>
-          Masukkan email untuk pemulihan kata sandi. Link untuk atur ulang kata
-          sandi akan dikirimkan melalui email.
+        <Typography as='p' className='mb-2 font-satoshi text-slate-600'>
+          Enter your email to recover your password. A link to reset your
+          password will be sent via email.
+        </Typography>
+        <FormProvider {...form}>
+          <form onSubmit={handleSubmit(onSubmit)} className='grid gap-[16px]'>
+            <div className='grid gap-y-[12px]'>
+              <Input
+                id='password'
+                label='Password'
+                placeholder='Enter your password'
+                containerClassName='font-satoshi'
+                validation={{ required: 'Password is required' }}
+              />
+              <Input
+                id='password_confirm'
+                label='Confirm Password'
+                placeholder='Re-enter your password'
+                containerClassName='font-satoshi'
+                validation={{
+                  required: 'Confirm Password is required',
+                  validate: (value) =>
+                    value === wpassword || 'Passwords do not match',
+                }}
+              />
+            </div>
+            <Button type='submit' className='w-full rounded-xl font-satoshi'>
+              Change Password
+            </Button>
+          </form>
+        </FormProvider>
+        <Typography
+          as='div'
+          className='space-x-1 text-center font-satoshi font-medium'
+        >
+          <Typography as='span' className='text-inherit' variant='s3'>
+            Back to
+          </Typography>
+          <Link
+            href='/login'
+            className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
+          >
+            <Typography as='span' className='text-inherit' variant='s3'>
+              Login Page
+            </Typography>
+          </Link>
         </Typography>
       </div>
-      <FormProvider {...form}>
-        <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
-          <div className='space-y-4'>
-            <Input
-              id='password'
-              label='Kata Sandi'
-              placeholder='Masukkan kata sandi Anda'
-              containerClassName='font-satoshi'
-              validation={{ required: 'Kata sandi tidak boleh kosong' }}
-            />
-            <Input
-              id='password_confirm'
-              label='Konfirmasi Kata Sandi'
-              placeholder='Masukkan kembali kata sandi Anda'
-              containerClassName='font-satoshi'
-              validation={{
-                required: 'Konfirmasi Kata sandi tidak boleh kosong',
-                validate: (value) =>
-                  value === wpassword || 'Kata sandi berbeda',
-              }}
-            />
-          </div>
-          <Button type='submit' className='w-full font-satoshi rounded-md'>
-            Ubah Kata Sandi
-          </Button>
-        </form>
-      </FormProvider>
-      <Typography as='div' className='font-satoshi space-x-1 text-center'>
-        <Typography as='span' className='text-inherit'>
-          Kembali ke
-        </Typography>
-        <Link
-          href='/'
-          className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
-        >
-          <Typography as='span' className='text-inherit'>
-            Halaman Utama
-          </Typography>
-        </Link>
-      </Typography>
     </AuthLayout>
   );
 }

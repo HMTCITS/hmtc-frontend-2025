@@ -1,5 +1,4 @@
-import { LucideIcon } from 'lucide-react';
-import { Eye, EyeClosed } from 'lucide-react';
+import { Eye, EyeClosed, Info, LucideIcon } from 'lucide-react';
 import * as React from 'react';
 import { get, RegisterOptions, useFormContext } from 'react-hook-form';
 
@@ -52,7 +51,7 @@ export default function Input({
   return (
     <div className={containerClassName}>
       {withLabel && (
-        <label className='text-typo-main font-medium' htmlFor={id}>
+        <label className='text-typo-main font-bold' htmlFor={id}>
           {label}
         </label>
       )}
@@ -60,7 +59,7 @@ export default function Input({
         className={cn(
           'relative',
           withLabel && 'mt-1',
-          addon && 'flex rounded-lg shadow-sm',
+          addon && 'flex rounded-lg shadow-none',
           'text-mid md:text-mid',
         )}
       >
@@ -96,15 +95,14 @@ export default function Input({
           readOnly={readOnly}
           disabled={disabled}
           className={cn(
-            'flex w-full rounded-md shadow-sm',
+            'flex w-full rounded-xl shadow-none',
             'min-h-[2.25rem] md:min-h-[2.5rem]',
             'text-typo-dark border border-gray-300 px-3.5 py-0 caret-stone-600',
             'ring-stone-400 focus:ring-2 focus:ring-offset-2 focus:outline-none',
             (readOnly || disabled) && [
               'cursor-not-allowed border-gray-300 bg-gray-100 focus:border-gray-300 focus:ring-0',
             ],
-            error &&
-              'border-red-500 caret-red-600 focus:border-red-500 focus:ring-red-500',
+            error && '',
             LeftIcon && ['pl-10', inputWithLeftIconClassName],
             rightNode && 'pr-10',
             addon && 'rounded-l-none shadow-none',
@@ -118,7 +116,7 @@ export default function Input({
             onClick={togglePassword}
             className={cn(
               'absolute top-1/2 right-0 mr-3 -translate-y-1/2',
-              'flex h-6 w-6 items-center justify-center rounded-md',
+              'flex h-6 w-6 items-center justify-center rounded-xl',
               'focus:ring focus:ring-stone-500 focus:outline-none',
               'text-lg text-stone-400 hover:text-stone-500',
             )}
@@ -136,9 +134,12 @@ export default function Input({
         <p className='mt-1.5 text-xs text-stone-500'>{helperText}</p>
       )}
       {!hideError && error && (
-        <p className='mt-1.5 text-xs text-red-500'>
-          {error.message?.toString()}
-        </p>
+        <div className='mt-[12px] flex h-[26px] items-center gap-[12px] self-stretch rounded-[12px] bg-red-500/[0.07] px-[8px] py-[2px]'>
+          <Info className='h-[18px] w-[18px] text-text-error' />
+          <p className='text-[14px] text-text-error'>
+            {error.message?.toString()}
+          </p>
+        </div>
       )}
     </div>
   );

@@ -11,7 +11,7 @@ import * as React from 'react';
 
 import Loading from '@/components/Loading';
 import { Toaster } from '@/components/ui/sonner';
-import api from '@/lib/api';
+import api from '@/lib/api/api';
 
 /**
  * Default query function untuk React Query.

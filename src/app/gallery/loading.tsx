@@ -2,6 +2,7 @@ import React from 'react';
 
 import NavbarGallery from '@/app/gallery/components/navbarGallery';
 import { Skeleton } from '@/components/ui/skeleton';
+
 export default function Loading() {
   return (
     <>

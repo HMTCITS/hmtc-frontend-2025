@@ -1,85 +1,173 @@
 'use client';
 
+import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import Button from '@/components/buttons/Button';
 import Input from '@/components/forms/Input';
 import Typography from '@/components/Typography';
 import AuthLayout from '@/layouts/AuthLayout';
+import { api } from '@/lib/api/api';
+import { buildPayload } from '@/lib/api/api.utils';
 
 type RegisterFormTypes = {
-  name: string;
+  full_name: string;
   email: string;
   password: string;
 };
 
+type RegisterResponse = {
+  status?: boolean;
+  message?: string;
+  data?: unknown;
+};
+
 export default function RegisterForm() {
-  const form = useForm<RegisterFormTypes>();
+  const router = useRouter();
+  const form = useForm<RegisterFormTypes>({
+    mode: 'onSubmit',
+    defaultValues: { full_name: '', email: '', password: '' },
+  });
   const { handleSubmit } = form;
 
-  const onSubmit = (_data: RegisterFormTypes) => {
-    // console.log(data);
+  const registerMutation = useMutation({
+    mutationFn: async (
+      values: RegisterFormTypes,
+    ): Promise<RegisterResponse> => {
+      const { data, headers } = buildPayload('/user/register', {
+        full_name: values.full_name,
+        email: values.email,
+        password: values.password,
+      });
+      const res = await api.post('/user/register', data, { headers });
+      return res.data as RegisterResponse;
+    },
+    onSuccess: (res) => {
+      toast.success(res?.message || 'Registration success. Please login.');
+      router.push('/login');
+    },
+    onError: (err: any) => {
+      const message: string =
+        err?.response?.data?.message ||
+        err?.message ||
+        'Registration Failed. Please try again.';
+      toast.error(message);
+    },
+  });
+
+  const onSubmit = (values: RegisterFormTypes) => {
+    registerMutation.mutate(values);
   };
 
   return (
     <AuthLayout>
-      <div className='space-y-3'>
+      <div className='grid gap-[16px]'>
         <Typography
           as='h1'
           variant='j0'
-          className='font-satoshi font-semibold text-3xl md:text-4xl lg:text-5xl'
+          className='font-adelphe text-3xl font-bold md:text-4xl lg:text-5xl'
         >
-          Daftar
+          Register
         </Typography>
-        <Typography as='p' className='font-satoshi text-slate-600 mb-2'>
-          Silakan mengisi formulir di bawah ini untuk membuat akun baru
+        <Typography as='p' className='font-satoshi text-slate-600'>
+          Please complete the form below to create your new account
         </Typography>
-      </div>
-      <FormProvider {...form}>
-        <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
-          <div className='space-y-4'>
-            <Input
-              id='name'
-              label='Nama Lengkap'
-              placeholder='Masukkan nama lengkap Anda'
-              containerClassName='font-satoshi'
-              validation={{ required: 'Nama lengkap tidak boleh kosong' }}
-            />
-            <Input
-              id='email'
-              label='Email'
-              placeholder='Masukkan email Anda'
-              containerClassName='font-satoshi'
-              validation={{ required: 'Email tidak boleh kosong' }}
-            />
-            <Input
-              id='password'
-              label='Kata Sandi'
-              placeholder='Masukkan kata sandi Anda'
-              containerClassName='font-satoshi'
-              validation={{ required: 'Kata sandi tidak boleh kosong' }}
-            />
-          </div>
-          <Button type='submit' className='w-full font-satoshi font-bold rounded-md'>
-            Daftar
-          </Button>
-        </form>
-        <Typography as='div' className='font-satoshi space-x-1 text-center'>
-          <Typography as='span' variant='b2'>
-            Sudah punya akun?
-          </Typography>
-          <Link
-            href='/login'
-            className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
+
+        <FormProvider {...form}>
+          <form onSubmit={handleSubmit(onSubmit)} className='grid gap-[16px]'>
+            <div className='grid gap-[12px]'>
+              <Input
+                id='full_name'
+                label='Full Name'
+                placeholder='Enter your full name'
+                containerClassName='font-satoshi'
+                validation={{
+                  required: 'Name cannot be empty',
+                  minLength: {
+                    value: 5,
+                    message: 'Full name must be at least 5 characters',
+                  },
+                  pattern: {
+                    value: /^[a-zA-Z\s]+$/,
+                    message: 'Full name must only contain letters and spaces',
+                  },
+                }}
+                inputMode='text'
+                autoComplete='name'
+              />
+
+              <Input
+                id='email'
+                label='Email'
+                placeholder='Enter your email'
+                containerClassName='font-satoshi'
+                validation={{
+                  required: 'Email cannot be empty',
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    message: 'Email is not valid',
+                  },
+                  maxLength: {
+                    value: 254,
+                    message: 'Email address is too long',
+                  },
+                }}
+                autoComplete='email'
+              />
+
+              <Input
+                id='password'
+                label='Password'
+                placeholder='Enter your password'
+                type='password'
+                containerClassName='font-satoshi'
+                validation={{
+                  required: 'Password cannot be empty',
+                  minLength: {
+                    value: 8,
+                    message: 'Password must be at least 8 characters',
+                  },
+                  pattern: {
+                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                    message:
+                      'Password must contain at least one letter and one number',
+                  },
+                }}
+                autoComplete='new-password'
+              />
+            </div>
+
+            <Button
+              type='submit'
+              className='w-full rounded-xl font-satoshi font-bold'
+              disabled={registerMutation.isPending}
+            >
+              {registerMutation.isPending ? 'Processing...' : 'Register'}
+            </Button>
+          </form>
+
+          <Typography
+            as='div'
+            className='space-x-1 text-center font-satoshi font-medium'
           >
-            <Typography as='span' variant='b2'>
-              Masuk
+            <Typography as='span' className='text-inherit' variant='s3'>
+              Have an account?
             </Typography>
-          </Link>
-        </Typography>
-      </FormProvider>
+            <Link
+              href='/login'
+              className='text-blue-500 underline decoration-white transition-colors duration-150 hover:decoration-blue-500'
+            >
+              <Typography as='span' className='text-inherit' variant='s3'>
+                Login
+              </Typography>
+            </Link>
+          </Typography>
+        </FormProvider>
+      </div>
     </AuthLayout>
   );
 }

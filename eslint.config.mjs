@@ -51,6 +51,10 @@ export default [
 
       'simple-import-sort/imports': 'warn',
       'simple-import-sort/exports': 'warn',
+      'import/first': 'error',
+      'import/newline-after-import': 'error',
+      'import/no-duplicates': 'error',
+      'simple-import-sort/exports': 'warn',
       'unused-imports/no-unused-imports': 'warn',
       'unused-imports/no-unused-vars': [
         'warn',
@@ -72,6 +76,7 @@ export default [
       '**/node_modules/',
       '**/.next/',
       '**/next.config.js',
+      '**/next-env.d.ts',
     ],
   },
 ];
