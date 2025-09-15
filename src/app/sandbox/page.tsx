@@ -17,6 +17,7 @@ export default function SandboxIndexPage() {
     { href: '/sandbox/pagination', label: 'Pagination' },
     { href: '/sandbox/skeleton', label: 'Skeleton' },
     { href: '/sandbox/toaster', label: 'Toaster / Sonner' },
+    { href: '/sandbox/table', label: 'Data Table' },
   ];
   return (
     <main className='mx-auto max-w-5xl space-y-8 p-8'>
