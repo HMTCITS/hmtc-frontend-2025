@@ -1,7 +1,7 @@
 'use client';
-
 import React from 'react';
 
+import Providers from '@/app/providers'; 
 import { HeaderBar } from '@/layouts/header-bar';
 import { SidebarNav } from '@/layouts/sidebar-nav';
 
@@ -32,15 +32,17 @@ export default function DashboardLayout({
   onLogout
  }: DashboardLayoutProps) {
   return (
-    <div className='min-h-screen bg-[#EDFAFF]'>
-      {/* Header */}
-      <HeaderBar user={user} onLogout={onLogout} />
+    <Providers>
+      <div className='min-h-screen bg-[#EDFAFF]'>
+        {/* Header */}
+        <HeaderBar user={user} onLogout={onLogout} />
 
-      {/* Main Content */}
-      <SidebarNav items={navItems} />
-      <main>
-        <div>{children}</div>
-      </main>
-    </div>
+        {/* Main Content */}
+        <SidebarNav items={navItems} />
+        <main>
+          <div>{children}</div>
+        </main>
+      </div>
+    </Providers>
   );
 }
