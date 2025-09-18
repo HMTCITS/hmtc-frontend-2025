@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
-import { GalleryItem } from '@/contents/gallery';
+import type { GalleryItem } from '@/types/gallery';
 
 interface CardProps {
   item: GalleryItem;
