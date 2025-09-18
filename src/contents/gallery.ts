@@ -1,12 +1,4 @@
-export type GalleryItem = {
-  id: number;
-  date: string;
-  title: string;
-  image: string;
-  link: string;
-  width: number;
-  height: number;
-};
+import type { GalleryItem } from '@/types/gallery';
 
 export const galleryItems: GalleryItem[] = [
   {
