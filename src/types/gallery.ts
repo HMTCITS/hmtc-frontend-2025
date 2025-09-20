@@ -8,17 +8,15 @@ export type GalleryItem = {
   height: number;
 }
 
-export type GalleryDetail = GalleryItem & {
-  description?: string;
-  tags?: string;
-  uploadedBy?: string;
-  uploadedAt?: string;
-  viewCount?: number;
+export interface GalleryDetail extends GalleryItem {
+  width: number;
+  height: number;
+  imageUrl: string;
 }
 
 export type CreateGalleryRequest = Omit<GalleryItem, 'id'> & {
   description?: string;
-  tags?: string;
+  tags?: string[];
 }
 
 export type UpdateGalleryRequest = Partial<Omit<GalleryItem, 'id'>> & {

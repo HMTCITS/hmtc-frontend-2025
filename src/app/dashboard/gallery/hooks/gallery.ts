@@ -6,11 +6,12 @@ import {
   deleteGallery,
   getGalleries,
   getGalleryById,
-  updateGallery
+  updateGallery,
+  uploadThumbnail
 } from '@/lib/api/gallery.client';
 import { galleryKeys } from '@/lib/query-keys'
+import { GalleryFormData } from '@/lib/validation/gallery';
 import type {
-  CreateGalleryRequest,
   GalleryItem,
   UpdateGalleryRequest
 } from '@/types/gallery';
@@ -50,20 +51,28 @@ export function useCreateGallery() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: CreateGalleryRequest) => createGallery(data),
-    onSuccess: (newGallery) => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({
-        queryKey: galleryKeys.lists(),
-      })
+    mutationFn: async (data: GalleryFormData) => {
+      if (!data.thumbnail) throw new Error('Thumbnail image is required.');
 
-      // Update cache
-      queryClient.setQueryData(
-        galleryKeys.detail(newGallery.data.data.id),
-        newGallery.data.data
-      )
+      const uploadResult = await uploadThumbnail(data.thumbnail);
+
+      const galleryData = {
+        title: data.title,
+        date: data.date,
+        link: data.link,
+        image: uploadResult.data.data.imageUrl,
+        width: uploadResult.data.data.width,
+        height: uploadResult.data.data.height,
+      };
+
+      return createGallery(galleryData);
     },
-    onError: () => {}
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['galleries']
+      })
+    }
   })
 }
 

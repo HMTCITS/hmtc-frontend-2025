@@ -35,6 +35,21 @@ export const getGalleryById = async (id: number) => {
 };
 
 /**
+ * Upload Gallery Thumbnail
+ */
+export const uploadThumbnail = async (file: File) => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  // POST to /uploads/gallery-thumbnail
+  return api.post<ApiResponse<GalleryDetail>>('/uploads/gallery-thumbnail', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+/**
  * Create gallery item
  */
 export const createGallery = async (data: CreateGalleryRequest) => {
