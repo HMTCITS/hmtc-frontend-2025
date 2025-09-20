@@ -47,36 +47,67 @@ function generateDummyAll(count = 500): RequestItem[] {
 const getColumns = (): ColumnDef<RequestItem>[] => [
   {
     id: 'no',
-    header: 'No.',
-    size: 56,
+    header: () => <span className='block text-center'>No.</span>,
     cell: ({ row, table }) => {
       const pageIndex = table.getState().pagination?.pageIndex ?? 0;
       const pageSize = table.getState().pagination?.pageSize ?? 10;
-      return pageIndex * pageSize + row.index + 1;
+      return (
+        <span className='block text-center'>
+          {pageIndex * pageSize + row.index + 1}
+        </span>
+      );
+    },
+    meta: {
+      initialWidth: 40,
+      minWidth: 32,
+      maxWidth: 40,
+      resizable: false,
+      wrap: 'clamp',
     },
   },
   {
     accessorKey: 'title',
-    header: 'Title',
+    header: () => <span className='block text-left'>Title</span>,
     cell: ({ getValue }) => (
-      <span className='line-clamp-1 max-w-[280px]' title={getValue<string>()}>
+      <span className='line-clamp-1 text-left' title={getValue<string>()}>
         {getValue<string>()}
       </span>
     ),
+    meta: {
+      initialWidth: 320,
+      minWidth: 180,
+      maxWidth: 480,
+      resizable: true,
+      // default wrap/clamp behavior: clamp (ellipsis)
+    },
   },
   {
     accessorKey: 'requestDate',
     header: 'Request Date',
     cell: ({ getValue }) => formatDDMMYYYY(getValue<string>()),
+    meta: {
+      initialWidth: 140,
+      minWidth: 100,
+      maxWidth: 220,
+      resizable: true,
+      wrap: 'clamp',
+    },
   },
   {
     accessorKey: 'applicant',
     header: 'Applicant',
     cell: ({ getValue }) => (
-      <span className='line-clamp-1 max-w-[160px]' title={getValue<string>()}>
+      <span className='line-clamp-1' title={getValue<string>()}>
         {getValue<string>()}
       </span>
     ),
+    meta: {
+      initialWidth: 160,
+      minWidth: 120,
+      maxWidth: 280,
+      resizable: true,
+      wrap: 'clamp',
+    },
   },
   {
     accessorKey: 'status',
@@ -84,11 +115,17 @@ const getColumns = (): ColumnDef<RequestItem>[] => [
     cell: ({ getValue }) => (
       <span className='capitalize'>{getValue<RequestItem['status']>()}</span>
     ),
+    meta: {
+      initialWidth: 120,
+      minWidth: 90,
+      maxWidth: 180,
+      resizable: true,
+      wrap: 'clamp',
+    },
   },
   {
     id: 'actions',
     header: 'Action',
-    size: 120,
     cell: ({ row }) => (
       <Button
         size='sm'
@@ -98,6 +135,13 @@ const getColumns = (): ColumnDef<RequestItem>[] => [
         Detail
       </Button>
     ),
+    meta: {
+      initialWidth: 120,
+      minWidth: 100,
+      maxWidth: 160,
+      resizable: false, // actions column fixed
+      wrap: 'clamp',
+    },
   },
 ];
 
@@ -191,8 +235,6 @@ function ClientSandbox() {
         allData={allData}
         columns={columns}
         storageKey='sandbox-client-table'
-        enableExportCsv
-        enableColumnVisibility
         defaultPageSize={10}
       />
     </section>
@@ -291,8 +333,6 @@ function ServerSandbox() {
         totalItems={totalItems}
         totalPages={totalPages}
         storageKey='sandbox-server-table'
-        enableExportCsv
-        enableColumnVisibility
         loading={loading}
         defaultPageSize={10}
       />
