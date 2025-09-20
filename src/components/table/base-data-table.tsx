@@ -13,16 +13,16 @@ import {
   VisibilityState,
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import { Search } from 'lucide-react';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import { Pagination } from '@/components/table/pagination';
-import { Input } from '@/components/ui/input';
+import Typography from '@/components/Typography';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from '@/components/ui/select';
 import {
   Table,
@@ -39,8 +39,6 @@ import ColumnToggle from './column-toggle';
 import { EmptyState } from './empty-state';
 import { ExportCsv } from './export-csv';
 import { SkeletonRows } from './skeleton-rows';
-import Typography from '@/components/Typography';
-import { Search } from 'lucide-react';
 
 /* --------------------- Utilities --------------------- */
 function loadVisibility(key?: string): VisibilityState {
@@ -182,7 +180,7 @@ export function BaseServerDataTable<TData extends RowData, TValue = unknown>({
   totalPages,
   storageKey,
   toolbarLeft,
-  toolbarRight,
+  toolbarRight: _toolbarRight,
   extraFilters,
   enableColumnVisibility = false,
   enableExportCsv = false,
@@ -222,7 +220,6 @@ export function BaseServerDataTable<TData extends RowData, TValue = unknown>({
   useEffect(() => {
     const persisted = loadColWidths(storageKey);
     if (persisted && Object.keys(persisted).length > 0) setColWidths(persisted);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storageKey]);
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -559,7 +556,7 @@ export function BaseServerDataTable<TData extends RowData, TValue = unknown>({
                       meta.initialWidth ??
                       (id === 'no' ? 40 : undefined);
                     const canResize = meta.resizable !== false;
-                    const clamp = meta.wrap !== 'wrap';
+                    const _clamp = meta.wrap !== 'wrap';
 
                     const style =
                       id === 'no'
@@ -698,7 +695,7 @@ export function BaseServerDataTable<TData extends RowData, TValue = unknown>({
                             colWidths[id] ??
                             meta.initialWidth ??
                             (id === 'no' ? 40 : undefined);
-                          const clamp = meta.wrap !== 'wrap';
+                          const _clamp = meta.wrap !== 'wrap';
                           const style =
                             id === 'no'
                               ? buildStyleObject({
@@ -726,7 +723,7 @@ export function BaseServerDataTable<TData extends RowData, TValue = unknown>({
                               key={cell.id}
                               className={cn(
                                 'border-b-2 border-black-100 align-middle',
-                                clamp
+                                _clamp
                                   ? 'overflow-hidden px-4 py-3 text-ellipsis whitespace-nowrap'
                                   : 'px-4 py-3 whitespace-normal',
                                 id === 'no' && 'p-0',
@@ -778,7 +775,7 @@ export function BaseServerDataTable<TData extends RowData, TValue = unknown>({
                           colWidths[id] ??
                           meta.initialWidth ??
                           (id === 'no' ? 40 : undefined);
-                        const clamp = meta.wrap !== 'wrap';
+                        const _clamp = meta.wrap !== 'wrap';
                         const style =
                           id === 'no'
                             ? buildStyleObject({
@@ -807,7 +804,7 @@ export function BaseServerDataTable<TData extends RowData, TValue = unknown>({
                             className={cn(
                               'border-b-2 border-black-100 align-middle',
                               isLast && 'border-b-0',
-                              clamp
+                              _clamp
                                 ? 'overflow-hidden px-4 py-3 text-ellipsis whitespace-nowrap'
                                 : 'px-4 py-3 whitespace-normal',
                               id === 'no' && 'p-0',
@@ -858,7 +855,7 @@ export function BaseClientDataTable<TData extends RowData, TValue = unknown>({
   columns,
   storageKey,
   toolbarLeft,
-  toolbarRight,
+  toolbarRight: _toolbarRight,
   extraFilters,
   enableColumnVisibility = false,
   enableExportCsv = false,
@@ -1131,7 +1128,7 @@ export function BaseClientDataTable<TData extends RowData, TValue = unknown>({
                     const widthNum =
                       colWidths[id] ?? meta.initialWidth ?? undefined;
                     const canResize = meta.resizable !== false;
-                    const clamp = meta.wrap !== 'wrap';
+                    const _clamp = meta.wrap !== 'wrap';
 
                     const style =
                       id === 'no'
@@ -1269,7 +1266,7 @@ export function BaseClientDataTable<TData extends RowData, TValue = unknown>({
                           const meta = getColMeta(c);
                           const widthNum =
                             colWidths[id] ?? meta.initialWidth ?? undefined;
-                          const clamp = meta.wrap !== 'wrap';
+                          const _clamp = meta.wrap !== 'wrap';
                           const style =
                             id === 'no'
                               ? buildStyleObject({
@@ -1297,7 +1294,7 @@ export function BaseClientDataTable<TData extends RowData, TValue = unknown>({
                               key={cell.id}
                               className={cn(
                                 'border-b-2 border-black-100 px-4 py-3',
-                                clamp
+                                _clamp
                                   ? 'overflow-hidden text-ellipsis whitespace-nowrap'
                                   : 'whitespace-normal',
                                 id === 'no' && 'p-0',
@@ -1347,7 +1344,7 @@ export function BaseClientDataTable<TData extends RowData, TValue = unknown>({
                         const meta = getColMeta(c);
                         const widthNum =
                           colWidths[id] ?? meta.initialWidth ?? undefined;
-                        const clamp = meta.wrap !== 'wrap';
+                        const _clamp = meta.wrap !== 'wrap';
                         const style =
                           id === 'no'
                             ? buildStyleObject({
@@ -1376,7 +1373,7 @@ export function BaseClientDataTable<TData extends RowData, TValue = unknown>({
                             className={cn(
                               'border-b-2 border-black-100 px-4 py-3 align-middle',
                               isLast && 'border-b-0',
-                              clamp
+                              _clamp
                                 ? 'overflow-hidden text-ellipsis whitespace-nowrap'
                                 : 'whitespace-normal',
                               id === 'no' && 'p-0',

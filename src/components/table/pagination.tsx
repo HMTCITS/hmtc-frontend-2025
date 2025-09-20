@@ -1,14 +1,14 @@
-import React from 'react';
-import Typography from '@/components/Typography';
-
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import {
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
 } from 'lucide-react';
+import React from 'react';
+
+import Typography from '@/components/Typography';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 type PaginationProps = {
   page: number;
