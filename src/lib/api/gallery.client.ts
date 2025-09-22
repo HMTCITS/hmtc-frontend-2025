@@ -22,9 +22,15 @@ export const getGalleries = async (params?: {
   if (params?.search) searchParams.append('q', params.search);
   if (params?.tags?.length) searchParams.append('tags', params.tags.join(','));
 
-  return api.get<ApiResponse<GalleryItem[]>>('/galleries', {
+  const response = await api.get<ApiResponse<GalleryItem[]>>('/galleries', {
     params: searchParams
   });
+  
+  if (!response.data.status) {
+    throw new Error(response.data.message || 'Failed to fetch galleries');
+  }
+  
+  return response.data.data;
 }
 
 /**

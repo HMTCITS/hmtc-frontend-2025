@@ -1031,7 +1031,7 @@ export function BaseClientDataTable<TData extends RowData, TValue = unknown>({
   return (
     <div
       className={cn(
-        'flex w-full min-w-0 flex-col gap-6 rounded-2xl border bg-white px-3 py-6 shadow-sm',
+        'flex w-full min-w-0 flex-col gap-6 rounded-2xl border bg-white px-3 py-6 shadow-sm font-satoshi',
         className,
       )}
       role='region'
