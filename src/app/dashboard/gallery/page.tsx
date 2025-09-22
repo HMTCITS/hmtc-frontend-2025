@@ -189,7 +189,7 @@ function GalleryTable({ onDeleteClick }: {
   };
 
   return (
-    <Card>
+    <Card className='rounded-2xl'>
       <BaseClientDataTable<GalleryItem>
         allData={mockGalleries}
         columns={columns}

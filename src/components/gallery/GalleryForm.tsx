@@ -1,13 +1,17 @@
 'use client';
 
+import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CalendarIcon, ImageIcon, LinkIcon, Save, X } from 'lucide-react';
+import { ImageIcon, LinkIcon, Save, X } from 'lucide-react';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
+import Typography from '@/components/Typography';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -18,6 +22,7 @@ import {
 } from '@/lib/validation/gallery';
 
 import { FileUpload } from './FileUpload';
+import { DatePicker } from '@/components/ui/date-picker';
 
 interface GalleryFormProps {
   onSubmit: (data: GalleryFormData) => Promise<void>;
@@ -38,6 +43,7 @@ export function GalleryForm({
 
   const {
     register,
+    control,
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
@@ -46,7 +52,9 @@ export function GalleryForm({
     resolver: zodResolver(galleryFormSchema),
     defaultValues: {
       title: initialData?.title || '',
-      date: initialData?.date || new Date().toISOString().split('T')[0],
+      // avoid computing a date on the server to prevent hydration mismatch;
+      // start undefined and set on client mount below
+      date: initialData?.date || undefined,
       link: initialData?.link || '',
     },
   });
@@ -69,143 +77,203 @@ export function GalleryForm({
         setSelectedFile(null);
       }
     } catch (error) {
-      toast.error(`Failed to ${mode === 'create' ? 'create' : 'update'} gallery item. ${(error as Error).message}`);
+      toast.error(
+        `Failed to ${mode === 'create' ? 'create' : 'update'} gallery item. ${(error as Error).message}`,
+      );
     }
   };
 
   const isFormLoading = isLoading || isSubmitting;
+  const router = useRouter();
+
+  // set default date on client after mount to avoid SSR/client mismatch
+  React.useEffect(() => {
+    if (!initialData?.date) {
+      const todayIso = new Date().toISOString().split('T')[0];
+      setValue('date', todayIso, { shouldValidate: false, shouldDirty: false });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <div className='mx-auto w-full font-satoshi'>
+    // suppressHydrationWarning: some children (date display, extension-injected attrs)
+    // may differ between server and client; ignore hydration warnings for this subtree.
+    <div suppressHydrationWarning className='mx-auto w-full font-satoshi'>
       <Card>
         <CardHeader>
           <CardTitle className='flex items-center gap-2'>
-            <ImageIcon className='h-5 w-5 text-blue-600' />
-            {mode === 'create' ? 'Add New Gallery Item' : 'Edit Gallery Item'}
+            <Typography
+              font='satoshi'
+              weight='medium'
+              variant='h1'
+              className='mb-2.5 w-full border-b-2 border-black-50 pb-5'
+            >
+              Gallery Detail
+            </Typography>
           </CardTitle>
         </CardHeader>
 
         <CardContent>
-          <form onSubmit={handleSubmit(handleFormSubmit)} className='space-y-6'>
+          <Typography
+            font='satoshi'
+            weight='medium'
+            variant='i2'
+            className='mb-2.5'
+          >
+            Information
+          </Typography>
+          <form
+            onSubmit={handleSubmit(handleFormSubmit)}
+            className='flex flex-col gap-2.5'
+          >
             {/* Title Field */}
-            <div className='space-y-2'>
+            <div className='flex flex-col gap-2.5 md:flex-row'>
               <Label
                 htmlFor='title'
-                className='flex items-center gap-2 text-sm font-medium'
+                className='flex w-full items-center gap-2 text-base font-medium text-black-200 md:w-1/3'
               >
-                Title <span className='text-red-500'>*</span>
+                Judul
               </Label>
-              <Input
-                id='title'
-                placeholder='Enter gallery title (minimum 3 characters)'
-                {...register('title')}
-                disabled={isFormLoading}
-                className={cn(
-                  'transition-colors',
-                  errors.title &&
-                    'border-red-500 focus:border-red-500 focus:ring-red-500',
+              <div className='w-full md:w-2/3'>
+                <Input
+                  id='title'
+                  placeholder='Masukkan judul galeri (minimal 3 karakter)'
+                  {...register('title')}
+                  disabled={isFormLoading}
+                  className={cn(
+                    'w-full transition-colors',
+                    errors.title &&
+                      'border-red-500 focus:border-red-500 focus:ring-red-500',
+                  )}
+                />
+                {errors.title && (
+                  <p className='mt-1 flex items-center gap-1 text-sm text-red-600'>
+                    <X className='h-3 w-3' />
+                    {errors.title.message}
+                  </p>
                 )}
-              />
-              {errors.title && (
-                <p className='flex items-center gap-1 text-sm text-red-600'>
-                  <X className='h-3 w-3' />
-                  {errors.title.message}
-                </p>
-              )}
+              </div>
             </div>
 
             {/* Date Field */}
-            <div className='space-y-2'>
+            <div className='flex flex-col gap-2.5 md:flex-row'>
               <Label
                 htmlFor='date'
-                className='flex items-center gap-2 text-sm font-medium'
+                className='flex w-full items-center gap-2 text-base font-medium text-black-200 md:w-1/3'
               >
-                <CalendarIcon className='h-4 w-4' />
                 Date <span className='text-red-500'>*</span>
               </Label>
-              <Input
-                id='date'
-                type='date'
-                {...register('date')}
-                disabled={isFormLoading}
-                className={cn(
-                  'transition-colors',
-                  errors.date &&
-                    'border-red-500 focus:border-red-500 focus:ring-red-500',
+              <div className='w-full md:w-2/3'>
+                <Controller
+                  name='date'
+                  control={control}
+                  render={({ field }) => (
+                    <DatePicker
+                      id='date'
+                      value={field.value}
+                      onChange={(v) => field.onChange(v)}
+                      disabled={isFormLoading}
+                      className={cn(
+                        'w-full transition-colors',
+                        errors.date &&
+                          'border-red-500 focus:border-red-500 focus:ring-red-500',
+                      )}
+                    />
+                  )}
+                />
+                {errors.date && (
+                  <p className='mt-1 flex items-center gap-1 text-sm text-red-600'>
+                    <X className='h-3 w-3' />
+                    {errors.date.message}
+                  </p>
                 )}
-              />
-              {errors.date && (
-                <p className='flex items-center gap-1 text-sm text-red-600'>
-                  <X className='h-3 w-3' />
-                  {errors.date.message}
-                </p>
-              )}
+              </div>
             </div>
 
             {/* Google Drive Link Field */}
-            <div className='space-y-2'>
+            <div className='flex flex-col gap-2.5 md:flex-row'>
               <Label
                 htmlFor='link'
-                className='flex items-center gap-2 text-sm font-medium'
+                className='flex w-full items-center gap-2 text-base font-medium text-black-200 md:w-1/3'
               >
                 <LinkIcon className='h-4 w-4' />
                 Link (Google Drive) <span className='text-red-500'>*</span>
               </Label>
-              <Input
-                id='link'
-                placeholder='https://drive.google.com/file/d/...'
-                {...register('link')}
-                disabled={isFormLoading}
-                className={cn(
-                  'transition-colors',
-                  errors.link &&
-                    'border-red-500 focus:border-red-500 focus:ring-red-500',
+              <div className='w-full md:w-2/3'>
+                <Input
+                  id='link'
+                  placeholder='https://drive.google.com/file/d/...'
+                  {...register('link')}
+                  disabled={isFormLoading}
+                  className={cn(
+                    'w-full transition-colors',
+                    errors.link &&
+                      'border-red-500 focus:border-red-500 focus:ring-red-500',
+                  )}
+                />
+                {errors.link && (
+                  <p className='mt-1 flex items-center gap-1 text-sm text-red-600'>
+                    <X className='h-3 w-3' />
+                    {errors.link.message}
+                  </p>
                 )}
-              />
-              {errors.link && (
-                <p className='flex items-center gap-1 text-sm text-red-600'>
-                  <X className='h-3 w-3' />
-                  {errors.link.message}
-                </p>
-              )}
+              </div>
             </div>
 
             {/* Thumbnail Upload Field */}
-            <div className='space-y-2'>
-              <Label className='flex items-center gap-2 text-sm font-medium'>
+            <div className='flex flex-col gap-2.5 md:flex-row'>
+              <Label className='flex w-full items-center gap-2 text-base font-medium text-black-200 md:w-1/3'>
                 <ImageIcon className='h-4 w-4' />
                 Thumbnail Image <span className='text-red-500'>*</span>
               </Label>
-              <FileUpload
-                onFileSelect={handleFileSelect}
-                onFileRemove={handleFileRemove}
-                selectedFile={selectedFile}
-                error={errors.thumbnail?.message}
-                disabled={isFormLoading}
-              />
-              <p className='text-xs text-gray-500'>
-                Upload a thumbnail image for preview. Max size: 1MB. Formats:
-                JPG, JPEG, PNG.
-              </p>
+              <div className='flex w-full flex-col gap-2 md:w-2/3'>
+                <FileUpload
+                  onFileSelect={handleFileSelect}
+                  onFileRemove={handleFileRemove}
+                  selectedFile={selectedFile}
+                  error={errors.thumbnail?.message}
+                  disabled={isFormLoading}
+                />
+                {errors.thumbnail && (
+                  <p className='mt-1 flex items-center gap-1 text-sm text-red-600'>
+                    <X className='h-3 w-3' />
+                    {errors.thumbnail.message}
+                  </p>
+                )}
+                <p className='text-xs text-gray-500'>
+                  Upload a thumbnail image for preview. Max size: 1MB. Formats:
+                  JPG, JPEG, PNG.
+                </p>
+              </div>
             </div>
 
             {/* Description Field */}
-            <div className='space-y-2'>
-              <Label htmlFor='description' className='text-sm font-medium'>
+            <div className='flex flex-col gap-2.5 md:flex-row'>
+              <Label
+                htmlFor='description'
+                className='flex w-full items-center gap-2 text-base font-medium text-black-200 md:w-1/3'
+              >
                 Description (Optional)
               </Label>
-              <Textarea
-                id='description'
-                placeholder='Enter a description for this gallery item...'
-                rows={3}
-                disabled={isFormLoading}
-                className='resize-none'
-              />
+              <div className='w-full md:w-2/3'>
+                <Textarea
+                  id='description'
+                  name='description'
+                  placeholder='Enter a description for this gallery item...'
+                  rows={3}
+                  disabled={isFormLoading}
+                  className='w-full resize-none'
+                />
+              </div>
             </div>
 
             {/* Form Actions */}
-            <div className='flex gap-3 border-t pt-4'>
-              <Button type='submit' disabled={isFormLoading} className='flex-1'>
+            <div className='flex flex-col-reverse gap-3 border-t pt-4 md:flex-row'>
+              <Button
+                type='submit'
+                disabled={isFormLoading}
+                className='w-full md:flex-1'
+              >
                 {isFormLoading ? (
                   <>
                     <div className='mr-2 h-4 w-4 animate-spin rounded-full border-b-2 border-white' />
@@ -224,9 +292,16 @@ export function GalleryForm({
               <Button
                 type='button'
                 variant='outline'
-                onClick={onCancel}
+                onClick={() => {
+                  // let parent decide where to navigate; this component only calls onCancel
+                  try {
+                    onCancel();
+                  } catch (err) {
+                    // swallow parent errors
+                  }
+                }}
                 disabled={isFormLoading}
-                className='px-8'
+                className='w-full md:w-auto md:px-8'
               >
                 Cancel
               </Button>
