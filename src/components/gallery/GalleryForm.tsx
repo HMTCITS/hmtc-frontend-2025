@@ -76,7 +76,7 @@ export function GalleryForm({
   const isFormLoading = isLoading || isSubmitting;
 
   return (
-    <div className='mx-auto w-full max-w-2xl font-satoshi'>
+    <div className='mx-auto w-full font-satoshi'>
       <Card>
         <CardHeader>
           <CardTitle className='flex items-center gap-2'>

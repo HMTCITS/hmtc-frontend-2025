@@ -6,30 +6,27 @@ import {
   Edit,
   Eye,
   Link as LinkIcon,
+  Plus,
   Trash2,
-  UserIcon,
 } from 'lucide-react';
+import Link from 'next/link';
 import React, { useMemo } from 'react';
 
+import {
+  Gallery,
+  Profile,
+  Repository,
+  Requests,
+  Upload,
+  User,
+} from '@/app/landing/components/dashboard/icons';
 import { BaseClientDataTable } from '@/components/table/base-data-table';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import { formatDDMMYYYY } from '@/lib/utils/date';
 import type { GalleryItem } from '@/types/gallery';
-
-/* --------------------------- Types --------------------------- */
-type User = {
-  name: string;
-  role: string;
-  avatarUrl?: string;
-};
-
-type NavItem = {
-  href: string;
-  label: string;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-};
+import type { NavItem, User as UserType } from '@/types/sidebar'
 
 /* --------------------------- Mock Data Generator --------------------------- */
 function generateMockGalleries(count = 50): GalleryItem[] {
@@ -76,10 +73,7 @@ const getGalleryColumns = (): ColumnDef<GalleryItem>[] => [
     header: () => <span className='block text-left'>Title</span>,
     cell: ({ getValue }) => (
       <div className='space-y-1'>
-        <span
-          className='line-clamp-2 text-left'
-          title={getValue<string>()}
-        >
+        <span className='line-clamp-2 text-left' title={getValue<string>()}>
           {getValue<string>()}
         </span>
       </div>
@@ -123,7 +117,7 @@ const getGalleryColumns = (): ColumnDef<GalleryItem>[] => [
         href={getValue<string>()}
         target='_blank'
         rel='noopener noreferrer'
-        className='block nax-w-[300px] truncate text-sm text-blue-600 hover:text-blue-800'
+        className='nax-w-[300px] block truncate text-sm text-blue-600 hover:text-blue-800'
         title={getValue<string>()}
       >
         {getValue<string>()}
@@ -189,6 +183,21 @@ function GalleryTable() {
   const mockGalleries = useMemo(() => generateMockGalleries(50), []);
   const columns = useMemo(() => getGalleryColumns(), []);
 
+  // Custom toolbar -> Add new gallery button
+  const customToolbarRight = () => {
+    return (
+      <Link
+        href='/dashboard/gallery/add'
+        className='flex justify-center rounded-lg bg-blue-500 px-[16px] py-[12px] text-white'
+      >
+        <p className='flex h-[30px] items-center gap-2 font-satoshi text-[16px]/8 font-medium'>
+          Add Gallery
+          <Plus />
+        </p>
+      </Link>
+    );
+  };
+
   return (
     <Card>
       <BaseClientDataTable<GalleryItem>
@@ -196,6 +205,7 @@ function GalleryTable() {
         columns={columns}
         storageKey='gallery-client-table'
         defaultPageSize={10}
+        toolbarRight={customToolbarRight}
       />
     </Card>
   );
@@ -205,16 +215,16 @@ function GalleryTable() {
 export default function GalleryPage() {
   // Navigation Items
   const navItem: NavItem[] = [
-    { href: '/profile', label: 'Profile', icon: UserIcon },
-    { href: '/user', label: 'User', icon: UserIcon },
-    { href: '/repository', label: 'Repository', icon: UserIcon },
-    { href: '/user-requests', label: 'User Requests', icon: UserIcon },
-    { href: '/user-uploads', label: 'User Upload', icon: UserIcon },
-    { href: '/dashboard/gallery', label: 'Gallery Post', icon: UserIcon },
+    { href: '/profile', label: 'Profile', icon: Profile },
+    { href: '/user', label: 'User', icon: User },
+    { href: '/repository', label: 'Repository', icon: Repository },
+    { href: '/user-requests', label: 'User Requests', icon: Requests },
+    { href: '/user-uploads', label: 'User Upload', icon: Upload },
+    { href: '/dashboard/gallery', label: 'Gallery Post', icon: Gallery },
   ];
 
   // Dummy User Data
-  const user: User = {
+  const user: UserType = {
     name: 'John Doe',
     role: 'Administrator',
     avatarUrl: '',
@@ -229,7 +239,7 @@ export default function GalleryPage() {
       }}
     >
       <div className='flex flex-col space-y-6 p-6'>
-        <h1 className='font-adelphe py-[10px] px-[24px] text-[32px] font-bold'>
+        <h1 className='px-[24px] py-[10px] font-adelphe text-[32px] font-bold'>
           Available Gallery
         </h1>
 

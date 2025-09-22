@@ -42,7 +42,7 @@ export function SidebarNav({ items, className, onNavigate }: SidebarNavProps) {
                   : 'text-slate-700 hover:bg-slate-100',
               )}
             >
-              <ItemIcon className={cn('h-5 w-5', active && 'text-primary')} />
+              <ItemIcon className={cn('h-8 w-8', active && 'text-primary')} />
               <span className='font-satoshi font-bold text-black'>
                 {it.label}
               </span>
