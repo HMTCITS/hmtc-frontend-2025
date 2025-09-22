@@ -14,7 +14,7 @@ export interface PaginatedApiResponse<DataType> {
 }
 
 export type ApiResponse<T> = {
-  id(id: any): readonly ["galleries", "detail", number];
+  id(id: any): readonly ['galleries', 'detail', number];
   message: string;
   status: boolean;
   code: number;

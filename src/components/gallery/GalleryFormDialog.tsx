@@ -38,14 +38,14 @@ export function GalleryFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-0">
-        <DialogHeader className="px-6 pt-6 pb-4">
+      <DialogContent className='max-h-[90vh] max-w-4xl overflow-y-auto p-0'>
+        <DialogHeader className='px-6 pt-6 pb-4'>
           <DialogTitle>
             {mode === 'create' ? 'Add New Gallery Item' : 'Edit Gallery Item'}
           </DialogTitle>
         </DialogHeader>
-        
-        <div className="px-6 pb-6">
+
+        <div className='px-6 pb-6'>
           <GalleryForm
             onSubmit={handleSubmit}
             onCancel={handleCancel}

@@ -53,7 +53,7 @@ export function HeaderBar({
               src='/images/header/logo-hmtc2025-black.png'
               alt='Logo HMTC Suar Peradaban'
             />
-            <div className='flex flex-col items-start font-adelphe text-2xl max-md:text-xl font-bold'>
+            <div className='flex flex-col items-start font-adelphe text-2xl font-bold max-md:text-xl'>
               HMTC <br /> Suar Peradaban
             </div>
           </Link>

@@ -7,28 +7,22 @@ import {
   getGalleries,
   getGalleryById,
   updateGallery,
-  uploadThumbnail
+  uploadThumbnail,
 } from '@/lib/api/gallery.client';
-import { galleryKeys } from '@/lib/query-keys'
+import { galleryKeys } from '@/lib/query-keys';
 import { GalleryFormData } from '@/lib/validation/gallery';
-import type {
-  GalleryItem,
-  UpdateGalleryRequest
-} from '@/types/gallery';
+import type { GalleryItem, UpdateGalleryRequest } from '@/types/gallery';
 
 /**
  * Get all galleries + Caching
  */
-export function useGalleries(filters?: {
-  search?: string;
-  tags?: string[];
-}) {
+export function useGalleries(filters?: { search?: string; tags?: string[] }) {
   return useQuery({
     queryKey: galleryKeys.list(filters || {}),
     queryFn: () => getGalleries(filters),
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
-  })
+  });
 }
 
 /**
@@ -41,7 +35,7 @@ export function useGallery(id: number, enabled = true) {
     enabled: !!id && enabled,
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
-  })
+  });
 }
 
 /**
@@ -70,10 +64,10 @@ export function useCreateGallery() {
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['galleries']
-      })
-    }
-  })
+        queryKey: ['galleries'],
+      });
+    },
+  });
 }
 
 /**
@@ -83,23 +77,21 @@ export function useUpdateQuery() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, data }: { id: number; data: UpdateGalleryRequest }) => updateGallery(id, data),
+    mutationFn: ({ id, data }: { id: number; data: UpdateGalleryRequest }) =>
+      updateGallery(id, data),
     onSuccess: (updatedGallery, variables) => {
       const { id } = variables;
 
       // Update specific gallery cache
-      queryClient.setQueryData(
-        galleryKeys.detail(id),
-        updatedGallery
-      );
+      queryClient.setQueryData(galleryKeys.detail(id), updatedGallery);
 
       // Invalidate galleries list
       queryClient.invalidateQueries({
         queryKey: galleryKeys.lists(),
-      })
+      });
     },
-    onError: () => {}
-  })
+    onError: () => {},
+  });
 }
 
 /**
@@ -113,16 +105,16 @@ export function useDeleteGallery() {
     onSuccess: (_, id) => {
       // Remove from cache
       queryClient.removeQueries({
-        queryKey: galleryKeys.detail(id)
-      })
+        queryKey: galleryKeys.detail(id),
+      });
 
       // Invalidate lists
       queryClient.invalidateQueries({
         queryKey: galleryKeys.lists(),
-      })
+      });
     },
-    onError: () => {}
-  })
+    onError: () => {},
+  });
 }
 
 /**
@@ -150,7 +142,7 @@ export function useGalleryOperations() {
  */
 export function useGalleryPagination(
   galleries: GalleryItem[] = [],
-  initialPageSize = 10
+  initialPageSize = 10,
 ) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(initialPageSize);
@@ -163,7 +155,7 @@ export function useGalleryPagination(
     // Filter by search query
     if (searchQuery) {
       filtered = filtered.filter((gallery) =>
-        gallery.title.toLowerCase().includes(searchQuery.toLowerCase())
+        gallery.title.toLowerCase().includes(searchQuery.toLowerCase()),
       );
     }
 
@@ -188,12 +180,12 @@ export function useGalleryPagination(
   const changePageSize = (size: number) => {
     setPageSize(size);
     setCurrentPage(1);
-  }
+  };
 
   const search = (query: string) => {
     setSearchQuery(query);
     setCurrentPage(1);
-  }
+  };
 
   return {
     galleries: paginatedGalleries,
@@ -204,6 +196,6 @@ export function useGalleryPagination(
     searchQuery,
     goToPage,
     changePageSize,
-    search
-  }
+    search,
+  };
 }

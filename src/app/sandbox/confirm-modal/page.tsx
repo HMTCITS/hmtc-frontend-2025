@@ -54,7 +54,14 @@ export default function ConfirmModalSandbox() {
         variant={variant}
         size={size}
         title={'Delete Item'}
-        illustration={<Image src='/images/illustrations/delete-confirm.png' alt='Delete Confirmation' width={300} height={300} />}
+        illustration={
+          <Image
+            src='/images/illustrations/delete-confirm.png'
+            alt='Delete Confirmation'
+            width={300}
+            height={300}
+          />
+        }
         subtitle={'Tindakan ini tidak dapat dibatalkan.'}
         actions={[
           { id: 'cancel', label: 'Cancel', variant: 'outline' },

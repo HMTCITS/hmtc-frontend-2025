@@ -23,15 +23,15 @@ export const getGalleries = async (params?: {
   if (params?.tags?.length) searchParams.append('tags', params.tags.join(','));
 
   const response = await api.get<ApiResponse<GalleryItem[]>>('/galleries', {
-    params: searchParams
+    params: searchParams,
   });
-  
+
   if (!response.data.status) {
     throw new Error(response.data.message || 'Failed to fetch galleries');
   }
-  
+
   return response.data.data;
-}
+};
 
 /**
  * Get gallery item by ID
@@ -48,11 +48,15 @@ export const uploadThumbnail = async (file: File) => {
   formData.append('file', file);
 
   // POST to /uploads/gallery-thumbnail
-  return api.post<ApiResponse<GalleryDetail>>('/uploads/gallery-thumbnail', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
+  return api.post<ApiResponse<GalleryDetail>>(
+    '/uploads/gallery-thumbnail',
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     },
-  });
+  );
 };
 
 /**
@@ -60,18 +64,18 @@ export const uploadThumbnail = async (file: File) => {
  */
 export const createGallery = async (data: CreateGalleryRequest) => {
   return api.post<ApiResponse<GalleryDetail>>('/galleries', data);
-}
+};
 
 /**
  * Update gallery item
  */
 export const updateGallery = async (id: number, data: UpdateGalleryRequest) => {
   return api.patch<ApiResponse<GalleryDetail>>(`/galleries/${id}`, data);
-}
+};
 
 /**
  * Delete gallery item
  */
 export const deleteGallery = async (id: number) => {
   return api.delete<ApiResponse<null>>(`/galleries/${id}`);
-}
+};

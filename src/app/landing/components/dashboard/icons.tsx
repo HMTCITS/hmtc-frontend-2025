@@ -7,12 +7,7 @@ interface CustomIconProps {
   className?: string;
 }
 
-function CustomIcon({
-  src,
-  size = 32,
-  className,
-  ...props
-}: CustomIconProps) {
+function CustomIcon({ src, size = 32, className, ...props }: CustomIconProps) {
   return (
     <Image
       src={src}
@@ -22,7 +17,7 @@ function CustomIcon({
       className={`${className}`}
       {...props}
     />
-  )
+  );
 }
 
 function createCustomIcon(iconPath: string, alt?: string) {
@@ -35,23 +30,22 @@ function createCustomIcon(iconPath: string, alt?: string) {
         aria-label={alt || 'Icon'}
         {...props}
       />
-    )
-  }
+    );
+  };
 }
 
 // Custom Icons for Dashboard - From Figma
 const Profile = createCustomIcon('/icons/dashboard/profile.svg', 'Profile');
 const User = createCustomIcon('/icons/dashboard/user.svg', 'User');
-const Repository = createCustomIcon('/icons/dashboard/repository.svg', 'Repository');
-const Requests = createCustomIcon('/icons/dashboard/user-request.svg', 'Requests');
+const Repository = createCustomIcon(
+  '/icons/dashboard/repository.svg',
+  'Repository',
+);
+const Requests = createCustomIcon(
+  '/icons/dashboard/user-request.svg',
+  'Requests',
+);
 const Upload = createCustomIcon('/icons/dashboard/user-upload.svg', 'Upload');
 const Gallery = createCustomIcon('/icons/dashboard/gallery.svg', 'Gallery');
 
-export {
-  Gallery,
-  Profile,
-  Repository,
-  Requests,
-  Upload,
-  User
-};
+export { Gallery, Profile, Repository, Requests, Upload, User };

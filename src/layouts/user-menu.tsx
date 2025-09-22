@@ -28,6 +28,7 @@ export function UserMenu({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
+          suppressHydrationWarning
           className='flex items-center gap-3 rounded-xl bg-gradient-to-r from-sky-600 to-cyan-600 px-2 py-2 text-white'
           aria-label='User menu'
         >

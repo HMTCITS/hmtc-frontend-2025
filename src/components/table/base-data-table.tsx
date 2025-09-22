@@ -148,24 +148,22 @@ function InfoBar({
   onChange: (p: number) => void;
 }) {
   return (
-    <div className='flex items-center justify-between'>
-      <div className='flex items-center gap-4'>
-        <Pagination
-          page={page}
-          totalPages={totalPages}
-          onChange={onChange}
-          maxButtons={2}
-        />
-        <Typography
-          as='span'
-          font='satoshi'
-          weight='medium'
-          variant='s3'
-          className='mb-0 text-navy-500'
-        >
-          {`Page ${page} from ${totalPages}`}
-        </Typography>
-      </div>
+    <div className='flex items-center justify-between gap-4'>
+      <Typography
+        as='span'
+        font='satoshi'
+        weight='medium'
+        variant='s3'
+        className='mb-0 text-navy-500'
+      >
+        {`Page ${page} from ${totalPages}`}
+      </Typography>
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        onChange={onChange}
+        maxButtons={2}
+      />
     </div>
   );
 }

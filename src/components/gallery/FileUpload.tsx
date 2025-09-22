@@ -2,7 +2,7 @@
 
 import { AlertCircle, CheckCircle2, Upload, X } from 'lucide-react';
 import Image from 'next/image';
-import { useCallback, useEffect,useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import { Button } from '@/components/ui/button';
@@ -30,32 +30,35 @@ export function FileUpload({
   const [isUploading, setIsUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string>('');
 
-  const onDrop = useCallback((acceptedFiles: File[], rejectedFiles: any[]) => {
-    // Handle rejected files
-    if (rejectedFiles.length > 0) {
-      return;
-    }
+  const onDrop = useCallback(
+    (acceptedFiles: File[], rejectedFiles: any[]) => {
+      // Handle rejected files
+      if (rejectedFiles.length > 0) {
+        return;
+      }
 
-    const file = acceptedFiles[0];
-    if (file && !disabled) {
-      setIsUploading(true);
-      setUploadProgress(0);
+      const file = acceptedFiles[0];
+      if (file && !disabled) {
+        setIsUploading(true);
+        setUploadProgress(0);
 
-      const interval = setInterval(() => {
-        setUploadProgress((prev) => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            setTimeout(() => {
-              setIsUploading(false);
-              onFileSelect(file);
-            }, 500); // Add small delay
-            return 100;
-          }
-          return prev + Math.random() * 15 + 5;
-        });
-      }, 150);
-    }
-  }, [onFileSelect, disabled]);
+        const interval = setInterval(() => {
+          setUploadProgress((prev) => {
+            if (prev >= 100) {
+              clearInterval(interval);
+              setTimeout(() => {
+                setIsUploading(false);
+                onFileSelect(file);
+              }, 500); // Add small delay
+              return 100;
+            }
+            return prev + Math.random() * 15 + 5;
+          });
+        }, 150);
+      }
+    },
+    [onFileSelect, disabled],
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -87,25 +90,25 @@ export function FileUpload({
     const sizes = ['Bytes', 'KB', 'MB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  }
+  };
 
   const handleRemoveFile = () => {
     setUploadProgress(0);
     setIsUploading(false);
     setPreviewUrl('');
     onFileRemove();
-  }
+  };
 
   // Show uploading state
   if (isUploading) {
     return (
       <div className={cn('w-full', className)}>
-        <div className='border-2 border-dashed rounded-lg p-8 text-center'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 mx-auto mb-4' />
-          <p className='text-gray-600 mb-3'>Uploading thumbnail...</p>
+        <div className='rounded-lg border-2 border-dashed p-8 text-center'>
+          <div className='mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2' />
+          <p className='mb-3 text-gray-600'>Uploading thumbnail...</p>
 
-          <div className='max-w-xs mx-auto'>
-            <div className='flex justify-between test-sm mb-2'>
+          <div className='mx-auto max-w-xs'>
+            <div className='test-sm mb-2 flex justify-between'>
               <span>Progress</span>
               <span>{Math.round(uploadProgress)}%</span>
             </div>
@@ -134,26 +137,25 @@ export function FileUpload({
                 {formatFileSize(selectedFile.size)} • {selectedFile.type}
               </p>
             </div>
+            <Button
+              type='button'
+              variant='ghost'
+              size='sm'
+              onClick={handleRemoveFile}
+              disabled={disabled}
+            >
+              <X className='h-4 w-4' />
+            </Button>
           </div>
-
-          <Button
-            type='button'
-            variant='ghost'
-            size='sm'
-            onClick={handleRemoveFile}
-            disabled={disabled}
-          >
-            <X className='h-4 w-4' />
-          </Button>
         </div>
         {/* Preview */}
         {previewUrl && (
-          <div className='mt-3 relative w-full h-40'>
+          <div className='relative mt-3 h-40 w-full'>
             <Image
               src={previewUrl}
               alt='Thumbnail Preview'
               fill
-              className='object-cover rounded'
+              className='rounded object-cover'
             />
           </div>
         )}
@@ -167,60 +169,60 @@ export function FileUpload({
       <div
         {...getRootProps()}
         className={cn(
-          'border-2 border-dashed rounded-lg p-8 text-center cursor-pointer',
+          'cursor-pointer rounded-lg border-2 border-dashed p-8 text-center',
           isDragActive
-            ? 'border-blue-500 bg-blue-50 scale-[1.02'
+            ? 'scale-[1.02 border-blue-500 bg-blue-50'
             : error
-            ? 'border-red-500 bg-red-50'
+              ? 'border-red-500 bg-red-50'
               : 'border-gray-300 hover:border-gray-400',
-          disabled && 'opacity-50 cursor-not-allowed',
+          disabled && 'cursor-not-allowed opacity-50',
         )}
       >
         <input {...getInputProps()} />
 
-        <Upload className={cn(
-          'mx-auto h-12 w-12 mb-4',
-          isDragActive ? 'text-blue-500' : 'text-gray-400'
-        )} />
+        <Upload
+          className={cn(
+            'mx-auto mb-4 h-12 w-12',
+            isDragActive ? 'text-blue-500' : 'text-gray-400',
+          )}
+        />
 
         {isDragActive ? (
           <div className='text-blue-600'>
             <p className='text-lg font-medium'>Drop the image here</p>
-            <p className='text-sm mt-1'>Release to upload</p>
+            <p className='mt-1 text-sm'>Release to upload</p>
           </div>
         ) : (
-            <>
-              <div className='space-y-2'>
-                <p className='text-gray-600'>
-                  <span className='font-medium'>Drag and drop</span> an image here, or{' '}
-                  <span className='text-blue-600 font-medium hover:text-blue-700'>
-                    choose file
-                  </span>
-                </p>
-                <p className='text-sm text-gray-500'>
-                  PNG, JPG, JPEG up to 1MB
-                </p>
-              </div>
+          <>
+            <div className='space-y-2'>
+              <p className='text-gray-600'>
+                <span className='font-medium'>Drag and drop</span> an image
+                here, or{' '}
+                <span className='font-medium text-blue-600 hover:text-blue-700'>
+                  choose file
+                </span>
+              </p>
+              <p className='text-sm text-gray-500'>PNG, JPG, JPEG up to 1MB</p>
+            </div>
 
-              <Button
-                type='button'
-                variant='outline'
-                className='mt-4'
-                disabled={disabled}
-              >
-                Choose File
-              </Button>
-            </>
+            <Button
+              type='button'
+              variant='outline'
+              className='mt-4'
+              disabled={disabled}
+            >
+              Choose File
+            </Button>
+          </>
         )}
 
         {error && (
-          <div className='flex items-center justify-center mt-4 p-3 bg-red-100 border border-red-200 rounded'>
-            <AlertCircle className='h-4 w-4 text-red-500 mr-2' />
+          <div className='mt-4 flex items-center justify-center rounded border border-red-200 bg-red-100 p-3'>
+            <AlertCircle className='mr-2 h-4 w-4 text-red-500' />
             <span className='text-sm text-red-600'>{error}</span>
           </div>
         )}
-
       </div>
     </div>
-  )
+  );
 }

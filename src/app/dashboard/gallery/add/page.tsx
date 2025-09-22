@@ -57,7 +57,7 @@ export default function AddGalleryPage() {
         {/* Inline Form */}
         <GalleryForm
           onSubmit={handleCreateGallery}
-          onCancel={() => {  }}
+          onCancel={() => {}}
           isLoading={createMutation.isPending}
           mode='create'
         />
