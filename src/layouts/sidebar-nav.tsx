@@ -9,11 +9,21 @@ type NavItem = {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 };
 
-export function SidebarNav({ items }: { items: NavItem[] }) {
+type SidebarNavProps = {
+  items: NavItem[];
+  className?: string;
+  onNavigate?: () => void;
+};
+
+export function SidebarNav({ items, className, onNavigate }: SidebarNavProps) {
   const pathname = usePathname();
 
+  const handleNavClick = () => {
+    if (onNavigate) onNavigate();
+  }
+
   return (
-    <aside className='w-64 shrink-0 py-8 pr-3'>
+    <aside className={cn('w-64 shrink-0 py-8 pr-3', className)}>
       <nav role='navigation' aria-label='Main' className='flex flex-col gap-4'>
         {items.map((it) => {
           const active = pathname.startsWith(it.href);
@@ -21,6 +31,7 @@ export function SidebarNav({ items }: { items: NavItem[] }) {
 
           return (
             <Link
+              onClick={handleNavClick}
               key={it.href}
               href={it.href}
               aria-current={active ? 'page' : undefined}
@@ -31,7 +42,7 @@ export function SidebarNav({ items }: { items: NavItem[] }) {
                   : 'text-slate-700 hover:bg-slate-100',
               )}
             >
-              <ItemIcon className={cn('h-5 w-5', active && 'text-primary')} />
+              <ItemIcon className={cn('h-8 w-8', active && 'text-primary')} />
               <span className='font-satoshi font-bold text-black'>
                 {it.label}
               </span>
