@@ -28,7 +28,7 @@ export function HeaderBar({
   showMenuButton = false,
 }: HeaderBarProps) {
   return (
-    <header className={cn('fixed top-0 z-[100] w-full', className)}>
+    <header className={cn('fixed top-0 z-[5] w-full', className)}>
       <div className='flex items-center justify-between bg-white px-[100px] py-3 max-md:px-[50px]'>
         {/* Left - Logo Homepage + Burger Menu */}
         <div className='flex items-center gap-4'>

@@ -1,23 +1,20 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
-import {
-  Calendar,
-  Info,
-  Link as LinkIcon,
-  Plus,
-  Trash2,
-} from 'lucide-react';
+import { Calendar, Info, Link as LinkIcon, Plus, Trash2 } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
+import { toast } from 'sonner';
 
 import { navItem } from '@/app/dashboard/sidebar-link';
 import { BaseClientDataTable } from '@/components/table/base-data-table';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { ConfirmModal } from '@/components/ui/confirm-modal';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import type { GalleryItem } from '@/types/gallery';
-import type { User as UserType } from '@/types/sidebar'
+import type { User as UserType } from '@/types/sidebar';
 
 /* --------------------------- Mock Data Generator --------------------------- */
 function generateMockGalleries(count = 50): GalleryItem[] {
@@ -38,7 +35,9 @@ function generateMockGalleries(count = 50): GalleryItem[] {
 }
 
 /* --------------------------- Columns Definition --------------------------- */
-const getGalleryColumns = (): ColumnDef<GalleryItem>[] => [
+const getGalleryColumns = (
+  onDeleteClick: (item: GalleryItem) => void
+): ColumnDef<GalleryItem>[] => [
   {
     id: 'no',
     header: () => <span className='block text-center'>No.</span>,
@@ -85,12 +84,14 @@ const getGalleryColumns = (): ColumnDef<GalleryItem>[] => [
       </span>
     ),
     cell: ({ getValue }) => (
-      <span className='text-sm'>{new Date(getValue<string>()).toLocaleDateString('id-ID', { 
-        weekday: 'long', 
-        day: 'numeric', 
-        month: 'long', 
-        year: 'numeric' 
-      })}</span>
+      <span className='text-sm'>
+        {new Date(getValue<string>()).toLocaleDateString('id-ID', {
+          weekday: 'long',
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+        })}
+      </span>
     ),
     meta: {
       initialWidth: 120,
@@ -132,12 +133,11 @@ const getGalleryColumns = (): ColumnDef<GalleryItem>[] => [
     header: 'Actions',
     cell: ({ row }) => (
       <div className='flex items-center gap-1'>
-        <Button
-          size='lg'
-          variant='default'
-          title='View Details'
-        >
-          <Link href={`/dashboard/gallery/${row.original.id}`} className='flex items-center gap-2'>
+        <Button size='lg' variant='default' title='View Details'>
+          <Link
+            href={`/dashboard/gallery/${row.original.id}`}
+            className='flex items-center gap-2'
+          >
             <Info className='h-4 w-4' />
             <span>Detail</span>
           </Link>
@@ -145,7 +145,9 @@ const getGalleryColumns = (): ColumnDef<GalleryItem>[] => [
         <Button
           size='lg'
           variant='destructive'
-          onClick={() => { alert('Delete Clicked') }}
+          onClick={() => {
+            onDeleteClick(row.original);
+          }}
           title='Delete'
         >
           <Trash2 className='h-4 w-4' />
@@ -164,10 +166,12 @@ const getGalleryColumns = (): ColumnDef<GalleryItem>[] => [
 ];
 
 /* --------------------------- Gallery Table Component --------------------------- */
-function GalleryTable() {
+function GalleryTable({ onDeleteClick }: {
+  onDeleteClick: (item: GalleryItem) => void
+}) {
   // Mock data
   const mockGalleries = useMemo(() => generateMockGalleries(50), []);
-  const columns = useMemo(() => getGalleryColumns(), []);
+  const columns = useMemo(() => getGalleryColumns(onDeleteClick), [onDeleteClick]);
 
   // Custom toolbar -> Add new gallery button
   const customToolbarRight = () => {
@@ -177,7 +181,7 @@ function GalleryTable() {
         className='flex justify-center rounded-lg bg-blue-500 px-[16px] py-[12px] text-white'
       >
         <p className='flex h-[30px] items-center gap-2 font-satoshi text-[16px]/8 font-medium'>
-          <p className='max-md:hidden'>Add Gallery</p>
+          <span className='max-md:hidden'>Add Gallery</span>
           <Plus />
         </p>
       </Link>
@@ -199,13 +203,33 @@ function GalleryTable() {
 
 /* --------------------------- Main Page Component --------------------------- */
 export default function GalleryPage() {
-
   // Dummy User Data
   const user: UserType = {
     name: 'John Doe',
     role: 'Administrator',
     avatarUrl: '',
   };
+
+  // Confirm Modal States
+  const [open, setOpen] = useState(false);
+  const [successOpen, setSuccessOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
+  
+  // Handler for delete button click
+  const handleDeleteClick = (item: GalleryItem) => {
+    setSelectedItem(item);
+    setOpen(true);
+  }
+
+  // Handler for delete confirmation
+  const handleDeleteConfirm = () => {
+    if (selectedItem) {
+      setOpen(false);
+      setSuccessOpen(true);
+      setSelectedItem(null);
+      toast.success('Gallery item deleted successfully!');
+    }
+  }
 
   return (
     <DashboardLayout
@@ -216,11 +240,67 @@ export default function GalleryPage() {
       }}
     >
       <div className='flex flex-col space-y-6 p-6'>
+        
+        {/* Delete Confirmation Modal */}
+        <ConfirmModal
+          open={open}
+          onOpenChange={setOpen}
+          variant={'danger'}
+          size={'md'}
+          title={'Please confirm that you want to delete this data'}
+          illustration={
+            <Image
+              src='/images/illustrations/delete-confirm.png'
+              alt='Delete Confirmation'
+              width={300}
+              height={300}
+            />
+          }
+          actions={[
+            {
+              id: 'no',
+              label: 'No',
+              variant: 'outline',
+              onClick: () => setOpen(false),
+            },
+            {
+              id: 'yes',
+              label: 'Yes, Delete',
+              variant: 'destructive',
+              onClick: handleDeleteConfirm
+            },
+          ]}
+        />
+        {/* Success Confirmation Modal */}
+        <ConfirmModal
+          open={successOpen}
+          onOpenChange={setSuccessOpen}
+          variant={'success'}
+          size={'md'}
+          title={'Data Deleted Successfully'}
+          illustration={
+            <Image
+              src='/images/illustrations/delete-success.png'
+              alt='Success Confirmation'
+              width={300}
+              height={300}
+            />
+          }
+          actions={[
+            {
+              id: 'ok',
+              label: 'OK',
+              variant: 'default',
+              onClick: () => setSuccessOpen(false),
+            }
+          ]}
+        />
+
         <h1 className='px-[24px] py-[10px] font-adelphe text-[32px] font-bold'>
           Available Gallery
         </h1>
 
-        <GalleryTable />
+        <GalleryTable onDeleteClick={handleDeleteClick} />
       </div>
     </DashboardLayout>
   );
