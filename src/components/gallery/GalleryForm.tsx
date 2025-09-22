@@ -149,7 +149,7 @@ export function GalleryForm({
                 className='flex items-center gap-2 text-sm font-medium'
               >
                 <LinkIcon className='h-4 w-4' />
-                Google Drive Link <span className='text-red-500'>*</span>
+                Link (Google Drive) <span className='text-red-500'>*</span>
               </Label>
               <Input
                 id='link'
@@ -168,9 +168,6 @@ export function GalleryForm({
                   {errors.link.message}
                 </p>
               )}
-              <p className='text-xs text-gray-500'>
-                Paste the Google Drive sharing link for the full-size image
-              </p>
             </div>
 
             {/* Thumbnail Upload Field */}

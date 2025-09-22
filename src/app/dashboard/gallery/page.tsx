@@ -3,8 +3,7 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import {
   Calendar,
-  Edit,
-  Eye,
+  Info,
   Link as LinkIcon,
   Plus,
   Trash2,
@@ -12,21 +11,13 @@ import {
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 
-import {
-  Gallery,
-  Profile,
-  Repository,
-  Requests,
-  Upload,
-  User,
-} from '@/app/landing/components/dashboard/icons';
+import { navItem } from '@/app/dashboard/sidebar-link';
 import { BaseClientDataTable } from '@/components/table/base-data-table';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import DashboardLayout from '@/layouts/DashboardLayout';
-import { formatDDMMYYYY } from '@/lib/utils/date';
 import type { GalleryItem } from '@/types/gallery';
-import type { NavItem, User as UserType } from '@/types/sidebar'
+import type { User as UserType } from '@/types/sidebar'
 
 /* --------------------------- Mock Data Generator --------------------------- */
 function generateMockGalleries(count = 50): GalleryItem[] {
@@ -79,9 +70,9 @@ const getGalleryColumns = (): ColumnDef<GalleryItem>[] => [
       </div>
     ),
     meta: {
-      initialWidth: 250,
-      minWidth: 200,
-      maxWidth: 300,
+      initialWidth: 150,
+      minWidth: 150,
+      maxWidth: 200,
       resizable: true,
     },
   },
@@ -94,7 +85,12 @@ const getGalleryColumns = (): ColumnDef<GalleryItem>[] => [
       </span>
     ),
     cell: ({ getValue }) => (
-      <span className='text-sm'>{formatDDMMYYYY(getValue<string>())}</span>
+      <span className='text-sm'>{new Date(getValue<string>()).toLocaleDateString('id-ID', { 
+        weekday: 'long', 
+        day: 'numeric', 
+        month: 'long', 
+        year: 'numeric' 
+      })}</span>
     ),
     meta: {
       initialWidth: 120,
@@ -137,41 +133,31 @@ const getGalleryColumns = (): ColumnDef<GalleryItem>[] => [
     cell: ({ row }) => (
       <div className='flex items-center gap-1'>
         <Button
-          size='sm'
-          variant='ghost'
-          onClick={() => alert(`View details: ${row.original.title}`)}
+          size='lg'
+          variant='default'
           title='View Details'
         >
-          <Eye className='h-4 w-4' />
+          <Link href={`/dashboard/gallery/${row.original.id}`} className='flex items-center gap-2'>
+            <Info className='h-4 w-4' />
+            <span>Detail</span>
+          </Link>
         </Button>
         <Button
-          size='sm'
-          variant='ghost'
-          onClick={() => alert(`Edit: ${row.original.title}`)}
-          title='Edit'
-        >
-          <Edit className='h-4 w-4' />
-        </Button>
-        <Button
-          size='sm'
-          variant='ghost'
-          onClick={() => {
-            if (confirm('Are you sure you want to delete this gallery item?')) {
-              alert(`Delete: ${row.original.title}`);
-            }
-          }}
-          className='text-red-600 hover:text-red-700'
+          size='lg'
+          variant='destructive'
+          onClick={() => { alert('Delete Clicked') }}
           title='Delete'
         >
           <Trash2 className='h-4 w-4' />
+          <span>Delete</span>
         </Button>
       </div>
     ),
     meta: {
       initialWidth: 120,
-      minWidth: 110,
-      maxWidth: 140,
-      resizable: false,
+      minWidth: 260,
+      maxWidth: 260,
+      resizable: true,
       wrap: 'clamp',
     },
   },
@@ -191,7 +177,7 @@ function GalleryTable() {
         className='flex justify-center rounded-lg bg-blue-500 px-[16px] py-[12px] text-white'
       >
         <p className='flex h-[30px] items-center gap-2 font-satoshi text-[16px]/8 font-medium'>
-          Add Gallery
+          <p className='max-md:hidden'>Add Gallery</p>
           <Plus />
         </p>
       </Link>
@@ -213,15 +199,6 @@ function GalleryTable() {
 
 /* --------------------------- Main Page Component --------------------------- */
 export default function GalleryPage() {
-  // Navigation Items
-  const navItem: NavItem[] = [
-    { href: '/profile', label: 'Profile', icon: Profile },
-    { href: '/user', label: 'User', icon: User },
-    { href: '/repository', label: 'Repository', icon: Repository },
-    { href: '/user-requests', label: 'User Requests', icon: Requests },
-    { href: '/user-uploads', label: 'User Upload', icon: Upload },
-    { href: '/dashboard/gallery', label: 'Gallery Post', icon: Gallery },
-  ];
 
   // Dummy User Data
   const user: UserType = {

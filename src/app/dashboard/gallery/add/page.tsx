@@ -5,18 +5,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-import {
-  Gallery,
-  Profile,
-  Repository,
-  Requests,
-  Upload,
-  User,
-} from '@/app/landing/components/dashboard/icons';
+import { navItem } from '@/app/dashboard/sidebar-link';
 import { GalleryForm } from '@/components/gallery/GalleryForm';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import type { GalleryFormData } from '@/lib/validation/gallery';
-import type { NavItem, User as UserType } from '@/types/sidebar';
+import type { User as UserType } from '@/types/sidebar';
 
 import { useCreateGallery } from '../hooks/gallery';
 
@@ -40,15 +33,6 @@ export default function AddGalleryPage() {
       toast.error(`Failed to create gallery item. ${(error as Error).message}`);
     }
   };
-  // Navigation Items
-  const navItem: NavItem[] = [
-    { href: '/profile', label: 'Profile', icon: Profile },
-    { href: '/user', label: 'User', icon: User },
-    { href: '/repository', label: 'Repository', icon: Repository },
-    { href: '/user-requests', label: 'User Requests', icon: Requests },
-    { href: '/user-uploads', label: 'User Upload', icon: Upload },
-    { href: '/dashboard/gallery', label: 'Gallery Post', icon: Gallery },
-  ];
 
   // Dummy user data
   const user: UserType = {
