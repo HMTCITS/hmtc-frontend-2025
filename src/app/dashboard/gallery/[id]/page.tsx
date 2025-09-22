@@ -1,13 +1,13 @@
 'use client';
 
-import { ArrowLeft, X, Download } from 'lucide-react';
+import { Dialog, Transition } from '@headlessui/react';
+import { ArrowLeft, Download, X } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import * as React from 'react';
-import NextImage from '@/components/NextImage';
-import { Dialog, Transition } from '@headlessui/react';
 
 import { navItem } from '@/app/dashboard/sidebar-link';
+import NextImage from '@/components/NextImage';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -221,7 +221,7 @@ export default function IdGalleryPage() {
                             y: e.clientY,
                           };
                         }}
-                        onPointerUp={(e) => {
+                        onPointerUp={(_e) => {
                           isPanningRef.current = false;
                           lastPointerRef.current = null;
                         }}

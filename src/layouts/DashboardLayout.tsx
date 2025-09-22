@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Providers from '@/app/providers';
 import { HeaderBar } from '@/layouts/header-bar';

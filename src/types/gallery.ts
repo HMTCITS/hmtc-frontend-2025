@@ -6,7 +6,7 @@ export type GalleryItem = {
   link: string;
   width: number;
   height: number;
-}
+};
 
 export interface GalleryDetail extends GalleryItem {
   width: number;
@@ -17,12 +17,12 @@ export interface GalleryDetail extends GalleryItem {
 export type CreateGalleryRequest = Omit<GalleryItem, 'id'> & {
   description?: string;
   tags?: string[];
-}
+};
 
 export type UpdateGalleryRequest = Partial<Omit<GalleryItem, 'id'>> & {
   description?: string;
   tags?: string[];
-}
+};
 
 // --- API Response Type
 export type GalleryListResponse = {
@@ -30,4 +30,4 @@ export type GalleryListResponse = {
   // totalItems: number;
   // totalPages: number;
   // currentPage: number;
-}
+};

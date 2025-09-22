@@ -36,7 +36,7 @@ function generateMockGalleries(count = 50): GalleryItem[] {
 
 /* --------------------------- Columns Definition --------------------------- */
 const getGalleryColumns = (
-  onDeleteClick: (item: GalleryItem) => void
+  onDeleteClick: (item: GalleryItem) => void,
 ): ColumnDef<GalleryItem>[] => [
   {
     id: 'no',
@@ -166,12 +166,17 @@ const getGalleryColumns = (
 ];
 
 /* --------------------------- Gallery Table Component --------------------------- */
-function GalleryTable({ onDeleteClick }: {
-  onDeleteClick: (item: GalleryItem) => void
+function GalleryTable({
+  onDeleteClick,
+}: {
+  onDeleteClick: (item: GalleryItem) => void;
 }) {
   // Mock data
   const mockGalleries = useMemo(() => generateMockGalleries(50), []);
-  const columns = useMemo(() => getGalleryColumns(onDeleteClick), [onDeleteClick]);
+  const columns = useMemo(
+    () => getGalleryColumns(onDeleteClick),
+    [onDeleteClick],
+  );
 
   // Custom toolbar -> Add new gallery button
   const customToolbarRight = () => {
@@ -214,12 +219,12 @@ export default function GalleryPage() {
   const [open, setOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
-  
+
   // Handler for delete button click
   const handleDeleteClick = (item: GalleryItem) => {
     setSelectedItem(item);
     setOpen(true);
-  }
+  };
 
   // Handler for delete confirmation
   const handleDeleteConfirm = () => {
@@ -229,7 +234,7 @@ export default function GalleryPage() {
       setSelectedItem(null);
       toast.success('Gallery item deleted successfully!');
     }
-  }
+  };
 
   return (
     <DashboardLayout
@@ -240,7 +245,6 @@ export default function GalleryPage() {
       }}
     >
       <div className='flex flex-col space-y-6 p-6'>
-        
         {/* Delete Confirmation Modal */}
         <ConfirmModal
           open={open}
@@ -267,7 +271,7 @@ export default function GalleryPage() {
               id: 'yes',
               label: 'Yes, Delete',
               variant: 'destructive',
-              onClick: handleDeleteConfirm
+              onClick: handleDeleteConfirm,
             },
           ]}
         />
@@ -292,7 +296,7 @@ export default function GalleryPage() {
               label: 'OK',
               variant: 'default',
               onClick: () => setSuccessOpen(false),
-            }
+            },
           ]}
         />
 

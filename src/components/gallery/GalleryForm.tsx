@@ -1,17 +1,15 @@
 'use client';
 
-import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ImageIcon, LinkIcon, Save, X } from 'lucide-react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import Typography from '@/components/Typography';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
+import { DatePicker } from '@/components/ui/date-picker';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -22,7 +20,6 @@ import {
 } from '@/lib/validation/gallery';
 
 import { FileUpload } from './FileUpload';
-import { DatePicker } from '@/components/ui/date-picker';
 
 interface GalleryFormProps {
   onSubmit: (data: GalleryFormData) => Promise<void>;
@@ -84,7 +81,6 @@ export function GalleryForm({
   };
 
   const isFormLoading = isLoading || isSubmitting;
-  const router = useRouter();
 
   // set default date on client after mount to avoid SSR/client mismatch
   React.useEffect(() => {
@@ -296,8 +292,8 @@ export function GalleryForm({
                   // let parent decide where to navigate; this component only calls onCancel
                   try {
                     onCancel();
-                  } catch (err) {
-                    // swallow parent errors
+                  } catch {
+                    // swallow parent errors intentionally
                   }
                 }}
                 disabled={isFormLoading}

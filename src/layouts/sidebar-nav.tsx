@@ -20,7 +20,7 @@ export function SidebarNav({ items, className, onNavigate }: SidebarNavProps) {
 
   const handleNavClick = () => {
     if (onNavigate) onNavigate();
-  }
+  };
 
   return (
     <aside className={cn('w-64 shrink-0 py-8 pr-3', className)}>

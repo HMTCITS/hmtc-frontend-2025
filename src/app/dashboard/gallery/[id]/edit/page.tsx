@@ -1,20 +1,21 @@
 'use client';
 
-import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import { useRouter, useParams, usePathname } from 'next/navigation';
+import Link from 'next/link';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import * as React from 'react';
 import { toast } from 'sonner';
 
+import {
+  useGallery,
+  useUpdateQuery,
+} from '@/app/dashboard/gallery/hooks/gallery';
 import { navItem } from '@/app/dashboard/sidebar-link';
 import { GalleryForm } from '@/components/gallery/GalleryForm';
 import DashboardLayout from '@/layouts/DashboardLayout';
+import { uploadThumbnail } from '@/lib/api/gallery.client';
 import type { GalleryFormData } from '@/lib/validation/gallery';
 import type { User as UserType } from '@/types/sidebar';
-
-import { useGallery } from '@/app/dashboard/gallery/hooks/gallery';
-import { useUpdateQuery } from '@/app/dashboard/gallery/hooks/gallery';
-import { uploadThumbnail } from '@/lib/api/gallery.client';
 
 export default function EditGalleryPagePath() {
   const router = useRouter();
@@ -29,7 +30,8 @@ export default function EditGalleryPagePath() {
   // TODO: remove this flag when API is ready / backend available.
   const USE_DUMMY = true;
 
-  const galleryQuery = USE_DUMMY ? null : useGallery(Number(id), !!id);
+  // Always call the hook but disable it when using dummy data to satisfy rules-of-hooks
+  const galleryQuery = useGallery(Number(id), !USE_DUMMY && !!id);
   const updateMutation = useUpdateQuery();
 
   const [initialData, setInitialData] = React.useState<
@@ -60,7 +62,9 @@ export default function EditGalleryPagePath() {
         try {
           const d = new Date(v);
           if (!isNaN(d.getTime())) return d.toISOString().split('T')[0];
-        } catch {}
+        } catch (e) {
+          void e;
+        }
         return undefined;
       };
 
@@ -70,7 +74,7 @@ export default function EditGalleryPagePath() {
         link: serverData.link,
       });
     }
-  }, [galleryQuery?.data]);
+  }, [USE_DUMMY, galleryQuery]);
 
   const handleUpdate = async (data: GalleryFormData) => {
     if (!id || Number.isNaN(id)) {
