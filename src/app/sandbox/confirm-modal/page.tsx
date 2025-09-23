@@ -1,5 +1,6 @@
 'use client';
 import { Check, Loader2, Trash2 } from 'lucide-react';
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -53,6 +54,14 @@ export default function ConfirmModalSandbox() {
         variant={variant}
         size={size}
         title={'Delete Item'}
+        illustration={
+          <Image
+            src='/images/illustrations/delete-confirm.png'
+            alt='Delete Confirmation'
+            width={300}
+            height={300}
+          />
+        }
         subtitle={'Tindakan ini tidak dapat dibatalkan.'}
         actions={[
           { id: 'cancel', label: 'Cancel', variant: 'outline' },

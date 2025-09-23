@@ -1,12 +1,4 @@
-export type GalleryItem = {
-  id: number;
-  date: string;
-  title: string;
-  image: string;
-  link: string;
-  width: number;
-  height: number;
-};
+import type { GalleryItem } from '@/types/gallery';
 
 export const galleryItems: GalleryItem[] = [
   {
@@ -154,66 +146,84 @@ export const galleryItems: GalleryItem[] = [
     height: 600,
   },
   {
-    "id": 17,
-    "date": "Senin, 4 Agustus 2025",
-    "title": "OKKBK 2025",
-    "image": "/gallery/OKKBK_2025.jpg",
-    "link": "https://drive.google.com/drive/folders/1ybZxITVSKN2LyzcoR59CfUFn7VD3bSKh?usp=drive_link",
-    "width": 600,
-    "height": 400
+    id: 17,
+    date: 'Senin, 4 Agustus 2025',
+    title: 'OKKBK 2025',
+    image: '/gallery/OKKBK_2025.jpg',
+    link: 'https://drive.google.com/drive/folders/1ybZxITVSKN2LyzcoR59CfUFn7VD3bSKh?usp=drive_link',
+    width: 600,
+    height: 400,
   },
   {
-    "id": 18,
-    "date": "Jumat, 8 Agustus 2025",
-    "title": "Maba Fun Day",
-    "image": "/gallery/MABA_FUN_DAY.jpg",
-    "link": "https://drive.google.com/drive/folders/1bCJJPb3rp_jPoYcWlG8uzOMTksCdOcyJ?usp=drive_link",
-    "width": 600,
-    "height": 400
+    id: 18,
+    date: 'Jumat, 8 Agustus 2025',
+    title: 'Maba Fun Day',
+    image: '/gallery/MABA_FUN_DAY.jpg',
+    link: 'https://drive.google.com/drive/folders/1bCJJPb3rp_jPoYcWlG8uzOMTksCdOcyJ?usp=drive_link',
+    width: 600,
+    height: 400,
   },
   {
-    "id": 19,
-    "date": "Sabtu, 23 Agustus 2025",
-    "title": "HMTC x HIMASTHAPATI",
-    "image": "/gallery/HMTC_HIMASTHAPATI.jpg",
-    "link": "https://drive.google.com/drive/folders/1b4WWuAihpH-tSqN7J15dHU69j2v44qcb?usp=drive_link",
-    "width": 600,
-    "height": 400
+    id: 19,
+    date: 'Sabtu, 23 Agustus 2025',
+    title: 'HMTC x HIMASTHAPATI',
+    image: '/gallery/HMTC_HIMASTHAPATI.jpg',
+    link: 'https://drive.google.com/drive/folders/1b4WWuAihpH-tSqN7J15dHU69j2v44qcb?usp=drive_link',
+    width: 600,
+    height: 400,
   },
   {
-    "id": 20,
-    "date": "Kamis, 28 Agustus 2025",
-    "title": "TConference 29 Agustus",
-    "image": "/gallery/TCONFERENCE_2.jpg",
-    "link": "https://drive.google.com/drive/folders/1FWhx5HLQ96sTVrr67NW48ogGc7Qru_t4?usp=drive_link",
-    "width": 600,
-    "height": 400
+    id: 20,
+    date: 'Kamis, 28 Agustus 2025',
+    title: 'TConference 29 Agustus',
+    image: '/gallery/TCONFERENCE_2.jpg',
+    link: 'https://drive.google.com/drive/folders/1FWhx5HLQ96sTVrr67NW48ogGc7Qru_t4?usp=drive_link',
+    width: 600,
+    height: 400,
   },
   {
-    "id": 21,
-    "date": "Kamis, 28 Agustus 2025",
-    "title": "Forum 1 Nawasena",
-    "image": "/gallery/FORUM_1_NAWASENA.jpg",
-    "link": "https://drive.google.com/drive/folders/18nukN3hSqyaqyX_uG01ORIEy1PkKxIB9?usp=drive_link",
-    "width": 600,
-    "height": 400
+    id: 21,
+    date: 'Kamis, 28 Agustus 2025',
+    title: 'Forum 1 Nawasena',
+    image: '/gallery/FORUM_1_NAWASENA.jpg',
+    link: 'https://drive.google.com/drive/folders/18nukN3hSqyaqyX_uG01ORIEy1PkKxIB9?usp=drive_link',
+    width: 600,
+    height: 400,
   },
   {
-    "id": 22,
-    "date": "Jumat, 5 September 2025",
-    "title": "Safari Lab",
-    "image": "/gallery/SAFARI_LAB.jpg",
-    "link": "https://drive.google.com/drive/folders/16l31THAY5uIENZPZT1nifL8Rusa1t_dd?usp=drive_link",
-    "width": 600,
-    "height": 400
+    id: 22,
+    date: 'Jumat, 5 September 2025',
+    title: 'Safari Lab',
+    image: '/gallery/SAFARI_LAB.jpg',
+    link: 'https://drive.google.com/drive/folders/16l31THAY5uIENZPZT1nifL8Rusa1t_dd?usp=drive_link',
+    width: 600,
+    height: 400,
   },
   {
-    "id": 23,
-    "date": "Minggu, 7 September 2025",
-    "title": "Comvis Microsoft Huawei",
-    "image": "/gallery/COMVIS.jpg",
-    "link": "https://drive.google.com/drive/folders/1g151f-l4WpVJCD3CTcSGRtF8qxp04Jgj?usp=drive_link",
-    "width": 600,
-    "height": 400
+    id: 23,
+    date: 'Minggu, 7 September 2025',
+    title: 'Comvis Microsoft Huawei',
+    image: '/gallery/COMVIS.jpg',
+    link: 'https://drive.google.com/drive/folders/1g151f-l4WpVJCD3CTcSGRtF8qxp04Jgj?usp=drive_link',
+    width: 600,
+    height: 400,
+  },
+  {
+    id: 24,
+    date: 'Minggu, 14 September 2025',
+    title: 'Basic Media Schooling (BMS)',
+    image: '/gallery/BMS.jpg',
+    link: 'https://drive.google.com/drive/folders/1Jo4JAVToKYBU07TR8c0M-Dzqci-QNbWL?usp=drive_link',
+    width: 600,
+    height: 400,
+  },
+  {
+    id: 25,
+    date: 'Sabtu, 20 September 2025',
+    title: 'SW 132',
+    image: '/gallery/SW132.jpg',
+    link: 'https://drive.google.com/drive/folders/1BqVG3-YIjzDQyu2H60m4zdFEXtchSJB5?usp=drive_link',
+    width: 600,
+    height: 400,
   }
 ];
