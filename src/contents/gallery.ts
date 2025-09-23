@@ -208,4 +208,22 @@ export const galleryItems: GalleryItem[] = [
     width: 600,
     height: 400,
   },
+  {
+    id: 24,
+    date: 'Minggu, 14 September 2025',
+    title: 'Basic Media Schooling (BMS)',
+    image: '/gallery/BMS.jpg',
+    link: 'https://drive.google.com/drive/folders/1Jo4JAVToKYBU07TR8c0M-Dzqci-QNbWL?usp=drive_link',
+    width: 600,
+    height: 400,
+  },
+  {
+    id: 25,
+    date: 'Sabtu, 20 September 2025',
+    title: 'SW 132',
+    image: '/gallery/SW132.jpg',
+    link: 'https://drive.google.com/drive/folders/1BqVG3-YIjzDQyu2H60m4zdFEXtchSJB5?usp=drive_link',
+    width: 600,
+    height: 400,
+  }
 ];
