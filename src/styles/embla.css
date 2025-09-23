@@ -51,7 +51,7 @@
   .embla__slide-blog {
     position: relative;
     min-width: 50%; /* Adjust this percentage to show the desired number of slides per view */
-    padding: 0 10;
+    padding: 0 10px;
     box-sizing: border-box;
   }
   .embla__slide.lifeAtHmtc {
@@ -69,7 +69,7 @@
   .embla__slide-blog {
     position: relative;
     min-width: 100%; /* Adjust this percentage to show the desired number of slides per view */
-    padding: 0 10;
+    padding: 0 10px;
     box-sizing: border-box;
   }
   .embla__slide {
