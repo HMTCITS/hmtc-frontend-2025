@@ -7,10 +7,22 @@ const BLOCKED_EXACT = ['/login', '/register'];
 const BLOCKED_PREFIX_AUTH = ['/change-password'];
 
 export function middleware(req: NextRequest) {
-  const disableInProd = process.env.NODE_ENV === 'production';
+  const isProd = process.env.NODE_ENV === 'production';
   // Read server-only env var so the flag is NOT exposed to client bundles.
-  const envOverride = process.env.DISABLE_ADMIN_ROUTES === '1';
-  const shouldDisable = disableInProd || envOverride;
+  // We treat the env var as an explicit override with the following semantics:
+  // - Production: admin routes are disabled by default (shouldDisable = true). To
+  //   force-enable admin routes in prod for testing, set DISABLE_ADMIN_ROUTES=0.
+  // - Development: admin routes are enabled by default (shouldDisable = false).
+  //   To simulate disabling in dev, set DISABLE_ADMIN_ROUTES=1.
+  const envFlag = process.env.DISABLE_ADMIN_ROUTES;
+  let shouldDisable: boolean;
+  if (isProd) {
+    // In production default to disabling admin routes unless explicitly set to '0'
+    shouldDisable = envFlag !== '0';
+  } else {
+    // In development default to NOT disabling admin routes unless explicitly set to '1'
+    shouldDisable = envFlag === '1';
+  }
 
   // Debug logging (server-side). Remove after troubleshooting.
   try {
