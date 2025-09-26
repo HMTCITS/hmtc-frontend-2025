@@ -1,7 +1,7 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
-import { Calendar, Info, Plus, Trash2, User } from 'lucide-react';
+import { Calendar, Info, Trash2, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useMemo, useState } from 'react';
@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 
 import { navItem } from '@/app/dashboard/sidebar-link';
 import { BaseClientDataTable } from '@/components/table/base-data-table';
+import Typography from '@/components/Typography';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ConfirmModal } from '@/components/ui/confirm-modal';
@@ -37,7 +38,11 @@ const getRepositoryColumns = (
 ): ColumnDef<RepositoryItem>[] => [
   {
     id: 'no',
-    header: () => <span className='block text-center'>No.</span>,
+    header: () => (
+      <Typography as='span' variant='s3' className='block text-center'>
+        No.
+      </Typography>
+    ),
     cell: ({ row, table }) => {
       const pageIndex = table.getState().pagination?.pageIndex ?? 0;
       const pageSize = table.getState().pagination?.pageSize ?? 10;
@@ -57,12 +62,21 @@ const getRepositoryColumns = (
   },
   {
     accessorKey: 'title',
-    header: () => <span className='block text-left'>Title</span>,
+    header: () => (
+      <Typography as='span' variant='s2' className='block text-left'>
+        Title
+      </Typography>
+    ),
     cell: ({ getValue }) => (
       <div className='space-y-1'>
-        <span className='line-clamp-2 text-left' title={getValue<string>()}>
+        <Typography
+          as='span'
+          variant='b2'
+          className='line-clamp-2 text-left'
+          title={getValue<string>()}
+        >
           {getValue<string>()}
-        </span>
+        </Typography>
       </div>
     ),
     meta: {
@@ -77,18 +91,20 @@ const getRepositoryColumns = (
     header: () => (
       <span className='flex items-center gap-1'>
         <Calendar className='h-4 w-4' />
-        Date
+        <Typography as='span' variant='s3'>
+          Date
+        </Typography>
       </span>
     ),
     cell: ({ getValue }) => (
-      <span className='text-sm'>
+      <Typography as='span' variant='s3' className='text-sm'>
         {new Date(getValue<string>()).toLocaleDateString('id-ID', {
           weekday: 'long',
           day: 'numeric',
           month: 'long',
           year: 'numeric',
         })}
-      </span>
+      </Typography>
     ),
     meta: {
       initialWidth: 140,
@@ -103,11 +119,15 @@ const getRepositoryColumns = (
     header: () => (
       <span className='flex items-center gap-1'>
         <User className='h-4 w-4' />
-        Writer
+        <Typography as='span' variant='s3'>
+          Writer
+        </Typography>
       </span>
     ),
     cell: ({ getValue }) => (
-      <span className='text-sm text-gray-700'>{getValue<string>()}</span>
+      <Typography as='span' variant='s3' className='text-sm text-gray-700'>
+        {getValue<string>()}
+      </Typography>
     ),
     meta: {
       initialWidth: 130,
@@ -119,7 +139,11 @@ const getRepositoryColumns = (
   },
   {
     id: 'actions',
-    header: 'Actions',
+    header: () => (
+      <Typography as='span' variant='s2'>
+        Actions
+      </Typography>
+    ),
     cell: ({ row }) => (
       <div className='flex items-center gap-1'>
         <Button
@@ -131,7 +155,9 @@ const getRepositoryColumns = (
           title='Delete'
         >
           <Trash2 className='h-4 w-4' />
-          <span>Delete</span>
+          <Typography as='span' variant='s3'>
+            Delete
+          </Typography>
         </Button>
         <Button size='lg' variant='default' title='View Details'>
           <Link
@@ -139,7 +165,9 @@ const getRepositoryColumns = (
             className='flex items-center gap-2'
           >
             <Info className='h-4 w-4' />
-            <span>Detail</span>
+            <Typography as='span' variant='s3'>
+              Detail
+            </Typography>
           </Link>
         </Button>
       </div>
@@ -273,19 +301,14 @@ export default function RepositoryPage() {
           ]}
         />
 
-        <div className='flex items-center justify-between px-[24px] py-[10px]'>
-          <h1 className='font-adelphe text-[32px] font-bold'>
-            Repository Management
-          </h1>
-          <Button variant='default' size='lg' asChild>
-            <Link
-              href='/dashboard/repository/add'
-              className='flex items-center gap-2'
-            >
-              <Plus className='h-4 w-4' />
-              <span>Add Repository</span>
-            </Link>
-          </Button>
+        <div className='py-[10px]'>
+          <Typography
+            as='h1'
+            variant='k2'
+            className='font-adelphe font-bold md:text-[32px]'
+          >
+            Available Repositories
+          </Typography>
         </div>
 
         <RepositoryTable onDeleteClick={handleDeleteClick} />

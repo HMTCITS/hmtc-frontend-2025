@@ -3,6 +3,7 @@
 import { FileText, Upload, X } from 'lucide-react';
 import React, { useRef } from 'react';
 
+import Typography from '@/components/Typography';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -75,12 +76,16 @@ export function DocumentUpload({
         >
           <FileText className='h-8 w-8 text-green-600' />
           <div className='min-w-0 flex-1'>
-            <p className='truncate text-sm font-medium text-green-800'>
+            <Typography
+              as='p'
+              variant='b4'
+              className={cn('truncate text-sm font-medium text-green-800')}
+            >
               {selectedFile.name}
-            </p>
-            <p className='text-xs text-green-600'>
+            </Typography>
+            <Typography as='p' variant='c0' className='text-xs text-green-600'>
               {formatFileSize(selectedFile.size)}
-            </p>
+            </Typography>
           </div>
           <Button
             type='button'
@@ -111,19 +116,23 @@ export function DocumentUpload({
               error ? 'text-red-400' : 'text-gray-400',
             )}
           />
-          <p
+          <Typography
+            as='p'
+            variant='b4'
             className={cn(
-              'mb-1 text-sm font-medium',
+              'mb-1 font-medium',
               error ? 'text-red-700' : 'text-gray-700',
             )}
           >
             Click to upload document
-          </p>
-          <p
+          </Typography>
+          <Typography
+            as='p'
+            variant='c0'
             className={cn('text-xs', error ? 'text-red-500' : 'text-gray-500')}
           >
             PDF, DOC, DOCX, TXT (Max 10MB)
-          </p>
+          </Typography>
         </div>
       )}
     </div>

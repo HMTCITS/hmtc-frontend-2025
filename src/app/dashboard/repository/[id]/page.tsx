@@ -4,10 +4,10 @@ import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import * as React from 'react';
-import { toast } from 'sonner';
 
 import { navItem } from '@/app/dashboard/sidebar-link';
 import { RepositoryForm } from '@/components/repository/RepositoryForm';
+import Typography from '@/components/Typography';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -81,11 +81,10 @@ export default function RepositoryDetailPage() {
     try {
       // Simulate API call - in real app, use the data to update repository
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      toast.success('Repository updated successfully!');
+      // RepositoryForm already shows success toast on confirm; only change UI state here
       setIsEditing(false);
     } catch {
-      toast.error('Failed to update repository');
+      // RepositoryForm already shows error toast; no page-level toast needed
     }
   };
 
@@ -97,7 +96,13 @@ export default function RepositoryDetailPage() {
           <Link href='/dashboard/repository'>
             <ArrowLeft className='mr-2 h-6 w-6' />
           </Link>
-          <h1 className='text-[32px] font-bold'>Repository Detail</h1>
+          <Typography
+            as='h1'
+            variant='k2'
+            className='font-adelphe font-bold md:text-[32px]'
+          >
+            Detail Repository
+          </Typography>
         </div>
 
         {/* Conditional Rendering: Detail View or Edit Form */}
@@ -117,10 +122,25 @@ export default function RepositoryDetailPage() {
             isLoading={false}
           />
         ) : (
-          <Card className='space-y-[10px] font-satoshi'>
-            <CardHeader>
-              <CardTitle className='text-2xl leading-relaxed font-medium'>
-                {repositoryDetail.title}
+          <Card className='space-y-1.5 font-satoshi'>
+            <CardHeader className='mb-0'>
+              <CardTitle>
+                <Typography
+                  as='h2'
+                  variant='i2'
+                  className='leading-relaxed font-medium'
+                >
+                  {repositoryDetail.title}
+                </Typography>
+                <Typography
+                  as='p'
+                  variant='b4'
+                  font='satoshi'
+                  weight='regular'
+                  className='mt-2 text-[14px] leading-[140%] text-[var(--Foundation-Black-black-200,#8A8A8A)]'
+                >
+                  Dibuat pada 27 Maret 2023
+                </Typography>
               </CardTitle>
             </CardHeader>
 
@@ -128,51 +148,71 @@ export default function RepositoryDetailPage() {
 
             <CardContent>
               <div className='space-y-6 font-medium'>
-                <h2 className='text-[20px] font-semibold text-gray-900'>
+                <Typography
+                  as='h2'
+                  variant='h2'
+                  className='text-[20px] font-semibold text-gray-900'
+                >
                   Information
-                </h2>
+                </Typography>
 
                 {/* Title */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-4'>
                   <div className='flex items-center gap-2 text-black-200 md:col-span-1'>
-                    <span>Title</span>
+                    <Typography as='span' variant='s3'>
+                      Title
+                    </Typography>
                   </div>
                   <div className='md:col-span-3'>
-                    <p className='text-gray-900'>{repositoryDetail.title}</p>
+                    <Typography as='p' variant='b2' className='text-gray-900'>
+                      {repositoryDetail.title}
+                    </Typography>
                   </div>
                 </div>
 
                 {/* Writer */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-4'>
                   <div className='flex items-center gap-2 text-black-200 md:col-span-1'>
-                    <span>Writer</span>
+                    <Typography as='span' variant='s3'>
+                      Writer
+                    </Typography>
                   </div>
                   <div className='md:col-span-3'>
-                    <p className='text-gray-900'>{repositoryDetail.writer}</p>
+                    <Typography as='p' variant='b2' className='text-gray-900'>
+                      {repositoryDetail.writer}
+                    </Typography>
                   </div>
                 </div>
 
                 {/* Description */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-4'>
                   <div className='flex items-start gap-2 text-black-200 md:col-span-1'>
-                    <span>Description</span>
+                    <Typography as='span' variant='s3'>
+                      Description
+                    </Typography>
                   </div>
                   <div className='md:col-span-3'>
-                    <p className='leading-relaxed text-gray-900'>
+                    <Typography
+                      as='p'
+                      variant='b2'
+                      className='leading-relaxed text-gray-900'
+                    >
                       {repositoryDetail.description}
-                    </p>
+                    </Typography>
                   </div>
                 </div>
 
                 {/* Publish Date */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-4'>
                   <div className='flex items-center gap-2 text-black-200 md:col-span-1'>
-                    <span>Publish Date</span>
+                    <Typography as='span' variant='s3'>
+                      Publish Date
+                    </Typography>
                   </div>
                   <div className='md:col-span-3'>
-                    <p className='text-gray-900'>
+                    <Typography as='p' variant='b2' className='text-gray-900'>
                       {formatDate(repositoryDetail.publishDate)}
-                    </p>
+                    </Typography>
                   </div>
                 </div>
 
@@ -180,12 +220,14 @@ export default function RepositoryDetailPage() {
                 {repositoryDetail.supervisor && (
                   <div className='grid grid-cols-1 gap-4 md:grid-cols-4'>
                     <div className='flex items-center gap-2 text-black-200 md:col-span-1'>
-                      <span>Supervisor</span>
+                      <Typography as='span' variant='s3'>
+                        Supervisor
+                      </Typography>
                     </div>
                     <div className='md:col-span-3'>
-                      <p className='text-gray-900'>
+                      <Typography as='p' variant='b2' className='text-gray-900'>
                         {repositoryDetail.supervisor}
-                      </p>
+                      </Typography>
                     </div>
                   </div>
                 )}
@@ -194,23 +236,27 @@ export default function RepositoryDetailPage() {
                 {repositoryDetail.laboratory && (
                   <div className='grid grid-cols-1 gap-4 md:grid-cols-4'>
                     <div className='flex items-center gap-2 text-black-200 md:col-span-1'>
-                      <span>Laboratory</span>
+                      <Typography as='span' variant='s3'>
+                        Laboratory
+                      </Typography>
                     </div>
                     <div className='md:col-span-3'>
-                      <p className='text-gray-900'>
+                      <Typography as='p' variant='b2' className='text-gray-900'>
                         {repositoryDetail.laboratory}
-                      </p>
+                      </Typography>
                     </div>
                   </div>
                 )}
               </div>
             </CardContent>
 
-            <Separator />
+            <Separator className='mb-6' />
 
             <CardFooter className='flex justify-end'>
               <Button size='lg' className='px-8' onClick={handleEdit}>
-                Edit Repository
+                <Typography as='span' variant='s3'>
+                  Edit Repository
+                </Typography>
               </Button>
             </CardFooter>
           </Card>

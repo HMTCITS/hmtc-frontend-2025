@@ -166,7 +166,10 @@ export function RepositoryForm({
                 htmlFor='title'
                 className='flex w-full items-center gap-2 text-base font-medium text-black-200 md:w-1/3'
               >
-                Title <span className='text-red-500'>*</span>
+                <Typography as='span' variant='s3'>
+                  Title
+                </Typography>
+                <span className='text-red-500'>*</span>
               </Label>
               <div className='w-full md:w-2/3'>
                 <Input
@@ -184,14 +187,16 @@ export function RepositoryForm({
                   )}
                 />
                 {errors.title && (
-                  <p
+                  <Typography
+                    as='p'
                     id='title-error'
                     className='mt-1 flex items-center gap-1 text-sm text-red-600'
                     role='alert'
+                    variant='c1'
                   >
                     <X className='h-3 w-3' />
                     {errors.title.message}
-                  </p>
+                  </Typography>
                 )}
               </div>
             </div>
@@ -202,7 +207,10 @@ export function RepositoryForm({
                 htmlFor='writer'
                 className='flex w-full items-center gap-2 text-base font-medium text-black-200 md:w-1/3'
               >
-                Writer <span className='text-red-500'>*</span>
+                <Typography as='span' variant='s3'>
+                  Writer
+                </Typography>
+                <span className='text-red-500'>*</span>
               </Label>
               <div className='w-full md:w-2/3'>
                 <Input
@@ -219,14 +227,16 @@ export function RepositoryForm({
                   )}
                 />
                 {errors.writer && (
-                  <p
+                  <Typography
+                    as='p'
                     id='writer-error'
                     className='mt-1 flex items-center gap-1 text-sm text-red-600'
                     role='alert'
+                    variant='c1'
                   >
                     <X className='h-3 w-3' />
                     {errors.writer.message}
-                  </p>
+                  </Typography>
                 )}
               </div>
             </div>
@@ -237,7 +247,10 @@ export function RepositoryForm({
                 htmlFor='description'
                 className='flex w-full items-center gap-2 text-base font-medium text-black-200 md:w-1/3'
               >
-                Description <span className='text-red-500'>*</span>
+                <Typography as='span' variant='s3'>
+                  Description
+                </Typography>
+                <span className='text-red-500'>*</span>
               </Label>
               <div className='w-full md:w-2/3'>
                 <Textarea
@@ -257,14 +270,16 @@ export function RepositoryForm({
                   )}
                 />
                 {errors.description && (
-                  <p
+                  <Typography
+                    as='p'
                     id='description-error'
                     className='mt-1 flex items-center gap-1 text-sm text-red-600'
                     role='alert'
+                    variant='c1'
                   >
                     <X className='h-3 w-3' />
                     {errors.description.message}
-                  </p>
+                  </Typography>
                 )}
               </div>
             </div>
@@ -275,7 +290,10 @@ export function RepositoryForm({
                 htmlFor='publishDate'
                 className='flex w-full items-center gap-2 text-base font-medium text-black-200 md:w-1/3'
               >
-                Publish Date <span className='text-red-500'>*</span>
+                <Typography as='span' variant='s3'>
+                  Publish Date
+                </Typography>
+                <span className='text-red-500'>*</span>
               </Label>
               <div className='w-full md:w-2/3'>
                 <Controller
@@ -300,14 +318,16 @@ export function RepositoryForm({
                   )}
                 />
                 {errors.publishDate && (
-                  <p
+                  <Typography
+                    as='p'
                     id='publishDate-error'
                     className='mt-1 flex items-center gap-1 text-sm text-red-600'
                     role='alert'
+                    variant='c1'
                   >
                     <X className='h-3 w-3' />
                     {errors.publishDate.message}
-                  </p>
+                  </Typography>
                 )}
               </div>
             </div>
@@ -318,7 +338,9 @@ export function RepositoryForm({
                 htmlFor='supervisor'
                 className='flex w-full items-center gap-2 text-base font-medium text-black-200 md:w-1/3'
               >
-                Supervisor
+                <Typography as='span' variant='s3'>
+                  Supervisor
+                </Typography>
               </Label>
               <div className='w-full md:w-2/3'>
                 <Input
@@ -337,7 +359,9 @@ export function RepositoryForm({
                 htmlFor='laboratory'
                 className='flex w-full items-center gap-2 text-base font-medium text-black-200 md:w-1/3'
               >
-                Laboratory
+                <Typography as='span' variant='s3'>
+                  Laboratory
+                </Typography>
               </Label>
               <div className='w-full md:w-2/3'>
                 <Input
@@ -365,7 +389,9 @@ export function RepositoryForm({
                 disabled={isFormLoading}
                 className='w-full md:w-auto md:px-8'
               >
-                Cancel
+                <Typography as='span' variant='s3'>
+                  Cancel
+                </Typography>
               </Button>
 
               <Button
@@ -376,10 +402,14 @@ export function RepositoryForm({
                 {isFormLoading ? (
                   <>
                     <div className='mr-2 h-4 w-4 animate-spin rounded-full border-b-2 border-white' />
-                    {mode === 'create' ? 'Creating...' : 'Updating...'}
+                    <Typography as='span' variant='s3'>
+                      {mode === 'create' ? 'Creating...' : 'Updating...'}
+                    </Typography>
                   </>
                 ) : (
-                  <>Save</>
+                  <Typography as='span' variant='s3'>
+                    Save
+                  </Typography>
                 )}
               </Button>
             </div>
