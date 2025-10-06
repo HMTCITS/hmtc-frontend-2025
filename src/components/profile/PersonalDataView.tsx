@@ -2,6 +2,7 @@
 
 import { Edit } from 'lucide-react';
 
+import Typography from '@/components/Typography';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -19,15 +20,30 @@ export default function PersonalDataView({
   return (
     <Card className='w-full border-t-4 border-t-blue-500'>
       <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-4'>
-        <CardTitle className='font-satoshi text-[24px] font-semibold text-black'>
-          Personal Data
+        <CardTitle>
+          <Typography
+            as='h2'
+            variant='h2'
+            font='satoshi'
+            weight='semibold'
+            className='text-[24px] text-black'
+          >
+            Personal Data
+          </Typography>
         </CardTitle>
         <Button
           variant='default'
           onClick={onEdit}
           className='flex items-center gap-2 rounded-lg bg-blue-700 px-4 py-2 font-satoshi text-[14px] font-medium text-white hover:bg-blue-500'
         >
-          Change Profile
+          <Typography
+            as='span'
+            variant='s3'
+            font='satoshi'
+            className='text-white'
+          >
+            Change Profile
+          </Typography>
           <Edit size={16} className='text-white' />
         </Button>
       </CardHeader>
@@ -37,36 +53,84 @@ export default function PersonalDataView({
         {/* Grid Layout for label-value pairs */}
         <div className='grid grid-cols-[200px_1fr] gap-x-8 gap-y-6'>
           {/* Full Name */}
-          <span className='font-satoshi text-[16px] font-normal text-gray-500'>
+          <Typography
+            as='span'
+            variant='b2'
+            font='satoshi'
+            weight='regular'
+            className='text-[16px] text-gray-500'
+          >
             Full Name
-          </span>
-          <span className='font-satoshi text-[16px] font-medium text-black'>
+          </Typography>
+          <Typography
+            as='span'
+            variant='b2'
+            font='satoshi'
+            weight='medium'
+            className='text-[16px] text-black'
+          >
             {user.fullName}
-          </span>
+          </Typography>
 
           {/* NRP */}
-          <span className='font-satoshi text-[16px] font-normal text-gray-500'>
+          <Typography
+            as='span'
+            variant='b2'
+            font='satoshi'
+            weight='regular'
+            className='text-[16px] text-gray-500'
+          >
             NRP
-          </span>
-          <span className='font-satoshi text-[16px] font-medium text-black'>
+          </Typography>
+          <Typography
+            as='span'
+            variant='b2'
+            font='satoshi'
+            weight='medium'
+            className='text-[16px] text-black'
+          >
             {user.nrp || '-'}
-          </span>
+          </Typography>
 
           {/* Email */}
-          <span className='font-satoshi text-[16px] font-normal text-gray-500'>
+          <Typography
+            as='span'
+            variant='b2'
+            font='satoshi'
+            weight='regular'
+            className='text-[16px] text-gray-500'
+          >
             Email
-          </span>
-          <span className='font-satoshi text-[16px] font-medium text-black'>
+          </Typography>
+          <Typography
+            as='span'
+            variant='b2'
+            font='satoshi'
+            weight='medium'
+            className='text-[16px] text-black'
+          >
             {user.email}
-          </span>
+          </Typography>
 
           {/* Angkatan */}
-          <span className='font-satoshi text-[16px] font-normal text-gray-500'>
+          <Typography
+            as='span'
+            variant='b2'
+            font='satoshi'
+            weight='regular'
+            className='text-[16px] text-gray-500'
+          >
             Angkatan
-          </span>
-          <span className='font-satoshi text-[16px] font-medium text-black'>
+          </Typography>
+          <Typography
+            as='span'
+            variant='b2'
+            font='satoshi'
+            weight='medium'
+            className='text-[16px] text-black'
+          >
             {user.angkatan || '-'}
-          </span>
+          </Typography>
         </div>
       </CardContent>
     </Card>

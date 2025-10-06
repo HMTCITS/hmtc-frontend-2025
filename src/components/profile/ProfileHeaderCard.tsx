@@ -2,6 +2,7 @@
 import { LockKeyhole, UserRound } from 'lucide-react';
 import Link from 'next/link';
 
+import Typography from '@/components/Typography';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader } from '@/components/ui/card';
@@ -29,12 +30,24 @@ export default function ProfileHeaderCard(user: UserMe) {
         {/* Content */}
         <div>
           <CardHeader className='gap-2'>
-            <h2 className='m-0 font-satoshi text-[32px] font-bold'>
+            <Typography
+              as='h2'
+              variant='i2'
+              font='satoshi'
+              weight='bold'
+              className='m-0 text-[32px]'
+            >
               {user.fullName}
-            </h2>
-            <p className='font-satoshi text-[20px] font-medium capitalize opacity-50'>
+            </Typography>
+            <Typography
+              as='p'
+              variant='s0'
+              font='satoshi'
+              weight='medium'
+              className='text-[20px] capitalize opacity-50'
+            >
               {user.role}
-            </p>
+            </Typography>
           </CardHeader>
         </div>
       </div>
@@ -44,8 +57,20 @@ export default function ProfileHeaderCard(user: UserMe) {
           variant='outline'
           className='rounded-8 h-10 border px-6 font-satoshi text-[16px] font-medium'
         >
-          Change Password
-          <LockKeyhole size={16} />
+          <Typography
+            as='span'
+            variant='s2'
+            font='satoshi'
+            weight='bold'
+            className='text-accent-foreground'
+          >
+            Change Password
+          </Typography>
+          <LockKeyhole
+            size={16}
+            className='text-accent-foreground'
+            strokeWidth={3}
+          />
         </Button>
       </Link>
     </Card>

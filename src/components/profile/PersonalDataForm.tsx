@@ -5,6 +5,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import Typography from '@/components/Typography';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -97,11 +98,16 @@ export default function PersonalDataForm({
   return (
     <Card className='w-full border-t-4 border-t-blue-500'>
       <CardHeader>
-        <CardTitle
-          className='font-satoshi text-[24px] font-semibold text-black'
-          id='personal-data-form-title'
-        >
-          Personal Data
+        <CardTitle id='personal-data-form-title'>
+          <Typography
+            as='h2'
+            variant='h2'
+            font='satoshi'
+            weight='semibold'
+            className='text-[24px] text-black'
+          >
+            Personal Data
+          </Typography>
         </CardTitle>
       </CardHeader>
 
@@ -123,7 +129,15 @@ export default function PersonalDataForm({
                 htmlFor='fullName'
                 className='font-satoshi text-[14px] font-medium text-gray-700'
               >
-                Full Name <span className='text-red-500'>*</span>
+                <Typography
+                  as='span'
+                  variant='s3'
+                  font='satoshi'
+                  className='text-[14px] text-gray-700'
+                >
+                  Full Name
+                </Typography>
+                <span className='text-red-500'>*</span>
               </Label>
             </div>
             <div className='space-y-2'>
@@ -143,13 +157,16 @@ export default function PersonalDataForm({
                 )}
               />
               {errors.fullName && (
-                <p
+                <Typography
+                  as='p'
                   id='fullName-error'
-                  className='font-satoshi text-[14px] text-red-600'
+                  variant='b4'
+                  font='satoshi'
+                  className='text-[14px] text-red-600'
                   role='alert'
                 >
                   {errors.fullName.message}
-                </p>
+                </Typography>
               )}
             </div>
 
@@ -159,7 +176,14 @@ export default function PersonalDataForm({
                 htmlFor='nrp'
                 className='font-satoshi text-[14px] font-medium text-gray-700'
               >
-                NRP
+                <Typography
+                  as='span'
+                  variant='s3'
+                  font='satoshi'
+                  className='text-[14px] text-gray-700'
+                >
+                  NRP
+                </Typography>
               </Label>
             </div>
             <div className='space-y-2'>
@@ -177,13 +201,16 @@ export default function PersonalDataForm({
                 )}
               />
               {errors.nrp && (
-                <p
+                <Typography
+                  as='p'
                   id='nrp-error'
-                  className='font-satoshi text-[14px] text-red-600'
+                  variant='b4'
+                  font='satoshi'
+                  className='text-[14px] text-red-600'
                   role='alert'
                 >
                   {errors.nrp.message}
-                </p>
+                </Typography>
               )}
             </div>
 
@@ -193,7 +220,15 @@ export default function PersonalDataForm({
                 htmlFor='email'
                 className='font-satoshi text-[14px] font-medium text-gray-700'
               >
-                Email <span className='text-red-500'>*</span>
+                <Typography
+                  as='span'
+                  variant='s3'
+                  font='satoshi'
+                  className='text-[14px] text-gray-700'
+                >
+                  Email
+                </Typography>
+                <span className='text-red-500'>*</span>
               </Label>
             </div>
             <div className='space-y-2'>
@@ -212,13 +247,16 @@ export default function PersonalDataForm({
                 )}
               />
               {errors.email && (
-                <p
+                <Typography
+                  as='p'
                   id='email-error'
-                  className='font-satoshi text-[14px] text-red-600'
+                  variant='b4'
+                  font='satoshi'
+                  className='text-[14px] text-red-600'
                   role='alert'
                 >
                   {errors.email.message}
-                </p>
+                </Typography>
               )}
             </div>
 
@@ -228,7 +266,14 @@ export default function PersonalDataForm({
                 htmlFor='angkatan'
                 className='font-satoshi text-[14px] font-medium text-gray-700'
               >
-                Angkatan
+                <Typography
+                  as='span'
+                  variant='s3'
+                  font='satoshi'
+                  className='text-[14px] text-gray-700'
+                >
+                  Angkatan
+                </Typography>
               </Label>
             </div>
             <div className='space-y-2'>
@@ -248,13 +293,16 @@ export default function PersonalDataForm({
                 )}
               />
               {errors.angkatan && (
-                <p
+                <Typography
+                  as='p'
                   id='angkatan-error'
-                  className='font-satoshi text-[14px] text-red-600'
+                  variant='b4'
+                  font='satoshi'
+                  className='text-[14px] text-red-600'
                   role='alert'
                 >
                   {errors.angkatan.message}
-                </p>
+                </Typography>
               )}
             </div>
           </fieldset>
@@ -269,7 +317,14 @@ export default function PersonalDataForm({
               className='font-satoshi text-[14px] font-medium'
               aria-describedby='cancel-button-help'
             >
-              Cancel
+              <Typography
+                as='span'
+                variant='s3'
+                font='satoshi'
+                className='text-[14px]'
+              >
+                Cancel
+              </Typography>
             </Button>
             <div id='cancel-button-help' className='sr-only'>
               Cancel editing and discard any unsaved changes
@@ -286,10 +341,24 @@ export default function PersonalDataForm({
                     className='mr-2 h-4 w-4 animate-spin rounded-full border-b-2 border-white'
                     aria-hidden='true'
                   />
-                  Saving...
+                  <Typography
+                    as='span'
+                    variant='s3'
+                    font='satoshi'
+                    className='text-[14px]'
+                  >
+                    Saving...
+                  </Typography>
                 </>
               ) : (
-                'Save'
+                <Typography
+                  as='span'
+                  variant='s3'
+                  font='satoshi'
+                  className='text-[14px]'
+                >
+                  Save
+                </Typography>
               )}
             </Button>
             <div id='save-button-help' className='sr-only'>
