@@ -6,3 +6,8 @@ export const galleryKeys = {
   details: () => [...galleryKeys.all, 'detail'] as const,
   detail: (id: number) => [...galleryKeys.details(), id] as const,
 } as const;
+
+export const profileKeys = {
+  all: ['profile'] as const,
+  me: () => [...profileKeys.all, 'me'] as const,
+} as const;
