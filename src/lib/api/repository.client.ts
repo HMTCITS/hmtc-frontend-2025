@@ -26,9 +26,12 @@ export const getRepositories = async (params?: {
   if (params?.laboratory) searchParams.append('laboratory', params.laboratory);
   if (params?.supervisor) searchParams.append('supervisor', params.supervisor);
 
-  const response = await api.get<ApiResponse<RepositoryItem[]>>('/repositories', {
-    params: searchParams,
-  });
+  const response = await api.get<ApiResponse<RepositoryItem[]>>(
+    '/repositories',
+    {
+      params: searchParams,
+    },
+  );
 
   if (!response.data.status) {
     throw new Error(response.data.message || 'Failed to fetch repositories');
@@ -73,7 +76,10 @@ export const createRepository = async (data: CreateRepositoryRequest) => {
 /**
  * Update repository item
  */
-export const updateRepository = async (id: string, data: UpdateRepositoryRequest) => {
+export const updateRepository = async (
+  id: string,
+  data: UpdateRepositoryRequest,
+) => {
   return api.patch<ApiResponse<RepositoryDetail>>(`/repositories/${id}`, data);
 };
 
@@ -88,14 +94,18 @@ export const deleteRepository = async (id: string) => {
  * Get repositories by writer
  */
 export const getRepositoriesByWriter = async (writer: string) => {
-  return api.get<ApiResponse<RepositoryItem[]>>(`/repositories/writer/${writer}`);
+  return api.get<ApiResponse<RepositoryItem[]>>(
+    `/repositories/writer/${writer}`,
+  );
 };
 
 /**
  * Get repositories by laboratory
  */
 export const getRepositoriesByLaboratory = async (laboratory: string) => {
-  return api.get<ApiResponse<RepositoryItem[]>>(`/repositories/laboratory/${laboratory}`);
+  return api.get<ApiResponse<RepositoryItem[]>>(
+    `/repositories/laboratory/${laboratory}`,
+  );
 };
 
 /**
