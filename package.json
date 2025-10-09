@@ -56,7 +56,7 @@
     "react-day-picker": "^9.11.0",
     "react-dom": "^19.0.0",
     "react-dropzone": "^14.3.8",
-    "react-hook-form": "7.54.2",
+    "react-hook-form": "^7.55.0",
     "react-hot-toast": "^2.5.2",
     "react-scroll": "^1.9.3",
     "sonner": "^2.0.0",
@@ -64,6 +64,7 @@
     "tailwind-merge": "^3.0.1",
     "tailwindcss": "4.0.6",
     "tailwindcss-animate": "^1.0.7",
+    "three": "^0.180.0",
     "typescript": "5.7.3",
     "universal-cookie": "^7.2.2",
     "zod": "^4.0.16",
@@ -86,6 +87,7 @@
     "@types/react": "19.0.8",
     "@types/react-dom": "^19.0.0",
     "@types/react-scroll": "^1.8.10",
+    "@types/three": "^0.180.0",
     "@typescript-eslint/eslint-plugin": "^8.24.0",
     "@typescript-eslint/parser": "^8.24.0",
     "axios-mock-adapter": "^2.1.0",
@@ -110,5 +112,10 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "ts-node": "^10.9.2"
   },
-  "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977"
+  "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977",
+  "pnpm": {
+    "overrides": {
+      "glob": "^11.0.3"
+    }
+  }
 }
