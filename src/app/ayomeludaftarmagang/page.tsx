@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckCircle2, TriangleAlert } from 'lucide-react';
+import { CheckCircle2, Droplets, Layers, TriangleAlert } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import * as React from 'react';
 
@@ -18,6 +18,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Switch } from '@/components/ui/switch';
 import { useApplyMagang } from '@/hooks/api/useApplyMagang';
 import { useScheduleAutoRedirect } from '@/hooks/useSchedule';
 
@@ -28,18 +29,26 @@ import { useScheduleAutoRedirect } from '@/hooks/useSchedule';
  * Data submission is delegated to a dedicated TanStack mutation hook.
  */
 export default function ApplyMagangPage() {
-  const [effectsEnabled, setEffectsEnabled] = React.useState(true);
+  const [liquidEnabled, setLiquidEnabled] = React.useState(true);
+  const [glassEnabled, setGlassEnabled] = React.useState(true);
+
+  // Check for reduced motion preference
   React.useEffect(() => {
     try {
       const prefersReduced =
         typeof window !== 'undefined' &&
         typeof window.matchMedia === 'function' &&
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReduced) setEffectsEnabled(false);
+      if (prefersReduced) {
+        setLiquidEnabled(false);
+        setGlassEnabled(false);
+      }
     } catch {
       /* noop */
     }
   }, []);
+
+  // Battery status check
   React.useEffect(() => {
     let isMounted = true;
     const anyNavigator: any =
@@ -51,7 +60,11 @@ export default function ApplyMagangPage() {
           if (!isMounted || !bat) return;
           const update = () => {
             if (!isMounted) return;
-            if (bat.level < 0.2 && !bat.charging) setEffectsEnabled(false);
+            // Disable effects when battery is low and not charging
+            if (bat.level < 0.2 && !bat.charging) {
+              setLiquidEnabled(false);
+              setGlassEnabled(false);
+            }
           };
           update();
           bat.addEventListener('levelchange', update);
@@ -92,7 +105,7 @@ export default function ApplyMagangPage() {
   return (
     <section className='relative min-h-screen w-full overflow-hidden'>
       <div className='absolute inset-0 -z-10 bg-gradient-to-b from-neutral-950 via-neutral-900 to-black'>
-        {effectsEnabled ? (
+        {liquidEnabled ? (
           <LiquidEtherNoSSR
             colors={etherColors}
             mouseForce={20}
@@ -115,25 +128,91 @@ export default function ApplyMagangPage() {
         ) : null}
       </div>
 
+      {/* Visual Effect Toggle Switches */}
+      <div className='absolute top-4 right-4 z-10 flex flex-col gap-2 rounded-lg bg-black/30 p-3 backdrop-blur-sm'>
+        <div className='flex items-center gap-2'>
+          <Droplets className='h-4 w-4 text-blue-400' />
+          <span className='text-xs font-medium text-white'>Liquid Effect</span>
+          <Switch
+            checked={liquidEnabled}
+            onCheckedChange={setLiquidEnabled}
+            className='ml-1'
+          />
+        </div>
+        <div className='flex items-center gap-2'>
+          <Layers className='h-4 w-4 text-purple-400' />
+          <span className='text-xs font-medium text-white'>Glass Effect</span>
+          <Switch
+            checked={glassEnabled}
+            onCheckedChange={setGlassEnabled}
+            className='ml-1'
+          />
+        </div>
+      </div>
+
       <main className='mx-auto w-full max-w-3xl px-5 py-12 md:px-8 md:py-20'>
-        <GlassSurface
-          width='100%'
-          height='auto'
-          borderRadius={24}
-          brightness={55}
-          opacity={0.86}
-          blur={14}
-          backgroundOpacity={0.18}
-          saturation={1.4}
-          distortionScale={-160}
-          displace={6}
-          redOffset={0}
-          greenOffset={10}
-          blueOffset={20}
-          mixBlendMode='screen'
-          className='pointer-events-none shadow-xl'
-        >
-          <div className='pointer-events-auto w-full p-6 md:p-10'>
+        {glassEnabled ? (
+          <GlassSurface
+            width='100%'
+            height='auto'
+            borderRadius={24}
+            brightness={55}
+            opacity={0.86}
+            blur={14}
+            backgroundOpacity={0.18}
+            saturation={1.4}
+            distortionScale={-160}
+            displace={6}
+            redOffset={0}
+            greenOffset={10}
+            blueOffset={20}
+            mixBlendMode='screen'
+            className='pointer-events-none shadow-xl'
+          >
+            <div className='pointer-events-auto w-full p-6 md:p-10'>
+              <Card className='border-0 bg-transparent shadow-none'>
+                <CardHeader className='space-y-2 pb-0'>
+                  <CardTitle>
+                    <Typography
+                      as='h1'
+                      font='satoshi'
+                      weight='bold'
+                      className='bg-gradient-to-r from-indigo-400 via-pink-300 to-purple-300 bg-clip-text text-3xl leading-tight tracking-tight text-transparent md:text-4xl'
+                    >
+                      Rekrutmen Anak Magang HMTC
+                    </Typography>
+                  </CardTitle>
+                  <Typography
+                    as='p'
+                    variant='b4'
+                    className='text-base text-white/80 md:text-lg'
+                  >
+                    Silakan isi data diri dengan benar dan unggah file mindmap
+                    sesuai ketentuan.
+                  </Typography>
+                </CardHeader>
+                <CardContent className='pt-6'>
+                  <ApplyMagangForm
+                    submitFn={(p) =>
+                      mutateAsync({
+                        nama: p.nama,
+                        nrp: p.nrp,
+                        kelompokKP: p.kelompokKP,
+                        mindmap: p.mindmap,
+                      })
+                    }
+                    onSubmitSuccess={() => setOpenSuccess(true)}
+                    onSubmitError={(msg) => {
+                      setErrorMsg(msg);
+                      setOpenError(true);
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </div>
+          </GlassSurface>
+        ) : (
+          <div className='w-full rounded-3xl bg-slate-800/50 p-6 shadow-xl md:p-10'>
             <Card className='border-0 bg-transparent shadow-none'>
               <CardHeader className='space-y-2 pb-0'>
                 <CardTitle>
@@ -174,7 +253,7 @@ export default function ApplyMagangPage() {
               </CardContent>
             </Card>
           </div>
-        </GlassSurface>
+        )}
       </main>
 
       {/* Success Dialog */}

@@ -1,5 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
+
+import {
+  BatteryStatus,
+  detectDeviceTier,
+  devicePresets,
+  getBatteryStatus,
+} from '../lib/utils/device-detection';
 
 export interface LiquidEtherProps {
   mouseForce?: number;
@@ -67,6 +74,11 @@ interface LiquidEtherWebGL {
   adjustCooldownMs?: number;
   capMobileFps?: number;
   fpsCapIdleAfterMs?: number;
+  // Battery-aware and optimization methods
+  updateBatteryStatus?: (
+    status: BatteryStatus,
+    usePowerSaving: boolean,
+  ) => void;
   resize: () => void;
   start: () => void;
   pause: () => void;
@@ -105,6 +117,121 @@ export default function LiquidEther({
   capMobileFps = 30,
   fpsCapIdleAfterMs = 1500,
 }: LiquidEtherProps): React.ReactElement {
+  // Detect device capability and get optimized presets
+  const deviceTier = useMemo(() => detectDeviceTier(), []);
+  const devicePreset = useMemo(() => devicePresets[deviceTier], [deviceTier]);
+
+  // Track battery status for power-aware rendering
+  const [batteryStatus, setBatteryStatus] = useState<BatteryStatus>({
+    charging: true,
+    level: 1.0,
+    lowPowerMode: false,
+  });
+
+  // Battery monitoring
+  useEffect(() => {
+    // Initial battery status check
+    const checkBattery = async () => {
+      try {
+        const status = await getBatteryStatus();
+        setBatteryStatus(status);
+      } catch {
+        // Silently fail if battery API isn't available
+      }
+    };
+
+    checkBattery();
+
+    // Set up battery status monitoring
+    const batteryCheckInterval = setInterval(checkBattery, 30000); // Check every 30 seconds
+
+    // Clean up
+    return () => {
+      clearInterval(batteryCheckInterval);
+    };
+  }, []);
+
+  // Determine if we should use power saving mode based on battery
+  const usePowerSaving = useMemo(() => {
+    if (batteryStatus.lowPowerMode) return true;
+    if (
+      !batteryStatus.charging &&
+      devicePreset.lowBatteryThreshold &&
+      batteryStatus.level <= devicePreset.lowBatteryThreshold
+    ) {
+      return true;
+    }
+    return false;
+  }, [batteryStatus, devicePreset]);
+
+  // Apply device-optimized defaults when not explicitly overridden by props
+  // We use props object spread to ensure passed values take priority
+
+  // First apply device tier presets (if not explicitly overridden)
+  let appliedResolution =
+    resolution === 0.5 ? devicePreset.resolution : resolution;
+  let appliedIterationsPoisson =
+    iterationsPoisson === 32
+      ? devicePreset.iterationsPoisson
+      : iterationsPoisson;
+  let appliedIterationsViscous =
+    iterationsViscous === 32
+      ? devicePreset.iterationsViscous
+      : iterationsViscous;
+
+  // Then apply power saving adjustments if needed
+  if (usePowerSaving) {
+    if (devicePreset.lowPowerResolution) {
+      appliedResolution = devicePreset.lowPowerResolution;
+    }
+    if (devicePreset.lowPowerIterations) {
+      appliedIterationsPoisson = devicePreset.lowPowerIterations;
+      appliedIterationsViscous = devicePreset.lowPowerIterations;
+    }
+  }
+
+  // Assign the final values
+  resolution = appliedResolution;
+  iterationsPoisson = appliedIterationsPoisson;
+  iterationsViscous = appliedIterationsViscous;
+
+  dt = dt === 0.014 ? devicePreset.dt : dt;
+  if (devicePreset.viscous && viscous === 30) viscous = devicePreset.viscous;
+  if (devicePreset.minResolution) minResolution = devicePreset.minResolution;
+  if (devicePreset.qualityStep) qualityStep = devicePreset.qualityStep;
+  if (typeof devicePreset.capMobileFps === 'number')
+    capMobileFps = devicePreset.capMobileFps;
+  if (typeof devicePreset.fpsCapIdleAfterMs === 'number')
+    fpsCapIdleAfterMs = devicePreset.fpsCapIdleAfterMs;
+
+  // For debugging in development
+  if (process.env.NODE_ENV === 'development') {
+    // Dev-only diagnostics
+    // eslint-disable-next-line no-console
+    console.log(`[LiquidEther] Using ${deviceTier} device preset:`, {
+      resolution,
+      iterationsPoisson,
+      iterationsViscous,
+      dt,
+      capMobileFps,
+      powerSaving: usePowerSaving,
+      batteryLevel: batteryStatus.level,
+      charging: batteryStatus.charging,
+      lowPowerMode: batteryStatus.lowPowerMode,
+    });
+  }
+
+  // For debugging in development
+  if (process.env.NODE_ENV === 'development') {
+    // eslint-disable-next-line no-console
+    console.log(`[LiquidEther] Using ${deviceTier} device preset:`, {
+      resolution,
+      iterationsPoisson,
+      iterationsViscous,
+      dt,
+      capMobileFps,
+    });
+  }
   const mountRef = useRef<HTMLDivElement | null>(null);
   const webglRef = useRef<LiquidEtherWebGL | null>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
@@ -117,32 +244,159 @@ export default function LiquidEther({
     typeof window.matchMedia === 'function' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Track if any form field is currently focused and save original resolution
+  const isFormFocusedRef = useRef(false);
+  const preFormFocusResRef = useRef<number | null>(null);
+
+  // Update WebGL rendering quality when battery status changes
+  useEffect(() => {
+    if (webglRef.current && webglRef.current.output?.simulation) {
+      const sim = webglRef.current.output.simulation;
+
+      // Only apply if we're in power saving mode and the WebGL context is initialized
+      if (usePowerSaving && devicePreset.lowPowerResolution) {
+        // Don't override if form focus is already active
+        if (!isFormFocusedRef.current) {
+          sim.options.resolution = devicePreset.lowPowerResolution;
+
+          if (devicePreset.lowPowerIterations) {
+            sim.options.iterations_poisson = devicePreset.lowPowerIterations;
+            sim.options.iterations_viscous = devicePreset.lowPowerIterations;
+          }
+
+          sim.resize();
+        }
+      }
+    }
+  }, [batteryStatus, usePowerSaving, devicePreset]);
+
+  // Setup form focus detection
+  useEffect(() => {
+    // Helper to detect if an element is a form input
+    const isFormField = (el: Element | null): boolean => {
+      if (!el) return false;
+      const tag = el.tagName.toLowerCase();
+      return (
+        tag === 'input' ||
+        tag === 'textarea' ||
+        tag === 'select' ||
+        el.getAttribute('contenteditable') === 'true'
+      );
+    };
+
+    // Event handlers
+    const handleFocusIn = (e: FocusEvent) => {
+      if (isFormField(e.target as Element)) {
+        if (!isFormFocusedRef.current && webglRef.current) {
+          // Drastically reduce resolution when form is focused
+          const sim = webglRef.current.output?.simulation;
+          if (sim && sim.options) {
+            preFormFocusResRef.current = sim.options.resolution;
+            sim.options.resolution = Math.min(
+              0.1,
+              sim.options.resolution * 0.5,
+            );
+            sim.resize();
+            isFormFocusedRef.current = true;
+          }
+        }
+      }
+    };
+
+    const handleFocusOut = (e: FocusEvent) => {
+      if (isFormField(e.target as Element)) {
+        if (
+          isFormFocusedRef.current &&
+          webglRef.current &&
+          preFormFocusResRef.current !== null
+        ) {
+          // Restore resolution when form focus is released
+          const sim = webglRef.current.output?.simulation;
+          if (sim && sim.options) {
+            sim.options.resolution = preFormFocusResRef.current;
+            preFormFocusResRef.current = null;
+            sim.resize();
+            isFormFocusedRef.current = false;
+          }
+        }
+      }
+    };
+
+    // Add global focus event listeners
+    document.addEventListener('focusin', handleFocusIn);
+    document.addEventListener('focusout', handleFocusOut);
+
+    return () => {
+      document.removeEventListener('focusin', handleFocusIn);
+      document.removeEventListener('focusout', handleFocusOut);
+    };
+  }, []);
+
   useEffect(() => {
     if (!mountRef.current) return;
 
     function makePaletteTexture(stops: string[]): THREE.DataTexture {
+      // Check if we should use simplified textures based on device tier
+      const shouldUseSimplifiedTextures = devicePreset.useSimplifiedTextures;
+      const useMonochrome = devicePreset.useMonochromeColors;
+
+      // Process the color stops based on device capabilities
       let arr: string[];
       if (Array.isArray(stops) && stops.length > 0) {
-        arr = stops.length === 1 ? [stops[0], stops[0]] : stops;
+        if (shouldUseSimplifiedTextures) {
+          // For low-end devices, use fewer color stops
+          const primaryColor = stops[0];
+          arr = useMonochrome
+            ? [primaryColor, primaryColor] // Single color for extreme optimization
+            : [
+                stops[0],
+                stops[Math.floor(stops.length / 2)],
+                stops[stops.length - 1],
+              ]; // Simplified gradient
+        } else {
+          arr = stops.length === 1 ? [stops[0], stops[0]] : stops;
+        }
       } else {
         arr = ['#ffffff', '#ffffff'];
       }
+
+      // Create the texture data
       const w = arr.length;
       const data = new Uint8Array(w * 4);
-      for (let i = 0; i < w; i++) {
-        const c = new THREE.Color(arr[i]);
-        data[i * 4 + 0] = Math.round(c.r * 255);
-        data[i * 4 + 1] = Math.round(c.g * 255);
-        data[i * 4 + 2] = Math.round(c.b * 255);
-        data[i * 4 + 3] = 255;
+
+      if (useMonochrome) {
+        // For extreme optimization, use a single base color with varying alpha
+        const baseColor = new THREE.Color(arr[0]);
+        const r = Math.round(baseColor.r * 255);
+        const g = Math.round(baseColor.g * 255);
+        const b = Math.round(baseColor.b * 255);
+
+        for (let i = 0; i < w; i++) {
+          data[i * 4 + 0] = r;
+          data[i * 4 + 1] = g;
+          data[i * 4 + 2] = b;
+          data[i * 4 + 3] = Math.round(255 * (i / (w - 1))); // Vary alpha from 0 to 255
+        }
+      } else {
+        // Regular color mapping
+        for (let i = 0; i < w; i++) {
+          const c = new THREE.Color(arr[i]);
+          data[i * 4 + 0] = Math.round(c.r * 255);
+          data[i * 4 + 1] = Math.round(c.g * 255);
+          data[i * 4 + 2] = Math.round(c.b * 255);
+          data[i * 4 + 3] = 255;
+        }
       }
+
+      // Create the texture with appropriate settings based on device tier
       const tex = new THREE.DataTexture(data, w, 1, THREE.RGBAFormat);
       tex.magFilter = THREE.LinearFilter;
       tex.minFilter = THREE.LinearFilter;
       tex.wrapS = THREE.ClampToEdgeWrapping;
       tex.wrapT = THREE.ClampToEdgeWrapping;
-      tex.generateMipmaps = false;
+      tex.generateMipmaps = false; // Disable mipmaps to save memory
       tex.needsUpdate = true;
+
       return tex;
     }
 
@@ -1093,6 +1347,9 @@ export default function LiquidEther({
       running = false;
       private _loop = this.loop.bind(this);
       private _resize = this.resize.bind(this);
+      private _handleScroll = this.handleScroll.bind(this);
+      private _handleContextLost = this.handleContextLost.bind(this);
+      private _handleContextRestored = this.handleContextRestored.bind(this);
       private _onVisibility?: () => void;
       // Adaptive quality state
       baseResolution = 0.5;
@@ -1119,6 +1376,43 @@ export default function LiquidEther({
         typeof navigator !== 'undefined' ? navigator.userAgent : '',
       );
       private _lastRenderAt = performance.now();
+      // Battery-aware settings
+      private _batteryStatus: BatteryStatus = {
+        charging: true,
+        level: 1.0,
+        lowPowerMode: false,
+      };
+      private _inPowerSavingMode = false;
+      // Frame budget management
+      private _deviceTier = detectDeviceTier();
+      private _frameBudgetMs = 16; // Default ~60fps
+      private _frameStartTime = 0;
+      private _frameCount = 0;
+      private _skipFrameCheck = false;
+      private _consecutiveHeavyFrames = 0;
+      private _maxConsecutiveHeavyFrames = 5;
+      // Progressive loading properties
+      // Progressive loading gradually increases rendering quality to improve initial user experience
+      // by starting with a low resolution and iteratively improving it over time
+      private _progressiveEnabled = false; // Whether progressive loading is enabled
+      private _progressiveStartTime = 0; // When the progressive loading started
+      private _progressiveDuration = 2000; // How long the progression should take (ms)
+      private _progressiveSteps = 4; // Number of quality steps to take
+      private _initialResolution = 0.1; // Starting resolution (very low)
+      private _targetResolution = 0.5; // Final target resolution
+      private _progressiveStep = 0; // Current step in the progression
+      private _progressiveComplete = false; // Whether progressive loading is complete
+
+      // Motion throttling during scroll properties
+      private _scrollThrottleEnabled = false; // Whether scroll throttling is enabled
+      private _scrollThrottleResolution = 0.2; // Reduced resolution during scroll
+      private _scrollThrottleIterations = 12; // Reduced iterations during scroll
+      private _scrollThrottleDuration = 300; // How long to maintain reduced quality after scroll stops (ms)
+      private _isScrolling = false; // Whether user is currently scrolling
+      private _lastScrollTime = 0; // When the last scroll event happened
+      private _scrollThrottleTimeout: number | null = null; // Timeout for resetting after scroll
+      private _preScrollResolution = 0; // Resolution before scroll throttling
+      private _preScrollIterations = 0; // Iterations before scroll throttling
       constructor(props: any) {
         this.props = props;
         Common.init(props.$wrapper);
@@ -1147,8 +1441,81 @@ export default function LiquidEther({
         this.adjustCooldownMs = props.adjustCooldownMs ?? 1000;
         this.capMobileFps = props.capMobileFps ?? 30;
         this.fpsCapIdleAfterMs = props.fpsCapIdleAfterMs ?? 1500;
+
+        // Set frame budget based on device capability
+        const preset = devicePresets[this._deviceTier];
+        this._frameBudgetMs =
+          preset.frameBudgetMs ||
+          (this._deviceTier === 'low'
+            ? 32
+            : this._deviceTier === 'mid'
+              ? 20
+              : 16);
+
+        // Apply texture downsample if specified for the device tier
+        if (preset.textureDownsample && preset.textureDownsample > 1) {
+          try {
+            // Set up WebGL params for reduced texture memory usage
+            const renderer = Common.renderer;
+            if (renderer) {
+              // Apply memory-saving settings
+              renderer.setPixelRatio(
+                Math.min(1, window.devicePixelRatio / preset.textureDownsample),
+              );
+
+              if (process.env.NODE_ENV === 'development') {
+                // eslint-disable-next-line no-console
+                console.log(
+                  `[LiquidEther] Memory optimization for ${this._deviceTier} tier: textureDownsample=${preset.textureDownsample}`,
+                );
+              }
+            }
+          } catch {
+            // Silent catch if WebGL context access fails
+          }
+        }
+
+        // Configure progressive loading based on device tier
+        if (
+          preset.initialResolution &&
+          preset.progressiveDuration &&
+          preset.progressiveSteps
+        ) {
+          // Add properties for progressive loading
+          this._progressiveEnabled = true;
+          this._progressiveStartTime = performance.now();
+          this._initialResolution = preset.initialResolution;
+          this._progressiveDuration = preset.progressiveDuration;
+          this._progressiveSteps = preset.progressiveSteps;
+          this._targetResolution = this.baseResolution;
+
+          // Start with initial low resolution
+          this.baseResolution = this._initialResolution;
+
+          if (process.env.NODE_ENV === 'development') {
+            // eslint-disable-next-line no-console
+            console.log(
+              `[LiquidEther] Progressive loading enabled for ${this._deviceTier} tier:`,
+              {
+                initialResolution: this._initialResolution,
+                targetResolution: this._targetResolution,
+                duration: this._progressiveDuration,
+                steps: this._progressiveSteps,
+              },
+            );
+          }
+        }
+
         this.init();
         window.addEventListener('resize', this._resize);
+
+        // Add scroll event listener for motion throttling if enabled
+        if (this._scrollThrottleEnabled) {
+          window.addEventListener('scroll', this._handleScroll, {
+            passive: true,
+          });
+        }
+
         this._onVisibility = () => {
           const hidden = document.hidden;
           if (hidden) {
@@ -1168,6 +1535,22 @@ export default function LiquidEther({
           el.style.opacity = '0';
           // Keep any existing transition if set by page styles
           if (!el.style.transition) el.style.transition = 'opacity 320ms ease';
+
+          // Add WebGL context loss/restore event listeners for enhanced recovery
+          el.addEventListener('webglcontextlost', this._handleContextLost, {
+            passive: false,
+          });
+          el.addEventListener(
+            'webglcontextrestored',
+            this._handleContextRestored,
+          );
+
+          if (process.env.NODE_ENV === 'development') {
+            // eslint-disable-next-line no-console
+            console.log(
+              '[LiquidEther] Enhanced WebGL context loss handling enabled',
+            );
+          }
         } catch {
           /* noop */
         }
@@ -1178,26 +1561,287 @@ export default function LiquidEther({
         this.output.resize();
       }
       render() {
+        // Record frame start time for budget tracking
+        this._frameStartTime = performance.now();
+        this._frameCount++;
+
         // Frame skipper: if on mobile and idle, cap FPS by skipping renders.
-        const now = performance.now();
+        const now = this._frameStartTime;
         const idleFor = now - this.lastUserInteraction;
-        if (
+
+        // Advanced frame skipping logic:
+        // 1. Skip if idle on mobile (basic throttle)
+        // 2. Skip if we've had too many heavy frames in a row
+        const skipForIdleThrottle =
           this._isMobile &&
           idleFor >= this.fpsCapIdleAfterMs &&
-          this.capMobileFps > 0
-        ) {
-          const minFrameDt = 1000 / this.capMobileFps;
-          const sinceLast = now - this._lastRenderAt;
-          if (sinceLast < minFrameDt) {
-            // Skip this frame entirely, don't update adaptive/FPS samples.
-            return;
-          }
+          this.capMobileFps > 0 &&
+          now - this._lastRenderAt < 1000 / this.capMobileFps;
+
+        const skipForHeavyFrames =
+          this._deviceTier !== 'high' &&
+          this._consecutiveHeavyFrames > this._maxConsecutiveHeavyFrames &&
+          this._frameCount % 2 === 1; // Skip every other frame when struggling
+
+        if (skipForIdleThrottle || skipForHeavyFrames) {
+          // Skip this frame entirely, don't update adaptive/FPS samples.
+          this._skipFrameCheck = true; // Don't count skipped frames in budget analysis
+          return;
         }
+
         this._lastRenderAt = now;
+
+        // Handle progressive quality loading if enabled
+        if (this._progressiveEnabled && !this._progressiveComplete) {
+          this._updateProgressiveLoading();
+        }
+
         if (this.autoDriver) this.autoDriver.update();
         Mouse.update();
         Common.update();
         this.output.update();
+
+        // Check if we exceeded frame budget and track consecutive heavy frames
+        this._checkFrameBudget();
+      }
+
+      private _checkFrameBudget() {
+        if (this._skipFrameCheck) {
+          this._skipFrameCheck = false;
+          return;
+        }
+
+        const frameDuration = performance.now() - this._frameStartTime;
+        if (frameDuration > this._frameBudgetMs) {
+          this._consecutiveHeavyFrames++;
+        } else {
+          // Slowly reduce the counter to avoid flickering between states
+          this._consecutiveHeavyFrames = Math.max(
+            0,
+            this._consecutiveHeavyFrames - 0.5,
+          );
+        }
+      }
+
+      /**
+       * Updates the simulation resolution based on progressive loading schedule
+       */
+      private _updateProgressiveLoading() {
+        if (!this._progressiveEnabled || this._progressiveComplete) return;
+
+        const sim = this.output?.simulation;
+        if (!sim) return;
+
+        // Calculate progress (0-1) based on elapsed time
+        const elapsed = performance.now() - this._progressiveStartTime;
+        const progress = Math.min(1.0, elapsed / this._progressiveDuration);
+
+        // Calculate current target step (0 to steps-1)
+        const targetStep = Math.floor(progress * this._progressiveSteps);
+
+        // Only update if we've moved to a new step
+        if (targetStep > this._progressiveStep) {
+          this._progressiveStep = targetStep;
+
+          // Interpolate between initial and target resolution
+          const stepProgress = targetStep / (this._progressiveSteps - 1);
+          const newResolution =
+            this._initialResolution +
+            (this._targetResolution - this._initialResolution) * stepProgress;
+
+          // Apply the new resolution
+          sim.options.resolution = newResolution;
+          sim.resize();
+
+          if (process.env.NODE_ENV === 'development') {
+            // eslint-disable-next-line no-console
+            console.log(
+              `[LiquidEther] Progressive quality step ${this._progressiveStep}/${this._progressiveSteps}: resolution=${newResolution.toFixed(3)}`,
+            );
+          }
+        }
+
+        // Mark as complete when we reach the final stage
+        if (progress >= 1.0) {
+          this._progressiveComplete = true;
+
+          // Ensure final resolution is exactly as targeted
+          sim.options.resolution = this._targetResolution;
+          sim.resize();
+
+          if (process.env.NODE_ENV === 'development') {
+            // eslint-disable-next-line no-console
+            console.log('[LiquidEther] Progressive loading complete');
+          }
+        }
+      }
+
+      /**
+       * Handles scroll events and reduces quality during scrolling
+       */
+      handleScroll() {
+        if (!this._scrollThrottleEnabled) return;
+
+        const sim = this.output?.simulation;
+        if (!sim) return;
+
+        if (!this._isScrolling) {
+          // Store current values before reducing quality
+          this._preScrollResolution = sim.options.resolution;
+          this._preScrollIterations = sim.options.iterations_poisson;
+
+          // Apply reduced quality during scroll
+          sim.options.resolution = this._scrollThrottleResolution;
+          sim.options.iterations_poisson = this._scrollThrottleIterations;
+          sim.options.iterations_viscous = this._scrollThrottleIterations;
+          sim.resize();
+
+          this._isScrolling = true;
+
+          if (process.env.NODE_ENV === 'development') {
+            // eslint-disable-next-line no-console
+            console.log(
+              `[LiquidEther] Scroll throttling activated: resolution=${this._scrollThrottleResolution}`,
+            );
+          }
+        }
+
+        // Update last scroll time
+        this._lastScrollTime = performance.now();
+
+        // Clear any existing timeout
+        if (this._scrollThrottleTimeout !== null) {
+          window.clearTimeout(this._scrollThrottleTimeout);
+          this._scrollThrottleTimeout = null;
+        }
+
+        // Set timeout to restore quality after scrolling stops
+        this._scrollThrottleTimeout = window.setTimeout(() => {
+          this._resetAfterScroll();
+        }, this._scrollThrottleDuration);
+      }
+
+      /**
+       * Resets quality settings after scroll throttling
+       */
+      private _resetAfterScroll() {
+        if (!this._isScrolling) return;
+
+        const sim = this.output?.simulation;
+        if (!sim) return;
+
+        // Restore pre-scroll settings
+        if (this._preScrollResolution > 0) {
+          sim.options.resolution = this._preScrollResolution;
+          sim.options.iterations_poisson = this._preScrollIterations;
+          sim.options.iterations_viscous = this._preScrollIterations;
+          sim.resize();
+
+          if (process.env.NODE_ENV === 'development') {
+            // eslint-disable-next-line no-console
+            console.log(
+              `[LiquidEther] Scroll throttling deactivated: resolution restored to ${this._preScrollResolution}`,
+            );
+          }
+        }
+
+        this._isScrolling = false;
+        this._scrollThrottleTimeout = null;
+      }
+
+      /**
+       * Handles WebGL context loss events
+       * This prevents the page from becoming unresponsive when WebGL crashes
+       * @param event The context lost event
+       */
+      handleContextLost(event: Event) {
+        // Prevent the default behavior which can cause page hanging
+        event.preventDefault();
+
+        if (process.env.NODE_ENV === 'development') {
+          // eslint-disable-next-line no-console
+          console.warn(
+            '[LiquidEther] WebGL context lost. Attempting to recover...',
+          );
+        }
+
+        // Pause animation loop to prevent further errors
+        this.pause();
+
+        // Notify user of the issue with a reduced-quality fallback
+        try {
+          // Add a visible but subtle notification if we're in a visible component
+          const wrapper = this.props.$wrapper;
+          if (wrapper) {
+            const notification = document.createElement('div');
+            notification.className = 'liquid-ether-recovery-notification';
+            notification.style.position = 'absolute';
+            notification.style.bottom = '8px';
+            notification.style.right = '8px';
+            notification.style.background = 'rgba(0,0,0,0.5)';
+            notification.style.color = 'rgba(255,255,255,0.8)';
+            notification.style.padding = '4px 8px';
+            notification.style.borderRadius = '4px';
+            notification.style.fontSize = '10px';
+            notification.style.pointerEvents = 'none';
+            notification.style.zIndex = '1000';
+            notification.style.opacity = '0';
+            notification.style.transition = 'opacity 0.5s ease';
+            notification.textContent = 'Visuals recovering...';
+            wrapper.appendChild(notification);
+
+            // Fade in the notification
+            setTimeout(() => {
+              notification.style.opacity = '1';
+            }, 10);
+          }
+        } catch {
+          // Ignore any errors here, recovery notification is not critical
+        }
+
+        return false;
+      }
+
+      /**
+       * Handles WebGL context restoration events
+       */
+      handleContextRestored() {
+        if (process.env.NODE_ENV === 'development') {
+          // eslint-disable-next-line no-console
+          console.log(
+            '[LiquidEther] WebGL context restored. Reinitializing...',
+          );
+        }
+
+        try {
+          // Reinitialize WebGL components
+          this.init();
+
+          // Restart the animation loop if the component is visible
+          if (isVisibleRef.current && !document.hidden) {
+            this.start();
+          }
+
+          // Remove any recovery notifications
+          const notification = this.props.$wrapper.querySelector(
+            '.liquid-ether-recovery-notification',
+          );
+          if (notification) {
+            notification.style.opacity = '0';
+            setTimeout(() => {
+              try {
+                notification.parentNode?.removeChild(notification);
+              } catch {
+                // Ignore removal errors
+              }
+            }, 500); // Remove after fade out
+          }
+        } catch (err) {
+          if (process.env.NODE_ENV === 'development') {
+            // eslint-disable-next-line no-console
+            console.error('[LiquidEther] Error during context recovery:', err);
+          }
+        }
       }
       private _recordFpsAndMaybeAdjust() {
         if (!this.adaptiveQuality) return;
@@ -1285,6 +1929,24 @@ export default function LiquidEther({
       }
       loop() {
         if (!this.running) return;
+
+        // Skip frame entirely if page is not visible
+        if (document.hidden) {
+          rafRef.current = requestAnimationFrame(this._loop);
+          return;
+        }
+
+        // Check if any form field is focused (this gets set from the component's focus detection)
+        // We use higher frameSkip when inputs are focused to improve typing responsiveness
+        if (isFormFocusedRef.current && this._deviceTier !== 'high') {
+          // Only render every 4th frame when forms are focused on lower-end devices
+          if (this._frameCount % 4 !== 0) {
+            this._frameCount++;
+            rafRef.current = requestAnimationFrame(this._loop);
+            return;
+          }
+        }
+
         this.render();
         this._recordFpsAndMaybeAdjust();
         rafRef.current = requestAnimationFrame(this._loop);
@@ -1314,19 +1976,108 @@ export default function LiquidEther({
           rafRef.current = null;
         }
       }
+
+      /**
+       * Updates internal battery status and applies power saving optimizations
+       */
+      updateBatteryStatus(status: BatteryStatus, usePowerSaving: boolean) {
+        // Store for reference
+        this._batteryStatus = status;
+        this._inPowerSavingMode = usePowerSaving;
+
+        // Log battery status in development
+        if (process.env.NODE_ENV === 'development') {
+          // eslint-disable-next-line no-console
+          console.log('[LiquidEther] Battery status update:', {
+            level: status.level,
+            charging: status.charging,
+            lowPower: status.lowPowerMode,
+            powerSaving: usePowerSaving,
+          });
+        }
+
+        // If progressive loading is active, wait for it to complete before applying battery settings
+        if (this._progressiveEnabled && !this._progressiveComplete) {
+          if (process.env.NODE_ENV === 'development') {
+            // eslint-disable-next-line no-console
+            console.log(
+              '[LiquidEther] Delaying battery optimization until progressive loading completes',
+            );
+          }
+          return;
+        }
+
+        // Get device preset to check for power-saving options
+        const preset = devicePresets[this._deviceTier];
+        if (!preset || !usePowerSaving) return;
+
+        // Apply battery-saving settings if simulation is active
+        const sim = this.output?.simulation;
+        if (sim && sim.options) {
+          // Apply reduced resolution and iterations if in power-saving mode
+          if (preset.lowPowerResolution) {
+            sim.options.resolution = preset.lowPowerResolution;
+
+            // Update the target resolution for progressive loading in case it resumes
+            if (this._progressiveEnabled) {
+              this._targetResolution = preset.lowPowerResolution;
+            }
+          }
+
+          if (preset.lowPowerIterations) {
+            sim.options.iterations_poisson = preset.lowPowerIterations;
+            sim.options.iterations_viscous = preset.lowPowerIterations;
+          }
+
+          // Resize to apply resolution change
+          sim.resize();
+        }
+      }
+
       dispose() {
         try {
+          // Remove all event listeners
           window.removeEventListener('resize', this._resize);
+
+          // Remove scroll throttling event listener if it was enabled
+          if (this._scrollThrottleEnabled) {
+            window.removeEventListener('scroll', this._handleScroll);
+          }
+
+          // Clear any pending scroll throttle timeout
+          if (this._scrollThrottleTimeout !== null) {
+            window.clearTimeout(this._scrollThrottleTimeout);
+            this._scrollThrottleTimeout = null;
+          }
+
           if (this._onVisibility)
             document.removeEventListener(
               'visibilitychange',
               this._onVisibility,
             );
+
           Mouse.dispose();
+
           if (Common.renderer) {
             const canvas = Common.renderer.domElement;
+
+            // Remove WebGL context recovery event listeners
+            try {
+              canvas.removeEventListener(
+                'webglcontextlost',
+                this._handleContextLost,
+              );
+              canvas.removeEventListener(
+                'webglcontextrestored',
+                this._handleContextRestored,
+              );
+            } catch {
+              // Silent catch if event removal fails
+            }
+
             if (canvas && canvas.parentNode)
               canvas.parentNode.removeChild(canvas);
+
             Common.renderer.dispose();
           }
         } catch {
@@ -1462,6 +2213,9 @@ export default function LiquidEther({
     capMobileFps,
     fpsCapIdleAfterMs,
     prefersReducedMotion,
+    // Device preset flags used inside effect (explicitly list to satisfy hooks linter)
+    devicePreset.useMonochromeColors,
+    devicePreset.useSimplifiedTextures,
   ]);
 
   useEffect(() => {
