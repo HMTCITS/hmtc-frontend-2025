@@ -21,6 +21,17 @@ export interface LiquidEtherProps {
   takeoverDuration?: number;
   autoResumeDelay?: number;
   autoRampDuration?: number;
+  adaptiveQuality?: boolean; // enable automatic quality scaling (default: true)
+  lowFpsThreshold?: number; // FPS below which quality is reduced (default: 30)
+  highFpsThreshold?: number; // FPS above which quality is restored (default: 55)
+  minResolution?: number; // minimum resolution scale (default: 0.2)
+  qualityStep?: number; // multiplicative step when changing quality (default: 0.85)
+  // Smoothing controls
+  adaptiveWarmupMs?: number; // delay before first quality adjustment
+  adjustCooldownMs?: number; // minimum interval between adjustments
+  // Mobile idle FPS cap
+  capMobileFps?: number; // target FPS when capping on mobile idle (default: 30)
+  fpsCapIdleAfterMs?: number; // inactivity before applying cap (default: 1500)
 }
 
 interface SimOptions {
@@ -46,6 +57,16 @@ interface LiquidEtherWebGL {
     mouse?: { autoIntensity: number; takeoverDuration: number };
     forceStop: () => void;
   };
+  // Adaptive tuning knobs (optional public for runtime tweaking)
+  lowFpsThreshold?: number;
+  highFpsThreshold?: number;
+  minResolution?: number;
+  qualityStep?: number;
+  adaptiveQuality?: boolean;
+  adaptiveWarmupMs?: number;
+  adjustCooldownMs?: number;
+  capMobileFps?: number;
+  fpsCapIdleAfterMs?: number;
   resize: () => void;
   start: () => void;
   pause: () => void;
@@ -74,6 +95,15 @@ export default function LiquidEther({
   takeoverDuration = 0.25,
   autoResumeDelay = 1000,
   autoRampDuration = 0.6,
+  adaptiveQuality = true,
+  lowFpsThreshold = 30,
+  highFpsThreshold = 55,
+  minResolution = 0.2,
+  qualityStep = 0.85,
+  adaptiveWarmupMs = 1200,
+  adjustCooldownMs = 1000,
+  capMobileFps = 30,
+  fpsCapIdleAfterMs = 1500,
 }: LiquidEtherProps): React.ReactElement {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const webglRef = useRef<LiquidEtherWebGL | null>(null);
@@ -82,6 +112,10 @@ export default function LiquidEther({
   const intersectionObserverRef = useRef<IntersectionObserver | null>(null);
   const isVisibleRef = useRef<boolean>(true);
   const resizeRafRef = useRef<number | null>(null);
+  const prefersReducedMotion =
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -1060,6 +1094,31 @@ export default function LiquidEther({
       private _loop = this.loop.bind(this);
       private _resize = this.resize.bind(this);
       private _onVisibility?: () => void;
+      // Adaptive quality state
+      baseResolution = 0.5;
+      baseIterationsPoisson = 32;
+      baseIterationsViscous = 32;
+      minResolution = 0.2;
+      qualityStep = 0.85;
+      lowFpsThreshold = 30;
+      highFpsThreshold = 55;
+      adaptiveQuality = true;
+      lastFrameTime = performance.now();
+      _fpsSamples: number[] = [];
+      _samplesLimit = 30;
+      // Smoothing controls
+      adaptiveWarmupMs = 1200;
+      adjustCooldownMs = 1000;
+      private _createdAt = performance.now();
+      private _lastAdjustAt = 0;
+      private _hasFadedIn = false;
+      // FPS cap for mobile idle
+      capMobileFps = 30;
+      fpsCapIdleAfterMs = 1500;
+      private _isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(
+        typeof navigator !== 'undefined' ? navigator.userAgent : '',
+      );
+      private _lastRenderAt = performance.now();
       constructor(props: any) {
         this.props = props;
         Common.init(props.$wrapper);
@@ -1076,6 +1135,18 @@ export default function LiquidEther({
           resumeDelay: props.autoResumeDelay,
           rampDuration: props.autoRampDuration,
         });
+        this.baseResolution = props.baseResolution ?? 0.5;
+        this.baseIterationsPoisson = props.baseIterationsPoisson ?? 32;
+        this.baseIterationsViscous = props.baseIterationsViscous ?? 32;
+        this.minResolution = props.minResolution ?? 0.2;
+        this.qualityStep = props.qualityStep ?? 0.85;
+        this.lowFpsThreshold = props.lowFpsThreshold ?? 30;
+        this.highFpsThreshold = props.highFpsThreshold ?? 55;
+        this.adaptiveQuality = !!props.adaptiveQuality;
+        this.adaptiveWarmupMs = props.adaptiveWarmupMs ?? 1200;
+        this.adjustCooldownMs = props.adjustCooldownMs ?? 1000;
+        this.capMobileFps = props.capMobileFps ?? 30;
+        this.fpsCapIdleAfterMs = props.fpsCapIdleAfterMs ?? 1500;
         this.init();
         window.addEventListener('resize', this._resize);
         this._onVisibility = () => {
@@ -1091,6 +1162,15 @@ export default function LiquidEther({
       init() {
         if (!Common.renderer) return;
         this.props.$wrapper.prepend(Common.renderer.domElement);
+        // Prepare a gentle fade-in for first start to reduce perceived flicker.
+        try {
+          const el = Common.renderer.domElement as HTMLCanvasElement;
+          el.style.opacity = '0';
+          // Keep any existing transition if set by page styles
+          if (!el.style.transition) el.style.transition = 'opacity 320ms ease';
+        } catch {
+          /* noop */
+        }
         this.output = new Output();
       }
       resize() {
@@ -1098,19 +1178,133 @@ export default function LiquidEther({
         this.output.resize();
       }
       render() {
+        // Frame skipper: if on mobile and idle, cap FPS by skipping renders.
+        const now = performance.now();
+        const idleFor = now - this.lastUserInteraction;
+        if (
+          this._isMobile &&
+          idleFor >= this.fpsCapIdleAfterMs &&
+          this.capMobileFps > 0
+        ) {
+          const minFrameDt = 1000 / this.capMobileFps;
+          const sinceLast = now - this._lastRenderAt;
+          if (sinceLast < minFrameDt) {
+            // Skip this frame entirely, don't update adaptive/FPS samples.
+            return;
+          }
+        }
+        this._lastRenderAt = now;
         if (this.autoDriver) this.autoDriver.update();
         Mouse.update();
         Common.update();
         this.output.update();
       }
+      private _recordFpsAndMaybeAdjust() {
+        if (!this.adaptiveQuality) return;
+        const now = performance.now();
+        const dt = now - this.lastFrameTime;
+        this.lastFrameTime = now;
+        // If we are intentionally capping FPS (mobile + idle), we still want a stable
+        // average but should avoid triggering quality reductions due to artificial cap.
+        // We do that by only sampling FPS toward quality when not under cap.
+        const idleFor = now - this.lastUserInteraction;
+        const underCap =
+          this._isMobile &&
+          idleFor >= this.fpsCapIdleAfterMs &&
+          this.capMobileFps > 0;
+        if (underCap) return;
+        if (dt <= 0) return;
+        const fps = 1000 / dt;
+        this._fpsSamples.push(fps);
+        if (this._fpsSamples.length >= this._samplesLimit) {
+          const avg =
+            this._fpsSamples.reduce((a, b) => a + b, 0) /
+            this._fpsSamples.length;
+          this._fpsSamples.length = 0;
+          // Defer adjustments until warmup passes to avoid initial thrash.
+          if (now - this._createdAt >= this.adaptiveWarmupMs) {
+            this._adjustQuality(avg);
+          }
+        }
+      }
+      private _adjustQuality(avgFps: number) {
+        const sim = this.output?.simulation;
+        if (!sim) return;
+        const now = performance.now();
+        // Respect cooldown between quality changes to prevent visible thrashing.
+        if (now - this._lastAdjustAt < this.adjustCooldownMs) return;
+        const curRes = sim.options.resolution;
+        const curIterP = sim.options.iterations_poisson;
+        const curIterV = sim.options.iterations_viscous;
+        let didAdjust = false;
+        if (avgFps < this.lowFpsThreshold) {
+          const newRes = Math.max(
+            this.minResolution,
+            curRes * this.qualityStep,
+          );
+          if (newRes < curRes - 1e-6) {
+            sim.options.resolution = newRes;
+            sim.resize();
+            didAdjust = true;
+          }
+          const newIterP = Math.max(8, Math.floor(curIterP * this.qualityStep));
+          const newIterV = Math.max(8, Math.floor(curIterV * this.qualityStep));
+          if (newIterP !== curIterP || newIterV !== curIterV) {
+            sim.options.iterations_poisson = newIterP;
+            sim.options.iterations_viscous = newIterV;
+            didAdjust = true;
+          }
+          if (didAdjust) this._lastAdjustAt = now;
+          return;
+        }
+        if (avgFps > this.highFpsThreshold) {
+          const newRes = Math.min(
+            this.baseResolution,
+            curRes / this.qualityStep,
+          );
+          if (newRes > curRes + 1e-6) {
+            sim.options.resolution = newRes;
+            sim.resize();
+            didAdjust = true;
+          }
+          const newIterP = Math.min(
+            this.baseIterationsPoisson,
+            Math.max(curIterP, Math.ceil(curIterP / this.qualityStep)),
+          );
+          const newIterV = Math.min(
+            this.baseIterationsViscous,
+            Math.max(curIterV, Math.ceil(curIterV / this.qualityStep)),
+          );
+          if (newIterP !== curIterP || newIterV !== curIterV) {
+            sim.options.iterations_poisson = newIterP;
+            sim.options.iterations_viscous = newIterV;
+            didAdjust = true;
+          }
+          if (didAdjust) this._lastAdjustAt = now;
+        }
+      }
       loop() {
         if (!this.running) return;
         this.render();
+        this._recordFpsAndMaybeAdjust();
         rafRef.current = requestAnimationFrame(this._loop);
       }
       start() {
         if (this.running) return;
         this.running = true;
+        // Fade in the canvas on the first ever start.
+        if (!this._hasFadedIn && Common.renderer) {
+          try {
+            const el = Common.renderer.domElement as HTMLCanvasElement;
+            // Trigger transition on next frame to ensure styles are applied.
+            requestAnimationFrame(() => {
+              el.style.opacity = '1';
+            });
+            this._hasFadedIn = true;
+          } catch {
+            /* noop */
+          }
+        }
         this._loop();
       }
       pause() {
@@ -1147,12 +1341,24 @@ export default function LiquidEther({
 
     const webgl = new WebGLManager({
       $wrapper: container,
-      autoDemo,
+      autoDemo: prefersReducedMotion ? false : autoDemo,
       autoSpeed,
       autoIntensity,
       takeoverDuration,
       autoResumeDelay,
       autoRampDuration,
+      adaptiveQuality,
+      lowFpsThreshold,
+      highFpsThreshold,
+      minResolution,
+      qualityStep,
+      adaptiveWarmupMs,
+      adjustCooldownMs,
+      capMobileFps,
+      fpsCapIdleAfterMs,
+      baseResolution: resolution,
+      baseIterationsPoisson: iterationsPoisson,
+      baseIterationsViscous: iterationsViscous,
     });
     webglRef.current = webgl;
 
@@ -1190,7 +1396,8 @@ export default function LiquidEther({
           webglRef.current.pause();
         }
       },
-      { threshold: [0, 0.01, 0.1] },
+      // Slightly higher small threshold reduces rapid toggling around 0.
+      { threshold: [0, 0.05, 0.15] },
     );
     io.observe(container);
     intersectionObserverRef.current = io;
@@ -1245,6 +1452,16 @@ export default function LiquidEther({
     takeoverDuration,
     autoResumeDelay,
     autoRampDuration,
+    adaptiveQuality,
+    lowFpsThreshold,
+    highFpsThreshold,
+    minResolution,
+    qualityStep,
+    adaptiveWarmupMs,
+    adjustCooldownMs,
+    capMobileFps,
+    fpsCapIdleAfterMs,
+    prefersReducedMotion,
   ]);
 
   useEffect(() => {
@@ -1275,6 +1492,17 @@ export default function LiquidEther({
         webgl.autoDriver.mouse.takeoverDuration = takeoverDuration;
       }
     }
+    // Update adaptive quality thresholds and smoothing values dynamically
+    // so tweaking props doesn't require a remount.
+    webgl.lowFpsThreshold = lowFpsThreshold;
+    webgl.highFpsThreshold = highFpsThreshold;
+    webgl.minResolution = minResolution;
+    webgl.qualityStep = qualityStep;
+    webgl.adaptiveQuality = adaptiveQuality;
+    webgl.adaptiveWarmupMs = adaptiveWarmupMs;
+    webgl.adjustCooldownMs = adjustCooldownMs;
+    webgl.capMobileFps = capMobileFps;
+    webgl.fpsCapIdleAfterMs = fpsCapIdleAfterMs;
     if (resolution !== prevRes) sim.resize();
   }, [
     mouseForce,
@@ -1293,6 +1521,15 @@ export default function LiquidEther({
     takeoverDuration,
     autoResumeDelay,
     autoRampDuration,
+    adaptiveQuality,
+    lowFpsThreshold,
+    highFpsThreshold,
+    minResolution,
+    qualityStep,
+    adaptiveWarmupMs,
+    adjustCooldownMs,
+    capMobileFps,
+    fpsCapIdleAfterMs,
   ]);
 
   return (

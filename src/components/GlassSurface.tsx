@@ -93,6 +93,11 @@ const GlassSurface: React.FC<GlassSurfaceProps> = ({
   const greenChannelRef = useRef<SVGFEDisplacementMapElement>(null);
   const blueChannelRef = useRef<SVGFEDisplacementMapElement>(null);
   const gaussianBlurRef = useRef<SVGFEGaussianBlurElement>(null);
+  // Perf: cache generated map and last dims to avoid unnecessary regeneration
+  const cachedMapRef = useRef<string | null>(null);
+  const lastDimsRef = useRef<{ width: number; height: number } | null>(null);
+  const isVisibleRef = useRef<boolean>(true);
+  const resizeDebounceRef = useRef<number | null>(null);
 
   const isDarkMode = useDarkMode();
   const [isMounted, setIsMounted] = useState(false);
@@ -102,9 +107,18 @@ const GlassSurface: React.FC<GlassSurfaceProps> = ({
   }, []);
 
   const generateDisplacementMap = useCallback(() => {
-    const rect = containerRef.current?.getBoundingClientRect();
-    const actualWidth = rect?.width || 400;
-    const actualHeight = rect?.height || 200;
+    if (!containerRef.current) return cachedMapRef.current || '';
+    if (!isVisibleRef.current && cachedMapRef.current)
+      return cachedMapRef.current;
+    const rect = containerRef.current.getBoundingClientRect();
+    const actualWidth = Math.max(1, Math.round(rect.width || 400));
+    const actualHeight = Math.max(1, Math.round(rect.height || 200));
+    if (lastDimsRef.current) {
+      const { width: lw, height: lh } = lastDimsRef.current;
+      if (Math.abs(lw - actualWidth) < 4 && Math.abs(lh - actualHeight) < 4) {
+        return cachedMapRef.current || '';
+      }
+    }
     const edgeSize = Math.min(actualWidth, actualHeight) * (borderWidth * 0.5);
 
     const svgContent = `
@@ -125,9 +139,10 @@ const GlassSurface: React.FC<GlassSurfaceProps> = ({
         <rect x="${edgeSize}" y="${edgeSize}" width="${actualWidth - edgeSize * 2}" height="${actualHeight - edgeSize * 2}" rx="${borderRadius}" fill="hsl(0 0% ${brightness}% / ${opacity})" style="filter:blur(${blur}px)" />
       </svg>
     `;
-
-    return `data:image/svg+xml,${encodeURIComponent(svgContent)}`;
-    // depend on visual props and ids used inside the generated SVG
+    const dataUrl = `data:image/svg+xml,${encodeURIComponent(svgContent)}`;
+    cachedMapRef.current = dataUrl;
+    lastDimsRef.current = { width: actualWidth, height: actualHeight };
+    return dataUrl;
   }, [
     borderWidth,
     borderRadius,
@@ -182,15 +197,44 @@ const GlassSurface: React.FC<GlassSurfaceProps> = ({
 
   useEffect(() => {
     if (!containerRef.current) return;
-
+    const el = containerRef.current;
+    // Debounced ResizeObserver
     const resizeObserver = new ResizeObserver(() => {
-      setTimeout(updateDisplacementMap, 0);
+      if (resizeDebounceRef.current)
+        cancelAnimationFrame(resizeDebounceRef.current);
+      resizeDebounceRef.current = requestAnimationFrame(() => {
+        updateDisplacementMap();
+      });
     });
-
-    resizeObserver.observe(containerRef.current);
+    resizeObserver.observe(el);
+    // Visibility observer to avoid work when off-screen
+    const io = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        isVisibleRef.current =
+          entry.isIntersecting && entry.intersectionRatio > 0;
+        if (isVisibleRef.current) {
+          updateDisplacementMap();
+        }
+      },
+      { threshold: [0, 0.01, 0.1] },
+    );
+    io.observe(el);
 
     return () => {
-      resizeObserver.disconnect();
+      try {
+        resizeObserver.disconnect();
+      } catch {
+        /* noop - ignore disconnect errors */
+      }
+      try {
+        io.disconnect();
+      } catch {
+        /* noop - ignore disconnect errors */
+      }
+      if (resizeDebounceRef.current)
+        cancelAnimationFrame(resizeDebounceRef.current);
+      resizeDebounceRef.current = null;
     };
   }, [updateDisplacementMap]);
 
