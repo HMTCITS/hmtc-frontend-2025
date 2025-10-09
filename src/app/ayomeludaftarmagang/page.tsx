@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckCircle2, Droplets, Layers, TriangleAlert } from 'lucide-react';
+import { CheckCircle2, TriangleAlert } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import * as React from 'react';
 
@@ -18,7 +18,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Switch } from '@/components/ui/switch';
 import { useApplyMagang } from '@/hooks/api/useApplyMagang';
 import { useScheduleAutoRedirect } from '@/hooks/useSchedule';
 
@@ -29,54 +28,32 @@ import { useScheduleAutoRedirect } from '@/hooks/useSchedule';
  * Data submission is delegated to a dedicated TanStack mutation hook.
  */
 export default function ApplyMagangPage() {
+  // Determine if effects should be enabled based on user preferences
   const [liquidEnabled, setLiquidEnabled] = React.useState(true);
   const [glassEnabled, setGlassEnabled] = React.useState(true);
 
-  // Check for reduced motion preference
+  // Check for reduced motion preference and battery status
   React.useEffect(() => {
     try {
+      // Default to enabled unless user has reduced motion preference
+      let shouldEnableEffects = true;
+
+      // Check for reduced motion preference
       const prefersReduced =
         typeof window !== 'undefined' &&
         typeof window.matchMedia === 'function' &&
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReduced) {
-        setLiquidEnabled(false);
-        setGlassEnabled(false);
-      }
-    } catch {
-      /* noop */
-    }
-  }, []);
 
-  // Battery status check
-  React.useEffect(() => {
-    let isMounted = true;
-    const anyNavigator: any =
-      typeof navigator !== 'undefined' ? navigator : null;
-    if (anyNavigator && typeof anyNavigator.getBattery === 'function') {
-      anyNavigator
-        .getBattery()
-        .then((bat: any) => {
-          if (!isMounted || !bat) return;
-          const update = () => {
-            if (!isMounted) return;
-            // Disable effects when battery is low and not charging
-            if (bat.level < 0.2 && !bat.charging) {
-              setLiquidEnabled(false);
-              setGlassEnabled(false);
-            }
-          };
-          update();
-          bat.addEventListener('levelchange', update);
-          bat.addEventListener('chargingchange', update);
-        })
-        .catch(() => {
-          /* ignore */
-        });
+      if (prefersReduced) {
+        shouldEnableEffects = false;
+      }
+
+      // Apply preferences to state
+      setLiquidEnabled(true);
+      setGlassEnabled(shouldEnableEffects);
+    } catch (e: unknown) {
+      void e;
     }
-    return () => {
-      isMounted = false;
-    };
   }, []);
 
   const [openSuccess, setOpenSuccess] = React.useState(false);
@@ -128,27 +105,7 @@ export default function ApplyMagangPage() {
         ) : null}
       </div>
 
-      {/* Visual Effect Toggle Switches */}
-      <div className='absolute top-4 right-4 z-10 flex flex-col gap-2 rounded-lg bg-black/30 p-3 backdrop-blur-sm'>
-        <div className='flex items-center gap-2'>
-          <Droplets className='h-4 w-4 text-blue-400' />
-          <span className='text-xs font-medium text-white'>Liquid Effect</span>
-          <Switch
-            checked={liquidEnabled}
-            onCheckedChange={setLiquidEnabled}
-            className='ml-1'
-          />
-        </div>
-        <div className='flex items-center gap-2'>
-          <Layers className='h-4 w-4 text-purple-400' />
-          <span className='text-xs font-medium text-white'>Glass Effect</span>
-          <Switch
-            checked={glassEnabled}
-            onCheckedChange={setGlassEnabled}
-            className='ml-1'
-          />
-        </div>
-      </div>
+      {/* Page content starts below */}
 
       <main className='mx-auto w-full max-w-3xl px-5 py-12 md:px-8 md:py-20'>
         {glassEnabled ? (

@@ -60,6 +60,113 @@ const useDarkMode = () => {
   return isDark;
 };
 
+// Deteksi kemampuan device (low-end, mid-tier, high-end)
+const useDeviceOptimization = () => {
+  const [deviceTier, setDeviceTier] = useState<
+    'high' | 'mid' | 'low' | 'server'
+  >('server');
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const detectTier = () => {
+      const ua = navigator.userAgent;
+      const memory = (navigator as any).deviceMemory || 4;
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+      const isOldMobile = /Android [4-7]|iPhone [5-8]/i.test(ua);
+      const cores = navigator.hardwareConcurrency || 4;
+
+      if (isOldMobile || (isMobile && memory <= 2) || cores <= 2) {
+        return 'low';
+      } else if (isMobile || memory <= 4 || cores <= 4) {
+        return 'mid';
+      }
+      return 'high';
+    };
+
+    // Gunakan session storage untuk cache hasil deteksi
+    try {
+      const cached = sessionStorage.getItem('device-tier');
+      if (cached) {
+        setDeviceTier(cached as 'high' | 'mid' | 'low');
+      } else {
+        const detected = detectTier();
+        setDeviceTier(detected);
+        sessionStorage.setItem('device-tier', detected);
+      }
+    } catch {
+      setDeviceTier(detectTier());
+    }
+  }, []);
+
+  return deviceTier;
+};
+
+// Feature detection yang ter-cache untuk peningkatan performa
+const useFeatureDetection = () => {
+  const [features, setFeatures] = useState({
+    svgFilters: false,
+    backdropFilter: false,
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    // Coba ambil dari session storage dulu
+    try {
+      const cached = sessionStorage.getItem('glass-features');
+      if (cached) {
+        setFeatures(JSON.parse(cached));
+        return;
+      }
+    } catch {
+      // Ignore errors, continue with detection
+    }
+
+    // Lakukan deteksi jika belum ada cache
+    const svgFilters = (() => {
+      const isWebkit =
+        /Safari/.test(navigator.userAgent) &&
+        !/Chrome/.test(navigator.userAgent);
+      const isFirefox = /Firefox/.test(navigator.userAgent);
+
+      if (isWebkit || isFirefox) return false;
+
+      const div = document.createElement('div');
+      try {
+        (div.style as any).backdropFilter = 'url(#test)';
+        return !!(div.style as any).backdropFilter;
+      } catch {
+        return false;
+      }
+    })();
+
+    const backdropFilter = (() => {
+      try {
+        return (
+          CSS &&
+          typeof CSS.supports === 'function' &&
+          CSS.supports('backdrop-filter', 'blur(10px)')
+        );
+      } catch {
+        return false;
+      }
+    })();
+
+    const newFeatures = { svgFilters, backdropFilter };
+    setFeatures(newFeatures);
+
+    // Cache hasil untuk session
+    try {
+      sessionStorage.setItem('glass-features', JSON.stringify(newFeatures));
+    } catch {
+      // Ignore storage errors
+    }
+  }, []);
+
+  return features;
+};
+
 const GlassSurface: React.FC<GlassSurfaceProps> = ({
   children,
   width = 200,
@@ -93,34 +200,95 @@ const GlassSurface: React.FC<GlassSurfaceProps> = ({
   const greenChannelRef = useRef<SVGFEDisplacementMapElement>(null);
   const blueChannelRef = useRef<SVGFEDisplacementMapElement>(null);
   const gaussianBlurRef = useRef<SVGFEGaussianBlurElement>(null);
-  // Perf: cache generated map and last dims to avoid unnecessary regeneration
+
+  // Refs untuk optimasi
   const cachedMapRef = useRef<string | null>(null);
   const lastDimsRef = useRef<{ width: number; height: number } | null>(null);
   const isVisibleRef = useRef<boolean>(true);
+  const isScrollingRef = useRef<boolean>(false);
   const resizeDebounceRef = useRef<number | null>(null);
+  const initialRenderRef = useRef<boolean>(true);
 
   const isDarkMode = useDarkMode();
+  const deviceTier = useDeviceOptimization();
+  const useLightweightMode = deviceTier === 'low';
+  const useMidMode = deviceTier === 'mid';
+  const features = useFeatureDetection();
+
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
+    initialRenderRef.current = true;
+
+    // Tandai render awal selesai setelah paint pertama
+    const timeout = setTimeout(() => {
+      initialRenderRef.current = false;
+    }, 100);
+
+    return () => clearTimeout(timeout);
   }, []);
 
+  // Props yang disesuaikan untuk berbagai tier device
+  const adjustedProps = {
+    borderRadius: useMidMode ? Math.min(borderRadius, 16) : borderRadius,
+    borderWidth: useLightweightMode ? 0.03 : useMidMode ? 0.05 : borderWidth,
+    brightness: useMidMode ? brightness - 5 : brightness,
+    opacity: useLightweightMode ? Math.min(opacity + 0.05, 1) : opacity,
+    blur: useLightweightMode ? Math.min(blur - 3, 8) : useMidMode ? Math.min(blur, 10) : blur,
+    displace: useLightweightMode ? Math.max(displace - 2, 0) : displace,
+  };
+
   const generateDisplacementMap = useCallback(() => {
-    if (!containerRef.current) return cachedMapRef.current || '';
-    if (!isVisibleRef.current && cachedMapRef.current)
-      return cachedMapRef.current;
-    const rect = containerRef.current.getBoundingClientRect();
-    const actualWidth = Math.max(1, Math.round(rect.width || 400));
-    const actualHeight = Math.max(1, Math.round(rect.height || 200));
-    if (lastDimsRef.current) {
+    if (!containerRef.current) return '';
+
+    // If cached and dimensions exist, try to reuse
+    if (cachedMapRef.current && lastDimsRef.current) {
       const { width: lw, height: lh } = lastDimsRef.current;
-      if (Math.abs(lw - actualWidth) < 4 && Math.abs(lh - actualHeight) < 4) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const actualWidth = Math.max(1, Math.round(rect.width || 400));
+      const actualHeight = Math.max(1, Math.round(rect.height || 200));
+      const threshold = useMidMode ? 10 : 4;
+      if (Math.abs(lw - actualWidth) < threshold && Math.abs(lh - actualHeight) < threshold) {
         return cachedMapRef.current || '';
       }
     }
-    const edgeSize = Math.min(actualWidth, actualHeight) * (borderWidth * 0.5);
 
+    // Skip if not visible and we have a cache
+    if (!isVisibleRef.current && cachedMapRef.current) return cachedMapRef.current;
+
+    // Skip during scrolling
+    if (isScrollingRef.current) return cachedMapRef.current || '';
+
+    const rect = containerRef.current.getBoundingClientRect();
+    const actualWidth = Math.max(1, Math.round(rect.width || 400));
+    const actualHeight = Math.max(1, Math.round(rect.height || 200));
+
+    // Threshold changes
+    if (lastDimsRef.current) {
+      const { width: lw, height: lh } = lastDimsRef.current;
+      const threshold = useMidMode ? 10 : 4;
+      if (Math.abs(lw - actualWidth) < threshold && Math.abs(lh - actualHeight) < threshold) {
+        return cachedMapRef.current || '';
+      }
+    }
+
+    const edgeSize = Math.min(actualWidth, actualHeight) * (adjustedProps.borderWidth * 0.5);
+
+    // Simple SVG for mid-tier
+    if (useMidMode) {
+      const simpleSvgContent = `
+        <svg viewBox="0 0 ${actualWidth} ${actualHeight}" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="${actualWidth}" height="${actualHeight}" rx="${adjustedProps.borderRadius}" fill="hsl(0 0% ${adjustedProps.brightness}% / ${adjustedProps.opacity})" />
+        </svg>
+      `;
+      const dataUrl = `data:image/svg+xml,${encodeURIComponent(simpleSvgContent)}`;
+      cachedMapRef.current = dataUrl;
+      lastDimsRef.current = { width: actualWidth, height: actualHeight };
+      return dataUrl;
+    }
+
+    // Full SVG for high-end
     const svgContent = `
       <svg viewBox="0 0 ${actualWidth} ${actualHeight}" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -134,57 +302,121 @@ const GlassSurface: React.FC<GlassSurfaceProps> = ({
           </linearGradient>
         </defs>
         <rect x="0" y="0" width="${actualWidth}" height="${actualHeight}" fill="black"></rect>
-        <rect x="0" y="0" width="${actualWidth}" height="${actualHeight}" rx="${borderRadius}" fill="url(#${redGradId})" />
-        <rect x="0" y="0" width="${actualWidth}" height="${actualHeight}" rx="${borderRadius}" fill="url(#${blueGradId})" style="mix-blend-mode: ${mixBlendMode}" />
-        <rect x="${edgeSize}" y="${edgeSize}" width="${actualWidth - edgeSize * 2}" height="${actualHeight - edgeSize * 2}" rx="${borderRadius}" fill="hsl(0 0% ${brightness}% / ${opacity})" style="filter:blur(${blur}px)" />
+        <rect x="0" y="0" width="${actualWidth}" height="${actualHeight}" rx="${adjustedProps.borderRadius}" fill="url(#${redGradId})" />
+        <rect x="0" y="0" width="${actualWidth}" height="${actualHeight}" rx="${adjustedProps.borderRadius}" fill="url(#${blueGradId})" style="mix-blend-mode: ${mixBlendMode}" />
+        <rect x="${edgeSize}" y="${edgeSize}" width="${actualWidth - edgeSize * 2}" height="${actualHeight - edgeSize * 2}" rx="${adjustedProps.borderRadius}" fill="hsl(0 0% ${adjustedProps.brightness}% / ${adjustedProps.opacity})" style="filter:blur(${adjustedProps.blur}px)" />
       </svg>
     `;
+
     const dataUrl = `data:image/svg+xml,${encodeURIComponent(svgContent)}`;
     cachedMapRef.current = dataUrl;
     lastDimsRef.current = { width: actualWidth, height: actualHeight };
     return dataUrl;
   }, [
-    borderWidth,
-    borderRadius,
-    brightness,
-    opacity,
-    blur,
+    useMidMode,
+    adjustedProps.borderWidth,
+    adjustedProps.borderRadius,
+    adjustedProps.brightness,
+    adjustedProps.opacity,
+    adjustedProps.blur,
     mixBlendMode,
     redGradId,
     blueGradId,
   ]);
 
   const updateDisplacementMap = useCallback(() => {
-    feImageRef.current?.setAttribute('href', generateDisplacementMap());
-  }, [generateDisplacementMap]);
+    // Lewati update untuk mode lightweight
+    if (useLightweightMode) return;
 
+    // Lewati jika tidak visible atau selama render awal
+    if (!isVisibleRef.current || initialRenderRef.current) return;
+
+    // Lewati jika scrolling
+    if (isScrollingRef.current) return;
+
+    // Hanya update SVG jika kita menggunakannya
+    if (feImageRef.current && deviceTier === 'high') {
+      feImageRef.current.setAttribute('href', generateDisplacementMap());
+    }
+  }, [generateDisplacementMap, useLightweightMode, deviceTier]);
+
+  // Deteksi scrolling
   useEffect(() => {
-    updateDisplacementMap();
-    [
-      { ref: redChannelRef, offset: redOffset },
-      { ref: greenChannelRef, offset: greenOffset },
-      { ref: blueChannelRef, offset: blueOffset },
-    ].forEach(({ ref, offset }) => {
-      if (ref.current) {
-        ref.current.setAttribute(
-          'scale',
-          (distortionScale + offset).toString(),
-        );
-        ref.current.setAttribute('xChannelSelector', xChannel);
-        ref.current.setAttribute('yChannelSelector', yChannel);
-      }
-    });
+    if (typeof window === 'undefined') return;
 
-    gaussianBlurRef.current?.setAttribute('stdDeviation', displace.toString());
+    let scrollTimeout: NodeJS.Timeout;
+
+    const handleScroll = () => {
+      isScrollingRef.current = true;
+
+      // Hapus timeout yang ada
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+
+      // Set timeout baru
+      scrollTimeout = setTimeout(
+        () => {
+          isScrollingRef.current = false;
+
+          // Update setelah scrolling berhenti, tapi hanya jika visible dan bukan lightweight mode
+          if (
+            isVisibleRef.current &&
+            !useLightweightMode &&
+            feImageRef.current
+          ) {
+            updateDisplacementMap();
+          }
+        },
+        useMidMode ? 300 : 150,
+      ); // Timeout lebih lama untuk mid-tier
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+    };
+  }, [updateDisplacementMap, useLightweightMode, useMidMode]);
+
+  // Apply parameter filter SVG saat properti terkait berubah
+  useEffect(() => {
+    // Lewati untuk lightweight mode
+    if (useLightweightMode) return;
+
+    // Hanya update jika kita di high-end device
+    if (deviceTier === 'high') {
+      updateDisplacementMap();
+
+      // Update parameter displacement
+      [
+        { ref: redChannelRef, offset: redOffset },
+        { ref: greenChannelRef, offset: greenOffset },
+        { ref: blueChannelRef, offset: blueOffset },
+      ].forEach(({ ref, offset }) => {
+        if (ref.current) {
+          ref.current.setAttribute(
+            'scale',
+            (distortionScale + offset).toString(),
+          );
+          ref.current.setAttribute('xChannelSelector', xChannel);
+          ref.current.setAttribute('yChannelSelector', yChannel);
+        }
+      });
+
+      gaussianBlurRef.current?.setAttribute(
+        'stdDeviation',
+        adjustedProps.displace.toString(),
+      );
+    }
   }, [
     width,
     height,
-    borderRadius,
-    borderWidth,
-    brightness,
-    opacity,
-    blur,
-    displace,
+    adjustedProps.borderRadius,
+    adjustedProps.borderWidth,
+    adjustedProps.brightness,
+    adjustedProps.opacity,
+    adjustedProps.blur,
+    adjustedProps.displace,
     distortionScale,
     redOffset,
     greenOffset,
@@ -193,122 +425,146 @@ const GlassSurface: React.FC<GlassSurfaceProps> = ({
     yChannel,
     mixBlendMode,
     updateDisplacementMap,
+    useLightweightMode,
+    deviceTier,
   ]);
 
+  // ResizeObserver yang dioptimasi
   useEffect(() => {
     if (!containerRef.current) return;
     const el = containerRef.current;
-    // Debounced ResizeObserver
+
+    // Delay debounce berbeda berdasarkan device
+    const debounceDelay = useLightweightMode ? 0 : useMidMode ? 200 : 100;
+
+    // ResizeObserver dengan debounce yang sesuai
     const resizeObserver = new ResizeObserver(() => {
       if (resizeDebounceRef.current)
         cancelAnimationFrame(resizeDebounceRef.current);
+
+      // Tidak perlu jadwalkan update untuk lightweight mode
+      if (useLightweightMode) return;
+
       resizeDebounceRef.current = requestAnimationFrame(() => {
-        updateDisplacementMap();
+        // Hanya jadwalkan jika visible dan tidak scrolling
+        if (
+          isVisibleRef.current &&
+          !isScrollingRef.current &&
+          !initialRenderRef.current
+        ) {
+          setTimeout(updateDisplacementMap, debounceDelay);
+        }
       });
     });
-    resizeObserver.observe(el);
-    // Visibility observer to avoid work when off-screen
+
+    // IntersectionObserver yang kurang sensitif untuk performa lebih baik
     const io = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
+        const wasVisible = isVisibleRef.current;
         isVisibleRef.current =
-          entry.isIntersecting && entry.intersectionRatio > 0;
-        if (isVisibleRef.current) {
-          updateDisplacementMap();
+          entry.isIntersecting && entry.intersectionRatio > 0.05;
+
+        // Hanya update saat menjadi visible setelah invisible
+        if (
+          isVisibleRef.current &&
+          !wasVisible &&
+          !useLightweightMode &&
+          !initialRenderRef.current
+        ) {
+          setTimeout(updateDisplacementMap, 100);
         }
       },
-      { threshold: [0, 0.01, 0.1] },
+      { threshold: [0, 0.05] }, // Threshold lebih sedikit untuk performa lebih baik
     );
+
+    resizeObserver.observe(el);
     io.observe(el);
 
     return () => {
       try {
         resizeObserver.disconnect();
-      } catch {
-        /* noop - ignore disconnect errors */
+      } catch (e: unknown) {
+        void e;
       }
       try {
         io.disconnect();
-      } catch {
-        /* noop - ignore disconnect errors */
+      } catch (e: unknown) {
+        void e;
       }
       if (resizeDebounceRef.current)
         cancelAnimationFrame(resizeDebounceRef.current);
       resizeDebounceRef.current = null;
     };
-  }, [updateDisplacementMap]);
-
-  // (removed duplicate ResizeObserver effect above)
-
-  useEffect(() => {
-    setTimeout(updateDisplacementMap, 0);
-  }, [width, height, updateDisplacementMap]);
-
-  const supportsSVGFilters = () => {
-    if (typeof window === 'undefined' || typeof document === 'undefined')
-      return false;
-
-    const isWebkit =
-      /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
-    const isFirefox = /Firefox/.test(navigator.userAgent);
-
-    if (isWebkit || isFirefox) {
-      return false;
-    }
-
-    const div = document.createElement('div');
-    // Some browsers expose backdropFilter only on element.style; try to detect support safely
-    try {
-      // use a harmless assignment and read back. The property is non-standard
-      // so tell TypeScript we expect it may not exist on the style type.
-      (div.style as any).backdropFilter = `url(#${filterId})`;
-      return !!(div.style as any).backdropFilter;
-    } catch {
-      return false;
-    }
-  };
-
-  const supportsBackdropFilter = () => {
-    if (typeof window === 'undefined') return false;
-    try {
-      return (
-        CSS &&
-        typeof CSS.supports === 'function' &&
-        CSS.supports('backdrop-filter', 'blur(10px)')
-      );
-    } catch {
-      return false;
-    }
-  };
+  }, [updateDisplacementMap, useLightweightMode, useMidMode]);
 
   const getContainerStyles = (client = false): React.CSSProperties => {
-    // base styles are kept minimal and consistent across SSR and initial client render
+    // style dasar yang sama untuk semua rendering
     const baseStyles: React.CSSProperties = {
       ...style,
       width: typeof width === 'number' ? `${width}px` : width,
       height: typeof height === 'number' ? `${height}px` : height,
-      borderRadius: `${borderRadius}px`,
-      // always use strings for CSS custom properties to avoid number/string mismatches
+      borderRadius: `${adjustedProps.borderRadius}px`,
       ['--glass-frost' as any]: String(backgroundOpacity),
       ['--glass-saturation' as any]: String(saturation),
-    } as React.CSSProperties;
+    };
 
+    // Server / pre-mount: kembalikan minimal styles untuk SSR
     if (!client) {
-      // server / pre-mount: return a conservative, stable style that matches between server and client
       return {
         ...baseStyles,
         background: isDarkMode
           ? `rgba(0,0,0,${backgroundOpacity})`
           : `rgba(255,255,255,${backgroundOpacity})`,
-        // don't include backdropFilter or complex boxShadow before client-side feature detection
       };
     }
 
-    // client-side: compute feature-detected styles
-    const svgSupported = supportsSVGFilters();
-    const backdropFilterSupported = supportsBackdropFilter();
+    // Mobile low-end: sangat disederhanakan
+    if (useLightweightMode) {
+      return {
+        ...baseStyles,
+        background: isDarkMode
+          ? `rgba(0,0,0,${backgroundOpacity * 1.3})`
+          : `rgba(255,255,255,${backgroundOpacity * 1.3})`,
+        backdropFilter: features.backdropFilter
+          ? `blur(8px) saturate(${saturation})`
+          : undefined,
+        WebkitBackdropFilter: features.backdropFilter
+          ? `blur(8px) saturate(${saturation})`
+          : undefined,
+        border:
+          '1px solid ' +
+          (isDarkMode ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.25)'),
+        boxShadow: isDarkMode
+          ? '0 0 1px 0 rgba(255,255,255,0.15)'
+          : '0 0 1px 0 rgba(0,0,0,0.08)',
+      };
+    }
 
-    if (svgSupported) {
+    // Mid-range mobile: CSS sederhana saja, lewati SVG filters
+    if (useMidMode) {
+      return {
+        ...baseStyles,
+        background: isDarkMode
+          ? `rgba(0,0,0,${backgroundOpacity * 1.2})`
+          : `rgba(255,255,255,${backgroundOpacity * 1.2})`,
+        backdropFilter: features.backdropFilter
+          ? `blur(${adjustedProps.blur}px) saturate(${saturation})`
+          : undefined,
+        WebkitBackdropFilter: features.backdropFilter
+          ? `blur(${adjustedProps.blur}px) saturate(${saturation})`
+          : undefined,
+        border:
+          '1px solid ' +
+          (isDarkMode ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.25)'),
+        boxShadow: isDarkMode
+          ? '0 1px 2px 0 rgba(0,0,0,0.1), 0 0 1px 0 rgba(255,255,255,0.08) inset'
+          : '0 1px 3px 0 rgba(0,0,0,0.08), 0 0 1px 0 rgba(255,255,255,0.25) inset',
+      };
+    }
+
+    // High-end: full SVG filter dan efek
+    if (features.svgFilters) {
       return {
         ...baseStyles,
         background: isDarkMode
@@ -316,67 +572,44 @@ const GlassSurface: React.FC<GlassSurfaceProps> = ({
           : `hsl(0 0% 100% / ${backgroundOpacity})`,
         backdropFilter: `url(#${filterId}) saturate(${saturation})`,
         boxShadow: isDarkMode
-          ? `0 0 2px 1px color-mix(in oklch, white, transparent 65%) inset,
-             0 0 10px 4px color-mix(in oklch, white, transparent 85%) inset,
+          ? `0 0 2px 1px rgba(255,255,255,0.15) inset,
+             0 0 10px 4px rgba(255,255,255,0.05) inset,
              0px 4px 16px rgba(17, 17, 26, 0.05),
-             0px 8px 24px rgba(17, 17, 26, 0.05),
-             0px 16px 56px rgba(17, 17, 26, 0.05),
-             0px 4px 16px rgba(17, 17, 26, 0.05) inset,
-             0px 8px 24px rgba(17, 17, 26, 0.05) inset,
-             0px 16px 56px rgba(17, 17, 26, 0.05) inset`
-          : `0 0 2px 1px color-mix(in oklch, black, transparent 85%) inset,
-             0 0 10px 4px color-mix(in oklch, black, transparent 90%) inset,
+             0px 8px 24px rgba(17, 17, 26, 0.05)`
+          : `0 0 2px 1px rgba(0,0,0,0.15) inset,
+             0 0 10px 4px rgba(0,0,0,0.1) inset,
              0px 4px 16px rgba(17, 17, 26, 0.05),
-             0px 8px 24px rgba(17, 17, 26, 0.05),
-             0px 16px 56px rgba(17, 17, 26, 0.05),
-             0px 4px 16px rgba(17, 17, 26, 0.05) inset,
-             0px 8px 24px rgba(17, 17, 26, 0.05) inset,
-             0px 16px 56px rgba(17, 17, 26, 0.05) inset`,
+             0px 8px 24px rgba(17, 17, 26, 0.05)`,
       };
     }
 
-    if (isDarkMode) {
-      if (!backdropFilterSupported) {
-        return {
-          ...baseStyles,
-          background: 'rgba(0, 0, 0, 0.4)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          boxShadow: `inset 0 1px 0 0 rgba(255, 255, 255, 0.2),
-                        inset 0 -1px 0 0 rgba(255, 255, 255, 0.1)`,
-        };
-      }
-
+    // Fallback untuk browser tanpa SVG filters
+    if (features.backdropFilter) {
       return {
         ...baseStyles,
-        background: 'rgba(255, 255, 255, 0.1)',
-        backdropFilter: 'blur(12px) saturate(1.8) brightness(1.2)',
-        WebkitBackdropFilter: 'blur(12px) saturate(1.8) brightness(1.2)',
-        border: '1px solid rgba(255, 255, 255, 0.2)',
-        boxShadow: `inset 0 1px 0 0 rgba(255, 255, 255, 0.2),
-                        inset 0 -1px 0 0 rgba(255, 255, 255, 0.1)`,
+        background: isDarkMode
+          ? 'rgba(255, 255, 255, 0.1)'
+          : 'rgba(255, 255, 255, 0.25)',
+        backdropFilter: `blur(${adjustedProps.blur}px) saturate(${saturation}) brightness(1.1)`,
+        WebkitBackdropFilter: `blur(${adjustedProps.blur}px) saturate(${saturation}) brightness(1.1)`,
+        border: isDarkMode
+          ? '1px solid rgba(255, 255, 255, 0.2)'
+          : '1px solid rgba(255, 255, 255, 0.3)',
+        boxShadow: isDarkMode
+          ? 'inset 0 1px 0 0 rgba(255, 255, 255, 0.2)'
+          : '0 8px 32px 0 rgba(31, 38, 135, 0.1)',
       };
     }
 
-    if (!backdropFilterSupported) {
-      return {
-        ...baseStyles,
-        background: 'rgba(255, 255, 255, 0.4)',
-        border: '1px solid rgba(255, 255, 255, 0.3)',
-        boxShadow: `inset 0 1px 0 0 rgba(255, 255, 255, 0.5),
-                        inset 0 -1px 0 0 rgba(255, 255, 255, 0.3)`,
-      };
-    }
-
+    // Fallback absolut untuk browser lama
     return {
       ...baseStyles,
-      background: 'rgba(255, 255, 255, 0.25)',
-      backdropFilter: 'blur(12px) saturate(1.8) brightness(1.1)',
-      WebkitBackdropFilter: 'blur(12px) saturate(1.8) brightness(1.1)',
-      border: '1px solid rgba(255, 255, 255, 0.3)',
-      boxShadow: `0 8px 32px 0 rgba(31, 38, 135, 0.2),
-                        0 2px 16px 0 rgba(31, 38, 135, 0.1),
-                        inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
-                        inset 0 -1px 0 0 rgba(255, 255, 255, 0.2)`,
+      background: isDarkMode
+        ? 'rgba(0, 0, 0, 0.4)'
+        : 'rgba(255, 255, 255, 0.4)',
+      border: isDarkMode
+        ? '1px solid rgba(255, 255, 255, 0.2)'
+        : '1px solid rgba(255, 255, 255, 0.3)',
     };
   };
 
@@ -393,90 +626,93 @@ const GlassSurface: React.FC<GlassSurfaceProps> = ({
       className={`${glassSurfaceClasses} ${focusVisibleClasses} ${className}`}
       style={isMounted ? getContainerStyles(true) : getContainerStyles(false)}
     >
-      <svg
-        className='pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-0'
-        xmlns='http://www.w3.org/2000/svg'
-      >
-        <defs>
-          <filter
-            id={filterId}
-            colorInterpolationFilters='sRGB'
-            x='0%'
-            y='0%'
-            width='100%'
-            height='100%'
-          >
-            <feImage
-              ref={feImageRef}
-              x='0'
-              y='0'
+      {/* Render SVG filter hanya untuk device high-end */}
+      {isMounted && deviceTier === 'high' && features.svgFilters && (
+        <svg
+          className='pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-0'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <defs>
+            <filter
+              id={filterId}
+              colorInterpolationFilters='sRGB'
+              x='0%'
+              y='0%'
               width='100%'
               height='100%'
-              preserveAspectRatio='none'
-              result='map'
-            />
+            >
+              <feImage
+                ref={feImageRef}
+                x='0'
+                y='0'
+                width='100%'
+                height='100%'
+                preserveAspectRatio='none'
+                result='map'
+              />
 
-            <feDisplacementMap
-              ref={redChannelRef}
-              in='SourceGraphic'
-              in2='map'
-              id='redchannel'
-              result='dispRed'
-            />
-            <feColorMatrix
-              in='dispRed'
-              type='matrix'
-              values='1 0 0 0 0
-                      0 0 0 0 0
-                      0 0 0 0 0
-                      0 0 0 1 0'
-              result='red'
-            />
+              <feDisplacementMap
+                ref={redChannelRef}
+                in='SourceGraphic'
+                in2='map'
+                id='redchannel'
+                result='dispRed'
+              />
+              <feColorMatrix
+                in='dispRed'
+                type='matrix'
+                values='1 0 0 0 0
+                        0 0 0 0 0
+                        0 0 0 0 0
+                        0 0 0 1 0'
+                result='red'
+              />
 
-            <feDisplacementMap
-              ref={greenChannelRef}
-              in='SourceGraphic'
-              in2='map'
-              id='greenchannel'
-              result='dispGreen'
-            />
-            <feColorMatrix
-              in='dispGreen'
-              type='matrix'
-              values='0 0 0 0 0
-                      0 1 0 0 0
-                      0 0 0 0 0
-                      0 0 0 1 0'
-              result='green'
-            />
+              <feDisplacementMap
+                ref={greenChannelRef}
+                in='SourceGraphic'
+                in2='map'
+                id='greenchannel'
+                result='dispGreen'
+              />
+              <feColorMatrix
+                in='dispGreen'
+                type='matrix'
+                values='0 0 0 0 0
+                        0 1 0 0 0
+                        0 0 0 0 0
+                        0 0 0 1 0'
+                result='green'
+              />
 
-            <feDisplacementMap
-              ref={blueChannelRef}
-              in='SourceGraphic'
-              in2='map'
-              id='bluechannel'
-              result='dispBlue'
-            />
-            <feColorMatrix
-              in='dispBlue'
-              type='matrix'
-              values='0 0 0 0 0
-                      0 0 0 0 0
-                      0 0 1 0 0
-                      0 0 0 1 0'
-              result='blue'
-            />
+              <feDisplacementMap
+                ref={blueChannelRef}
+                in='SourceGraphic'
+                in2='map'
+                id='bluechannel'
+                result='dispBlue'
+              />
+              <feColorMatrix
+                in='dispBlue'
+                type='matrix'
+                values='0 0 0 0 0
+                        0 0 0 0 0
+                        0 0 1 0 0
+                        0 0 0 1 0'
+                result='blue'
+              />
 
-            <feBlend in='red' in2='green' mode='screen' result='rg' />
-            <feBlend in='rg' in2='blue' mode='screen' result='output' />
-            <feGaussianBlur
-              ref={gaussianBlurRef}
-              in='output'
-              stdDeviation='0.7'
-            />
-          </filter>
-        </defs>
-      </svg>
+              <feBlend in='red' in2='green' mode='screen' result='rg' />
+              <feBlend in='rg' in2='blue' mode='screen' result='output' />
+              <feGaussianBlur
+                ref={gaussianBlurRef}
+                in='output'
+                stdDeviation='0.7'
+              />
+            </filter>
+          </defs>
+        </svg>
+      )}
 
       <div className='relative z-10 flex h-full w-full items-center justify-center rounded-[inherit] p-2'>
         {children}
