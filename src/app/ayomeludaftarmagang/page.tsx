@@ -1,11 +1,11 @@
 'use client';
 
 import { CheckCircle2, TriangleAlert } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import * as React from 'react';
 
 import ApplyMagangForm from '@/app/ayomeludaftarmagang/components/ApplyMagangForm';
 import GlassSurface from '@/components/GlassSurface';
-import LiquidEther from '@/components/LiquidEther';
 import Typography from '@/components/Typography';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -28,7 +28,44 @@ import { useScheduleAutoRedirect } from '@/hooks/useSchedule';
  * Data submission is delegated to a dedicated TanStack mutation hook.
  */
 export default function ApplyMagangPage() {
-  // Dialog states
+  const [effectsEnabled, setEffectsEnabled] = React.useState(true);
+  React.useEffect(() => {
+    try {
+      const prefersReduced =
+        typeof window !== 'undefined' &&
+        typeof window.matchMedia === 'function' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) setEffectsEnabled(false);
+    } catch {
+      /* noop */
+    }
+  }, []);
+  React.useEffect(() => {
+    let isMounted = true;
+    const anyNavigator: any =
+      typeof navigator !== 'undefined' ? navigator : null;
+    if (anyNavigator && typeof anyNavigator.getBattery === 'function') {
+      anyNavigator
+        .getBattery()
+        .then((bat: any) => {
+          if (!isMounted || !bat) return;
+          const update = () => {
+            if (!isMounted) return;
+            if (bat.level < 0.2 && !bat.charging) setEffectsEnabled(false);
+          };
+          update();
+          bat.addEventListener('levelchange', update);
+          bat.addEventListener('chargingchange', update);
+        })
+        .catch(() => {
+          /* ignore */
+        });
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const [openSuccess, setOpenSuccess] = React.useState(false);
   const [openError, setOpenError] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState<string>('');
@@ -41,27 +78,41 @@ export default function ApplyMagangPage() {
     [],
   );
 
+  const LiquidEtherNoSSR = React.useMemo(
+    () =>
+      dynamic(() => import('@/components/LiquidEther'), {
+        ssr: false,
+        loading: () => (
+          <div className='absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-900 to-black' />
+        ),
+      }),
+    [],
+  );
+
   return (
     <section className='relative min-h-screen w-full overflow-hidden'>
       <div className='absolute inset-0 -z-10 bg-gradient-to-b from-neutral-950 via-neutral-900 to-black'>
-        <LiquidEther
-          colors={etherColors}
-          mouseForce={20}
-          cursorSize={120}
-          isViscous={true}
-          viscous={40}
-          iterationsViscous={35}
-          iterationsPoisson={32}
-          resolution={0.3}
-          isBounce={false}
-          autoDemo={true}
-          autoSpeed={0.5}
-          autoIntensity={2.7}
-          takeoverDuration={0.25}
-          autoResumeDelay={3000}
-          autoRampDuration={0.6}
-          style={{ width: '100%', height: '100%', position: 'relative' }}
-        />
+        {effectsEnabled ? (
+          <LiquidEtherNoSSR
+            colors={etherColors}
+            mouseForce={20}
+            cursorSize={120}
+            isViscous={true}
+            viscous={40}
+            iterationsViscous={35}
+            iterationsPoisson={32}
+            resolution={0.3}
+            isBounce={false}
+            autoDemo={true}
+            autoSpeed={0.5}
+            autoIntensity={2.7}
+            takeoverDuration={0.25}
+            autoResumeDelay={3000}
+            autoRampDuration={0.6}
+            adaptiveQuality={true}
+            style={{ width: '100%', height: '100%', position: 'relative' }}
+          />
+        ) : null}
       </div>
 
       <main className='mx-auto w-full max-w-3xl px-5 py-12 md:px-8 md:py-20'>
