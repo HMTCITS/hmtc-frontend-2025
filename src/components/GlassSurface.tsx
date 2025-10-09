@@ -235,7 +235,11 @@ const GlassSurface: React.FC<GlassSurfaceProps> = ({
     borderWidth: useLightweightMode ? 0.03 : useMidMode ? 0.05 : borderWidth,
     brightness: useMidMode ? brightness - 5 : brightness,
     opacity: useLightweightMode ? Math.min(opacity + 0.05, 1) : opacity,
-    blur: useLightweightMode ? Math.min(blur - 3, 8) : useMidMode ? Math.min(blur, 10) : blur,
+    blur: useLightweightMode
+      ? Math.min(blur - 3, 8)
+      : useMidMode
+        ? Math.min(blur, 10)
+        : blur,
     displace: useLightweightMode ? Math.max(displace - 2, 0) : displace,
   };
 
@@ -249,13 +253,17 @@ const GlassSurface: React.FC<GlassSurfaceProps> = ({
       const actualWidth = Math.max(1, Math.round(rect.width || 400));
       const actualHeight = Math.max(1, Math.round(rect.height || 200));
       const threshold = useMidMode ? 10 : 4;
-      if (Math.abs(lw - actualWidth) < threshold && Math.abs(lh - actualHeight) < threshold) {
+      if (
+        Math.abs(lw - actualWidth) < threshold &&
+        Math.abs(lh - actualHeight) < threshold
+      ) {
         return cachedMapRef.current || '';
       }
     }
 
     // Skip if not visible and we have a cache
-    if (!isVisibleRef.current && cachedMapRef.current) return cachedMapRef.current;
+    if (!isVisibleRef.current && cachedMapRef.current)
+      return cachedMapRef.current;
 
     // Skip during scrolling
     if (isScrollingRef.current) return cachedMapRef.current || '';
@@ -268,12 +276,16 @@ const GlassSurface: React.FC<GlassSurfaceProps> = ({
     if (lastDimsRef.current) {
       const { width: lw, height: lh } = lastDimsRef.current;
       const threshold = useMidMode ? 10 : 4;
-      if (Math.abs(lw - actualWidth) < threshold && Math.abs(lh - actualHeight) < threshold) {
+      if (
+        Math.abs(lw - actualWidth) < threshold &&
+        Math.abs(lh - actualHeight) < threshold
+      ) {
         return cachedMapRef.current || '';
       }
     }
 
-    const edgeSize = Math.min(actualWidth, actualHeight) * (adjustedProps.borderWidth * 0.5);
+    const edgeSize =
+      Math.min(actualWidth, actualHeight) * (adjustedProps.borderWidth * 0.5);
 
     // Simple SVG for mid-tier
     if (useMidMode) {
