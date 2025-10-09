@@ -5,14 +5,14 @@ import { FileSpreadsheet } from 'lucide-react';
 import * as React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import {
-  ApplyMagangFormData,
-  applyMagangSchema,
-} from '@/app/ayomeludaftarmagang/validation/schema';
 import Input from '@/components/forms/Input';
 import { DocumentUpload } from '@/components/repository/DocumentUpload';
 import Typography from '@/components/Typography';
 import { Button } from '@/components/ui/button';
+import {
+  ApplyMagangFormData,
+  applyMagangSchema,
+} from '@/lib/validation/applyMagang.schema';
 
 /**
  * Props contract for ApplyMagangForm component.
