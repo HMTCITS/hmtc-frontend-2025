@@ -1,10 +1,11 @@
 import { api } from '@/lib/api/api';
 import type { ApiResponse } from '@/types/api';
-import type { 
-  AvatarUploadResponse, 
-  ChangePasswordRequest, 
-  UpdateProfileRequest, 
-  UserMe} from '@/types/profile';
+import type {
+  AvatarUploadResponse,
+  ChangePasswordRequest,
+  UpdateProfileRequest,
+  UserMe,
+} from '@/types/profile';
 
 /**
  * Get current user profile information
@@ -21,7 +22,7 @@ export const getCurrentUser = async (): Promise<ApiResponse<UserMe>> => {
  * @returns Promise<ApiResponse<UserMe>>
  */
 export const updateProfile = async (
-  data: UpdateProfileRequest
+  data: UpdateProfileRequest,
 ): Promise<ApiResponse<UserMe>> => {
   const response = await api.patch<ApiResponse<UserMe>>('/users/me', data);
   return response.data;
@@ -33,7 +34,7 @@ export const updateProfile = async (
  * @returns Promise<ApiResponse<AvatarUploadResponse>>
  */
 export const uploadAvatar = async (
-  file: File
+  file: File,
 ): Promise<ApiResponse<AvatarUploadResponse>> => {
   const formData = new FormData();
   formData.append('avatar', file);
@@ -45,9 +46,9 @@ export const uploadAvatar = async (
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-    }
+    },
   );
-  
+
   return response.data;
 };
 
@@ -57,13 +58,13 @@ export const uploadAvatar = async (
  * @returns Promise<ApiResponse<{ message: string }>>
  */
 export const changePassword = async (
-  data: ChangePasswordRequest
+  data: ChangePasswordRequest,
 ): Promise<ApiResponse<{ message: string }>> => {
   const response = await api.post<ApiResponse<{ message: string }>>(
     '/auth/change-password',
-    data
+    data,
   );
-  
+
   return response.data;
 };
 
