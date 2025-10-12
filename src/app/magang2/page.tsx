@@ -4,7 +4,8 @@ import { CheckCircle2, TriangleAlert } from 'lucide-react';
 import React from 'react';
 
 import ApplyMagangForm from '@/app/magang2/components/ApplyMagangForm';
-import PlaneBackground from '@/app/magang2/components/PlaneBackground';
+import DotGrid from '@/app/magang2/components/DotGrid';
+import GradientText from '@/app/magang2/components/GradientText';
 import TitleAnimation from '@/app/magang2/components/TitleAnimation';
 import Typography from '@/components/Typography';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -28,33 +29,60 @@ export default function Magang2Page() {
   const { mutateAsync } = useApplyMagang();
 
   return (
-    <div className='relative w-full'>
-      {/* Black background overlay for top area (above PlaneBackground) */}
-      <div className='absolute inset-x-0 top-0 -z-10 h-[80vh] bg-black'></div>
+    <div className='relative min-h-screen w-full'>
+      {/* DotGrid as absolute background that follows content height */}
+      <div
+        className='absolute inset-0 -z-10 w-full bg-black'
+        style={{ minHeight: '100%' }}
+      >
+        <DotGrid
+          dotSize={5}
+          gap={15}
+          baseColor='#1C1C1C'
+          activeColor='#0040FF'
+          proximity={120}
+          shockRadius={250}
+          shockStrength={5}
+          resistance={750}
+          returnDuration={1.5}
+          className='min-h-full'
+        />
+      </div>
 
       {/* Main content */}
-      <div className='relative z-10 min-h-screen w-full'>
+      <div className='relative z-10 w-full'>
         <main className='mx-auto w-full max-w-6xl px-5 py-12 md:px-8 md:py-20'>
           <div className='grid grid-cols-1 items-center justify-center gap-12 lg:grid-cols-1'>
             {/* Top - Header */}
-            <div className='mt-[10rem] flex items-start justify-start'>
+            <div className='relative mt-[10rem] py-10 flex flex-col items-start justify-start'>
               <TitleAnimation />
-              {/* <IdleAnimation /> */}
             </div>
 
             {/* Bottom - Form */}
             <div className='mx-auto mb-32 w-full max-w-xl'>
-              <Card className='border-1 border-white/10 bg-white/1 shadow-xl backdrop-blur-sm'>
+              <Card className='border-1 border-white/10 bg-white/1 shadow-xl backdrop-blur-xs'>
                 <CardHeader className='space-y-2 pb-0'>
                   <CardTitle>
-                    <Typography
-                      as='h1'
-                      font='satoshi'
-                      weight='bold'
-                      className='text-3xl leading-tight tracking-tight text-white md:text-4xl'
+                    <GradientText
+                      colors={[
+                        '#2F6FED',
+                        '#1699E7',
+                        '#2F6FED',
+                        '#1699E7',
+                        '#2F6FED',
+                      ]}
+                      animationSpeed={8}
+                      showBorder={false}
                     >
-                      Rekrutmen Anak Magang HMTC
-                    </Typography>
+                      <Typography
+                        as='h1'
+                        font='satoshi'
+                        weight='bold'
+                        className='text-3xl leading-tight tracking-tight md:text-4xl'
+                      >
+                        Rekrutmen Anak Magang HMTC
+                      </Typography>
+                    </GradientText>
                   </CardTitle>
                   <Typography
                     as='p'
@@ -129,7 +157,6 @@ export default function Magang2Page() {
       </div>
 
       {/* Background anchored from bottom - follows scroll */}
-      <PlaneBackground />
     </div>
   );
 }
