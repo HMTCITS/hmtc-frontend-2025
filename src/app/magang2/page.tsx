@@ -60,7 +60,7 @@ export default function Magang2Page() {
 
             {/* Bottom - Form */}
             <div className='mx-auto mb-32 w-full max-w-xl'>
-              <Card className='border-1 border-white/10 bg-white/1 shadow-xl backdrop-blur-xs'>
+              <Card className='border-1 border-white/10 bg-white/5 shadow-xl backdrop-blur-xs'>
                 <CardHeader className='space-y-2 pb-0'>
                   <CardTitle>
                     <GradientText
@@ -78,7 +78,7 @@ export default function Magang2Page() {
                         as='h1'
                         font='satoshi'
                         weight='bold'
-                        className='text-3xl leading-tight tracking-tight md:text-4xl'
+                        className='text-3xl leading-tight tracking-tight md:text-4xl bg-none'
                       >
                         Rekrutmen Anak Magang HMTC
                       </Typography>
