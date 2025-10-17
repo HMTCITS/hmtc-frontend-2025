@@ -6,7 +6,7 @@ import {
   detectDeviceTier,
   devicePresets,
   getBatteryStatus,
-} from '../lib/utils/device-detection';
+} from '../../lib/utils/device-detection';
 
 export interface LiquidEtherProps {
   mouseForce?: number;
@@ -205,33 +205,7 @@ export default function LiquidEther({
     fpsCapIdleAfterMs = devicePreset.fpsCapIdleAfterMs;
 
   // For debugging in development
-  if (process.env.NODE_ENV === 'development') {
-    // Dev-only diagnostics
-    // eslint-disable-next-line no-console
-    console.log(`[LiquidEther] Using ${deviceTier} device preset:`, {
-      resolution,
-      iterationsPoisson,
-      iterationsViscous,
-      dt,
-      capMobileFps,
-      powerSaving: usePowerSaving,
-      batteryLevel: batteryStatus.level,
-      charging: batteryStatus.charging,
-      lowPowerMode: batteryStatus.lowPowerMode,
-    });
-  }
-
-  // For debugging in development
-  if (process.env.NODE_ENV === 'development') {
-    // eslint-disable-next-line no-console
-    console.log(`[LiquidEther] Using ${deviceTier} device preset:`, {
-      resolution,
-      iterationsPoisson,
-      iterationsViscous,
-      dt,
-      capMobileFps,
-    });
-  }
+  // Development logs suppressed
   const mountRef = useRef<HTMLDivElement | null>(null);
   const webglRef = useRef<LiquidEtherWebGL | null>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
@@ -1463,12 +1437,7 @@ export default function LiquidEther({
                 Math.min(1, window.devicePixelRatio / preset.textureDownsample),
               );
 
-              if (process.env.NODE_ENV === 'development') {
-                // eslint-disable-next-line no-console
-                console.log(
-                  `[LiquidEther] Memory optimization for ${this._deviceTier} tier: textureDownsample=${preset.textureDownsample}`,
-                );
-              }
+              // Memory optimization debug log suppressed
             }
           } catch {
             // Silent catch if WebGL context access fails
@@ -1492,18 +1461,7 @@ export default function LiquidEther({
           // Start with initial low resolution
           this.baseResolution = this._initialResolution;
 
-          if (process.env.NODE_ENV === 'development') {
-            // eslint-disable-next-line no-console
-            console.log(
-              `[LiquidEther] Progressive loading enabled for ${this._deviceTier} tier:`,
-              {
-                initialResolution: this._initialResolution,
-                targetResolution: this._targetResolution,
-                duration: this._progressiveDuration,
-                steps: this._progressiveSteps,
-              },
-            );
-          }
+          // Progressive loading debug log suppressed
         }
 
         this.init();
@@ -1545,12 +1503,7 @@ export default function LiquidEther({
             this._handleContextRestored,
           );
 
-          if (process.env.NODE_ENV === 'development') {
-            // eslint-disable-next-line no-console
-            console.log(
-              '[LiquidEther] Enhanced WebGL context loss handling enabled',
-            );
-          }
+          // Enhanced WebGL context loss handling log suppressed
         } catch {
           /* noop */
         }
@@ -1653,12 +1606,7 @@ export default function LiquidEther({
           sim.options.resolution = newResolution;
           sim.resize();
 
-          if (process.env.NODE_ENV === 'development') {
-            // eslint-disable-next-line no-console
-            console.log(
-              `[LiquidEther] Progressive quality step ${this._progressiveStep}/${this._progressiveSteps}: resolution=${newResolution.toFixed(3)}`,
-            );
-          }
+          // Progressive quality step log suppressed
         }
 
         // Mark as complete when we reach the final stage
@@ -1669,10 +1617,7 @@ export default function LiquidEther({
           sim.options.resolution = this._targetResolution;
           sim.resize();
 
-          if (process.env.NODE_ENV === 'development') {
-            // eslint-disable-next-line no-console
-            console.log('[LiquidEther] Progressive loading complete');
-          }
+          // Progressive loading complete log suppressed
         }
       }
 
@@ -1698,12 +1643,7 @@ export default function LiquidEther({
 
           this._isScrolling = true;
 
-          if (process.env.NODE_ENV === 'development') {
-            // eslint-disable-next-line no-console
-            console.log(
-              `[LiquidEther] Scroll throttling activated: resolution=${this._scrollThrottleResolution}`,
-            );
-          }
+          // Scroll throttling activation log suppressed
         }
 
         // Update last scroll time
@@ -1737,12 +1677,7 @@ export default function LiquidEther({
           sim.options.iterations_viscous = this._preScrollIterations;
           sim.resize();
 
-          if (process.env.NODE_ENV === 'development') {
-            // eslint-disable-next-line no-console
-            console.log(
-              `[LiquidEther] Scroll throttling deactivated: resolution restored to ${this._preScrollResolution}`,
-            );
-          }
+          // Scroll throttling deactivated log suppressed
         }
 
         this._isScrolling = false;
@@ -1758,12 +1693,7 @@ export default function LiquidEther({
         // Prevent the default behavior which can cause page hanging
         event.preventDefault();
 
-        if (process.env.NODE_ENV === 'development') {
-          // eslint-disable-next-line no-console
-          console.warn(
-            '[LiquidEther] WebGL context lost. Attempting to recover...',
-          );
-        }
+        // WebGL context lost recovery log suppressed
 
         // Pause animation loop to prevent further errors
         this.pause();
@@ -1806,12 +1736,7 @@ export default function LiquidEther({
        * Handles WebGL context restoration events
        */
       handleContextRestored() {
-        if (process.env.NODE_ENV === 'development') {
-          // eslint-disable-next-line no-console
-          console.log(
-            '[LiquidEther] WebGL context restored. Reinitializing...',
-          );
-        }
+        // WebGL context restored log suppressed
 
         try {
           // Reinitialize WebGL components
@@ -1831,16 +1756,13 @@ export default function LiquidEther({
             setTimeout(() => {
               try {
                 notification.parentNode?.removeChild(notification);
-              } catch {
-                // Ignore removal errors
+              } catch (err) {
+                void err;
               }
             }, 500); // Remove after fade out
           }
         } catch (err) {
-          if (process.env.NODE_ENV === 'development') {
-            // eslint-disable-next-line no-console
-            console.error('[LiquidEther] Error during context recovery:', err);
-          }
+          void err; // Error during context recovery suppressed
         }
       }
       private _recordFpsAndMaybeAdjust() {
@@ -1986,24 +1908,11 @@ export default function LiquidEther({
         this._inPowerSavingMode = usePowerSaving;
 
         // Log battery status in development
-        if (process.env.NODE_ENV === 'development') {
-          // eslint-disable-next-line no-console
-          console.log('[LiquidEther] Battery status update:', {
-            level: status.level,
-            charging: status.charging,
-            lowPower: status.lowPowerMode,
-            powerSaving: usePowerSaving,
-          });
-        }
+        // Battery status update log suppressed
 
         // If progressive loading is active, wait for it to complete before applying battery settings
         if (this._progressiveEnabled && !this._progressiveComplete) {
-          if (process.env.NODE_ENV === 'development') {
-            // eslint-disable-next-line no-console
-            console.log(
-              '[LiquidEther] Delaying battery optimization until progressive loading completes',
-            );
-          }
+          // Delayed battery optimization log suppressed
           return;
         }
 
