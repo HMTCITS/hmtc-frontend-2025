@@ -214,14 +214,14 @@ export default function Stepper({
               className={`px-8 pb-8 ${footerClassName} ${currentStep === 1 ? 'hidden' : ''}`}
             >
               <div
-                className={`mt-10 flex ${currentStep !== 1 ? 'justify-between' : 'justify-end'}`}
+                className={`mt-10 flex flex-col gap-4 sm:flex-row ${currentStep !== 1 ? 'sm:justify-between' : 'sm:justify-end'}`}
               >
                 {activeIndex !== 1 && (
                   <button
                     type='button'
                     data-stepper-back
                     onClick={handleBack}
-                    className={`cursor-pointer rounded px-2 py-1 transition duration-350 ${
+                    className={`w-full cursor-pointer rounded px-2 py-1 font-satoshi transition duration-350 sm:w-auto ${
                       currentStep === 1
                         ? 'pointer-events-none text-blue-300/60 opacity-50'
                         : 'text-blue-200 hover:text-blue-50'
@@ -231,12 +231,12 @@ export default function Stepper({
                     {backButtonText}
                   </button>
                 )}
-                <div className='flex items-center gap-3'>
+                <div className='flex flex-col gap-3 sm:flex-row sm:items-center'>
                   {onReset && (
                     <button
                       type='button'
                       onClick={() => onReset(currentStep)}
-                      className='cursor-pointer rounded px-2 py-1 text-blue-200 transition duration-350 hover:text-blue-50'
+                      className='w-full cursor-pointer rounded px-2 py-1 font-satoshi text-blue-200 transition duration-350 hover:text-blue-50 sm:w-auto'
                     >
                       {resetButtonText}
                     </button>
@@ -289,7 +289,7 @@ export default function Stepper({
                     }}
                     disabled={locked}
                     aria-disabled={locked}
-                    className={`flex cursor-pointer items-center justify-center rounded-lg bg-blue-500/30 px-3.5 py-1.5 font-medium tracking-tight text-white shadow-[0_10px_30px_-10px_rgba(46,106,247,0.55)] backdrop-blur-sm transition duration-350 hover:bg-blue-500/40 active:bg-blue-600/40 ${
+                    className={`flex w-full cursor-pointer items-center justify-center rounded-lg bg-blue-500/30 px-3.5 py-1.5 font-satoshi font-medium tracking-tight text-white shadow-[0_10px_30px_-10px_rgba(46,106,247,0.55)] backdrop-blur-sm transition duration-350 hover:bg-blue-500/40 active:bg-blue-600/40 sm:w-auto ${
                       locked ? 'pointer-events-none opacity-60' : ''
                     }`}
                     {...nextButtonProps}
