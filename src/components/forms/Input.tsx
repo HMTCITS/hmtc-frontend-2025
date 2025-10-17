@@ -113,6 +113,7 @@ export default function Input({
             LeftIcon && ['pl-10', inputWithLeftIconClassName],
             rightNode && 'pr-10',
             addon && 'rounded-l-none shadow-none',
+            'autofill-bg-transparent', // Add this class
             inputClassName,
           )}
           aria-describedby={id}

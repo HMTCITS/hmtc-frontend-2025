@@ -15,6 +15,8 @@ interface DocumentUploadProps {
   disabled?: boolean;
   className?: string;
   tone?: 'default' | 'glass';
+  accept?: string;
+  hint?: string;
 }
 
 export function DocumentUpload({
@@ -25,6 +27,8 @@ export function DocumentUpload({
   disabled = false,
   className,
   tone = 'default',
+  accept = '.pdf,.doc,.docx,.txt',
+  hint,
 }: DocumentUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -62,7 +66,7 @@ export function DocumentUpload({
       <input
         ref={inputRef}
         type='file'
-        accept='.pdf,.doc,.docx,.txt'
+        accept={accept}
         onChange={handleFileChange}
         className='hidden'
         disabled={disabled}
@@ -180,7 +184,7 @@ export function DocumentUpload({
                   : 'text-gray-500',
             )}
           >
-            PDF, DOC, DOCX, TXT (Max 10MB)
+            {hint ?? 'PDF, DOC, DOCX, TXT (Max 10MB)'}
           </Typography>
         </div>
       )}
