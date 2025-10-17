@@ -87,7 +87,16 @@ function toISO(d: Date) {
 }
 
 export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
+  // Request.url can be absolute or a path-only string depending on runtime.
+  // Be defensive and fall back to a constructed origin when needed.
+  let searchParams: URLSearchParams;
+  try {
+    searchParams = new URL(req.url).searchParams;
+  } catch {
+    const proto = req.headers.get('x-forwarded-proto') || 'http';
+    const host = req.headers.get('host') || 'localhost';
+    searchParams = new URL(req.url, `${proto}://${host}`).searchParams;
+  }
   const path = searchParams.get('path') || '/ayomeludaftarmagang';
   const config = getScheduleForPath(path);
 
