@@ -190,7 +190,6 @@ export function applyInterceptors(instance: AxiosInstance, opts?: ApplyOpts) {
 // Dynamic capture to avoid bundling Node instrumentation into client chunks
 function dynamicCapture(error: unknown) {
   if (process.env.NODE_ENV !== 'production') {
-    // eslint-disable-next-line no-console
-    console.warn('[capture]', error);
+    void error; // capture suppressed in dev to avoid console noise
   }
 }

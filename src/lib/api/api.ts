@@ -61,9 +61,9 @@ export function createApi(opts?: CreateApiOptions): AxiosInstance {
         }),
     });
   } catch (e) {
+    void e;
     if (process.env.NODE_ENV !== 'production') {
-      // eslint-disable-next-line no-console
-      console.warn('[api] interceptor setup error (non-blocking)', e);
+      // interceptor setup error (logged only in development previously)
     }
   }
 
