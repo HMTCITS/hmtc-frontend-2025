@@ -91,6 +91,7 @@ export default function HMTCIntroductionStep({
       <div className='intro-stagger flex flex-col items-center justify-center space-y-3 text-center'>
         <Typography
           as='span'
+          font='satoshi'
           className='inline-block rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-semibold text-blue-400 backdrop-blur-sm'
         >
           {INTRO_CONTENT.badge}
@@ -109,15 +110,26 @@ export default function HMTCIntroductionStep({
           showBorder={false}
           className='!mx-0 rounded-none backdrop-blur-none'
         >
-          <Typography as='h2' weight='bold' className='text-2xl md:text-3xl'>
+          <Typography
+            as='h2'
+            font='satoshi'
+            weight='bold'
+            className='text-2xl md:text-3xl'
+          >
             {INTRO_CONTENT.gradientTitle}
           </Typography>
         </GradientText>
-        <Typography as='p' weight='semibold' className='text-lg text-primary'>
+        <Typography
+          as='p'
+          font='satoshi'
+          weight='semibold'
+          className='text-lg text-primary'
+        >
           {INTRO_CONTENT.subtitle}
         </Typography>
         <Typography
           as='p'
+          font='satoshi'
           className='mx-auto max-w-2xl leading-relaxed text-balance text-amber-50'
         >
           {INTRO_CONTENT.paragraph}
@@ -127,6 +139,7 @@ export default function HMTCIntroductionStep({
       <div className='intro-stagger space-y-4'>
         <Typography
           as='h3'
+          font='satoshi'
           weight='bold'
           className='mt-4 text-center text-2xl text-amber-50'
         >
@@ -149,6 +162,7 @@ export default function HMTCIntroductionStep({
                   </div>
                   <Typography
                     as='h4'
+                    font='satoshi'
                     weight='bold'
                     className='mb-1 text-base text-amber-50'
                   >
@@ -156,6 +170,7 @@ export default function HMTCIntroductionStep({
                   </Typography>
                   <Typography
                     as='p'
+                    font='satoshi'
                     className='text-sm leading-relaxed text-amber-50/70'
                   >
                     {req.desc}
@@ -173,6 +188,7 @@ export default function HMTCIntroductionStep({
                 </div>
                 <Typography
                   as='h3'
+                  font='satoshi'
                   weight='bold'
                   className='text-lg text-amber-50'
                 >
@@ -181,25 +197,43 @@ export default function HMTCIntroductionStep({
               </div>
               <Typography
                 as='p'
+                font='satoshi'
                 weight='semibold'
                 className='text-base text-blue-400'
               >
                 {INTRO_TIME_LIMIT.range}
               </Typography>
-              <Typography as='p' className='mt-2 text-sm text-amber-50/70'>
+              <Typography
+                as='p'
+                font='satoshi'
+                className='mt-2 text-sm text-amber-50/70'
+              >
                 {INTRO_TIME_LIMIT.note}
               </Typography>
 
               {INTRO_TIME_LIMIT.extend && (
                 <div className='mt-4 rounded-xl border border-red-500/30 bg-red-500/10 p-4'>
-                  <Typography as='p' weight='bold' className='text-red-400'>
+                  <Typography
+                    as='p'
+                    font='satoshi'
+                    weight='bold'
+                    className='text-red-400'
+                  >
                     {INTRO_TIME_LIMIT.extend.label || 'Diperpanjang'}
                   </Typography>
-                  <Typography as='p' className='text-sm text-red-300'>
+                  <Typography
+                    as='p'
+                    font='satoshi'
+                    className='text-sm text-red-300'
+                  >
                     {INTRO_TIME_LIMIT.extend.range}
                   </Typography>
                   {INTRO_TIME_LIMIT.extend.note && (
-                    <Typography as='p' className='text-xs text-red-200/80'>
+                    <Typography
+                      as='p'
+                      font='satoshi'
+                      className='text-xs text-red-200/80'
+                    >
                       {INTRO_TIME_LIMIT.extend.note}
                     </Typography>
                   )}
@@ -217,6 +251,7 @@ export default function HMTCIntroductionStep({
                 </div>
                 <Typography
                   as='h3'
+                  font='satoshi'
                   weight='bold'
                   className='text-lg text-amber-50'
                 >
@@ -228,6 +263,7 @@ export default function HMTCIntroductionStep({
                   <Typography
                     key={i}
                     as='p'
+                    font='satoshi'
                     weight='medium'
                     className='text-sm text-amber-50'
                   >
@@ -246,6 +282,7 @@ export default function HMTCIntroductionStep({
         <div className='relative z-10 space-y-6 text-center'>
           <Typography
             as='h3'
+            font='satoshi'
             weight='bold'
             className='text-2xl text-amber-50 md:text-3xl'
           >
@@ -253,6 +290,7 @@ export default function HMTCIntroductionStep({
           </Typography>
           <Typography
             as='p'
+            font='satoshi'
             className='mx-auto max-w-xl text-base text-amber-50/80'
           >
             Jangan hanya menjadi penonton. Ambil langkah pertama menuju
@@ -267,6 +305,7 @@ export default function HMTCIntroductionStep({
           >
             <Typography
               as='span'
+              font='satoshi'
               weight='semibold'
               className='text-white'
               variant='h1'
@@ -281,6 +320,7 @@ export default function HMTCIntroductionStep({
       <div className='intro-stagger mt-6 text-center'>
         <Typography
           as='p'
+          font='satoshi'
           weight='bold'
           className='text-lg text-primary opacity-80'
         >

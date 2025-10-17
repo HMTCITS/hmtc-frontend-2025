@@ -581,8 +581,12 @@ export default function Magang2Page() {
             />
           </svg>
           <div className='text-center'>
-            <p className='text-lg font-semibold text-white'>Memuat data...</p>
-            <p className='text-sm text-white/80'>Mohon tunggu sebentar.</p>
+            <p className='font-satoshi text-lg font-semibold text-white'>
+              Memuat data...
+            </p>
+            <p className='font-satoshi text-sm text-white/80'>
+              Mohon tunggu sebentar.
+            </p>
           </div>
         </div>
       </div>
@@ -667,7 +671,7 @@ export default function Magang2Page() {
                           aria-label={`Step ${step}`}
                         >
                           <div
-                            className={`flex h-8 w-8 items-center justify-center rounded-full font-semibold shadow-sm backdrop-blur ${
+                            className={`flex h-8 w-8 items-center justify-center rounded-full font-satoshi font-semibold shadow-sm backdrop-blur ${
                               currentStep === step
                                 ? 'bg-[#3b82f6]/35 text-white'
                                 : isCleared
@@ -678,7 +682,7 @@ export default function Magang2Page() {
                             {step}
                           </div>
                           {isError && !isCleared && (
-                            <span className='absolute -top-2 -right-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white'>
+                            <span className='absolute -top-2 -right-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-red-500 font-satoshi text-[10px] font-bold text-white'>
                               !
                             </span>
                           )}
@@ -817,7 +821,7 @@ export default function Magang2Page() {
                     : 'Gagal Mengirim'}
               </DialogTitle>
               <DialogDescription>
-                <span className='text-black'>
+                <span className='font-satoshi text-black'>
                   {submissionStatus === 'loading' &&
                     'Mohon tunggu, data Anda sedang dikirim.'}
                   {submissionStatus === 'success' &&
@@ -874,7 +878,7 @@ export default function Magang2Page() {
                 <CheckCircle2 className='h-5 w-5 text-green-600' /> Berhasil
               </DialogTitle>
               <DialogDescription>
-                <span className='text-black'>
+                <span className='font-satoshi text-black'>
                   Pendaftaran magang Anda berhasil dikirim.
                 </span>
               </DialogDescription>
@@ -899,7 +903,7 @@ export default function Magang2Page() {
                 Mengirim
               </DialogTitle>
               <DialogDescription>
-                <span className='text-black'>
+                <span className='font-satoshi text-black'>
                   {errorMsg ||
                     'Terjadi kesalahan saat mengirim data. Coba lagi nanti.'}
                 </span>

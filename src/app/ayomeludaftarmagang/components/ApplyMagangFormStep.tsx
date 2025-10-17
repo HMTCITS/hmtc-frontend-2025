@@ -198,8 +198,8 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
               minLength: { value: 2, message: 'Nama minimal 2 karakter' },
             }}
             required
-            labelClassName='text-white/90 '
-            inputClassName='border-white/20 bg-white/5 text-white placeholder:text-white/60 focus:border-[#0040FF] focus:ring-2 focus:ring-[#0040FF]/30'
+            labelClassName='text-white/90 font-satoshi'
+            inputClassName='border-white/20 bg-white/5 text-white placeholder:text-white/60 placeholder:font-satoshi focus:border-[#0040FF] focus:ring-2 focus:ring-[#0040FF]/30'
             containerClassName='group'
           />
 
@@ -217,8 +217,8 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
             required
             pattern='\d{8,12}'
             inputMode='numeric'
-            labelClassName='text-white/90 '
-            inputClassName='border-white/20 bg-white/5 text-white placeholder:text-white/60 focus:border-[#0040FF] focus:ring-2 focus:ring-[#0040FF]/30'
+            labelClassName='text-white/90 font-satoshi'
+            inputClassName='border-white/20 bg-white/5 text-white placeholder:text-white/60 placeholder:font-satoshi focus:border-[#0040FF] focus:ring-2 focus:ring-[#0040FF]/30'
             containerClassName='group'
           />
 
@@ -228,8 +228,8 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
             placeholder='Kelompok KP Anda (Tempat Anda belajar)'
             validation={{ required: 'Kelompok KP wajib diisi' }}
             required
-            labelClassName='text-white/90 '
-            inputClassName='border-white/20 bg-white/5 text-white placeholder:text-white/60 focus:border-[#0040FF] focus:ring-2 focus:ring-[#0040FF]/30'
+            labelClassName='text-white/90 font-satoshi'
+            inputClassName='border-white/20 bg-white/5 text-white placeholder:text-white/60 placeholder:font-satoshi focus:border-[#0040FF] focus:ring-2 focus:ring-[#0040FF]/30'
             containerClassName='group md:col-span-2'
           />
         </div>
@@ -244,7 +244,7 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
                     <span className='rounded-lg bg-white/15 p-2 backdrop-blur-sm'>
                       <FileArchive className='h-5 w-5 text-blue-400' />
                     </span>
-                    <Label className='m-0 text-white/90'>
+                    <Label className='m-0 font-satoshi text-white/90'>
                       Bundle Dokumen (ZIP)
                     </Label>
                   </div>
@@ -260,11 +260,11 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
                       (errors as any)?.zipFile?.message as string | undefined
                     }
                   />
-                  <p className='mt-2 text-xs text-white/60'>
+                  <p className='mt-2 font-satoshi text-xs text-white/60'>
                     Format .zip (maks. 10 MB).
                   </p>
                   {(errors as any)?.zipFile?.message && (
-                    <p className='mt-2 text-xs text-red-400'>
+                    <p className='mt-2 font-satoshi text-xs text-red-400'>
                       {(errors as any).zipFile.message as string}
                     </p>
                   )}
@@ -272,13 +272,15 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
                 <div className='rounded-xl border border-white/10 bg-white/5 p-4'>
                   <div className='mb-2 flex items-center gap-2'>
                     <Info className='h-4 w-4 text-blue-400' />
-                    <p className='text-sm font-semibold text-white'>
+                    <p className='font-satoshi text-sm font-semibold text-white'>
                       Panduan penyusunan berkas
                     </p>
                   </div>
-                  <div className='space-y-4 text-xs text-white/80'>
+                  <div className='space-y-4 font-satoshi text-xs text-white/80'>
                     <div>
-                      <p className='font-medium text-white'>Isi paket ZIP</p>
+                      <p className='font-satoshi font-medium text-white'>
+                        Isi paket ZIP
+                      </p>
                       <ul className='ml-5 list-disc space-y-0.5'>
                         <li>Wajib: CV ATS (PDF)</li>
                         <li>Wajib: Brainmap (PDF)</li>
@@ -286,7 +288,7 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
                       </ul>
                     </div>
                     <div className='border-t border-white/10 pt-3'>
-                      <p className='font-medium text-white'>
+                      <p className='font-satoshi font-medium text-white'>
                         Penamaan arsip ZIP
                       </p>
                       <p className='mt-1'>
@@ -296,13 +298,13 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
                       </p>
                       <p className='mt-1 opacity-80'>
                         Contoh:{' '}
-                        <span className='font-medium'>
+                        <span className='font-satoshi font-medium'>
                           50242112_BudiSantoso.zip
                         </span>
                       </p>
                     </div>
                     <div className='border-t border-white/10 pt-3'>
-                      <p className='font-medium text-white'>
+                      <p className='font-satoshi font-medium text-white'>
                         Penamaan berkas di dalam ZIP
                       </p>
                       <ul className='ml-5 list-disc space-y-0.5'>
@@ -347,7 +349,7 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: num * 0.1 }}
             >
-              <label className='mb-2 block text-sm font-semibold text-white/90 transition-colors'>
+              <label className='mb-2 block font-satoshi text-sm font-semibold text-white/90 transition-colors'>
                 {GENERAL_QUESTIONS[num - 1] || `Pertanyaan ${num}`}
               </label>
               <textarea
@@ -357,10 +359,10 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
                 required
                 placeholder={`Jawab pertanyaan ${num} di sini...`}
                 rows={4}
-                className='w-full resize-none rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-white transition-all duration-300 group-hover:border-[#0040FF]/50 placeholder:text-white/60 focus:border-[#0040FF] focus:ring-2 focus:ring-[#0040FF]/30'
+                className='w-full resize-none rounded-lg border border-white/20 bg-white/5 px-4 py-3 font-satoshi text-white transition-all duration-300 group-hover:border-[#0040FF]/50 placeholder:text-white/60 placeholder:font-satoshi focus:border-[#0040FF] focus:ring-2 focus:ring-[#0040FF]/30'
               />
               {(errors as any)?.[`q${num}`]?.message && (
-                <p className='mt-1 text-xs text-red-400'>
+                <p className='mt-1 font-satoshi text-xs text-red-400'>
                   {(errors as any)[`q${num}`].message as string}
                 </p>
               )}
@@ -458,7 +460,7 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
                         {division.name}
                       </span>
                     </GradientText>
-                    <p className='mt-1 truncate text-xs text-white/60'>
+                    <p className='mt-1 truncate font-satoshi text-xs text-white/60'>
                       {(division as any).description ?? ''}
                     </p>
                   </div>
@@ -475,7 +477,7 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
                         transition={{ type: 'spring', stiffness: 200 }}
                         aria-hidden='true'
                       >
-                        <span className='text-sm font-bold text-white'>
+                        <span className='font-satoshi text-sm font-bold text-white'>
                           {rank + 1}
                         </span>
                       </motion.div>
@@ -488,7 +490,7 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
           ))}
         </div>
         {(errors as any)?.selectedDivisions?.message && (
-          <p className='mt-2 text-xs text-red-400'>
+          <p className='mt-2 font-satoshi text-xs text-red-400'>
             {(errors as any).selectedDivisions.message as string}
           </p>
         )}
