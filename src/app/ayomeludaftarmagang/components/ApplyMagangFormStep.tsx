@@ -464,16 +464,25 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
                   </div>
                 </div>
 
-                {selectedDivisions.includes(division.id) && (
-                  <motion.div
-                    className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md ${division.id === 'bpi' ? 'bg-amber-500' : 'bg-[#0040FF]'}`}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: 'spring', stiffness: 200 }}
-                  >
-                    <span className='text-sm font-bold text-white'>✓</span>
-                  </motion.div>
-                )}
+                {(() => {
+                  const rank = selectedDivisions.indexOf(division.id);
+                  if (rank >= 0) {
+                    return (
+                      <motion.div
+                        className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md ${division.id === 'bpi' ? 'bg-amber-500' : 'bg-[#0040FF]'}`}
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: 'spring', stiffness: 200 }}
+                        aria-hidden='true'
+                      >
+                        <span className='text-sm font-bold text-white'>
+                          {rank + 1}
+                        </span>
+                      </motion.div>
+                    );
+                  }
+                  return null;
+                })()}
               </div>
             </motion.button>
           ))}

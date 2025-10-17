@@ -203,7 +203,7 @@ export default function ReviewStep({
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: idx * 0.05 }}
             >
-              ✓ {getDivisionName(divId)}
+              {idx + 1}. {getDivisionName(divId)}
             </motion.span>
           ))}
         </div>
