@@ -54,6 +54,16 @@ export default function ReviewStep({
   React.useEffect(() => {}, [errors, formData]);
   const getDivisionName = (divId: string) =>
     divisions.find((d) => d.id === divId)?.name || divId;
+  const trimFileName = (name: string, max = 28) => {
+    if (!name) return name;
+    if (name.length <= max) return name;
+    const parts = name.split('.');
+    if (parts.length <= 1) return name.slice(0, max - 1) + '…';
+    const ext = parts.pop() || '';
+    const base = parts.join('.');
+    const keep = Math.max(6, max - ext.length - 4);
+    return `${base.slice(0, keep)}….${ext}`;
+  };
   const GENERAL_KEYS = ['q1', 'q2', 'q3'] as const;
   const DIVISION_KEYS = ['q1', 'q2', 'q3', 'q4', 'q5'] as const;
 
@@ -158,10 +168,11 @@ export default function ReviewStep({
             <span className='font-satoshi font-medium text-white/70'>
               File ZIP:
             </span>
-            <span className='font-satoshi font-semibold text-white'>
-              {formData.file_zip
-                ? `✓ ${formData.file_zip.name}`
-                : '❌ Belum diunggah'}
+            <span
+              className='font-satoshi font-semibold text-white'
+              title={formData.file_zip ? formData.file_zip.name : undefined}
+            >
+              {formData.file_zip ? `✓ ${trimFileName(formData.file_zip.name)}` : '❌ Belum diunggah'}
             </span>
           </div>
           {errors?.zipFile && (
