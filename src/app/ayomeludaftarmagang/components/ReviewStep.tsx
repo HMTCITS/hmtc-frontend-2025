@@ -172,7 +172,9 @@ export default function ReviewStep({
               className='font-satoshi font-semibold text-white'
               title={formData.file_zip ? formData.file_zip.name : undefined}
             >
-              {formData.file_zip ? `✓ ${trimFileName(formData.file_zip.name)}` : '❌ Belum diunggah'}
+              {formData.file_zip
+                ? `✓ ${trimFileName(formData.file_zip.name)}`
+                : '❌ Belum diunggah'}
             </span>
           </div>
           {errors?.zipFile && (
