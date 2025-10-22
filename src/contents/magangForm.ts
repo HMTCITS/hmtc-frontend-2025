@@ -10,7 +10,7 @@ export const DIVISIONS = [
   { id: 'srd', name: 'Student Resources Development (SRD)', iconId: 'GraduationCap' },
   { id: 'ssd', name: 'Student Social Development (SSD)', iconId: 'Heart' },
   { id: 'swrt', name: 'Student Welfare and Research Technology (SWRT)', iconId: 'Cpu' },
-  { id: 'bod', name: 'Board of Directors (BOD)', iconId: 'Crown' },
+  { id: 'bod', name: 'Board of Director (BOD)', iconId: 'Crown' },
 ] as const;
 
 // General questions on the main form
