@@ -190,7 +190,7 @@ export default function Stepper({
           })}
         </div>
 
-        <div className='mt-6 w-full rounded-2xl border-1 border-blue-400/15 bg-blue-500/5 p-8 md:px-4 max-sm:px-2 shadow-xl backdrop-blur-xs'>
+        <div className='mt-6 w-full rounded-2xl border-1 border-blue-400/15 bg-blue-500/5 p-8 shadow-xl backdrop-blur-xs max-sm:px-2 md:px-4'>
           <StepContentWrapper
             isCompleted={isCompleted}
             currentStep={activeIndex}

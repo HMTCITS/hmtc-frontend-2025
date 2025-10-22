@@ -3,7 +3,6 @@ import { Metadata } from 'next';
 import LandingPage from '@/app/landing/LandingPage';
 import JsonLd from '@/components/JsonLd';
 import Footer from '@/layouts/Footer';
-import Navbar from '@/layouts/Navbar';
 
 export const metadata: Metadata = {
   title: {
@@ -23,7 +22,6 @@ export default function Page() {
         title='HMTC ITS'
         description='Selamat datang di Himpunan Mahasiswa Teknik Computer (HMTC) ITS — workshop, galeri, blog, dan komunitas mahasiswa Teknik Computer terkemuka.'
       />
-      <Navbar />
       <LandingPage />
       <Footer />
     </>

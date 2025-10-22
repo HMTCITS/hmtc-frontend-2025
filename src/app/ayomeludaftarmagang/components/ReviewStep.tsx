@@ -186,7 +186,7 @@ export default function ReviewStep({
             <p className='font-satoshi text-xs'>Isi ZIP:</p>
             <ul className='list-inside list-disc font-satoshi text-xs'>
               <li>Wajib: CV ATS (PDF)</li>
-              <li>Wajib: Brainmap (PDF)</li>
+              <li>Wajib: Mind Map (PDF)</li>
               <li>Opsional: Portofolio (PDF, khusus CMI)</li>
             </ul>
           </div>
