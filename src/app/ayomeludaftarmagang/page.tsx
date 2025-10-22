@@ -23,8 +23,8 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { DIVISIONS } from '@/contents/magangForm';
+import { useScheduleAutoRedirect } from '@/hooks/api/useSchedule';
 import { useUploadMagang } from '@/hooks/api/useUploadMagang';
-import { useScheduleAutoRedirect } from '@/hooks/useSchedule';
 import {
   clearAllLocal,
   clearFormState,

@@ -1,7 +1,11 @@
+'use client';
+
 import dynamic from 'next/dynamic';
+import * as React from 'react';
 
 import AboutSkeleton from '@/app/landing/components/about/AboutSkeleton';
-import Cover from '@/app/landing/components/cover/oprecCover';
+import Cover from '@/app/landing/components/cover/Cover';
+import OprecCover from '@/app/landing/components/cover/oprecCover';
 import GallerySkeleton from '@/app/landing/components/gallery/GallerySkeleton';
 import HMTCBlogSkeleton from '@/app/landing/components/hmtcblog/HMTCBlogSkeleton';
 import LifeAtHMTCSkeleton from '@/app/landing/components/lifeHmtc/LifeAtHMTCSkeleton';
@@ -10,6 +14,9 @@ import PeopleSkeleton from '@/app/landing/components/people/PeopleHMTCSkeleton';
 import ShowCase from '@/app/landing/components/showcase/ShowCase';
 import ShowCaseSkeleton from '@/app/landing/components/showcase/ShowCaseSkeleton';
 import LazySection from '@/components/LazySection';
+import { useAutoIsScheduleActive } from '@/hooks/api/useAutoIsScheduleActive';
+import { useIsScheduleActive } from '@/hooks/api/useIsScheduleActive';
+import NavbarDefault from '@/layouts/Navbar';
 import NavbarLanding from '@/layouts/NavbarLanding';
 
 const About = dynamic(() => import('./components/about/About'), {
@@ -40,10 +47,47 @@ const HMTCBlog = dynamic(() => import('./components/hmtcblog/HMTCBlog'), {
 // );
 
 export default function LandingPage() {
+  const scheduleQuery = useIsScheduleActive();
+  const initial = scheduleQuery?.data ?? true;
+
+  // Start background poller for schedule updates. It emits `hmtc:schedule`
+  // events and keeps an internal ref; we listen to the event to update a
+  // tiny local state so we can toggle visibility without remounting heavy
+  // components.
+  useAutoIsScheduleActive({ intervalMs: 7000, path: '/ayomeludaftarmagang' });
+
+  const [isActive, setIsActive] = React.useState<boolean>(initial);
+
+  React.useEffect(() => {
+    const onSchedule = (e: any) => {
+      const next = Boolean(e?.detail?.active);
+      setIsActive((prev) => (prev === next ? prev : next));
+    };
+    window.addEventListener('hmtc:schedule', onSchedule as EventListener);
+    if (typeof scheduleQuery.data === 'boolean')
+      setIsActive(scheduleQuery.data);
+    return () =>
+      window.removeEventListener('hmtc:schedule', onSchedule as EventListener);
+  }, [scheduleQuery.data]);
+
   return (
     <main className='relative scroll-smooth'>
-      <Cover />
-      <NavbarLanding />
+      {/* Mount both variants; toggle visibility via CSS to avoid unmounts */}
+      <div className={isActive ? 'block' : 'hidden'} aria-hidden={!isActive}>
+        <OprecCover />
+        <NavbarLanding />
+      </div>
+
+      <div className={!isActive ? 'block' : 'hidden'} aria-hidden={isActive}>
+        {/* Default cover is heavier; keep import path generic */}
+        <div>
+          {/* default Cover (server component) */}
+          {/* We render the same Cover component path used previously when schedule inactive */}
+          {/* Reuse the existing Cover export (oprecCover is default named Cover in its file) */}
+          <Cover />
+        </div>
+        <NavbarDefault />
+      </div>
       <LazySection
         fallback={<AboutSkeleton />}
         once={true}
