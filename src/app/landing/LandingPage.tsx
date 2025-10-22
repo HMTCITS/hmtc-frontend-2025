@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 
 import AboutSkeleton from '@/app/landing/components/about/AboutSkeleton';
-import Cover from '@/app/landing/components/cover/Cover';
+import Cover from '@/app/landing/components/cover/oprecCover';
 import GallerySkeleton from '@/app/landing/components/gallery/GallerySkeleton';
 import HMTCBlogSkeleton from '@/app/landing/components/hmtcblog/HMTCBlogSkeleton';
 import LifeAtHMTCSkeleton from '@/app/landing/components/lifeHmtc/LifeAtHMTCSkeleton';
@@ -10,6 +10,7 @@ import PeopleSkeleton from '@/app/landing/components/people/PeopleHMTCSkeleton';
 import ShowCase from '@/app/landing/components/showcase/ShowCase';
 import ShowCaseSkeleton from '@/app/landing/components/showcase/ShowCaseSkeleton';
 import LazySection from '@/components/LazySection';
+import NavbarLanding from '@/layouts/NavbarLanding';
 
 const About = dynamic(() => import('./components/about/About'), {
   ssr: true,
@@ -42,6 +43,7 @@ export default function LandingPage() {
   return (
     <main className='relative scroll-smooth'>
       <Cover />
+      <NavbarLanding />
       <LazySection
         fallback={<AboutSkeleton />}
         once={true}

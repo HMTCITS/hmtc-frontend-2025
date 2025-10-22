@@ -614,7 +614,7 @@ export default function Magang2Page() {
       </div>
 
       <div className='relative z-10 flex min-h-screen w-full items-center justify-center'>
-        <main className='relative w-full max-w-5xl px-5 py-12 md:px-8 md:py-8 max-sm:px-0'>
+        <main className='relative w-full max-w-5xl px-5 py-12 max-sm:px-0 md:px-8 md:py-8'>
           <Card className='border-0 bg-transparent'>
             <CardContent className='pt-6'>
               <FormProvider {...methods}>

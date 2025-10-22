@@ -359,7 +359,7 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
                 required
                 placeholder={`Jawab pertanyaan ${num} di sini...`}
                 rows={4}
-                className='w-full resize-none rounded-lg border border-white/20 bg-white/5 px-4 py-3 font-satoshi text-white transition-all duration-300 group-hover:border-[#0040FF]/50 placeholder:text-white/60 placeholder:font-satoshi focus:border-[#0040FF] focus:ring-2 focus:ring-[#0040FF]/30'
+                className='w-full resize-none rounded-lg border border-white/20 bg-white/5 px-4 py-3 font-satoshi text-white transition-all duration-300 group-hover:border-[#0040FF]/50 placeholder:font-satoshi placeholder:text-white/60 focus:border-[#0040FF] focus:ring-2 focus:ring-[#0040FF]/30'
               />
               {(errors as any)?.[`q${num}`]?.message && (
                 <p className='mt-1 font-satoshi text-xs text-red-400'>
