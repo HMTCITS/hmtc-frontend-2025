@@ -60,7 +60,7 @@ export default function DivisionQuestionStep({
           <GradientText
             className='mb-6 inline-block rounded-none bg-transparent font-satoshi text-xl font-bold tracking-tight backdrop-blur-none'
             colors={
-              divisionId === 'bpi'
+              divisionId === 'bod'
                 ? ['#FDE68A', '#F59E0B', '#FDE68A']
                 : ['#66a3ff', '#0040FF', '#66a3ff']
             }
@@ -88,7 +88,7 @@ export default function DivisionQuestionStep({
 
             return labels.map((qText, idx) => {
               const num = (idx + 1) as 1 | 2 | 3 | 4 | 5;
-              const isBPI = divisionId === 'bpi';
+              const isBOD = divisionId === 'bod';
               const _fieldError = (errors as any)?.divisionAnswers?.[
                 divisionId
               ]?.[`q${num}`]?.message as string | undefined;
@@ -100,7 +100,7 @@ export default function DivisionQuestionStep({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: (idx + 1) * 0.08 }}
                 >
-                  <Label className='mb-2 block font-satoshi text-sm font-semibold text-white/90'>
+                  <Label className='mb-2 block font-satoshi text-md text-justify font-medium text-white/90'>
                     {qText}
                   </Label>
                   <Textarea
@@ -111,7 +111,7 @@ export default function DivisionQuestionStep({
                     placeholder={DIVISION_QUESTION_PLACEHOLDER}
                     rows={4}
                     textareaClassName={`w-full resize-none ${
-                      isBPI
+                      isBOD
                         ? 'group-hover:border-amber-400/60 focus:border-amber-400 focus:ring-amber-300/30'
                         : 'group-hover:border-[#0040FF]/50 focus:border-[#0040FF] focus:ring-[#0040FF]/30'
                     }`}

@@ -11,7 +11,7 @@ export const divisionAnswerSchema = z.object({
 export const magangFormSchema = z
   .object({
     nama: z.string().min(2, 'Nama minimal 2 karakter'),
-    nrp: z.string().regex(/^\d{8,12}$/g, 'NRP harus 8-12 digit angka'),
+    nrp: z.string().regex(/^\d{10}$/g, 'NRP harus 10 digit angka'),
     kelompokKP: z.string().min(1, 'Kelompok KP wajib diisi'),
     q1: z.string().min(1, 'Jawaban pertanyaan 1 harus diisi'),
     q2: z.string().min(1, 'Jawaban pertanyaan 2 harus diisi'),

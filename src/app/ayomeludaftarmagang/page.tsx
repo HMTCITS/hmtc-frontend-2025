@@ -356,6 +356,8 @@ export default function Magang2Page() {
 
   const nextStep = React.useCallback(() => {
     const totalSteps = 1 + 1 + selectedDivisions.length + 1;
+    // Scroll to top of page smoothly
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setIsNavigating(true);
     setCurrentStep((s) => Math.min(s + 1, totalSteps));
   }, [selectedDivisions.length]);
@@ -633,6 +635,8 @@ export default function Magang2Page() {
                         setCurrentStep(s);
                         return;
                       }
+                      // Scroll to top of page smoothly
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
                       setIsNavigating(true);
                       setCurrentStep(s);
                     }}

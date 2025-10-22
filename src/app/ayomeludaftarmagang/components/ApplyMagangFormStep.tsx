@@ -1,18 +1,6 @@
 'use client';
 
-import {
-  Cpu,
-  Crown,
-  FileArchive,
-  Film,
-  Globe,
-  GraduationCap,
-  Heart,
-  Info,
-  Rocket,
-  Star,
-  Users,
-} from 'lucide-react';
+import { FileArchive, Info } from 'lucide-react';
 import { motion } from 'motion/react';
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -192,7 +180,7 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
           <Input
             id='nama'
             label='Nama Lengkap'
-            placeholder='Siapa nama Anda? (Kami ingin mengenal Anda lebih baik)'
+            placeholder='ex. Jason Susanto'
             validation={{
               required: 'Nama wajib diisi',
               minLength: { value: 2, message: 'Nama minimal 2 karakter' },
@@ -206,16 +194,16 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
           <Input
             id='nrp'
             label='NRP'
-            placeholder='Nomor Registrasi Peserta Anda'
+            placeholder='ex. 50xxxxxxxx'
             validation={{
               required: 'NRP wajib diisi',
               pattern: {
-                value: /\d{8,12}/,
-                message: 'NRP harus 8-12 digit angka',
+                value: /\d{10}/,
+                message: 'NRP harus 10 digit angka',
               },
             }}
             required
-            pattern='\d{8,12}'
+            pattern='\d{10}'
             inputMode='numeric'
             labelClassName='text-white/90 font-satoshi'
             inputClassName='border-white/20 bg-white/5 text-white placeholder:text-white/60 placeholder:font-satoshi focus:border-[#0040FF] focus:ring-2 focus:ring-[#0040FF]/30'
@@ -224,10 +212,17 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
 
           <Input
             id='kelompokKP'
-            label='Kelompok KP'
-            placeholder='Kelompok KP Anda (Tempat Anda belajar)'
-            validation={{ required: 'Kelompok KP wajib diisi' }}
+            label='Nomor Kelompok KP'
+            placeholder='ex. 01'
+            validation={{
+              required: 'Nomor Kelompok KP wajib diisi',
+              pattern: {
+                value: /^\d{1,2}$/,
+                message: 'Nomor Kelompok KP harus 2 digit angka',
+              },
+            }}
             required
+            pattern='\d{2}'
             labelClassName='text-white/90 font-satoshi'
             inputClassName='border-white/20 bg-white/5 text-white placeholder:text-white/60 placeholder:font-satoshi focus:border-[#0040FF] focus:ring-2 focus:ring-[#0040FF]/30'
             containerClassName='group md:col-span-2'
@@ -283,7 +278,7 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
                       </p>
                       <ul className='ml-5 list-disc space-y-0.5'>
                         <li>Wajib: CV ATS (PDF)</li>
-                        <li>Wajib: Brainmap (PDF)</li>
+                        <li>Wajib: Mindmap (PDF)</li>
                         <li>Opsional: Portofolio (PDF, khusus CMI)</li>
                       </ul>
                     </div>
@@ -315,9 +310,9 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
                           </code>
                         </li>
                         <li>
-                          Brainmap:{' '}
+                          Mindmap:{' '}
                           <code className='rounded bg-white/10 px-1 py-0.5 font-mono'>
-                            NRP_NamaLengkap_Brainmap.pdf
+                            NRP_NamaLengkap_Mindmap.pdf
                           </code>
                         </li>
                         <li>
@@ -349,7 +344,7 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: num * 0.1 }}
             >
-              <label className='mb-2 block font-satoshi text-sm font-semibold text-white/90 transition-colors'>
+              <label className='mb-2 block text-justify font-satoshi text-md font-medium text-white/90 transition-colors'>
                 {GENERAL_QUESTIONS[num - 1] || `Pertanyaan ${num}`}
               </label>
               <textarea
@@ -359,7 +354,7 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
                 required
                 placeholder={`Jawab pertanyaan ${num} di sini...`}
                 rows={4}
-                className='w-full resize-none rounded-lg border border-white/20 bg-white/5 px-4 py-3 font-satoshi text-white transition-all duration-300 group-hover:border-[#0040FF]/50 placeholder:text-white/60 placeholder:font-satoshi focus:border-[#0040FF] focus:ring-2 focus:ring-[#0040FF]/30'
+                className='w-full resize-none rounded-lg border border-white/20 bg-white/5 px-4 py-3 font-satoshi text-white transition-all duration-300 group-hover:border-[#0040FF]/50 placeholder:font-satoshi placeholder:text-white/60 focus:border-[#0040FF] focus:ring-2 focus:ring-[#0040FF]/30'
               />
               {(errors as any)?.[`q${num}`]?.message && (
                 <p className='mt-1 font-satoshi text-xs text-red-400'>
@@ -388,13 +383,13 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
               onClick={() => handleDivisionToggle(division.id)}
               className={`group relative flex items-center gap-4 rounded-lg border-2 p-4 text-left transition-all duration-300 hover:scale-105 focus:outline-none active:scale-95 ${(() => {
                 const isSelected = selectedDivisions.includes(division.id);
-                const isBPI = division.id === 'bpi';
+                const isBOD = division.id === 'bod';
                 if (isSelected) {
-                  return isBPI
+                  return isBOD
                     ? 'border-amber-400 bg-amber-400/10 ring-1 shadow-lg ring-amber-300/40'
                     : 'border-[#0040FF] bg-[#0040FF]/10 shadow-lg focus:ring-2 focus:ring-[#0040FF]/30';
                 }
-                return isBPI
+                return isBOD
                   ? 'border-amber-300/40 bg-white/5 hover:border-amber-400/60'
                   : 'border-white/15 bg-white/5 hover:border-[#0040FF]/50 focus:ring-2 focus:ring-[#0040FF]/30';
               })()}`}
@@ -405,51 +400,11 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
             >
               <div className='flex w-full items-center justify-between'>
                 <div className='flex min-w-0 items-center gap-4'>
-                  <div
-                    className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
-                      selectedDivisions.includes(division.id) ? 'shadow-lg' : ''
-                    }`}
-                    aria-hidden='true'
-                  >
-                    <div
-                      className={`relative flex h-12 w-12 items-center justify-center rounded-full ${(() => {
-                        const isSelected = selectedDivisions.includes(
-                          division.id,
-                        );
-                        const isBPI = division.id === 'bpi';
-                        if (!isSelected) return 'bg-white/6';
-                        return isBPI
-                          ? 'bg-gradient-to-br from-[#FDE68A] via-[#F59E0B] to-[#B45309]'
-                          : 'bg-gradient-to-br from-[#66a3ff] via-[#4a6bff] to-[#0040FF]';
-                      })()}`}
-                    >
-                      {(() => {
-                        const ICONS: Record<string, any> = {
-                          Rocket,
-                          Star,
-                          Users,
-                          Globe,
-                          Film,
-                          GraduationCap,
-                          Heart,
-                          Cpu,
-                          Crown,
-                        };
-                        const Icon = ICONS[(division as any).iconId] || Users;
-                        return (
-                          <Icon
-                            className={`h-6 w-6 ${selectedDivisions.includes(division.id) ? 'text-white' : 'text-white/90'}`}
-                          />
-                        );
-                      })()}
-                    </div>
-                  </div>
-
                   <div className='min-w-0'>
                     <GradientText
                       className='inline-block rounded-none bg-transparent font-satoshi text-base leading-tight font-bold tracking-tight backdrop-blur-none'
                       colors={
-                        division.id === 'bpi'
+                        division.id === 'bod'
                           ? ['#FDE68A', '#F59E0B', '#FDE68A']
                           : ['#66a3ff', '#0040FF', '#66a3ff']
                       }
@@ -471,7 +426,7 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
                   if (rank >= 0) {
                     return (
                       <motion.div
-                        className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md ${division.id === 'bpi' ? 'bg-amber-500' : 'bg-[#0040FF]'}`}
+                        className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md ${division.id === 'bod' ? 'bg-amber-500' : 'bg-[#0040FF]'}`}
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ type: 'spring', stiffness: 200 }}

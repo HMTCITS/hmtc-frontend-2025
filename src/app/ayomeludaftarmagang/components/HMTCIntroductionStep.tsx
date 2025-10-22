@@ -299,9 +299,14 @@ export default function HMTCIntroductionStep({
           </Typography>
           <Button
             type='button'
-            onClick={onNext}
+            onClick={() => {
+              // Scroll to top of page smoothly
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              // Call the original onNext handler
+              onNext();
+            }}
             size='lg'
-            className='pointer-events-auto inline-flex h-fit w-fit cursor-pointer items-center gap-2 rounded-lg bg-primary !px-8 py-4 font-medium text-white shadow-[0_10px_30px_-10px_rgba(82,39,255,0.7)] transition-transform hover:scale-[1.02] hover:bg-primary/90 active:scale-[0.98]'
+            className='pointer-events-auto inline-flex h-fit w-fit cursor-pointer items-center gap-2 rounded-lg bg-primary !px-8 py-4 font-satoshi font-medium text-white shadow-[0_10px_30px_-10px_rgba(82,39,255,0.7)] transition-transform hover:scale-[1.02] hover:bg-primary/90 active:scale-[0.98]'
           >
             <Typography
               as='span'
