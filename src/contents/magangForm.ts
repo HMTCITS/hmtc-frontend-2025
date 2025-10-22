@@ -147,6 +147,6 @@ export const INTRO_TIME_LIMIT = {
 
 // Contact persons
 export const INTRO_CONTACTS = [
-  { name: 'Brendan Timothy Mannuel', phone: '+62 815-1552-8712' },
   { name: 'Lathifah Sahda', phone: '+62 822-8981-0615' },
+  { name: 'Brendan Timothy Mannuel', phone: '+62 815-1552-8712' },
 ] as const;
