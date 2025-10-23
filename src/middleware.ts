@@ -53,8 +53,9 @@ export async function middleware(req: NextRequest) {
   }
 
   // --- Period-based gating (public pages) ---
+  // determine pathname here so the catch block can reference it safely
+  const pathname = req.nextUrl.pathname;
   try {
-    const pathname = req.nextUrl.pathname;
     // Add any additional period-gated pages here (ensure matcher is updated too)
     const gatedPrefixes = ['/ayomeludaftarmagang'];
     const isGated = gatedPrefixes.some(
@@ -78,7 +79,7 @@ export async function middleware(req: NextRequest) {
         return NextResponse.redirect(to);
       }
     }
-  } catch {
+  } catch (err) {
     const to = req.nextUrl.clone();
     const gatedPrefixes = ['/ayomeludaftarmagang'];
     const matched = gatedPrefixes.find(
@@ -86,12 +87,20 @@ export async function middleware(req: NextRequest) {
     );
     to.pathname = '/coming-soon';
     if (matched) to.searchParams.set('page', matched.replace(/^\//, ''));
+    try {
+      // server-side log to help diagnose production errors
+      // eslint-disable-next-line no-console
+      console.error(
+        'Middleware schedule check failed:',
+        typeof err === 'string' ? err : JSON.stringify(err),
+      );
+    } catch {
+      // ignore
+    }
     return NextResponse.redirect(to);
   }
 
   if (!shouldDisable) return NextResponse.next();
-
-  const pathname = req.nextUrl.pathname;
 
   // --- Admin/privileged routes blocking ---
   // block prefixes: /sandbox/* and /dashboard/*
