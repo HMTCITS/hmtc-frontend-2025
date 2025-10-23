@@ -344,7 +344,7 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: num * 0.1 }}
             >
-              <label className='mb-2 block text-justify font-satoshi text-md font-medium text-white/90 transition-colors'>
+              <label className='text-md mb-2 block text-justify font-satoshi font-medium text-white/90 transition-colors'>
                 {GENERAL_QUESTIONS[num - 1] || `Pertanyaan ${num}`}
               </label>
               <textarea

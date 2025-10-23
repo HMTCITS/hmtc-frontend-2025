@@ -2,14 +2,26 @@
 
 // Divisions shown in the selection grid (updated)
 export const DIVISIONS = [
-  { id: 'edd', name: 'Enterpreneurship Development Department (EDD)', iconId: 'Rocket' },
+  {
+    id: 'edd',
+    name: 'Enterpreneurship Development Department (EDD)',
+    iconId: 'Rocket',
+  },
   { id: 'sti', name: 'Student Talent and Interest (STI)', iconId: 'Star' },
   { id: 'ia', name: 'Internal Affairs (IA)', iconId: 'Users' },
   { id: 'ea', name: 'External Affairs (EA)', iconId: 'Globe' },
   { id: 'cmi', name: 'Creative Media Information (CMI)', iconId: 'Film' },
-  { id: 'srd', name: 'Student Resources Development (SRD)', iconId: 'GraduationCap' },
+  {
+    id: 'srd',
+    name: 'Student Resources Development (SRD)',
+    iconId: 'GraduationCap',
+  },
   { id: 'ssd', name: 'Student Social Development (SSD)', iconId: 'Heart' },
-  { id: 'swrt', name: 'Student Welfare and Research Technology (SWRT)', iconId: 'Cpu' },
+  {
+    id: 'swrt',
+    name: 'Student Welfare and Research Technology (SWRT)',
+    iconId: 'Cpu',
+  },
   { id: 'bod', name: 'Board of Director (BOD)', iconId: 'Crown' },
 ] as const;
 
@@ -18,7 +30,7 @@ export const GENERAL_QUESTIONS = [
   'Dalam MUBES V disebutkan bahwa salah satu tugas Himpunan Mahasiswa Departemen adalah mendukung BEM Fakultas dan BEM Institut. Bagaimana pendapatmu mengenai kondisi KM ITS saat ini yang cenderung departemen-sentris, sehingga sering berujung pada saling menyalahkan? Apa solusi yang bisa kamu tawarkan untuk KM ITS? Menurutmu, siapa yang paling bertanggung jawab atas situasi ini?',
   'Bagaimana caramu mengatur kegiatanmu apabila dalam satu waktu, kamu dihadapkan dengan 4 hal di waktu yang bersamaan yaitu urusan HMTC, akademik, Schematics, dan Me Time?',
   'Dalam beberapa tahun terakhir, relevansi himpunan di kalangan mahasiswa semakin menurun, dengan semakin banyaknya alternatif pengembangan diri di luar himpunan. Hal ini menyebabkan menurunnya jumlah regenerasi himpunan dan partisipasi pada kegiatan pada himpunan yang menyebabkan terhambatnya proses pengembangan dan regenarasi himpunan. Menurutmu, Siapa yang paling bertanggung jawab atas kondisi ini? Serta langkah apa yang perlu dilakukan untuk mengembalikan relevansi himpunan agar tetap menjadi wadah yang dibutuhkan dan diminati mahasiswa?',
-  'RUMJ (Rapat Umum Mahasiswa Jurusan) merupakan forum terbuka bagi warga Teknik Informatika untuk memutuskan  perkara yang berkaitan dengan HMTC dan segala sesuatu mengenai lingkungan mahasiswa Teknik Informatika yang berhubungan dengan HMTC. Sayangnya, dari tahun ke tahun, partisipasi warga Teknik Informatika pada RUMJ sangat sedikit. Semisal, RUMJ yang sangat penting akan diadakan (Pembentukan BSO atau pembubaran HMTC), namun jumlah warga yang ikut tidak memenuhi kuorum sehingga membatalkan RUMJ tersebut. Menurut Anda, Siapa yang bertanggung jawab atas permasalahan ini dan langkah apa yang sebaiknya diambil untuk kedepannya?'
+  'RUMJ (Rapat Umum Mahasiswa Jurusan) merupakan forum terbuka bagi warga Teknik Informatika untuk memutuskan  perkara yang berkaitan dengan HMTC dan segala sesuatu mengenai lingkungan mahasiswa Teknik Informatika yang berhubungan dengan HMTC. Sayangnya, dari tahun ke tahun, partisipasi warga Teknik Informatika pada RUMJ sangat sedikit. Semisal, RUMJ yang sangat penting akan diadakan (Pembentukan BSO atau pembubaran HMTC), namun jumlah warga yang ikut tidak memenuhi kuorum sehingga membatalkan RUMJ tersebut. Menurut Anda, Siapa yang bertanggung jawab atas permasalahan ini dan langkah apa yang sebaiknya diambil untuk kedepannya?',
 ] as const;
 
 // Division specific step texts

@@ -60,7 +60,15 @@ async function fetchTimeApiIo(signal?: AbortSignal): Promise<Date | null> {
     if (!res.ok) return null;
     const json: any = await res.json();
     if (json && typeof json.dateTime === 'string') {
-      return new Date(json.dateTime);
+      // timeapi.io sometimes returns a local date-time string without an
+      // explicit timezone offset (e.g. '2025-10-23T10:27:37'). Construct a
+      // timezone-aware ISO by appending +07:00 (Asia/Jakarta) when missing so
+      // `new Date(...)` yields a consistent UTC moment across providers.
+      let dt: string = json.dateTime;
+      if (!/([Zz]|[+-]\d{2}:\d{2})$/.test(dt)) {
+        dt = dt + '+07:00';
+      }
+      return new Date(dt);
     }
     return null;
   } catch {
