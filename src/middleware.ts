@@ -62,7 +62,7 @@ export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
   try {
     // Add any additional period-gated pages here (ensure matcher is updated too)
-    const gatedPrefixes = ['/ayomeludaftarmagang'];
+    const gatedPrefixes = ['/ayomeludaftarmagang', '/hidden-page-cf'];
     const isGated = gatedPrefixes.some(
       (p) => pathname === p || pathname.startsWith(p + '/'),
     );
@@ -255,6 +255,8 @@ export const config = {
   matcher: [
     '/ayomeludaftarmagang',
     '/ayomeludaftarmagang/:path*',
+    '/hidden-page-cf',
+    '/hidden-page-cf/:path*',
     '/sandbox/:path*',
     '/dashboard/:path*',
     '/login',

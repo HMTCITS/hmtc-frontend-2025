@@ -84,8 +84,7 @@ export default function HeaderAnnouncement({
     try {
       const start = new Date(scheduleData.start).getTime();
       const n = now.getTime();
-      const diff = Math.max(0, start - n);
-      return diff;
+      return Math.max(0, start - n);
     } catch {
       return null;
     }
@@ -110,53 +109,52 @@ export default function HeaderAnnouncement({
   return (
     <div
       className={cn(
-        'relative top-0 right-0 left-0 z-[110] flex items-center justify-center px-4 py-3 transition-all duration-300 ease-in-out',
+        'relative z-[110] w-full transition-transform duration-300 ease-in-out',
         ANNOUNCEMENT_CONFIG.backgroundColor,
         ANNOUNCEMENT_CONFIG.textColor,
-        'translate-y-0 opacity-100',
       )}
+      role='region'
+      aria-label='Pengumuman HMTC'
     >
-      <div className='mx-auto flex max-w-6xl items-center justify-center gap-3'>
-        <div className='flex items-center gap-3'>
-          <div>
-            <Typography font='satoshi' className='text-center font-medium'>
-              {/* show explicit status text depending on schedule, or loading */}
-              {isLoading
-                ? `${ANNOUNCEMENT_CONFIG.message} — Memuat...`
-                : effectiveActive
-                  ? `${ANNOUNCEMENT_CONFIG.message} — Sudah dibuka`
-                  : `${ANNOUNCEMENT_CONFIG.message} — Masih ditutup`}
-            </Typography>
-          </div>
+      <div className='mx-auto flex max-w-6xl items-center justify-center gap-3 px-4 py-3 sm:px-6 md:px-8'>
+        <div className='flex min-w-0 items-center gap-4'>
+          <Typography
+            as='p'
+            font='satoshi'
+            className='truncate text-sm leading-snug font-medium sm:text-base'
+          >
+            {isLoading
+              ? `${ANNOUNCEMENT_CONFIG.message} — Memuat...`
+              : effectiveActive
+                ? `${ANNOUNCEMENT_CONFIG.message} — Sudah dibuka`
+                : `${ANNOUNCEMENT_CONFIG.message} — Masih ditutup`}
+          </Typography>
+        </div>
 
-          {/* action: show countdown if not yet active (including countdown), otherwise CTA */}
+        <div className='flex items-center gap-3'>
+          {/* Countdown box */}
           {!effectiveActive ? (
-            <div className='flex items-center gap-2'>
-              <div
-                className='rounded bg-white/10 px-3 py-1 font-mono text-sm'
-                role='status'
-                aria-live='polite'
-              >
-                {isLoading
-                  ? 'Memuat...'
-                  : timeUntilStart != null
-                    ? formatRemaining(timeUntilStart)
-                    : '--:--:--'}
-              </div>
+            <div
+              className='flex items-center rounded-md bg-white/8 px-3 py-1 font-mono text-xs sm:text-sm'
+              role='status'
+              aria-live='polite'
+            >
+              {isLoading
+                ? 'Memuat...'
+                : timeUntilStart != null
+                  ? formatRemaining(timeUntilStart)
+                  : '--:--:--'}
             </div>
           ) : (
+            // Action CTA when active
             !isLoading &&
-            effectiveActive &&
             ANNOUNCEMENT_CONFIG.actionText &&
             ANNOUNCEMENT_CONFIG.actionUrl && (
               <Link
                 href={ANNOUNCEMENT_CONFIG.actionUrl}
-                className='inline-flex items-center text-sm font-semibold underline transition-all duration-200 hover:no-underline'
+                aria-label={ANNOUNCEMENT_CONFIG.actionText}
               >
-                <Button
-                  className='bg-transparent px-0 py-0 hover:bg-transparent'
-                  onClick={() => {}}
-                >
+                <Button className='rounded-md bg-white/10 px-3 py-1 text-sm font-semibold transition-colors hover:bg-white/20'>
                   {ANNOUNCEMENT_CONFIG.actionText}
                 </Button>
               </Link>
@@ -164,12 +162,14 @@ export default function HeaderAnnouncement({
           )}
 
           {ANNOUNCEMENT_CONFIG.dismissible && (
-            <Button
-              icon={X}
+            <button
               onClick={dismissAnnouncement}
-              className='ml-2 h-6 w-6 border-none bg-transparent p-0 text-current hover:bg-white/20'
               aria-label='Tutup pengumuman'
-            />
+              title='Tutup pengumuman'
+              className='-mr-1 rounded p-1 text-current hover:bg-white/10 focus:ring-2 focus:ring-white/20 focus:outline-none'
+            >
+              <X className='h-4 w-4' aria-hidden />
+            </button>
           )}
         </div>
       </div>

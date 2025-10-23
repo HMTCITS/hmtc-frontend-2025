@@ -34,7 +34,20 @@ export const PAGE_SCHEDULES: Array<{
     schedule: {
       mode: 'range',
       start: '2025-10-24T00:00:00+07:00',
-      end: '2025-10-30T23:59:59+07:00',
+      end: '2025-10-30T12:00:00+07:00',
+      timezone: 'Asia/Jakarta',
+    },
+  },
+  // Test schedule for hidden page used for Cloudflare/asset testing. Adjust
+  // the window as needed for your testing. This is intentionally a short
+  // window so it can be toggled easily in staging environments.
+  {
+    prefix: '/hidden-page-cf',
+    schedule: {
+      mode: 'range',
+      // Assumption: quick test window starting now (2025-10-24) for a few days
+      start: '2025-10-24T01:35:00+07:00',
+      end: '2025-10-24T01:37:00+07:00',
       timezone: 'Asia/Jakarta',
     },
   },

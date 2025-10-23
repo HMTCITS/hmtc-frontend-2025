@@ -230,11 +230,11 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
         </div>
 
         <div className='mb-8'>
-          <div className='group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl backdrop-blur-xs transition-all duration-300 hover:border-white/30'>
-            <div className='pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10' />
-            <div className='relative z-10 p-5 md:p-6'>
-              <div className='grid gap-5 md:grid-cols-2'>
-                <div>
+          <div className='group relative overflow-hidden rounded-2xl border border-white/8 bg-white/4 shadow-md transition-all duration-300 hover:border-white/20 hover:shadow-lg'>
+            <div className='pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/6 to-accent/6' />
+            <div className='relative z-10 p-4 sm:p-5 md:p-6'>
+              <div className='grid gap-4 md:grid-cols-2'>
+                <div className='min-h-[180px]'>
                   <div className='mb-3 flex items-center gap-2'>
                     <span className='rounded-lg bg-white/15 p-2 backdrop-blur-sm'>
                       <FileArchive className='h-5 w-5 text-blue-400' />
@@ -264,14 +264,14 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
                     </p>
                   )}
                 </div>
-                <div className='rounded-xl border border-white/10 bg-white/5 p-4'>
+                <div className='mt-4 rounded-xl border border-white/10 bg-white/5 p-4 md:mt-0'>
                   <div className='mb-2 flex items-center gap-2'>
                     <Info className='h-4 w-4 text-blue-400' />
                     <p className='font-satoshi text-sm font-semibold text-white'>
                       Panduan penyusunan berkas
                     </p>
                   </div>
-                  <div className='space-y-4 font-satoshi text-xs text-white/80'>
+                  <div className='space-y-4 font-satoshi text-sm text-white/85'>
                     <div>
                       <p className='font-satoshi font-medium text-white'>
                         Isi paket ZIP

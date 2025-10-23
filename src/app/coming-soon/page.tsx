@@ -13,13 +13,14 @@ export default function ComingSoon() {
   const search = useSearchParams();
   const router = useRouter();
   const page = search?.get('page');
-  const showCountdown = page === 'ayomeludaftarmagang';
+  const showCountdown =
+    page === 'ayomeludaftarmagang' || page === 'hidden-page-cf';
 
-  const {
-    data: scheduleData,
-    now,
-    loading,
-  } = useSchedule('/ayomeludaftarmagang', 7000);
+  // determine which path to fetch schedule for based on the page query
+  const schedulePath =
+    page === 'hidden-page-cf' ? '/hidden-page-cf' : '/ayomeludaftarmagang';
+
+  const { data: scheduleData, now, loading } = useSchedule(schedulePath, 7000);
 
   const timeUntilStart = (() => {
     if (!scheduleData?.start) return null;
@@ -35,9 +36,11 @@ export default function ComingSoon() {
   useEffect(() => {
     if (!showCountdown) return; // only auto-redirect when the page param requested the countdown
     if (scheduleData?.active || timeUntilStart === 0) {
-      router.replace('/ayomeludaftarmagang');
+      // redirect to the appropriate page when schedule becomes active
+      if (page === 'hidden-page-cf') router.replace('/hidden-page-cf');
+      else router.replace('/ayomeludaftarmagang');
     }
-  }, [scheduleData?.active, timeUntilStart, router, showCountdown]);
+  }, [scheduleData?.active, timeUntilStart, router, showCountdown, page]);
 
   const breakdownTime = (ms: number | null) => {
     if (ms == null) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
