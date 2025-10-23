@@ -25,7 +25,11 @@ function scrollToId(id: string, offset = 0) {
   });
 }
 
-export default function NavbarLanding() {
+type Props = {
+  isActive?: boolean;
+};
+
+export default function NavbarLanding({ isActive = false }: Props) {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
   function openSidebar() {
@@ -46,7 +50,12 @@ export default function NavbarLanding() {
   };
 
   return (
-    <header className='sticky top-0 z-[100] w-full bg-[#040404]'>
+    <header
+      className={cn(
+        'sticky top-0 z-[100] w-full bg-[#040404]',
+        isActive ?? 'hidden',
+      )}
+    >
       <div
         className={cn(
           'flex items-center justify-between px-6 py-4 min-lg:px-24',

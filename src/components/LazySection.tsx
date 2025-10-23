@@ -1,5 +1,8 @@
 'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
+
+import Loading from '@/components/Loading';
 
 type LazySectionProps = {
   children: React.ReactNode;
@@ -106,7 +109,11 @@ const LazySection: React.FC<LazySectionProps> = ({
 
   return (
     <div ref={ref} id={id || ''} className={className} style={{ minHeight: 0 }}>
-      {visible ? children : Skeleton}
+      {visible ? (
+        <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
+      ) : (
+        Skeleton
+      )}
     </div>
   );
 };

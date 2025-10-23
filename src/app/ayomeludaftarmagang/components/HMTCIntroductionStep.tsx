@@ -286,7 +286,7 @@ export default function HMTCIntroductionStep({
             weight='bold'
             className='text-2xl text-amber-50 md:text-3xl'
           >
-            Siap Mengubah Sejarah HMTC?
+            Ambil langkah pertama menuju Suar HMTC 2025.
           </Typography>
           <Typography
             as='p'

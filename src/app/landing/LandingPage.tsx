@@ -10,7 +10,6 @@ import GallerySkeleton from '@/app/landing/components/gallery/GallerySkeleton';
 import HMTCBlogSkeleton from '@/app/landing/components/hmtcblog/HMTCBlogSkeleton';
 import LifeAtHMTCSkeleton from '@/app/landing/components/lifeHmtc/LifeAtHMTCSkeleton';
 import PeopleSkeleton from '@/app/landing/components/people/PeopleHMTCSkeleton';
-// import QuotesKahimaSkeleton from '@/app/landing/components/quotesKahima/QuotesKahimaSkeleton';
 import ShowCase from '@/app/landing/components/showcase/ShowCase';
 import ShowCaseSkeleton from '@/app/landing/components/showcase/ShowCaseSkeleton';
 import LazySection from '@/components/LazySection';
@@ -39,21 +38,10 @@ const HMTCBlog = dynamic(() => import('./components/hmtcblog/HMTCBlog'), {
   ssr: true,
 });
 
-// const QuotesKahima = dynamic(
-//   () => import('./components/quotesKahima/QuotesKahima'),
-//   {
-//     ssr: true,
-//   },
-// );
-
 export default function LandingPage() {
   const scheduleQuery = useIsScheduleActive();
   const initial = scheduleQuery?.data ?? true;
 
-  // Start background poller for schedule updates. It emits `hmtc:schedule`
-  // events and keeps an internal ref; we listen to the event to update a
-  // tiny local state so we can toggle visibility without remounting heavy
-  // components.
   useAutoIsScheduleActive({ intervalMs: 7000, path: '/ayomeludaftarmagang' });
 
   const [isActive, setIsActive] = React.useState<boolean>(initial);
@@ -72,20 +60,12 @@ export default function LandingPage() {
 
   return (
     <main className='relative scroll-smooth'>
-      {/* Mount both variants; toggle visibility via CSS to avoid unmounts */}
       <div className={isActive ? 'block' : 'hidden'} aria-hidden={!isActive}>
         <OprecCover />
-        <NavbarLanding />
       </div>
-
+      <NavbarLanding isActive={isActive} />
       <div className={!isActive ? 'block' : 'hidden'} aria-hidden={isActive}>
-        {/* Default cover is heavier; keep import path generic */}
-        <div>
-          {/* default Cover (server component) */}
-          {/* We render the same Cover component path used previously when schedule inactive */}
-          {/* Reuse the existing Cover export (oprecCover is default named Cover in its file) */}
-          <Cover />
-        </div>
+        <Cover />
         <NavbarDefault />
       </div>
       <LazySection
