@@ -294,7 +294,7 @@ export default function HMTCIntroductionStep({
             className='mx-auto max-w-xl text-base text-amber-50/80'
           >
             Jangan hanya menjadi penonton. Ambil langkah pertama menuju
-            transformasi HMTC 2025. Isi formulir di bawah dan tunjukkan kepada
+            Suar HMTC 2025. Isi formulir di bawah dan tunjukkan kepada
             kami mengapa Anda adalah orang yang tepat untuk bergabung!
           </Typography>
           <Button
