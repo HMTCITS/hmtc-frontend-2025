@@ -89,7 +89,7 @@ export const DIVISION_QUESTIONS = {
     'Apabila kamu menjadi seorang sekjen dan diantara kedua departemenmu saling berselisih mengenai SOP yang telah disepakati di awal, namun ketika pelaksanaan saling berselisih. Apa yang akan kamu lakukan?',
     'Bagaimana kamu memastikan seluruh dokumen kegiatan terarsip dengan rapi dan apa strategi kamu agar sistem administrasi tersebut dapat diteruskan secara berkelanjutan oleh periode berikutnya?',
     'Administrasi merupakan aspek krusial dalam menjaga ketertiban dan keberlanjutan kegiatan organisasi. Bagaimana strategi kamu dalam mengelola berbagai kebutuhan administrasi yang berasal dari beragam pihak di lingkungan himpunan?',
-    'Saat ini pencatatan keuangan HMTC sudah dilakukan menggunakan tool, yakni spreadsheet. Namun, terdapat kesulitan terhadap mengolah hasil rekap untuk mengambil keputusan (misalnya evaluasi pengeluaran, prediksi kebutuhan dana, atau pelaporan). Menurutmu, bagaimana cara mengoptimalkan penggunaan spreadsheet agar data keuangan lebih mudah dianalisis dan dipahami kedepannya?',
+    'Dana HMTC tidak mencukupi untuk dua program kerja yang sama-sama penting dan mendesak. Sebagai bendahara, langkah apa yang akan kamu ambil untuk menanganinya agar tetap adil, efisien, dan transparan?',
   ],
 } as const;
 
