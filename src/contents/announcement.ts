@@ -7,7 +7,7 @@ export const ANNOUNCEMENT_CONFIG = {
   backgroundColor: 'bg-[#2F6FED]',
   textColor: 'text-white',
   dismissible: false, // Allow users to dismiss the announcement
-  start: '2025-10-24T01:00:00+07:00',
+  start: '2025-10-24T00:00:00+07:00',
   end: '2025-10-30T23:59:59+07:00',
   timezone: 'Asia/Jakarta',
 } as const;
