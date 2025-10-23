@@ -33,10 +33,11 @@ export default function ComingSoon() {
   })();
 
   useEffect(() => {
+    if (!showCountdown) return; // only auto-redirect when the page param requested the countdown
     if (scheduleData?.active || timeUntilStart === 0) {
       router.replace('/ayomeludaftarmagang');
     }
-  }, [scheduleData?.active, timeUntilStart, router]);
+  }, [scheduleData?.active, timeUntilStart, router, showCountdown]);
 
   const breakdownTime = (ms: number | null) => {
     if (ms == null) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
