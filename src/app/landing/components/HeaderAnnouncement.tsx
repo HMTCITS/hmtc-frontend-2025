@@ -63,7 +63,7 @@ type HeaderAnnouncementProps = {
 export default function HeaderAnnouncement({
   active,
 }: HeaderAnnouncementProps) {
-  const { isAnnouncementVisible, dismissAnnouncement } = useAnnouncementState();
+  const { dismissAnnouncement } = useAnnouncementState();
 
   // schedule data for the recruitment page — used to show countdown / CTA
   const {
@@ -88,9 +88,6 @@ export default function HeaderAnnouncement({
       return null;
     }
   }, [scheduleData?.start, now]);
-
-  // if announcement is not visible (dismissed, scrolled, or outside time), don't render
-  if (!isAnnouncementVisible) return null;
 
   const formatRemaining = (ms: number | null) => {
     if (ms == null) return '';
