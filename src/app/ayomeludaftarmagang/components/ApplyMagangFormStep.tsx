@@ -306,19 +306,19 @@ export default function ApplyMagangFormStep(_props: ApplyMagangFormStepProps) {
                         <li>
                           CV:{' '}
                           <code className='rounded bg-white/10 px-1 py-0.5 font-mono'>
-                            NRP_NamaLengkap_CV.pdf
+                            CV_NamaLengkap.pdf
                           </code>
                         </li>
                         <li>
                           Mindmap:{' '}
                           <code className='rounded bg-white/10 px-1 py-0.5 font-mono'>
-                            NRP_NamaLengkap_Mindmap.pdf
+                            Mindmap_NamaLengkap.pdf
                           </code>
                         </li>
                         <li>
                           Portofolio (opsional):{' '}
                           <code className='rounded bg-white/10 px-1 py-0.5 font-mono'>
-                            NRP_NamaLengkap_Portofolio.pdf
+                            Portofolio_NamaLengkap.pdf
                           </code>
                         </li>
                       </ul>
