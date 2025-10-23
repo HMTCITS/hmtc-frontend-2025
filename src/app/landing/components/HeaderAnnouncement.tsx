@@ -91,6 +91,10 @@ export default function HeaderAnnouncement({
     }
   }, [scheduleData?.start, now]);
 
+  // consider the countdown reaching zero as active so the UI flips immediately
+  const isCountdownFinished = timeUntilStart === 0;
+  const effectiveActive = scheduleActive || isCountdownFinished;
+
   const formatRemaining = (ms: number | null) => {
     if (ms == null) return '';
     const total = Math.floor(ms / 1000);
@@ -119,14 +123,14 @@ export default function HeaderAnnouncement({
               {/* show explicit status text depending on schedule, or loading */}
               {isLoading
                 ? `${ANNOUNCEMENT_CONFIG.message} — Memuat...`
-                : scheduleActive
+                : effectiveActive
                   ? `${ANNOUNCEMENT_CONFIG.message} — Sudah dibuka`
                   : `${ANNOUNCEMENT_CONFIG.message} — Masih ditutup`}
             </Typography>
           </div>
 
-          {/* action: show countdown if schedule inactive, otherwise CTA */}
-          {!scheduleActive ? (
+          {/* action: show countdown if not yet active (including countdown), otherwise CTA */}
+          {!effectiveActive ? (
             <div className='flex items-center gap-2'>
               <div
                 className='rounded bg-white/10 px-3 py-1 font-mono text-sm'
@@ -142,6 +146,7 @@ export default function HeaderAnnouncement({
             </div>
           ) : (
             !isLoading &&
+            effectiveActive &&
             ANNOUNCEMENT_CONFIG.actionText &&
             ANNOUNCEMENT_CONFIG.actionUrl && (
               <Link

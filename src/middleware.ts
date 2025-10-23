@@ -69,13 +69,23 @@ export async function middleware(req: NextRequest) {
       const j: any = await res.json();
       if (!j?.active) {
         const to = req.nextUrl.clone();
+        // preserve the page param so coming-soon knows which schedule triggered this
+        const matched = gatedPrefixes.find(
+          (p) => pathname === p || pathname.startsWith(p + '/'),
+        );
         to.pathname = '/coming-soon';
+        if (matched) to.searchParams.set('page', matched.replace(/^\//, ''));
         return NextResponse.redirect(to);
       }
     }
   } catch {
     const to = req.nextUrl.clone();
+    const gatedPrefixes = ['/ayomeludaftarmagang'];
+    const matched = gatedPrefixes.find(
+      (p) => pathname === p || pathname.startsWith(p + '/'),
+    );
     to.pathname = '/coming-soon';
+    if (matched) to.searchParams.set('page', matched.replace(/^\//, ''));
     return NextResponse.redirect(to);
   }
 

@@ -110,11 +110,12 @@ export function useScheduleAutoRedirect(
         if (!mounted) return;
         if (!res.ok) throw new Error('Failed to load schedule');
         const json = (await res.json()) as Schedule;
-        if (
-          json.active === false &&
-          window.location.pathname !== '/coming-soon'
-        ) {
-          router.replace('/coming-soon');
+        if (json.active === false) {
+          // if we're not already on coming-soon for this page, navigate there with page param
+          const search =
+            typeof window !== 'undefined' ? window.location.search : '';
+          const already = search.includes('page=ayomeludaftarmagang');
+          if (!already) router.replace('/coming-soon?page=ayomeludaftarmagang');
         }
         lastActiveRef.current = json.active;
       } catch (e: any) {
