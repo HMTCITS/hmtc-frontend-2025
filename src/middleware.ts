@@ -65,7 +65,8 @@ export async function middleware(req: NextRequest) {
       const url = req.nextUrl.clone();
       url.pathname = '/api/schedule';
       url.searchParams.set('path', pathname);
-      const res = await fetch(url, { cache: 'force-cache' });
+      // Don't use edge cache here — we need the current schedule state.
+      const res = await fetch(url.toString(), { cache: 'no-store' });
       if (!res.ok) throw new Error('schedule fetch failed');
       const j: any = await res.json();
       if (!j?.active) {
