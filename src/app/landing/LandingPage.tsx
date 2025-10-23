@@ -13,7 +13,6 @@ import PeopleSkeleton from '@/app/landing/components/people/PeopleHMTCSkeleton';
 import ShowCase from '@/app/landing/components/showcase/ShowCase';
 import ShowCaseSkeleton from '@/app/landing/components/showcase/ShowCaseSkeleton';
 import LazySection from '@/components/LazySection';
-import { useAutoIsScheduleActive } from '@/hooks/api/useAutoIsScheduleActive';
 import NavbarDefault from '@/layouts/Navbar';
 
 const About = dynamic(() => import('./components/about/About'), {
@@ -37,14 +36,10 @@ const HMTCBlog = dynamic(() => import('./components/hmtcblog/HMTCBlog'), {
 });
 
 export default function LandingPage() {
-  useAutoIsScheduleActive({ intervalMs: 7000, path: '/ayomeludaftarmagang' });
-
   return (
     <main className='relative scroll-smooth'>
       <HeaderAnnouncement />
       <div className=''>
-        {' '}
-        {/* Space for announcement */}
         <Cover />
         <NavbarDefault />
       </div>

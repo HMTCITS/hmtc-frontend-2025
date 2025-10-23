@@ -7,7 +7,6 @@ import * as React from 'react';
 import Button from '@/components/buttons/Button';
 import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
-import { ANNOUNCEMENT_CONFIG,isAnnouncementTimeValid } from '@/contents/announcement';
 import { NAVBAR_LINKS } from '@/contents/layout';
 import { cn } from '@/lib/utils';
 
@@ -34,45 +33,50 @@ export default function Navbar() {
   const checkAnnouncementStatus = React.useCallback(() => {
     const scrollY = window.scrollY;
     const isScrolledPastAnnouncement = scrollY >= 80;
-    const isDismissed = localStorage.getItem('announcement-dismissed') === 'true';
-    const isTimeValid = isAnnouncementTimeValid();
-    
+    const isDismissed =
+      localStorage.getItem('announcement-dismissed') === 'true';
+
     // Announcement is hidden if:
     // - Not active in config
     // - Outside time range
     // - Scrolled past threshold
     // - Manually dismissed
-    const shouldHideAnnouncement = 
-      !ANNOUNCEMENT_CONFIG.isActive || 
-      !isTimeValid || 
-      isScrolledPastAnnouncement || 
-      isDismissed;
-      
+    const shouldHideAnnouncement = isScrolledPastAnnouncement || isDismissed;
+
     setAnnouncementHidden(shouldHideAnnouncement);
   }, []);
 
-  const handleScroll = React.useCallback(function handleNavbarScroll() {
-    const shouldShift = window.scrollY >= 10;
-    setIsShift((prev) => (prev !== shouldShift ? shouldShift : prev));
-    checkAnnouncementStatus();
-  }, [checkAnnouncementStatus]);
+  const handleScroll = React.useCallback(
+    function handleNavbarScroll() {
+      const shouldShift = window.scrollY >= 10;
+      setIsShift((prev) => (prev !== shouldShift ? shouldShift : prev));
+      checkAnnouncementStatus();
+    },
+    [checkAnnouncementStatus],
+  );
 
   React.useEffect(() => {
     // Listen for scroll events
     window.addEventListener('scroll', handleScroll, { passive: true });
-    
+
     // Listen for announcement dismissed event
     const handleAnnouncementDismissed = () => {
       checkAnnouncementStatus();
     };
-    window.addEventListener('announcement-dismissed', handleAnnouncementDismissed);
-    
+    window.addEventListener(
+      'announcement-dismissed',
+      handleAnnouncementDismissed,
+    );
+
     // Initial check
     handleScroll();
-    
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('announcement-dismissed', handleAnnouncementDismissed);
+      window.removeEventListener(
+        'announcement-dismissed',
+        handleAnnouncementDismissed,
+      );
     };
   }, [handleScroll, checkAnnouncementStatus]);
 
@@ -94,10 +98,10 @@ export default function Navbar() {
   };
 
   return (
-    <header 
+    <header
       className={cn(
         'fixed z-[100] w-full transition-all duration-200 ease-in-out',
-        announcementHidden ? 'top-0' : 'top-[52px]' // 52px is announcement height
+        announcementHidden ? 'top-0' : 'top-[52px]', // 52px is announcement height
       )}
     >
       <div
