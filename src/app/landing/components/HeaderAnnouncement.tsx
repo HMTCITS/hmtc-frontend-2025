@@ -76,6 +76,8 @@ export default function HeaderAnnouncement({
   const scheduleActive =
     typeof active === 'boolean' ? active : (scheduleData?.active ?? true);
 
+  const isLoading = Boolean(_scheduleLoading);
+
   // compute remaining time until start if not active
   const timeUntilStart = React.useMemo(() => {
     if (!scheduleData?.start) return null;
@@ -114,23 +116,32 @@ export default function HeaderAnnouncement({
         <div className='flex items-center gap-3'>
           <div>
             <Typography font='satoshi' className='text-center font-medium'>
-              {/* show explicit status text depending on schedule */}
-              {scheduleActive
-                ? `${ANNOUNCEMENT_CONFIG.message} — Sudah dibuka`
-                : `${ANNOUNCEMENT_CONFIG.message} — Masih ditutup`}
+              {/* show explicit status text depending on schedule, or loading */}
+              {isLoading
+                ? `${ANNOUNCEMENT_CONFIG.message} — Memuat...`
+                : scheduleActive
+                  ? `${ANNOUNCEMENT_CONFIG.message} — Sudah dibuka`
+                  : `${ANNOUNCEMENT_CONFIG.message} — Masih ditutup`}
             </Typography>
           </div>
 
           {/* action: show countdown if schedule inactive, otherwise CTA */}
           {!scheduleActive ? (
             <div className='flex items-center gap-2'>
-              <div className='rounded bg-white/10 px-3 py-1 font-mono text-sm'>
-                {timeUntilStart != null
-                  ? formatRemaining(timeUntilStart)
-                  : '--:--:--'}
+              <div
+                className='rounded bg-white/10 px-3 py-1 font-mono text-sm'
+                role='status'
+                aria-live='polite'
+              >
+                {isLoading
+                  ? 'Memuat...'
+                  : timeUntilStart != null
+                    ? formatRemaining(timeUntilStart)
+                    : '--:--:--'}
               </div>
             </div>
           ) : (
+            !isLoading &&
             ANNOUNCEMENT_CONFIG.actionText &&
             ANNOUNCEMENT_CONFIG.actionUrl && (
               <Link

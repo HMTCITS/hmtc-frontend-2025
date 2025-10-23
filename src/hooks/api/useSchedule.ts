@@ -63,14 +63,13 @@ export function useSchedule(path = '/ayomeludaftarmagang', pollMs = 5000) {
       }
     };
 
+    // fetch once on mount and keep a per-second `now` ticker for the UI
     void fetchOnce();
-    const poll = window.setInterval(fetchOnce, pollMs);
     const tick = window.setInterval(() => setNow(new Date()), 1000);
 
     return () => {
       mounted = false;
       controller.abort();
-      clearInterval(poll);
       clearInterval(tick);
     };
   }, [path, pollMs]);
