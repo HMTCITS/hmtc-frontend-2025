@@ -55,11 +55,11 @@ export default function ComingSoon() {
     return (
       <main className='flex min-h-screen w-full flex-col items-center justify-center bg-[#201F1F] px-6 py-10 text-center text-white sm:px-8 md:px-12 lg:px-16'>
         <NextImage
-          src='/coming-soon/Logo.svg'
+          src='/logo-hmtc2025-footer.png'
           alt='background coming soon'
-          width={280}
-          height={355}
-          className='absolute opacity-20'
+          width={171}
+          height={492}
+          className='absolute opacity-30'
         />
         <div className='flex flex-col items-center space-y-4 sm:space-y-6'>
           <Typography
@@ -99,11 +99,11 @@ export default function ComingSoon() {
       </div>
 
       <NextImage
-        src='/coming-soon/Logo.svg'
+        src='/logo-hmtc2025-footer.png'
         alt='HMTC Logo'
-        width={200}
-        height={200}
-        className='mb-6 opacity-90 sm:mb-8 sm:w-[220px] md:w-[240px] lg:w-[260px]'
+        width={171}
+        height={492}
+        className='mb-6 opacity-30 sm:mb-8 sm:w-[130px]'
       />
 
       <motion.div
