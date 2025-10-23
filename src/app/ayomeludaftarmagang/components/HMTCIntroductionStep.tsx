@@ -293,9 +293,9 @@ export default function HMTCIntroductionStep({
             font='satoshi'
             className='mx-auto max-w-xl text-base text-amber-50/80'
           >
-            Jangan hanya menjadi penonton. Ambil langkah pertama menuju
-            Suar HMTC 2025. Isi formulir di bawah dan tunjukkan kepada
-            kami mengapa Anda adalah orang yang tepat untuk bergabung!
+            Jangan hanya menjadi penonton. Ambil langkah pertama menuju Suar
+            HMTC 2025. Isi formulir di bawah dan tunjukkan kepada kami mengapa
+            Anda adalah orang yang tepat untuk bergabung!
           </Typography>
           <Button
             type='button'

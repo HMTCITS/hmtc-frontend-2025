@@ -1,13 +1,13 @@
 /* --------------------------- Announcement Configuration --------------------------- */
 export const ANNOUNCEMENT_CONFIG = {
   isActive: true, // Set to false to hide announcement
-  message: 'Pendaftaran Magang HMTC ITS 2025 telah dibuka!',
+  message: 'Pendaftaran Magang HMTC ITS 2025',
   actionText: 'Daftar Sekarang',
   actionUrl: '/ayomeludaftarmagang',
   backgroundColor: 'bg-[#2F6FED]',
   textColor: 'text-white',
   dismissible: false, // Allow users to dismiss the announcement
-  start: '2025-10-23T10:40:00+07:00',
+  start: '2025-10-24T00:00:00+07:00',
   end: '2025-10-30T23:59:59+07:00',
   timezone: 'Asia/Jakarta',
 } as const;
@@ -22,7 +22,7 @@ export function isAnnouncementTimeValid(): boolean {
   const currentTime = new Date();
   const startTime = new Date(ANNOUNCEMENT_CONFIG.start);
   const endTime = new Date(ANNOUNCEMENT_CONFIG.end);
-  
+
   return currentTime >= startTime && currentTime <= endTime;
 }
 
@@ -43,20 +43,25 @@ export function formatTimestamp(date: Date | string | number): string {
  * Get remaining time until announcement expires
  * @returns object with days, hours, minutes remaining
  */
-export function getTimeRemaining(): { days: number; hours: number; minutes: number; expired: boolean } {
+export function getTimeRemaining(): {
+  days: number;
+  hours: number;
+  minutes: number;
+  expired: boolean;
+} {
   const currentTime = new Date();
   const endTime = new Date(ANNOUNCEMENT_CONFIG.end);
   const timeLeftMs = endTime.getTime() - currentTime.getTime();
-  
+
   if (timeLeftMs <= 0) {
     return { days: 0, hours: 0, minutes: 0, expired: true };
   }
-  
+
   const timeLeftSeconds = Math.floor(timeLeftMs / 1000);
   const days = Math.floor(timeLeftSeconds / (24 * 60 * 60));
   const hours = Math.floor((timeLeftSeconds % (24 * 60 * 60)) / (60 * 60));
   const minutes = Math.floor((timeLeftSeconds % (60 * 60)) / 60);
-  
+
   return { days, hours, minutes, expired: false };
 }
 
@@ -87,7 +92,7 @@ export function getAnnouncementStatus() {
   const endTime = new Date(ANNOUNCEMENT_CONFIG.end);
   const isTimeValid = isAnnouncementTimeValid();
   const timeRemaining = getTimeRemaining();
-  
+
   return {
     isActive: ANNOUNCEMENT_CONFIG.isActive,
     isTimeValid,
