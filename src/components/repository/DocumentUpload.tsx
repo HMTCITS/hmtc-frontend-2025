@@ -75,27 +75,34 @@ export function DocumentUpload({
       {selectedFile ? (
         <div
           className={cn(
-            'flex items-center gap-3 rounded-lg border-2 border-dashed p-4',
+            'flex w-full items-center gap-4 rounded-lg border p-3 sm:p-4',
             tone === 'glass'
-              ? 'border-indigo-200/60 bg-white/10 backdrop-blur-sm'
-              : 'border-green-300 bg-green-50',
-            disabled && 'cursor-not-allowed opacity-50',
+              ? 'border-white/10 bg-white/6 backdrop-blur-sm'
+              : 'border-green-200 bg-white/50',
+            disabled && 'cursor-not-allowed opacity-60',
           )}
+          role='group'
+          aria-label='Selected document'
         >
-          <FileText
-            className={cn(
-              'h-8 w-8',
-              tone === 'glass' ? 'text-indigo-200' : 'text-green-600',
-            )}
-          />
+          <div className='flex h-10 w-10 items-center justify-center rounded-md bg-white/6 sm:h-12 sm:w-12'>
+            <FileText
+              className={cn(
+                'h-5 w-5',
+                tone === 'glass' ? 'text-indigo-100' : 'text-green-700',
+              )}
+              aria-hidden
+            />
+          </div>
+
           <div className='min-w-0 flex-1'>
             <Typography
               as='p'
               variant='b4'
               className={cn(
                 'truncate text-sm font-medium',
-                tone === 'glass' ? 'text-white' : 'text-green-800',
+                tone === 'glass' ? 'text-white' : 'text-green-900',
               )}
+              title={selectedFile.name}
             >
               {selectedFile.name}
             </Typography>
@@ -103,56 +110,73 @@ export function DocumentUpload({
               as='p'
               variant='c0'
               className={cn(
-                'text-xs',
-                tone === 'glass' ? 'text-indigo-100/90' : 'text-green-600',
+                'mt-0.5 text-xs',
+                tone === 'glass' ? 'text-indigo-100/90' : 'text-green-700',
               )}
             >
               {formatFileSize(selectedFile.size)}
             </Typography>
           </div>
-          <Button
-            type='button'
-            variant='ghost'
-            size='sm'
-            onClick={handleRemove}
-            disabled={disabled}
-            className={cn(
-              'h-8 w-8 p-0',
-              tone === 'glass'
-                ? 'text-indigo-100 hover:bg-white/10 hover:text-white'
-                : 'text-green-600 hover:bg-green-100 hover:text-green-800',
-            )}
-          >
-            <X className='h-4 w-4' />
-          </Button>
+
+          <div className='flex items-center gap-2'>
+            <Button
+              type='button'
+              variant='ghost'
+              size='sm'
+              onClick={handleClick}
+              disabled={disabled}
+              className={cn(
+                'h-8 w-8 p-0',
+                tone === 'glass' ? 'text-indigo-100' : 'text-gray-700',
+              )}
+              aria-label='Ganti file'
+              title='Ganti file'
+            >
+              <Upload className='h-4 w-4' />
+            </Button>
+
+            <Button
+              type='button'
+              variant='ghost'
+              size='sm'
+              onClick={handleRemove}
+              disabled={disabled}
+              className={cn('h-8 w-8 p-0 text-red-400 hover:bg-red-600/10')}
+              aria-label='Hapus file'
+              title='Hapus file'
+            >
+              <X className='h-4 w-4' />
+            </Button>
+          </div>
         </div>
       ) : (
-        <div
+        <button
+          type='button'
           onClick={handleClick}
+          disabled={disabled}
           className={cn(
-            'flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed p-8 transition-colors',
+            'flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border p-6 transition-colors sm:p-8',
             tone === 'glass'
-              ? 'border-white/20 bg-white/5 hover:border-indigo-300/60'
-              : 'border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100',
-            disabled &&
-              (tone === 'glass'
-                ? 'cursor-not-allowed opacity-50 hover:border-white/20'
-                : 'cursor-not-allowed opacity-50 hover:border-gray-300 hover:bg-gray-50'),
+              ? 'border-white/12 bg-white/4 hover:border-indigo-300/60'
+              : 'border-gray-200 bg-gray-50 hover:border-gray-300 hover:bg-gray-100',
+            disabled && 'cursor-not-allowed opacity-60',
             error &&
               (tone === 'glass'
                 ? 'border-red-300/70 bg-red-500/10'
                 : 'border-red-300 bg-red-50'),
           )}
+          aria-disabled={disabled}
         >
           <Upload
             className={cn(
-              'mb-4 h-12 w-12',
+              'mb-3 h-10 w-10 sm:h-12 sm:w-12',
               error
                 ? 'text-red-400'
                 : tone === 'glass'
                   ? 'text-indigo-200'
                   : 'text-gray-400',
             )}
+            aria-hidden
           />
           <Typography
             as='p'
@@ -165,10 +189,10 @@ export function DocumentUpload({
                   : 'text-red-700'
                 : tone === 'glass'
                   ? 'text-white'
-                  : 'text-gray-700',
+                  : 'text-gray-800',
             )}
           >
-            Click to upload document
+            {hint ? hint : 'Klik untuk mengunggah dokumen'}
           </Typography>
           <Typography
             as='p'
@@ -186,7 +210,7 @@ export function DocumentUpload({
           >
             {hint ?? 'PDF, DOC, DOCX, TXT (Max 10MB)'}
           </Typography>
-        </div>
+        </button>
       )}
     </div>
   );
