@@ -46,7 +46,7 @@ export default function JsonLd({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Organization',
-              name: 'Himpunan Mahasiswa Teknik Komputer ITS',
+              name: 'Himpunan Mahasiswa Teknik Computer ITS',
               alternateName: 'HMTC ITS',
               url: 'https://hmtc-its.com',
               logo: logoUrl,
@@ -72,7 +72,7 @@ export default function JsonLd({
               '@type': 'WebSite',
               url: 'https://hmtc-its.com',
               name: 'HMTC ITS',
-              alternateName: 'Himpunan Mahasiswa Teknik Komputer ITS',
+              alternateName: 'Himpunan Mahasiswa Teknik Computer ITS',
               potentialAction: {
                 '@type': 'SearchAction',
                 target: 'https://hmtc-its.com/search?q={search_term_string}',

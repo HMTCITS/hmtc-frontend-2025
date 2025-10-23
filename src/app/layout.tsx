@@ -20,12 +20,12 @@ export const metadata: Metadata = {
 
   title: {
     default:
-      'HMTC ITS | Himpunan Mahasiswa Teknik Komputer Institut Teknologi Sepuluh Nopember',
+      'HMTC ITS | Himpunan Mahasiswa Teknik Computer Institut Teknologi Sepuluh Nopember',
     template: '%s | HMTC ITS',
   },
 
   description:
-    'Selamat datang di Himpunan Mahasiswa Teknik Komputer (HMTC) ITS — workshop, galeri, blog, dan komunitas mahasiswa.',
+    'Selamat datang di Himpunan Mahasiswa Teknik Computer (HMTC) ITS — workshop, galeri, blog, dan komunitas mahasiswa.',
 
   applicationName: 'HMTC ITS',
 
@@ -42,22 +42,22 @@ export const metadata: Metadata = {
     // versi capital
     'HMTC',
     'HMTC ITS',
-    'Himpunan Mahasiswa Teknik Komputer',
-    'Himpunan Mahasiswa Teknik Komputer ITS',
+    'Himpunan Mahasiswa Teknik Computer',
+    'Himpunan Mahasiswa Teknik Computer ITS',
     'Institut Teknologi Sepuluh Nopember',
     'ITS',
 
     // versi lowercase
     'hmtc',
     'hmtc its',
-    'himpunan mahasiswa teknik komputer',
-    'himpunan mahasiswa teknik komputer its',
+    'himpunan mahasiswa Teknik Computer',
+    'himpunan mahasiswa Teknik Computer its',
     'institut teknologi sepuluh nopember',
     'its',
 
     // long-tail & variasi bahasa Indonesia
     'hmtc its website resmi',
-    'komunitas mahasiswa teknik komputer its',
+    'komunitas mahasiswa Teknik Computer its',
     'kegiatan hmtc its',
     'agenda hmtc its',
     'acara hmtc its',
@@ -168,8 +168,8 @@ export default function RootLayout({
         )}
       >
         <JsonLd
-          title='HMTC ITS - Himpunan Mahasiswa Teknik Komputer'
-          description='Himpunan Mahasiswa Teknik Komputer ITS - wadah kreativitas dan kegiatan mahasiswa.'
+          title='HMTC ITS - Himpunan Mahasiswa Teknik Computer'
+          description='Himpunan Mahasiswa Teknik Computer ITS - wadah kreativitas dan kegiatan mahasiswa.'
         />
         <Providers>{children}</Providers>
       </body>

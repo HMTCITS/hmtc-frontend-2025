@@ -56,7 +56,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           'flex items-center justify-center',
           'focus:outline-none focus-visible:outline',
           'font-semibold transition-colors duration-75',
-          'disabled:cursor-not-allowed',
+          'cursor-pointer disabled:cursor-not-allowed',
           [
             size === 'small' && [
               'min-h-[1.75rem] md:min-h-[2rem]',

@@ -19,6 +19,8 @@ export type InputProps = {
   rightNode?: React.ReactNode;
   addon?: string;
   containerClassName?: string;
+  labelClassName?: string;
+  inputClassName?: string;
 } & React.ComponentPropsWithoutRef<'input'>;
 
 export default function Input({
@@ -36,6 +38,8 @@ export default function Input({
   addon,
   rightNode,
   containerClassName,
+  labelClassName,
+  inputClassName,
   ...rest
 }: InputProps) {
   const {
@@ -51,7 +55,10 @@ export default function Input({
   return (
     <div className={containerClassName}>
       {withLabel && (
-        <label className='text-typo-main font-bold' htmlFor={id}>
+        <label
+          className={cn('text-typo-main font-bold', labelClassName)}
+          htmlFor={id}
+        >
           {label}
         </label>
       )}
@@ -106,6 +113,8 @@ export default function Input({
             LeftIcon && ['pl-10', inputWithLeftIconClassName],
             rightNode && 'pr-10',
             addon && 'rounded-l-none shadow-none',
+            'autofill-bg-transparent', // Add this class
+            inputClassName,
           )}
           aria-describedby={id}
         />

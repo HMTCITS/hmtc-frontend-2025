@@ -1,15 +1,20 @@
+'use client';
+
 import dynamic from 'next/dynamic';
+import * as React from 'react';
 
 import AboutSkeleton from '@/app/landing/components/about/AboutSkeleton';
 import Cover from '@/app/landing/components/cover/Cover';
 import GallerySkeleton from '@/app/landing/components/gallery/GallerySkeleton';
+import HeaderAnnouncement from '@/app/landing/components/HeaderAnnouncement';
 import HMTCBlogSkeleton from '@/app/landing/components/hmtcblog/HMTCBlogSkeleton';
 import LifeAtHMTCSkeleton from '@/app/landing/components/lifeHmtc/LifeAtHMTCSkeleton';
 import PeopleSkeleton from '@/app/landing/components/people/PeopleHMTCSkeleton';
-// import QuotesKahimaSkeleton from '@/app/landing/components/quotesKahima/QuotesKahimaSkeleton';
 import ShowCase from '@/app/landing/components/showcase/ShowCase';
 import ShowCaseSkeleton from '@/app/landing/components/showcase/ShowCaseSkeleton';
 import LazySection from '@/components/LazySection';
+import { useAutoIsScheduleActive } from '@/hooks/api/useAutoIsScheduleActive';
+import NavbarDefault from '@/layouts/Navbar';
 
 const About = dynamic(() => import('./components/about/About'), {
   ssr: true,
@@ -31,17 +36,18 @@ const HMTCBlog = dynamic(() => import('./components/hmtcblog/HMTCBlog'), {
   ssr: true,
 });
 
-// const QuotesKahima = dynamic(
-//   () => import('./components/quotesKahima/QuotesKahima'),
-//   {
-//     ssr: true,
-//   },
-// );
-
 export default function LandingPage() {
+  useAutoIsScheduleActive({ intervalMs: 7000, path: '/ayomeludaftarmagang' });
+
   return (
     <main className='relative scroll-smooth'>
-      <Cover />
+      <HeaderAnnouncement />
+      <div className=''>
+        {' '}
+        {/* Space for announcement */}
+        <Cover />
+        <NavbarDefault />
+      </div>
       <LazySection
         fallback={<AboutSkeleton />}
         once={true}

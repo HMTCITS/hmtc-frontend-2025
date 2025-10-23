@@ -196,22 +196,56 @@
       transform: translateY(20px);
       opacity: 0;
     }
+
     to {
       transform: translateY(0);
       opacity: 1;
     }
   }
 
-  --animate-fade-in: fadeIn 0.5s ease-in forwards;
-  --animate-slide-in: slideIn 0.5s ease-out forwards;
   --animate-spin: spin 1s linear infinite;
   --animate-ping: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+
+  /* Move utility classes out of @theme (only custom props and keyframes allowed inside @theme) */
   --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   --animate-bounce: bounce 1s infinite;
 
   /* Ease functions */
   --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
   --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Shiny text animation (used by ShinyText component) */
+  @keyframes shine {
+    0% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: -100% 50%;
+    }
+  }
+
+  --animate-gradient: gradient 8s linear infinite;
+}
+
+/* Utility: shiny text animation (used by ShinyText component) */
+.animate-shine {
+  animation-name: shine;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: var(--shine-duration, 5s);
+  background-size: 200% 100%;
 }
 
 @layer base {
@@ -251,6 +285,16 @@
   /* Font declarations - use Tailwind v4 class syntax */
   html {
     font-family: var(--font-poppins);
+  }
+
+  /* Custom autofill override for transparent inputs */
+  input.autofill-bg-transparent:-webkit-autofill,
+  input.autofill-bg-transparent:-webkit-autofill:hover,
+  input.autofill-bg-transparent:-webkit-autofill:focus,
+  input.autofill-bg-transparent:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #00000000 inset !important; /* Transparent background */
+    -webkit-text-fill-color: #ffffff !important; /* White text */
+    transition: background-color 5000s ease-in-out 0s;
   }
 }
 
@@ -366,4 +410,69 @@
   .adelphe-fructidor {
     font-family: var(--font-adelphe);
   }
+}
+
+.animated-gradient-text {
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  max-width: fit-content;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  overflow: hidden;
+}
+
+.gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: 300% 100%;
+  animation: gradient linear infinite;
+  border-radius: inherit;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.gradient-overlay::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: inherit;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #060010;
+  z-index: -1;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.text-content {
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradient linear infinite;
 }

@@ -8,7 +8,7 @@ export default function Cover() {
         <NextImage
           src='halamandepan.png'
           alt='Background Beranda HMTC 2025'
-          className='z-0 h-screen min-h-[415px] w-full sm:min-h-[470px] lg:min-h-[768px] xl:min-h-[890px] 2xl:min-h-[768px]'
+          className='z-0 h-[calc(100vh-52px)] min-h-[415px] w-full sm:min-h-[470px] lg:min-h-[768px] xl:min-h-[890px] 2xl:min-h-[768px]'
           imgClassName='h-full w-full object-cover object-center'
           width={1512}
           height={982}
