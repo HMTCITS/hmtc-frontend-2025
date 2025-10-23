@@ -35,6 +35,11 @@ const BLOCKED_EXACT = ['/login', '/register'];
 const BLOCKED_PREFIX_AUTH = ['/change-password'];
 
 export async function middleware(req: NextRequest) {
+  // Only apply period-gating to safe idempotent fetches. This avoids
+  // interfering with non-GET requests (webhooks, analytics, etc.).
+  if (!['GET', 'HEAD'].includes(req.method)) {
+    return NextResponse.next();
+  }
   const isProd = process.env.NODE_ENV === 'production';
   // Read server-only env var so the flag is NOT exposed to client bundles.
   // We treat the env var as an explicit override with the following semantics:
@@ -66,18 +71,131 @@ export async function middleware(req: NextRequest) {
       url.pathname = '/api/schedule';
       url.searchParams.set('path', pathname);
       // Don't use edge cache here — we need the current schedule state.
-      const res = await fetch(url.toString(), { cache: 'no-store' });
-      if (!res.ok) throw new Error('schedule fetch failed');
-      const j: any = await res.json();
-      if (!j?.active) {
-        const to = req.nextUrl.clone();
-        // preserve the page param so coming-soon knows which schedule triggered this
-        const matched = gatedPrefixes.find(
-          (p) => pathname === p || pathname.startsWith(p + '/'),
-        );
-        to.pathname = '/coming-soon';
-        if (matched) to.searchParams.set('page', matched.replace(/^\//, ''));
-        return NextResponse.redirect(to);
+      let res: Response | null = null;
+      try {
+        res = await fetch(url.toString(), { cache: 'no-store' });
+      } catch (err) {
+        // Network or runtime error when contacting schedule API. For
+        // availability we choose to allow the request rather than block the
+        // site. Log the failure for diagnostics and continue.
+        try {
+          // eslint-disable-next-line no-console
+          console.error('Middleware schedule fetch error:', err);
+        } catch {
+          void 0;
+        }
+        return NextResponse.next();
+      }
+
+      if (!res.ok) {
+        // Non-200 from schedule API — attempt a cache-busting retry once. If
+        // that also fails, allow traffic rather than redirect to avoid a
+        // potential outage caused by time provider or edge issues.
+        try {
+          const retryUrl = url.clone();
+          retryUrl.searchParams.set('_ts', Date.now().toString());
+          const retryRes = await fetch(retryUrl.toString(), {
+            cache: 'no-store',
+          });
+          if (!retryRes.ok) {
+            try {
+              // eslint-disable-next-line no-console
+              console.error('Middleware schedule non-ok responses', {
+                initialStatus: res.status,
+                retryStatus: retryRes.status,
+                path: pathname,
+              });
+            } catch {
+              void 0;
+            }
+            return NextResponse.next();
+          }
+          const retryJson = await retryRes.json().catch(() => null);
+          if (!retryJson?.active) {
+            const to = req.nextUrl.clone();
+            const matched = gatedPrefixes.find(
+              (p) => pathname === p || pathname.startsWith(p + '/'),
+            );
+            to.pathname = '/coming-soon';
+            if (matched)
+              to.searchParams.set('page', matched.replace(/^\//, ''));
+            try {
+              // eslint-disable-next-line no-console
+              console.info('Middleware redirecting (schedule inactive)', {
+                path: pathname,
+                schedule: retryJson,
+              });
+            } catch {
+              void 0;
+            }
+            return NextResponse.redirect(to);
+          }
+        } catch (err) {
+          try {
+            // eslint-disable-next-line no-console
+            console.error('Middleware schedule retry error:', err);
+          } catch {
+            void 0;
+          }
+          return NextResponse.next();
+        }
+      } else {
+        // res.ok
+        const j: any = await res.json().catch(() => null);
+        if (!j?.active) {
+          // edge caches can sometimes be stale; perform one cache-busting re-check
+          try {
+            const retryUrl = url.clone();
+            retryUrl.searchParams.set('_ts', Date.now().toString());
+            const retryRes = await fetch(retryUrl.toString(), {
+              cache: 'no-store',
+            });
+            if (retryRes.ok) {
+              const retryJson = await retryRes.json().catch(() => null);
+              if (!retryJson?.active) {
+                const to = req.nextUrl.clone();
+                const matched = gatedPrefixes.find(
+                  (p) => pathname === p || pathname.startsWith(p + '/'),
+                );
+                to.pathname = '/coming-soon';
+                if (matched)
+                  to.searchParams.set('page', matched.replace(/^\//, ''));
+                try {
+                  // eslint-disable-next-line no-console
+                  console.info('Middleware redirecting (schedule inactive)', {
+                    path: pathname,
+                    schedule: j,
+                    retrySchedule: retryJson,
+                  });
+                } catch {
+                  void 0;
+                }
+                return NextResponse.redirect(to);
+              }
+            } else {
+              // retry fetch failed to return ok; allow traffic instead of redirect
+              try {
+                // eslint-disable-next-line no-console
+                console.error('Middleware schedule retry non-ok', {
+                  status: retryRes.status,
+                  path: pathname,
+                });
+              } catch {
+                void 0;
+              }
+              return NextResponse.next();
+            }
+          } catch (err) {
+            // retry errored — allow rather than block
+            try {
+              // eslint-disable-next-line no-console
+              console.error('Middleware schedule retry error:', err);
+            } catch {
+              void 0;
+            }
+            return NextResponse.next();
+          }
+        }
       }
     }
   } catch (err) {
