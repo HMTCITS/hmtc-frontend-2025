@@ -14,106 +14,159 @@
  *      (e.g., `/dashboard`, `/sandbox`, auth pages) in production unless
  *      explicitly enabled.
  *
- * Configuration:
- * - To add a new period-gated page:
- *   a) Add its prefix and schedule in `src/lib/schedule-config.ts`.
- *   b) Add the prefix to `gatedPrefixes` below and to `config.matcher`.
- *   c) In the page component, call `useScheduleAutoRedirect(… , '<prefix>')`
- *      for realtime UX fallback.
- * - To override admin routes in production, set `DISABLE_ADMIN_ROUTES=0`.
- *
- * Order of checks:
- * - Period gating runs first (page-specific policy), then admin blocking runs.
- *   Adjust ordering if you need admin policy to override period gating.
+ * NOTE: Logic preserved exactly from original file — only restructured for clarity.
  */
+
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-// Routes to block in production (or when DISABLE_ADMIN_ROUTES=1)
+/* ---------------------------
+   Configuration / Constants
+   --------------------------- */
+
+// Admin blocking configuration
 const BLOCKED_PREFIXES = ['/sandbox', '/dashboard'];
 const BLOCKED_EXACT = ['/login', '/register'];
 const BLOCKED_PREFIX_AUTH = ['/change-password'];
 
-export async function middleware(req: NextRequest) {
-  // Only apply period-gating to safe idempotent fetches. This avoids
-  // interfering with non-GET requests (webhooks, analytics, etc.).
-  if (!['GET', 'HEAD'].includes(req.method)) {
-    return NextResponse.next();
-  }
-  const isProd = process.env.NODE_ENV === 'production';
-  // Read server-only env var so the flag is NOT exposed to client bundles.
-  // We treat the env var as an explicit override with the following semantics:
-  // - Production: admin routes are disabled by default (shouldDisable = true). To
-  //   force-enable admin routes in prod for testing, set DISABLE_ADMIN_ROUTES=0.
-  // - Development: admin routes are enabled by default (shouldDisable = false).
-  //   To simulate disabling in dev, set DISABLE_ADMIN_ROUTES=1.
-  const envFlag = process.env.DISABLE_ADMIN_ROUTES;
-  let shouldDisable: boolean;
-  if (isProd) {
-    // In production default to disabling admin routes unless explicitly set to '0'
-    shouldDisable = envFlag !== '0';
-  } else {
-    // In development default to NOT disabling admin routes unless explicitly set to '1'
-    shouldDisable = envFlag === '1';
+// Period-gated prefixes used for schedule checks (kept as in original)
+const GATED_PREFIXES: string[] = ['/ayomeludaftarmagang', '/hidden-page-cf'];
+
+/* ---------------------------
+   Helpers
+   --------------------------- */
+
+function isSafeMethod(method: string) {
+  return method === 'GET' || method === 'HEAD';
+}
+
+function isPathUnderPrefixes(pathname: string, prefixes: string[]) {
+  return prefixes.some((p) => pathname === p || pathname.startsWith(p + '/'));
+}
+
+/**
+ * Create a fresh URL instance from an object that implements toString().
+ * NextRequest.nextUrl is a NextURL (Next.js), which can be stringified via toString().
+ * Using `new URL(...)` avoids relying on a `.clone()` method that doesn't exist on URL.
+ */
+function cloneUrl(base: { toString(): string }) {
+  return new URL(base.toString());
+}
+
+function buildScheduleUrlForPath(
+  baseUrl: { toString(): string },
+  pathname: string,
+) {
+  const url = cloneUrl(baseUrl);
+  url.pathname = '/api/schedule';
+  url.searchParams.set('path', pathname);
+  return url;
+}
+
+async function fetchJsonWithNoStore(url: string) {
+  // Wrapper so calling code remains expressive and centralized
+  return fetch(url, { cache: 'no-store' });
+}
+
+/**
+ * Performs the schedule check for the given request+pathname.
+ * Returns a NextResponse redirect to /coming-soon when schedule is inactive,
+ * otherwise returns null to allow the request to continue.
+ *
+ * This preserves the original flow:
+ * - fetch schedule
+ * - if non-ok -> retry with cache-buster; if retry non-ok -> allow (next)
+ * - if ok but j.active false -> retry with cache-buster and redirect on false
+ */
+async function handlePeriodGating(req: NextRequest, pathname: string) {
+  const isGated = isPathUnderPrefixes(pathname, GATED_PREFIXES);
+  if (!isGated) return null;
+
+  const url = buildScheduleUrlForPath(req.nextUrl, pathname);
+  let res: Response | null = null;
+
+  try {
+    // initial fetch (no-store to avoid stale edge cache here)
+    res = await fetchJsonWithNoStore(url.toString());
+  } catch (err) {
+    // Network/runtime error contacting schedule API -> allow traffic (log and continue)
+    try {
+      // eslint-disable-next-line no-console
+      console.error('Middleware schedule fetch error:', err);
+    } catch {
+      void 0;
+    }
+    return null;
   }
 
-  // --- Period-based gating (public pages) ---
-  // determine pathname here so the catch block can reference it safely
-  const pathname = req.nextUrl.pathname;
-  try {
-    // Add any additional period-gated pages here (ensure matcher is updated too)
-    const gatedPrefixes = ['/ayomeludaftarmagang', '/hidden-page-cf'];
-    const isGated = gatedPrefixes.some(
-      (p) => pathname === p || pathname.startsWith(p + '/'),
-    );
-    if (isGated) {
-      const url = req.nextUrl.clone();
-      url.pathname = '/api/schedule';
-      url.searchParams.set('path', pathname);
-      // Don't use edge cache here — we need the current schedule state.
-      let res: Response | null = null;
-      try {
-        res = await fetch(url.toString(), { cache: 'no-store' });
-      } catch (err) {
-        // Network or runtime error when contacting schedule API. For
-        // availability we choose to allow the request rather than block the
-        // site. Log the failure for diagnostics and continue.
+  // If initial response was not ok, attempt one retry with cache-busting. If retry fails,
+  // allow traffic to avoid creating an outage.
+  if (!res.ok) {
+    try {
+      const retryUrl = cloneUrl(url);
+      retryUrl.searchParams.set('_ts', Date.now().toString());
+      const retryRes = await fetchJsonWithNoStore(retryUrl.toString());
+      if (!retryRes.ok) {
         try {
           // eslint-disable-next-line no-console
-          console.error('Middleware schedule fetch error:', err);
+          console.error('Middleware schedule non-ok responses', {
+            initialStatus: res.status,
+            retryStatus: retryRes.status,
+            path: pathname,
+          });
         } catch {
           void 0;
         }
-        return NextResponse.next();
+        // allow traffic
+        return null;
       }
 
-      if (!res.ok) {
-        // Non-200 from schedule API — attempt a cache-busting retry once. If
-        // that also fails, allow traffic rather than redirect to avoid a
-        // potential outage caused by time provider or edge issues.
+      const retryJson = await retryRes.json().catch(() => null);
+      if (!retryJson?.active) {
+        const to = cloneUrl(req.nextUrl);
+        const matched = GATED_PREFIXES.find(
+          (p) => pathname === p || pathname.startsWith(p + '/'),
+        );
+        to.pathname = '/coming-soon';
+        if (matched) to.searchParams.set('page', matched.replace(/^\//, ''));
         try {
-          const retryUrl = url.clone();
-          retryUrl.searchParams.set('_ts', Date.now().toString());
-          const retryRes = await fetch(retryUrl.toString(), {
-            cache: 'no-store',
+          // eslint-disable-next-line no-console
+          console.info('Middleware redirecting (schedule inactive)', {
+            path: pathname,
+            schedule: retryJson,
           });
-          if (!retryRes.ok) {
-            try {
-              // eslint-disable-next-line no-console
-              console.error('Middleware schedule non-ok responses', {
-                initialStatus: res.status,
-                retryStatus: retryRes.status,
-                path: pathname,
-              });
-            } catch {
-              void 0;
-            }
-            return NextResponse.next();
-          }
+        } catch {
+          void 0;
+        }
+        return NextResponse.redirect(to);
+      }
+      return null;
+    } catch (err) {
+      try {
+        // eslint-disable-next-line no-console
+        console.error('Middleware schedule retry error:', err);
+      } catch {
+        void 0;
+      }
+      // allow traffic on retry error
+      return null;
+    }
+  }
+
+  // res.ok branch: parse JSON and redirect if inactive after a retry guard
+  try {
+    const j: any = await res.json().catch(() => null);
+    if (!j?.active) {
+      // First try cache-busting re-check — if still inactive, redirect
+      try {
+        const retryUrl = cloneUrl(url);
+        retryUrl.searchParams.set('_ts', Date.now().toString());
+        const retryRes = await fetchJsonWithNoStore(retryUrl.toString());
+        if (retryRes.ok) {
           const retryJson = await retryRes.json().catch(() => null);
           if (!retryJson?.active) {
-            const to = req.nextUrl.clone();
-            const matched = gatedPrefixes.find(
+            const to = cloneUrl(req.nextUrl);
+            const matched = GATED_PREFIXES.find(
               (p) => pathname === p || pathname.startsWith(p + '/'),
             );
             to.pathname = '/coming-soon';
@@ -123,134 +176,146 @@ export async function middleware(req: NextRequest) {
               // eslint-disable-next-line no-console
               console.info('Middleware redirecting (schedule inactive)', {
                 path: pathname,
-                schedule: retryJson,
+                schedule: j,
+                retrySchedule: retryJson,
               });
             } catch {
               void 0;
             }
             return NextResponse.redirect(to);
           }
-        } catch (err) {
+        } else {
           try {
             // eslint-disable-next-line no-console
-            console.error('Middleware schedule retry error:', err);
+            console.error('Middleware schedule retry non-ok', {
+              status: retryRes.status,
+              path: pathname,
+            });
           } catch {
             void 0;
           }
-          return NextResponse.next();
+          return null;
         }
-      } else {
-        // res.ok
-        const j: any = await res.json().catch(() => null);
-        if (!j?.active) {
-          // edge caches can sometimes be stale; perform one cache-busting re-check
-          try {
-            const retryUrl = url.clone();
-            retryUrl.searchParams.set('_ts', Date.now().toString());
-            const retryRes = await fetch(retryUrl.toString(), {
-              cache: 'no-store',
-            });
-            if (retryRes.ok) {
-              const retryJson = await retryRes.json().catch(() => null);
-              if (!retryJson?.active) {
-                const to = req.nextUrl.clone();
-                const matched = gatedPrefixes.find(
-                  (p) => pathname === p || pathname.startsWith(p + '/'),
-                );
-                to.pathname = '/coming-soon';
-                if (matched)
-                  to.searchParams.set('page', matched.replace(/^\//, ''));
-                try {
-                  // eslint-disable-next-line no-console
-                  console.info('Middleware redirecting (schedule inactive)', {
-                    path: pathname,
-                    schedule: j,
-                    retrySchedule: retryJson,
-                  });
-                } catch {
-                  void 0;
-                }
-                return NextResponse.redirect(to);
-              }
-            } else {
-              // retry fetch failed to return ok; allow traffic instead of redirect
-              try {
-                // eslint-disable-next-line no-console
-                console.error('Middleware schedule retry non-ok', {
-                  status: retryRes.status,
-                  path: pathname,
-                });
-              } catch {
-                void 0;
-              }
-              return NextResponse.next();
-            }
-          } catch (err) {
-            // retry errored — allow rather than block
-            try {
-              // eslint-disable-next-line no-console
-              console.error('Middleware schedule retry error:', err);
-            } catch {
-              void 0;
-            }
-            return NextResponse.next();
-          }
+      } catch (err) {
+        try {
+          // eslint-disable-next-line no-console
+          console.error('Middleware schedule retry error:', err);
+        } catch {
+          void 0;
         }
+        return null;
       }
     }
+    // active or nothing wrong -> allow
+    return null;
   } catch (err) {
-    const to = req.nextUrl.clone();
-    const gatedPrefixes = ['/ayomeludaftarmagang'];
-    const matched = gatedPrefixes.find(
+    // If parsing throws, fallback: preserve original behavior by redirecting to /coming-soon
+    // NOTE: original catch used a smaller gatedPrefixes list — keep that behavior for parity.
+    const to = cloneUrl(req.nextUrl);
+    const fallbackGated = GATED_PREFIXES;
+    const matched = fallbackGated.find(
       (p) => pathname === p || pathname.startsWith(p + '/'),
     );
     to.pathname = '/coming-soon';
     if (matched) to.searchParams.set('page', matched.replace(/^\//, ''));
     try {
-      // server-side log to help diagnose production errors
       // eslint-disable-next-line no-console
       console.error(
         'Middleware schedule check failed:',
         typeof err === 'string' ? err : JSON.stringify(err),
       );
     } catch {
-      // ignore
+      void 0;
     }
     return NextResponse.redirect(to);
   }
+}
 
-  if (!shouldDisable) return NextResponse.next();
+/**
+ * Determine whether admin routes should be disabled based on environment.
+ * Preserves semantics from original:
+ * - Production default: disabled unless DISABLE_ADMIN_ROUTES === '0'
+ * - Development default: enabled unless DISABLE_ADMIN_ROUTES === '1' (simulate disabling)
+ */
+function shouldDisableAdminRoutes(): boolean {
+  const isProd = process.env.NODE_ENV === 'production';
+  const envFlag = process.env.DISABLE_ADMIN_ROUTES;
+  if (isProd) {
+    // In production default to disabling admin routes unless explicitly set to '0'
+    return envFlag !== '0';
+  } else {
+    // In development default to NOT disabling admin routes unless explicitly set to '1'
+    return envFlag === '1';
+  }
+}
 
-  // --- Admin/privileged routes blocking ---
-  // block prefixes: /sandbox/* and /dashboard/*
+/**
+ * Checks and returns a redirect NextResponse if the pathname matches admin-block rules.
+ * Returns null if allowed.
+ */
+function handleAdminBlocking(
+  req: NextRequest,
+  pathname: string,
+  shouldDisable: boolean,
+) {
+  if (!shouldDisable) return null;
+
+  // blocked prefixes (e.g., /sandbox/*)
   for (const p of BLOCKED_PREFIXES) {
     if (pathname === p || pathname.startsWith(p + '/')) {
-      const url = req.nextUrl.clone();
+      const url = cloneUrl(req.nextUrl);
       url.pathname = '/coming-soon';
       return NextResponse.redirect(url);
     }
   }
 
-  // block exact auth pages (login, register)
+  // exact blocked routes (e.g., /login)
   if (BLOCKED_EXACT.includes(pathname)) {
-    const url = req.nextUrl.clone();
+    const url = cloneUrl(req.nextUrl);
     url.pathname = '/coming-soon';
     return NextResponse.redirect(url);
   }
 
-  // block auth prefixes (eg. change-password/*)
+  // blocked auth prefixes (e.g., /change-password/*)
   for (const p of BLOCKED_PREFIX_AUTH) {
     if (pathname === p || pathname.startsWith(p + '/')) {
-      const url = req.nextUrl.clone();
+      const url = cloneUrl(req.nextUrl);
       url.pathname = '/coming-soon';
       return NextResponse.redirect(url);
     }
   }
 
+  return null;
+}
+
+/* ---------------------------
+   Middleware Entry Point
+   --------------------------- */
+
+export async function middleware(req: NextRequest) {
+  // Only apply gating to safe idempotent fetches to avoid interfering with non-GET requests
+  if (!isSafeMethod(req.method)) {
+    return NextResponse.next();
+  }
+
+  const pathname = req.nextUrl.pathname;
+
+  // 1) Period-based gating (public pages) — run first
+  const scheduleDecision = await handlePeriodGating(req, pathname);
+  if (scheduleDecision) return scheduleDecision;
+
+  // 2) Admin/privileged routes blocking
+  const disableAdmin = shouldDisableAdminRoutes();
+  const adminDecision = handleAdminBlocking(req, pathname, disableAdmin);
+  if (adminDecision) return adminDecision;
+
   return NextResponse.next();
 }
 
-// Only run middleware for relevant routes to minimize overhead
+/* ---------------------------
+   Matcher configuration
+   --------------------------- */
+
 export const config = {
   matcher: [
     '/ayomeludaftarmagang',

@@ -8,7 +8,7 @@ export const ANNOUNCEMENT_CONFIG = {
   textColor: 'text-white',
   dismissible: false, // Allow users to dismiss the announcement
   start: '2025-10-24T00:00:00+07:00',
-  end: '2025-10-30T23:59:59+07:00',
+  end: '2025-10-30T12:00:00+07:00',
   timezone: 'Asia/Jakarta',
 } as const;
 
@@ -20,10 +20,9 @@ export type AnnouncementConfig = typeof ANNOUNCEMENT_CONFIG;
  */
 export function isAnnouncementTimeValid(): boolean {
   const currentTime = new Date();
-  const startTime = new Date(ANNOUNCEMENT_CONFIG.start);
   const endTime = new Date(ANNOUNCEMENT_CONFIG.end);
 
-  return currentTime >= startTime && currentTime <= endTime;
+  return currentTime <= endTime;
 }
 
 /**

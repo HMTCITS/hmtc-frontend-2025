@@ -28,47 +28,130 @@ function scrollToId(id: string, offset = 0) {
 export default function Navbar() {
   const [isShift, setIsShift] = React.useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
-  const [announcementHidden, setAnnouncementHidden] = React.useState(false);
 
-  const checkAnnouncementStatus = React.useCallback(() => {
+  // announcementHidden indicates whether the navbar should be positioned at top (true)
+  // or below the announcement (false). It is derived from multiple sources:
+  // - dismissed flag (localStorage)
+  // - scroll position (scrolled past announcement)
+  // - announcementForceHidden (explicit signal from HeaderAnnouncement that it is not visible)
+  // Start with a server-safe default (announcement not hidden). We will
+  // initialize the client-only persisted value inside useEffect after
+  // mount to avoid hydration mismatch between server and client renders.
+  const [announcementHidden, setAnnouncementHidden] =
+    React.useState<boolean>(false);
+
+  // announcementForceHidden tracks whether HeaderAnnouncement told us it is not visible
+  // (for example because it's outside schedule window). We keep a ref to use in scroll handler closure.
+  // Force-hidden state (HeaderAnnouncement signalled it's not visible).
+  // Default to false on server; read persisted value on mount to avoid
+  // hydration mismatch.
+  const [announcementForceHidden, setAnnouncementForceHidden] =
+    React.useState<boolean>(false);
+  const announcementForceHiddenRef = React.useRef<boolean>(
+    announcementForceHidden,
+  );
+  React.useEffect(() => {
+    announcementForceHiddenRef.current = announcementForceHidden;
+  }, [announcementForceHidden]);
+
+  const checkAnnouncementVisibilityFromScroll = React.useCallback(() => {
     const scrollY = window.scrollY;
-    const isScrolledPastAnnouncement = scrollY >= 80;
-    const isDismissed =
-      localStorage.getItem('announcement-dismissed') === 'true';
-
-    // Announcement is hidden if:
-    // - Not active in config
-    // - Outside time range
-    // - Scrolled past threshold
-    // - Manually dismissed
-    const shouldHideAnnouncement = isScrolledPastAnnouncement || isDismissed;
-
-    setAnnouncementHidden(shouldHideAnnouncement);
+    return scrollY >= 80; // scrolled past announcement height
   }, []);
 
-  const handleScroll = React.useCallback(
-    function handleNavbarScroll() {
-      const shouldShift = window.scrollY >= 10;
-      setIsShift((prev) => (prev !== shouldShift ? shouldShift : prev));
-      checkAnnouncementStatus();
-    },
-    [checkAnnouncementStatus],
-  );
+  const handleScroll = React.useCallback(() => {
+    const shouldShift = window.scrollY >= 10;
+    setIsShift((prev) => (prev !== shouldShift ? shouldShift : prev));
+
+    // determine dismissal flag from localStorage each time (keeps in sync with outside events)
+    let isDismissed = false;
+    try {
+      isDismissed =
+        typeof window !== 'undefined' &&
+        localStorage.getItem('announcement-dismissed') === 'true';
+    } catch {
+      isDismissed = false;
+    }
+
+    const scrolledPast = checkAnnouncementVisibilityFromScroll();
+    // combine all conditions so once announcement is force-hidden it stays hidden regardless of scroll
+    const shouldHide =
+      scrolledPast || isDismissed || announcementForceHiddenRef.current;
+    setAnnouncementHidden(shouldHide);
+  }, [checkAnnouncementVisibilityFromScroll]);
 
   React.useEffect(() => {
+    // On mount, read persisted announcement visibility/dismissal so we
+    // can initialize the navbar position without causing a hydration
+    // mismatch. This runs only on the client.
+    try {
+      const persisted = localStorage.getItem('announcement-visible');
+      const forceHidden = persisted === 'false';
+      setAnnouncementForceHidden(forceHidden);
+      announcementForceHiddenRef.current = forceHidden;
+
+      const isDismissed =
+        localStorage.getItem('announcement-dismissed') === 'true';
+      const scrolledPast = window.scrollY >= 80;
+      const initialHidden = scrolledPast || isDismissed || forceHidden;
+      setAnnouncementHidden(initialHidden);
+    } catch {
+      // ignore storage errors
+    }
+
     // Listen for scroll events
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     // Listen for announcement dismissed event
     const handleAnnouncementDismissed = () => {
-      checkAnnouncementStatus();
+      try {
+        // mark dismissed in localStorage (HeaderAnnouncement also does this)
+        localStorage.setItem('announcement-dismissed', 'true');
+      } catch {
+        // ignore
+      }
+      // when dismissed, always hide announcement area
+      setAnnouncementHidden(true);
     };
     window.addEventListener(
       'announcement-dismissed',
       handleAnnouncementDismissed,
     );
 
-    // Initial check
+    // Listen for announcement visibility updates (fired by HeaderAnnouncement)
+    const handleAnnouncementVisibility = (ev: Event) => {
+      try {
+        const detail = (ev as CustomEvent).detail as
+          | { visible: boolean }
+          | undefined;
+        const visible = detail?.visible ?? false;
+        // If HeaderAnnouncement signals it's not visible (visible === false), persist this as a force-hide.
+        const forceHidden = !visible;
+        setAnnouncementForceHidden(forceHidden);
+        announcementForceHiddenRef.current = forceHidden;
+
+        // recompute final hidden flag taking into account scroll/dismissal/forceHidden
+        const scrolledPast = checkAnnouncementVisibilityFromScroll();
+        let isDismissed = false;
+        try {
+          isDismissed =
+            typeof window !== 'undefined' &&
+            localStorage.getItem('announcement-dismissed') === 'true';
+        } catch {
+          isDismissed = false;
+        }
+        const shouldHide = scrolledPast || isDismissed || forceHidden;
+        setAnnouncementHidden(shouldHide);
+      } catch {
+        // ignore malformed events
+      }
+    };
+    window.addEventListener(
+      'announcement-visibility',
+      handleAnnouncementVisibility,
+    );
+
+    // Initial check to set correct position on mount
     handleScroll();
 
     return () => {
@@ -77,8 +160,12 @@ export default function Navbar() {
         'announcement-dismissed',
         handleAnnouncementDismissed,
       );
+      window.removeEventListener(
+        'announcement-visibility',
+        handleAnnouncementVisibility,
+      );
     };
-  }, [handleScroll, checkAnnouncementStatus]);
+  }, [handleScroll, checkAnnouncementVisibilityFromScroll]);
 
   function openSidebar() {
     setIsSidebarOpen(true);
@@ -101,7 +188,8 @@ export default function Navbar() {
     <header
       className={cn(
         'fixed z-[100] w-full transition-all duration-200 ease-in-out',
-        announcementHidden ? 'top-0' : 'top-[52px]', // 52px is announcement height
+        // When announcement is hidden we place navbar at top, otherwise below announcement height
+        announcementHidden ? 'top-0' : 'top-[52px]',
       )}
     >
       <div
