@@ -1,66 +1,13 @@
-const safeConsole = (globalThis as any)['console'] || {};
-
-function group(...args: any[]) {
-  const fn = safeConsole['group'] || safeConsole['log'];
-  try {
-    return fn.apply(safeConsole, args as any);
-  } catch {
-    return undefined;
-  }
-}
-
-function groupEnd(...args: any[]) {
-  const fn = safeConsole['groupEnd'] || safeConsole['log'];
-  try {
-    return fn.apply(safeConsole, args as any);
-  } catch {
-    return undefined;
-  }
-}
-
-function log(...args: any[]) {
-  const fn = safeConsole['log'] || (() => {});
-  try {
-    return fn.apply(safeConsole, args as any);
-  } catch {
-    return undefined;
-  }
-}
-
-function info(...args: any[]) {
-  const fn = safeConsole['info'] || safeConsole['log'] || (() => {});
-  try {
-    return fn.apply(safeConsole, args as any);
-  } catch {
-    return undefined;
-  }
-}
-
-function warn(...args: any[]) {
-  const fn = safeConsole['warn'] || safeConsole['log'] || (() => {});
-  try {
-    return fn.apply(safeConsole, args as any);
-  } catch {
-    return undefined;
-  }
-}
-
-function error(...args: any[]) {
-  const fn = safeConsole['error'] || safeConsole['log'] || (() => {});
-  try {
-    return fn.apply(safeConsole, args as any);
-  } catch {
-    return undefined;
-  }
-}
+// Production no-op debug logger
+const noop = (..._args: any[]) => undefined;
 
 const debug = {
-  group,
-  groupEnd,
-  log,
-  info,
-  warn,
-  error,
+  group: noop as (...args: any[]) => void,
+  groupEnd: noop as (...args: any[]) => void,
+  log: noop as (...args: any[]) => void,
+  info: noop as (...args: any[]) => void,
+  warn: noop as (...args: any[]) => void,
+  error: noop as (...args: any[]) => void,
 };
 
 export default debug;
