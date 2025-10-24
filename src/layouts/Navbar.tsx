@@ -58,27 +58,39 @@ export default function Navbar() {
     const scrollY = window.scrollY;
     return scrollY >= 80; // scrolled past announcement height
   }, []);
-
+  // Throttle scroll handler with rAF to avoid layout thrashing / forced reflow warnings
+  const rafRef = React.useRef<number | null>(null);
   const handleScroll = React.useCallback(() => {
-    const shouldShift = window.scrollY >= 10;
-    setIsShift((prev) => (prev !== shouldShift ? shouldShift : prev));
+    if (rafRef.current != null) return; // already scheduled
+    rafRef.current = window.requestAnimationFrame(() => {
+      try {
+        const scrollY = window.scrollY;
+        const shouldShift = scrollY >= 10;
+        setIsShift((prev) => (prev !== shouldShift ? shouldShift : prev));
 
-    // determine dismissal flag from localStorage each time (keeps in sync with outside events)
-    let isDismissed = false;
-    try {
-      isDismissed =
-        typeof window !== 'undefined' &&
-        localStorage.getItem('announcement-dismissed') === 'true';
-    } catch {
-      isDismissed = false;
-    }
+        // determine dismissal flag from localStorage each time (keeps in sync with outside events)
+        let isDismissed = false;
+        try {
+          isDismissed =
+            typeof window !== 'undefined' &&
+            localStorage.getItem('announcement-dismissed') === 'true';
+        } catch {
+          isDismissed = false;
+        }
 
-    const scrolledPast = checkAnnouncementVisibilityFromScroll();
-    // combine all conditions so once announcement is force-hidden it stays hidden regardless of scroll
-    const shouldHide =
-      scrolledPast || isDismissed || announcementForceHiddenRef.current;
-    setAnnouncementHidden(shouldHide);
-  }, [checkAnnouncementVisibilityFromScroll]);
+        const scrolledPast = scrollY >= 80; // avoid extra layout read by reusing scrollY
+        // combine all conditions so once announcement is force-hidden it stays hidden regardless of scroll
+        const shouldHide =
+          scrolledPast || isDismissed || announcementForceHiddenRef.current;
+        setAnnouncementHidden(shouldHide);
+      } finally {
+        if (rafRef.current != null) {
+          window.cancelAnimationFrame(rafRef.current);
+          rafRef.current = null;
+        }
+      }
+    });
+  }, []);
 
   React.useEffect(() => {
     // On mount, read persisted announcement visibility/dismissal so we
