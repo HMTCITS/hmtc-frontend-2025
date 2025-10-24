@@ -289,16 +289,47 @@ export default function ComingSoon() {
       }
     }
 
+    // Only consider redirect when either the schedule reports `active` OR
+    // the start time has just been reached and the server `now` lies within
+    // the [start, end] window. This prevents redirect when the window has
+    // already passed (timeUntilStart === 0 because now > end).
+    let withinWindow = false;
+    try {
+      if (scheduleData?.start && scheduleData?.end && scheduleData?.now) {
+        const s = new Date(scheduleData.start).getTime();
+        const e = new Date(scheduleData.end).getTime();
+        const serverNowMs = new Date(scheduleData.now).getTime();
+        withinWindow = serverNowMs >= s && serverNowMs <= e;
+      }
+    } catch {
+      withinWindow = false;
+    }
+
     const shouldConsiderRedirect =
-      (scheduleData?.active === true || timeUntilStart === 0) &&
+      (scheduleData?.active === true ||
+        (timeUntilStart === 0 && withinWindow)) &&
       serverNowFresh &&
       freshScheduleOk;
 
     if (shouldConsiderRedirect) {
       const id = window.setTimeout(() => {
         // re-check to avoid racing
+        // Re-evaluate window membership before redirect to avoid races.
+        let reWithinWindow = false;
+        try {
+          if (scheduleData?.start && scheduleData?.end && scheduleData?.now) {
+            const s = new Date(scheduleData.start).getTime();
+            const e = new Date(scheduleData.end).getTime();
+            const serverNowMs = new Date(scheduleData.now).getTime();
+            reWithinWindow = serverNowMs >= s && serverNowMs <= e;
+          }
+        } catch {
+          reWithinWindow = false;
+        }
+
         if (
-          (scheduleData?.active === true || timeUntilStart === 0) &&
+          (scheduleData?.active === true ||
+            (timeUntilStart === 0 && reWithinWindow)) &&
           serverNowFresh &&
           freshScheduleOk
         ) {
