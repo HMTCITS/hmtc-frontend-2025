@@ -112,9 +112,12 @@ export async function GET(req: Request) {
     return NextResponse.json(
       { active: false, reason: 'No schedule', path },
       {
+        // Do not allow shared/CDN caches to serve stale schedule data. In
+        // production (behind Cloudflare) some edges may ignore very short
+        // s-maxage values; use no-store to ensure origin is consulted on each
+        // request. This keeps redirect decisions accurate.
         headers: {
-          'Cache-Control':
-            'public, max-age=5, s-maxage=5, stale-while-revalidate=30',
+          'Cache-Control': 'no-store',
         },
       },
     );
@@ -140,10 +143,10 @@ export async function GET(req: Request) {
       source,
     },
     {
+      // Use no-store to avoid CDN/edge caching which can lead to stale
+      // responses and redirect loops in production behind aggressive caches.
       headers: {
-        // Allow short-term caching at the edge and browser to reduce flicker and API load
-        'Cache-Control':
-          'public, max-age=5, s-maxage=5, stale-while-revalidate=30',
+        'Cache-Control': 'no-store',
       },
     },
   );
