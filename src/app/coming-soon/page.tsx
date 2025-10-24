@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable no-console */
 
 import { motion } from 'motion/react';
 import Link from 'next/link';
@@ -95,6 +96,91 @@ export default function ComingSoon() {
   // poll schedule; `useSchedule` is expected to return { data, now, loading }
   const { data: scheduleData, now, loading } = useSchedule(schedulePath, 7000);
 
+  // Fresh origin-check state: perform a one-off origin fetch with cache-buster
+  // to ensure we don't act on stale edge/CDN or bfcache responses.
+  const [freshScheduleOk, setFreshScheduleOk] = React.useState(false);
+  const freshCheckAbortRef = React.useRef<AbortController | null>(null);
+
+  const runFreshScheduleCheck = React.useCallback(async () => {
+    try {
+      if (freshCheckAbortRef.current) {
+        try {
+          freshCheckAbortRef.current.abort();
+        } catch {
+          void 0;
+        }
+      }
+      const ac = new AbortController();
+      freshCheckAbortRef.current = ac;
+      const url = new URL('/api/schedule', window.location.origin);
+      url.searchParams.set('path', schedulePath);
+      url.searchParams.set('_ts', String(Date.now()));
+      console.group('[coming-soon] freshScheduleCheck ->', url.toString());
+      try {
+        const res = await fetch(url.toString(), {
+          signal: ac.signal,
+          cache: 'no-store',
+        });
+        if (!res.ok) {
+          console.log('[coming-soon] freshScheduleCheck non-ok', res.status);
+          setFreshScheduleOk(false);
+          console.groupEnd();
+          return;
+        }
+        const json = await res.json();
+        console.log('[coming-soon] freshScheduleCheck result', json);
+        const serverNowIso = json?.now;
+        let serverNowFresh = false;
+        if (serverNowIso) {
+          try {
+            const serverNowMs = new Date(serverNowIso).getTime();
+            const drift = Math.abs(Date.now() - serverNowMs);
+            serverNowFresh = drift <= 15_000;
+          } catch {
+            serverNowFresh = false;
+          }
+        }
+        setFreshScheduleOk(
+          Boolean(json && typeof json.active === 'boolean' && serverNowFresh),
+        );
+      } catch (err) {
+        console.log('[coming-soon] freshScheduleCheck error', err);
+        setFreshScheduleOk(false);
+      } finally {
+        console.groupEnd();
+      }
+    } catch (err) {
+      console.log('[coming-soon] freshScheduleCheck outer error', err);
+      setFreshScheduleOk(false);
+    }
+  }, [schedulePath]);
+
+  // Run a fresh check on mount and whenever scheduleData.now updates.
+  React.useEffect(() => {
+    // run once initially
+    if (typeof window !== 'undefined') void runFreshScheduleCheck();
+    return () => {
+      if (freshCheckAbortRef.current) {
+        try {
+          freshCheckAbortRef.current.abort();
+        } catch {
+          void 0;
+        }
+      }
+    };
+  }, [runFreshScheduleCheck, scheduleData?.now]);
+
+  // Handle bfcache/pageshow restores: when restored from BFCache we should
+  // re-run a fresh origin check so we don't act on stale snapshot state.
+  React.useEffect(() => {
+    const onPageShow = (ev: any) => {
+      console.log('[coming-soon] pageshow event. persisted=', ev?.persisted);
+      void runFreshScheduleCheck();
+    };
+    window.addEventListener('pageshow', onPageShow);
+    return () => window.removeEventListener('pageshow', onPageShow);
+  }, [runFreshScheduleCheck]);
+
   // compute ms until start / end (null if unknown)
   const timeUntilStart = useMemo(() => {
     if (!scheduleData?.start) return null;
@@ -176,15 +262,25 @@ export default function ComingSoon() {
     }
 
     const shouldConsiderRedirect =
-      (scheduleData?.active === true || timeUntilStart === 0) && serverNowFresh;
+      (scheduleData?.active === true || timeUntilStart === 0) &&
+      serverNowFresh &&
+      freshScheduleOk;
 
     if (shouldConsiderRedirect) {
       const id = window.setTimeout(() => {
         // re-check to avoid racing
         if (
           (scheduleData?.active === true || timeUntilStart === 0) &&
-          serverNowFresh
+          serverNowFresh &&
+          freshScheduleOk
         ) {
+          console.group('[coming-soon] Redirect decision');
+          console.log('page', page);
+          console.log('scheduleData', scheduleData);
+          console.log('timeUntilStart', timeUntilStart);
+          console.log('serverNowFresh', serverNowFresh);
+          console.log('freshScheduleOk', freshScheduleOk);
+          console.groupEnd();
           if (page === 'hidden-page-cf') router.replace('/hidden-page-cf');
           else router.replace('/ayomeludaftarmagang');
         }
@@ -199,6 +295,8 @@ export default function ComingSoon() {
     page,
     router,
     showCountdown,
+    freshScheduleOk,
+    scheduleData,
   ]);
 
   // prepare countdown breakdown only once per relevant change
