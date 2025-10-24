@@ -321,7 +321,7 @@ function computeErrorSteps(
   return set;
 }
 
-export default function AyoMeluDaftarMagangPage() {
+export default function HiddenPageCF() {
   const [isReady, setIsReady] = React.useState(false);
   const [submissionOpen, setSubmissionOpen] = React.useState(false);
   const [submissionStatus, setSubmissionStatus] =
@@ -364,7 +364,7 @@ export default function AyoMeluDaftarMagangPage() {
     q3,
   } = controller;
 
-  useScheduleAutoRedirect(5000, '/ayomeludaftarmagang');
+  useScheduleAutoRedirect(5000, '/hidden-page-cf');
 
   const { mutate } = useUploadMagang({
     onSuccess: (_data) => {

@@ -89,13 +89,8 @@ async function handlePeriodGating(req: NextRequest, pathname: string) {
     // initial fetch (no-store to avoid stale edge cache here)
     res = await fetchJsonWithNoStore(url.toString());
   } catch (err) {
-    // Network/runtime error contacting schedule API -> allow traffic (log and continue)
-    try {
-      // eslint-disable-next-line no-console
-      console.error('Middleware schedule fetch error:', err);
-    } catch {
-      void 0;
-    }
+    // Network/runtime error contacting schedule API -> allow traffic (silent and continue)
+    void err;
     return null;
   }
 
@@ -107,17 +102,7 @@ async function handlePeriodGating(req: NextRequest, pathname: string) {
       retryUrl.searchParams.set('_ts', Date.now().toString());
       const retryRes = await fetchJsonWithNoStore(retryUrl.toString());
       if (!retryRes.ok) {
-        try {
-          // eslint-disable-next-line no-console
-          console.error('Middleware schedule non-ok responses', {
-            initialStatus: res.status,
-            retryStatus: retryRes.status,
-            path: pathname,
-          });
-        } catch {
-          void 0;
-        }
-        // allow traffic
+        // allow traffic on non-ok retry (silent)
         return null;
       }
 
@@ -129,26 +114,13 @@ async function handlePeriodGating(req: NextRequest, pathname: string) {
         );
         to.pathname = '/coming-soon';
         if (matched) to.searchParams.set('page', matched.replace(/^\//, ''));
-        try {
-          // eslint-disable-next-line no-console
-          console.info('Middleware redirecting (schedule inactive)', {
-            path: pathname,
-            schedule: retryJson,
-          });
-        } catch {
-          void 0;
-        }
+        // redirecting due to inactive schedule (silent)
         return NextResponse.redirect(to);
       }
       return null;
     } catch (err) {
-      try {
-        // eslint-disable-next-line no-console
-        console.error('Middleware schedule retry error:', err);
-      } catch {
-        void 0;
-      }
-      // allow traffic on retry error
+      // retry error -> allow traffic (silent)
+      void err;
       return null;
     }
   }
@@ -172,43 +144,24 @@ async function handlePeriodGating(req: NextRequest, pathname: string) {
             to.pathname = '/coming-soon';
             if (matched)
               to.searchParams.set('page', matched.replace(/^\//, ''));
-            try {
-              // eslint-disable-next-line no-console
-              console.info('Middleware redirecting (schedule inactive)', {
-                path: pathname,
-                schedule: j,
-                retrySchedule: retryJson,
-              });
-            } catch {
-              void 0;
-            }
+            // redirecting due to inactive schedule (silent)
             return NextResponse.redirect(to);
           }
         } else {
-          try {
-            // eslint-disable-next-line no-console
-            console.error('Middleware schedule retry non-ok', {
-              status: retryRes.status,
-              path: pathname,
-            });
-          } catch {
-            void 0;
-          }
+          // retry non-ok -> allow (silent)
           return null;
         }
       } catch (err) {
-        try {
-          // eslint-disable-next-line no-console
-          console.error('Middleware schedule retry error:', err);
-        } catch {
-          void 0;
-        }
+        // retry error -> allow (silent)
+        void err;
         return null;
       }
     }
     // active or nothing wrong -> allow
     return null;
   } catch (err) {
+    // Reference the caught error to satisfy linters, but remain silent in production.
+    void err;
     // If parsing throws, fallback: preserve original behavior by redirecting to /coming-soon
     // NOTE: original catch used a smaller gatedPrefixes list — keep that behavior for parity.
     const to = cloneUrl(req.nextUrl);
@@ -218,15 +171,7 @@ async function handlePeriodGating(req: NextRequest, pathname: string) {
     );
     to.pathname = '/coming-soon';
     if (matched) to.searchParams.set('page', matched.replace(/^\//, ''));
-    try {
-      // eslint-disable-next-line no-console
-      console.error(
-        'Middleware schedule check failed:',
-        typeof err === 'string' ? err : JSON.stringify(err),
-      );
-    } catch {
-      void 0;
-    }
+    // schedule check failed while parsing -> redirect silently
     return NextResponse.redirect(to);
   }
 }

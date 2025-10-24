@@ -1,9 +1,15 @@
 'use client';
-/* eslint-disable simple-import-sort/imports */
-import React, { useEffect, useMemo } from 'react';
+
 import { motion } from 'motion/react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
@@ -11,55 +17,27 @@ import { useSchedule } from '@/hooks/api/useSchedule';
 import debug from '@/lib/debugLogger';
 
 /**
- * Improvements in this rewrite:
- * - Prevent repeated image refetches/re-mounts by isolating the logo image into
- *   a memoized component (LogoGraphic). The logo receives stable props so React
- *   won't remount it when the parent re-renders due to schedule polling.
- * - Keep the same UX and logic:
- *   * For `ayomeludaftarmagang` and `hidden-page-cf` show the countdown/status UI
- *   * Titles and subtitles follow the requested wording for upcoming/open/closed
- *   * When schedule becomes active, wait 2.5 seconds before redirect so the user
- *     can see the "coming soon" UI first
- * - Structured and small responsibilities (single-responsibility): UI pieces are
- *   separated and memoized to reduce unnecessary re-renders.
+ * ComingSoon page
+ *
+ * Reorganized for readability and single responsibility:
+ * - Small helpers grouped at top
+ * - Stable, memoized LogoGraphic to prevent repeated image re-fetches
+ * - Encapsulated fresh schedule probe logic with clear intent
+ * - Clear redirect decision flow preserved exactly as original
+ *
+ * Behavior preserved: schedule polling, fresh probes, redirect after brief delay
+ * when schedule becomes active, status texts (upcoming/open/closed), and UI.
  */
 
 /* -------------------------
-   Constants / Types
+   Types & Constants
    ------------------------- */
 
 type PageKey = 'ayomeludaftarmagang' | 'hidden-page-cf' | string;
 const COUNT_LABELS = ['Hari', 'Jam', 'Menit', 'Detik'] as const;
-
-/* -------------------------
-   Memoized static logo
-   ------------------------- */
-
-// Keep logo props stable and memoize component so it does not remount on parent updates.
-// This prevents NextImage from being torn down/recreated (which can trigger re-fetch).
-const LOGO_PROPS = {
-  src: '/logo-hmtc2025-footer.png',
-  alt: 'HMTC Logo',
-  width: 171,
-  height: 492,
-  // className intentionally separate when used so we can place it in markup without changing props
-} as const;
-
-const LogoGraphic = React.memo(function LogoGraphic({
-  className,
-}: {
-  className?: string;
-}) {
-  return (
-    <NextImage
-      {...LOGO_PROPS}
-      className={className}
-      // Note: if your NextImage implementation supports `priority` for preloading,
-      // you can add priority={true} here to load it once early. Avoid toggling props.
-    />
-  );
-});
-LogoGraphic.displayName = 'LogoGraphic';
+const MIN_FRESH_CHECK_INTERVAL_MS = 1200;
+const FRESH_SERVER_DRIFT_MS = 15_000;
+const REDIRECT_WAIT_MS = 2500;
 
 /* -------------------------
    Utilities
@@ -76,105 +54,121 @@ function breakdownTime(ms: number | null) {
 }
 
 /* -------------------------
+   Stable Logo (memoized)
+   ------------------------- */
+
+const LOGO_PROPS = {
+  src: '/logo-hmtc2025-footer.png',
+  alt: 'HMTC Logo',
+  width: 171,
+  height: 492,
+} as const;
+
+const LogoGraphic = React.memo(function LogoGraphic({
+  className,
+}: {
+  className?: string;
+}) {
+  return <NextImage {...LOGO_PROPS} className={className} />;
+});
+LogoGraphic.displayName = 'LogoGraphic';
+
+/* -------------------------
    Component
    ------------------------- */
 
 export default function ComingSoon() {
+  // routing / query
   const search = useSearchParams();
   const router = useRouter();
   const page = (search?.get('page') || '') as PageKey;
   const showCountdown =
     page === 'ayomeludaftarmagang' || page === 'hidden-page-cf';
 
-  // pick schedule API path based on `page` query param
+  // choose which schedule path to poll
   const schedulePath = useMemo(
     () =>
       page === 'hidden-page-cf' ? '/hidden-page-cf' : '/ayomeludaftarmagang',
     [page],
   );
 
-  // poll schedule; `useSchedule` is expected to return { data, now, loading }
+  // schedule polling hook (external)
   const { data: scheduleData, now, loading } = useSchedule(schedulePath, 7000);
 
-  // Fresh origin-check state: perform a one-off origin fetch with cache-buster
-  // to ensure we don't act on stale edge/CDN or bfcache responses.
-  const [freshScheduleOk, setFreshScheduleOk] = React.useState(false);
-  const freshCheckAbortRef = React.useRef<AbortController | null>(null);
-  const lastFreshCheckRef = React.useRef<number>(0);
+  // -- Fresh probe state & refs --
+  const [freshScheduleOk, setFreshScheduleOk] = useState(false);
+  const freshCheckAbortRef = useRef<AbortController | null>(null);
+  const lastFreshCheckRef = useRef<number>(0);
 
-  const runFreshScheduleCheck = React.useCallback(async () => {
-    // Debounce: avoid running more than once per 1200ms to prevent
-    // frequent aborts when `now` is updated every second by `useSchedule`.
+  // Run a single fresh schedule check that bypasses caches. Throttled to MIN_FRESH_CHECK_INTERVAL_MS.
+  const runFreshScheduleCheck = useCallback(async () => {
     const nowTs = Date.now();
-    if (nowTs - (lastFreshCheckRef.current || 0) < 1200) return;
+    if (nowTs - (lastFreshCheckRef.current || 0) < MIN_FRESH_CHECK_INTERVAL_MS)
+      return;
     lastFreshCheckRef.current = nowTs;
 
-    try {
-      // cancel prior in-flight request (if any) before creating a new one
-      if (freshCheckAbortRef.current) {
-        try {
-          freshCheckAbortRef.current.abort();
-        } catch {
-          /* ignore */
-        }
+    // abort previous probe if any
+    if (freshCheckAbortRef.current) {
+      try {
+        freshCheckAbortRef.current.abort();
+      } catch {
+        /* ignore */
       }
-      const ac = new AbortController();
-      freshCheckAbortRef.current = ac;
+      freshCheckAbortRef.current = null;
+    }
+
+    const ac = new AbortController();
+    freshCheckAbortRef.current = ac;
+
+    try {
       const url = new URL('/api/schedule', window.location.origin);
       url.searchParams.set('path', schedulePath);
       url.searchParams.set('_ts', String(Date.now()));
       debug.group('[coming-soon] freshScheduleCheck ->', url.toString());
 
-      try {
-        const res = await fetch(url.toString(), {
-          signal: ac.signal,
-          cache: 'no-store',
-        });
-        if (!res.ok) {
-          debug.log('[coming-soon] freshScheduleCheck non-ok', res.status);
-          setFreshScheduleOk(false);
-          debug.groupEnd();
-          return;
-        }
-        const json = await res.json();
-        debug.log('[coming-soon] freshScheduleCheck result', json);
-        const serverNowIso = json?.now;
-        let serverNowFresh = false;
-        if (serverNowIso) {
-          try {
-            const serverNowMs = new Date(serverNowIso).getTime();
-            const drift = Math.abs(Date.now() - serverNowMs);
-            serverNowFresh = drift <= 15_000;
-          } catch {
-            serverNowFresh = false;
-          }
-        }
-        setFreshScheduleOk(
-          Boolean(json && typeof json.active === 'boolean' && serverNowFresh),
-        );
-      } catch (err: any) {
-        // AbortError is expected when we cancel previous probes; do not treat it as an error.
-        if (err && (err.name === 'AbortError' || err.code === 'ERR_ABORTED')) {
-          debug.info('[coming-soon] freshScheduleCheck aborted (normal)');
-          // leave freshScheduleOk unchanged on abort
-        } else {
-          debug.log('[coming-soon] freshScheduleCheck error', err);
-          setFreshScheduleOk(false);
-        }
-      } finally {
+      const res = await fetch(url.toString(), {
+        signal: ac.signal,
+        cache: 'no-store',
+      });
+      if (!res.ok) {
+        debug.log('[coming-soon] freshScheduleCheck non-ok', res.status);
+        setFreshScheduleOk(false);
         debug.groupEnd();
+        return;
       }
-    } catch (err) {
-      debug.log('[coming-soon] freshScheduleCheck outer error', err);
-      setFreshScheduleOk(false);
+
+      const json = await res.json().catch(() => null);
+      debug.log('[coming-soon] freshScheduleCheck result', json);
+
+      const serverNowIso = json?.now;
+      let serverNowFresh = false;
+      if (serverNowIso) {
+        try {
+          const serverNowMs = new Date(serverNowIso).getTime();
+          const drift = Math.abs(Date.now() - serverNowMs);
+          serverNowFresh = drift <= FRESH_SERVER_DRIFT_MS;
+        } catch {
+          serverNowFresh = false;
+        }
+      }
+
+      setFreshScheduleOk(
+        Boolean(json && typeof json.active === 'boolean' && serverNowFresh),
+      );
+    } catch (err: any) {
+      if (err && (err.name === 'AbortError' || err.code === 'ERR_ABORTED')) {
+        debug.info('[coming-soon] freshScheduleCheck aborted (normal)');
+      } else {
+        debug.log('[coming-soon] freshScheduleCheck error', err);
+        setFreshScheduleOk(false);
+      }
+    } finally {
+      debug.groupEnd();
     }
   }, [schedulePath]);
 
-  // Run a fresh check once on mount only. Additional targeted checks are
-  // scheduled in the effect below (when the schedule is about to start or
-  // becomes active). This avoids running the origin probe every second while
-  // `useSchedule` updates `now`.
-  React.useEffect(() => {
+  // run an initial fresh probe on mount & clean up abort on unmount
+  useEffect(() => {
     if (typeof window !== 'undefined') void runFreshScheduleCheck();
     return () => {
       if (freshCheckAbortRef.current) {
@@ -187,20 +181,22 @@ export default function ComingSoon() {
     };
   }, [runFreshScheduleCheck]);
 
-  // Handle bfcache/pageshow restores: when restored from BFCache we should
-  // re-run a fresh origin check so we don't act on stale snapshot state.
-  React.useEffect(() => {
-    const onPageShow = (ev: any) => {
-      debug.log('[coming-soon] pageshow event. persisted=', ev?.persisted);
+  // also probe on page show (bfcache restore)
+  useEffect(() => {
+    const onPageShow = (ev: PageTransitionEvent) => {
+      debug.log(
+        '[coming-soon] pageshow event. persisted=',
+        (ev as any)?.persisted,
+      );
       void runFreshScheduleCheck();
     };
     window.addEventListener('pageshow', onPageShow);
     return () => window.removeEventListener('pageshow', onPageShow);
   }, [runFreshScheduleCheck]);
 
-  // compute ms until start / end (null if unknown)
+  // compute time until start/end from scheduleData & now
   const timeUntilStart = useMemo(() => {
-    if (!scheduleData?.start) return null;
+    if (!scheduleData?.start || !now) return null;
     try {
       const start = new Date(scheduleData.start).getTime();
       const n = now.getTime();
@@ -210,21 +206,8 @@ export default function ComingSoon() {
     }
   }, [scheduleData?.start, now]);
 
-  const _timeUntilEnd = useMemo(() => {
-    if (!scheduleData?.end) return null;
-    try {
-      const end = new Date(scheduleData.end).getTime();
-      const n = now.getTime();
-      return Math.max(0, end - n);
-    } catch {
-      return null;
-    }
-  }, [scheduleData?.end, now]);
-
-  // Only re-check the origin when we are near the start (<=15s) or when
-  // scheduleData reports `active === true`. This prevents frequent probes
-  // while `now` is ticking each second.
-  React.useEffect(() => {
+  // trigger additional fresh probe when near start or when scheduleData.active is true
+  useEffect(() => {
     const nearStart = timeUntilStart !== null && timeUntilStart <= 15_000;
     const shouldProbe = scheduleData?.active === true || nearStart;
     if (shouldProbe) {
@@ -244,9 +227,8 @@ export default function ComingSoon() {
         : null;
       const nowMs = now?.getTime();
 
-      if (endMs !== null && nowMs !== undefined && nowMs > endMs) {
+      if (endMs !== null && nowMs !== undefined && nowMs > endMs)
         return 'closed';
-      }
 
       if (
         (startMs !== null &&
@@ -259,9 +241,8 @@ export default function ComingSoon() {
         return 'open';
       }
 
-      if (startMs !== null && nowMs !== undefined && nowMs < startMs) {
+      if (startMs !== null && nowMs !== undefined && nowMs < startMs)
         return 'upcoming';
-      }
 
       return 'unknown';
     } catch {
@@ -269,30 +250,24 @@ export default function ComingSoon() {
     }
   }, [scheduleData, now, showCountdown]);
 
-  // when schedule becomes active, wait 5s so users see the coming-soon UI briefly,
-  // then redirect. cleanup timer if state changes.
+  // redirect logic: wait a short amount (REDIRECT_WAIT_MS) so user sees coming-soon UI briefly,
+  // then redirect only if fresh checks confirm server time and active window membership.
   useEffect(() => {
     if (!showCountdown) return;
-    // start redirect timer only when active or the start time is reached.
-    // Guard against stale cached API responses (edge/CDN or bfcache) by
-    // requiring the server-provided `now` in scheduleData to be recent.
-    // If scheduleData.now is stale (>15s), skip redirect until a fresh poll.
+
     const serverNowIso = scheduleData?.now;
     let serverNowFresh = false;
     if (serverNowIso) {
       try {
         const serverNowMs = new Date(serverNowIso).getTime();
         const drift = Math.abs(Date.now() - serverNowMs);
-        serverNowFresh = drift <= 15_000; // 15 seconds tolerance
+        serverNowFresh = drift <= FRESH_SERVER_DRIFT_MS;
       } catch {
         serverNowFresh = false;
       }
     }
 
-    // Only consider redirect when either the schedule reports `active` OR
-    // the start time has just been reached and the server `now` lies within
-    // the [start, end] window. This prevents redirect when the window has
-    // already passed (timeUntilStart === 0 because now > end).
+    // determine whether server-reported now is inside the window
     let withinWindow = false;
     try {
       if (scheduleData?.start && scheduleData?.end && scheduleData?.now) {
@@ -311,67 +286,63 @@ export default function ComingSoon() {
       serverNowFresh &&
       freshScheduleOk;
 
-    if (shouldConsiderRedirect) {
-      const id = window.setTimeout(() => {
-        // re-check to avoid racing
-        // Re-evaluate window membership before redirect to avoid races.
-        let reWithinWindow = false;
-        try {
-          if (scheduleData?.start && scheduleData?.end && scheduleData?.now) {
-            const s = new Date(scheduleData.start).getTime();
-            const e = new Date(scheduleData.end).getTime();
-            const serverNowMs = new Date(scheduleData.now).getTime();
-            reWithinWindow = serverNowMs >= s && serverNowMs <= e;
-          }
-        } catch {
-          reWithinWindow = false;
-        }
+    if (!shouldConsiderRedirect) return;
 
-        if (
-          (scheduleData?.active === true ||
-            (timeUntilStart === 0 && reWithinWindow)) &&
-          serverNowFresh &&
-          freshScheduleOk
-        ) {
-          debug.group('[coming-soon] Redirect decision');
-          debug.log('page', page);
-          debug.log('scheduleData', scheduleData);
-          debug.log('timeUntilStart', timeUntilStart);
-          debug.log('serverNowFresh', serverNowFresh);
-          debug.log('freshScheduleOk', freshScheduleOk);
-          debug.groupEnd();
-          if (page === 'hidden-page-cf') router.replace('/hidden-page-cf');
-          else router.replace('/ayomeludaftarmagang');
+    const id = window.setTimeout(() => {
+      // Re-evaluate before redirecting
+      let reWithinWindow = false;
+      try {
+        if (scheduleData?.start && scheduleData?.end && scheduleData?.now) {
+          const s = new Date(scheduleData.start).getTime();
+          const e = new Date(scheduleData.end).getTime();
+          const serverNowMs = new Date(scheduleData.now).getTime();
+          reWithinWindow = serverNowMs >= s && serverNowMs <= e;
         }
-      }, 2500);
-      return () => window.clearTimeout(id);
-    }
-    // nothing to cleanup
+      } catch {
+        reWithinWindow = false;
+      }
+
+      if (
+        (scheduleData?.active === true ||
+          (timeUntilStart === 0 && reWithinWindow)) &&
+        serverNowFresh &&
+        freshScheduleOk
+      ) {
+        debug.group('[coming-soon] Redirect decision');
+        debug.log('page', page);
+        debug.log('scheduleData', scheduleData);
+        debug.log('timeUntilStart', timeUntilStart);
+        debug.log('serverNowFresh', serverNowFresh);
+        debug.log('freshScheduleOk', freshScheduleOk);
+        debug.groupEnd();
+        if (page === 'hidden-page-cf') router.replace('/hidden-page-cf');
+        else router.replace('/ayomeludaftarmagang');
+      }
+    }, REDIRECT_WAIT_MS);
+
+    return () => window.clearTimeout(id);
   }, [
-    scheduleData?.active,
-    scheduleData?.now,
+    scheduleData,
     timeUntilStart,
     page,
     router,
     showCountdown,
     freshScheduleOk,
-    scheduleData,
   ]);
 
-  // prepare countdown breakdown only once per relevant change
+  // countdown numbers prepared
   const { days, hours, minutes, seconds } = useMemo(
     () => breakdownTime(timeUntilStart),
     [timeUntilStart],
   );
 
-  // title & subtitle based on status (for the two gated pages)
+  // title & subtitle selection
   const { titleText, subtitleText } = useMemo(() => {
-    if (!showCountdown) {
+    if (!showCountdown)
       return {
         titleText: 'Coming Soon',
         subtitleText: 'This page is still under development. Stay tuned!',
       };
-    }
 
     switch (pageStatus) {
       case 'upcoming':
@@ -397,11 +368,10 @@ export default function ComingSoon() {
     }
   }, [pageStatus, showCountdown]);
 
-  // === Default "non-countdown" UI ===
+  // --- Render: non-countdown default UI
   if (!showCountdown) {
     return (
       <main className='flex min-h-screen w-full flex-col items-center justify-center bg-[#201F1F] px-6 py-10 text-center text-white sm:px-8 md:px-12 lg:px-16'>
-        {/* Memoized logo — stable, won't trigger image re-fetch on schedule polling */}
         <LogoGraphic className='absolute opacity-30' />
         <div className='flex flex-col items-center space-y-4 sm:space-y-6'>
           <Typography
@@ -432,15 +402,13 @@ export default function ComingSoon() {
     );
   }
 
-  // === Countdown / schedule UI (for gated pages) ===
+  // --- Render: countdown / schedule UI ---
   return (
     <main className='relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#0e0e10] via-[#16161a] to-[#1e1e22] px-4 py-10 text-white sm:px-6 md:px-10 lg:px-14 xl:px-20'>
-      {/* Background glow */}
       <div className='absolute inset-0 -z-10 overflow-hidden'>
         <div className='absolute top-1/2 left-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600/30 blur-[140px] sm:h-[500px] sm:w-[500px] md:h-[600px] md:w-[600px]' />
       </div>
 
-      {/* Memoized logo instance — stable across re-renders */}
       <LogoGraphic className='mb-6 opacity-30 sm:mb-8 sm:w-[130px]' />
 
       <motion.div
