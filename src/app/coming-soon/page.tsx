@@ -100,14 +100,22 @@ export default function ComingSoon() {
   // to ensure we don't act on stale edge/CDN or bfcache responses.
   const [freshScheduleOk, setFreshScheduleOk] = React.useState(false);
   const freshCheckAbortRef = React.useRef<AbortController | null>(null);
+  const lastFreshCheckRef = React.useRef<number>(0);
 
   const runFreshScheduleCheck = React.useCallback(async () => {
+    // Debounce: avoid running more than once per 1200ms to prevent
+    // frequent aborts when `now` is updated every second by `useSchedule`.
+    const nowTs = Date.now();
+    if (nowTs - (lastFreshCheckRef.current || 0) < 1200) return;
+    lastFreshCheckRef.current = nowTs;
+
     try {
+      // cancel prior in-flight request (if any) before creating a new one
       if (freshCheckAbortRef.current) {
         try {
           freshCheckAbortRef.current.abort();
         } catch {
-          void 0;
+          /* ignore */
         }
       }
       const ac = new AbortController();
@@ -116,6 +124,7 @@ export default function ComingSoon() {
       url.searchParams.set('path', schedulePath);
       url.searchParams.set('_ts', String(Date.now()));
       debug.group('[coming-soon] freshScheduleCheck ->', url.toString());
+
       try {
         const res = await fetch(url.toString(), {
           signal: ac.signal,
@@ -143,9 +152,15 @@ export default function ComingSoon() {
         setFreshScheduleOk(
           Boolean(json && typeof json.active === 'boolean' && serverNowFresh),
         );
-      } catch (err) {
-        debug.log('[coming-soon] freshScheduleCheck error', err);
-        setFreshScheduleOk(false);
+      } catch (err: any) {
+        // AbortError is expected when we cancel previous probes; do not treat it as an error.
+        if (err && (err.name === 'AbortError' || err.code === 'ERR_ABORTED')) {
+          debug.info('[coming-soon] freshScheduleCheck aborted (normal)');
+          // leave freshScheduleOk unchanged on abort
+        } else {
+          debug.log('[coming-soon] freshScheduleCheck error', err);
+          setFreshScheduleOk(false);
+        }
       } finally {
         debug.groupEnd();
       }
@@ -155,20 +170,22 @@ export default function ComingSoon() {
     }
   }, [schedulePath]);
 
-  // Run a fresh check on mount and whenever scheduleData.now updates.
+  // Run a fresh check once on mount only. Additional targeted checks are
+  // scheduled in the effect below (when the schedule is about to start or
+  // becomes active). This avoids running the origin probe every second while
+  // `useSchedule` updates `now`.
   React.useEffect(() => {
-    // run once initially
     if (typeof window !== 'undefined') void runFreshScheduleCheck();
     return () => {
       if (freshCheckAbortRef.current) {
         try {
           freshCheckAbortRef.current.abort();
         } catch {
-          void 0;
+          /* ignore */
         }
       }
     };
-  }, [runFreshScheduleCheck, scheduleData?.now]);
+  }, [runFreshScheduleCheck]);
 
   // Handle bfcache/pageshow restores: when restored from BFCache we should
   // re-run a fresh origin check so we don't act on stale snapshot state.
@@ -203,6 +220,17 @@ export default function ComingSoon() {
       return null;
     }
   }, [scheduleData?.end, now]);
+
+  // Only re-check the origin when we are near the start (<=15s) or when
+  // scheduleData reports `active === true`. This prevents frequent probes
+  // while `now` is ticking each second.
+  React.useEffect(() => {
+    const nearStart = timeUntilStart !== null && timeUntilStart <= 15_000;
+    const shouldProbe = scheduleData?.active === true || nearStart;
+    if (shouldProbe) {
+      void runFreshScheduleCheck();
+    }
+  }, [scheduleData?.active, timeUntilStart, runFreshScheduleCheck]);
 
   // determine page status: upcoming / open / closed / unknown
   const pageStatus = useMemo<'upcoming' | 'open' | 'closed' | 'unknown'>(() => {
