@@ -159,11 +159,32 @@ export default function ComingSoon() {
   // then redirect. cleanup timer if state changes.
   useEffect(() => {
     if (!showCountdown) return;
-    // start redirect timer only when active or the start time is reached
-    if (scheduleData?.active || timeUntilStart === 0) {
+    // start redirect timer only when active or the start time is reached.
+    // Guard against stale cached API responses (edge/CDN or bfcache) by
+    // requiring the server-provided `now` in scheduleData to be recent.
+    // If scheduleData.now is stale (>15s), skip redirect until a fresh poll.
+    const serverNowIso = scheduleData?.now;
+    let serverNowFresh = false;
+    if (serverNowIso) {
+      try {
+        const serverNowMs = new Date(serverNowIso).getTime();
+        const drift = Math.abs(Date.now() - serverNowMs);
+        serverNowFresh = drift <= 15_000; // 15 seconds tolerance
+      } catch {
+        serverNowFresh = false;
+      }
+    }
+
+    const shouldConsiderRedirect =
+      (scheduleData?.active === true || timeUntilStart === 0) && serverNowFresh;
+
+    if (shouldConsiderRedirect) {
       const id = window.setTimeout(() => {
         // re-check to avoid racing
-        if (scheduleData?.active || timeUntilStart === 0) {
+        if (
+          (scheduleData?.active === true || timeUntilStart === 0) &&
+          serverNowFresh
+        ) {
           if (page === 'hidden-page-cf') router.replace('/hidden-page-cf');
           else router.replace('/ayomeludaftarmagang');
         }
@@ -171,7 +192,7 @@ export default function ComingSoon() {
       return () => window.clearTimeout(id);
     }
     // nothing to cleanup
-  }, [scheduleData?.active, timeUntilStart, page, router, showCountdown]);
+  }, [scheduleData?.active, scheduleData?.now, timeUntilStart, page, router, showCountdown]);
 
   // prepare countdown breakdown only once per relevant change
   const { days, hours, minutes, seconds } = useMemo(
