@@ -192,7 +192,14 @@ export default function ComingSoon() {
       return () => window.clearTimeout(id);
     }
     // nothing to cleanup
-  }, [scheduleData?.active, scheduleData?.now, timeUntilStart, page, router, showCountdown]);
+  }, [
+    scheduleData?.active,
+    scheduleData?.now,
+    timeUntilStart,
+    page,
+    router,
+    showCountdown,
+  ]);
 
   // prepare countdown breakdown only once per relevant change
   const { days, hours, minutes, seconds } = useMemo(
