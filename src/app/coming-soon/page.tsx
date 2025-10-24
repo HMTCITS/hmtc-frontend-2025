@@ -1,14 +1,14 @@
 'use client';
-/* eslint-disable no-console */
-
+/* eslint-disable simple-import-sort/imports */
+import React, { useEffect, useMemo } from 'react';
 import { motion } from 'motion/react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useMemo } from 'react';
 
 import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
 import { useSchedule } from '@/hooks/api/useSchedule';
+import debug from '@/lib/debugLogger';
 
 /**
  * Improvements in this rewrite:
@@ -115,20 +115,20 @@ export default function ComingSoon() {
       const url = new URL('/api/schedule', window.location.origin);
       url.searchParams.set('path', schedulePath);
       url.searchParams.set('_ts', String(Date.now()));
-      console.group('[coming-soon] freshScheduleCheck ->', url.toString());
+      debug.group('[coming-soon] freshScheduleCheck ->', url.toString());
       try {
         const res = await fetch(url.toString(), {
           signal: ac.signal,
           cache: 'no-store',
         });
         if (!res.ok) {
-          console.log('[coming-soon] freshScheduleCheck non-ok', res.status);
+          debug.log('[coming-soon] freshScheduleCheck non-ok', res.status);
           setFreshScheduleOk(false);
-          console.groupEnd();
+          debug.groupEnd();
           return;
         }
         const json = await res.json();
-        console.log('[coming-soon] freshScheduleCheck result', json);
+        debug.log('[coming-soon] freshScheduleCheck result', json);
         const serverNowIso = json?.now;
         let serverNowFresh = false;
         if (serverNowIso) {
@@ -144,13 +144,13 @@ export default function ComingSoon() {
           Boolean(json && typeof json.active === 'boolean' && serverNowFresh),
         );
       } catch (err) {
-        console.log('[coming-soon] freshScheduleCheck error', err);
+        debug.log('[coming-soon] freshScheduleCheck error', err);
         setFreshScheduleOk(false);
       } finally {
-        console.groupEnd();
+        debug.groupEnd();
       }
     } catch (err) {
-      console.log('[coming-soon] freshScheduleCheck outer error', err);
+      debug.log('[coming-soon] freshScheduleCheck outer error', err);
       setFreshScheduleOk(false);
     }
   }, [schedulePath]);
@@ -174,7 +174,7 @@ export default function ComingSoon() {
   // re-run a fresh origin check so we don't act on stale snapshot state.
   React.useEffect(() => {
     const onPageShow = (ev: any) => {
-      console.log('[coming-soon] pageshow event. persisted=', ev?.persisted);
+      debug.log('[coming-soon] pageshow event. persisted=', ev?.persisted);
       void runFreshScheduleCheck();
     };
     window.addEventListener('pageshow', onPageShow);
@@ -274,13 +274,13 @@ export default function ComingSoon() {
           serverNowFresh &&
           freshScheduleOk
         ) {
-          console.group('[coming-soon] Redirect decision');
-          console.log('page', page);
-          console.log('scheduleData', scheduleData);
-          console.log('timeUntilStart', timeUntilStart);
-          console.log('serverNowFresh', serverNowFresh);
-          console.log('freshScheduleOk', freshScheduleOk);
-          console.groupEnd();
+          debug.group('[coming-soon] Redirect decision');
+          debug.log('page', page);
+          debug.log('scheduleData', scheduleData);
+          debug.log('timeUntilStart', timeUntilStart);
+          debug.log('serverNowFresh', serverNowFresh);
+          debug.log('freshScheduleOk', freshScheduleOk);
+          debug.groupEnd();
           if (page === 'hidden-page-cf') router.replace('/hidden-page-cf');
           else router.replace('/ayomeludaftarmagang');
         }
