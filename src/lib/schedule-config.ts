@@ -46,8 +46,8 @@ export const PAGE_SCHEDULES: Array<{
     schedule: {
       mode: 'range',
       // Assumption: quick test window starting now (2025-10-24) for a few days
-      start: '2025-10-24T01:35:00+07:00',
-      end: '2025-10-24T01:37:00+07:00',
+      start: '2025-10-24T09:55:00+07:00',
+      end: '2025-10-24T10:00:00+07:00',
       timezone: 'Asia/Jakarta',
     },
   },

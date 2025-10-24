@@ -3,7 +3,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CheckCircle2, TriangleAlert } from 'lucide-react';
 import React from 'react';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import {
+  FormProvider,
+  useForm,
+  type UseFormSetValue,
+  useWatch,
+} from 'react-hook-form';
 
 import ApplyMagangFormStep from '@/app/ayomeludaftarmagang/components/ApplyMagangFormStep';
 import DivisionQuestionStep from '@/app/ayomeludaftarmagang/components/DivisionQuestionStep';
@@ -43,22 +48,369 @@ import {
   type MagangFormValues,
 } from '@/lib/validation/magangForm.schema';
 
-export default function Magang2Page() {
-  const [openSuccess, setOpenSuccess] = React.useState(false);
-  const [openError, setOpenError] = React.useState(false);
-  const [errorMsg, _setErrorMsg] = React.useState<string>('');
+/**
+ * Rewritten file with naming conflicts and typing fixes applied.
+ * - Fixed duplicate 'formState' declaration by renaming the RHF form state to `rhfFormState`.
+ * - Fixed setValue typing by accepting UseFormSetValue<MagangFormValues> in the persisted loader.
+ * Behavior/UI preserved.
+ */
+
+/* ============================
+   Types & Utilities
+   ============================ */
+
+type SubmissionStatus = 'idle' | 'loading' | 'success' | 'error';
+const FORM_ID = 'apply-magang-form';
+
+/* ============================
+   Form controller hook
+   ============================ */
+
+function useMagangFormController() {
+  const methods = useForm<MagangFormValues>({
+    resolver: zodResolver(magangFormSchema),
+    defaultValues: {
+      nama: '',
+      nrp: '',
+      kelompokKP: '',
+      q1: '',
+      q2: '',
+      q3: '',
+      zipFile: null as any,
+      selectedDivisions: [],
+      divisionAnswers: {} as any,
+    },
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+  });
+
+  const {
+    handleSubmit,
+    setValue,
+    reset,
+    resetField,
+    control,
+    setFocus,
+    clearErrors,
+    formState: rhfFormState,
+  } = methods;
+
+  // watches
+  const rawSelectedDivisions = useWatch({ control, name: 'selectedDivisions' });
+  const rawDivisionAnswers = useWatch({ control, name: 'divisionAnswers' });
+  const zipFile = useWatch({ control, name: 'zipFile' }) || null;
+  const nama = useWatch({ control, name: 'nama' }) || '';
+  const nrp = useWatch({ control, name: 'nrp' }) || '';
+  const kelompokKP = useWatch({ control, name: 'kelompokKP' }) || '';
+  const q1 = useWatch({ control, name: 'q1' }) || '';
+  const q2 = useWatch({ control, name: 'q2' }) || '';
+  const q3 = useWatch({ control, name: 'q3' }) || '';
+
+  const selectedDivisions = React.useMemo(
+    () => rawSelectedDivisions || [],
+    [rawSelectedDivisions],
+  );
+
+  const divisionAnswers = React.useMemo(
+    () => rawDivisionAnswers || {},
+    [rawDivisionAnswers],
+  );
+
+  return {
+    methods,
+    handleSubmit,
+    setValue,
+    reset,
+    resetField,
+    control,
+    setFocus,
+    clearErrors,
+    rhfFormState,
+    // watched values
+    selectedDivisions,
+    divisionAnswers,
+    zipFile,
+    nama,
+    nrp,
+    kelompokKP,
+    q1,
+    q2,
+    q3,
+  };
+}
+
+/* ============================
+   Persistence loader
+   ============================ */
+
+function usePersistedLoad(
+  setValue: UseFormSetValue<MagangFormValues>,
+  setFormStateLocal: (v: 'success' | 'error' | null) => void,
+  setIsReady: (v: boolean) => void,
+) {
+  React.useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const preSel = loadSelectedDivisions();
+        const preAns = loadDivisionAnswers();
+        const preBase = loadBase();
+        const persistedState = loadFormState();
+
+        if (persistedState) setFormStateLocal(persistedState as any);
+
+        if (preSel && preSel.length) {
+          setValue('selectedDivisions', preSel as any, { shouldDirty: false });
+        }
+        if (preAns && Object.keys(preAns).length) {
+          setValue('divisionAnswers', preAns as any, { shouldDirty: false });
+        }
+        if (preBase) {
+          setValue('nama', preBase.nama as any, { shouldDirty: false });
+          setValue('nrp', preBase.nrp as any, { shouldDirty: false });
+          setValue('kelompokKP', preBase.kelompokKP as any, {
+            shouldDirty: false,
+          });
+          setValue('q1', preBase.q1 as any, { shouldDirty: false });
+          setValue('q2', preBase.q2 as any, { shouldDirty: false });
+          setValue('q3', preBase.q3 as any, { shouldDirty: false });
+        }
+
+        try {
+          const f = await loadZipFile();
+          if (f) {
+            setValue('zipFile', f as any, { shouldDirty: false });
+          }
+        } catch (err) {
+          void err;
+        }
+      } catch (err) {
+        void err;
+      }
+
+      if (mounted) setIsReady(true);
+    })();
+
+    return () => {
+      mounted = false;
+    };
+  }, [setValue, setFormStateLocal, setIsReady]);
+}
+
+/* ============================
+   Error mapping & helpers
+   ============================ */
+
+function extractErrorMessage(v: any): string | undefined {
+  if (v === undefined || v === null) return undefined;
+  if (typeof v === 'string') return v;
+  if (v?.message && typeof v.message === 'string' && v.message.length)
+    return v.message;
+  if (Array.isArray(v?._errors) && v._errors.length)
+    return String(v._errors[0]);
+  return undefined;
+}
+
+function buildErrorMap(params: {
+  rxErrors: any;
+  isNavigating: boolean;
+  clearedSteps: number[];
+  selectedDivisions: string[];
+  divisionAnswers: Record<string, any>;
+  isSubmitted: boolean;
+}) {
+  const {
+    rxErrors,
+    isNavigating,
+    clearedSteps,
+    selectedDivisions,
+    divisionAnswers,
+    isSubmitted,
+  } = params;
+
+  if (isNavigating) return {} as Record<string, string>;
+
+  const map: Record<string, string> = {};
+
+  const pushIf = (key: string, val: any) => {
+    const msg = extractErrorMessage(val);
+    if (typeof msg === 'string' && msg.length) map[key] = msg;
+  };
+
+  const keyBelongsToStep = (key: string) => {
+    const baseKeys = new Set([
+      'nama',
+      'nrp',
+      'kelompokKP',
+      'q1',
+      'q2',
+      'q3',
+      'zipFile',
+      'selectedDivisions',
+    ]);
+    if (baseKeys.has(key)) return 2;
+    const m = key.match(/^divisionAnswers\.([^.]+)(?:\.|$)/);
+    if (m && m[1]) {
+      const divId = m[1];
+      const idx = (selectedDivisions || []).indexOf(divId);
+      if (idx >= 0) return 3 + idx;
+      return 3;
+    }
+    return 0;
+  };
+
+  const maybePush = (k: string, v: any) => {
+    const step = keyBelongsToStep(k);
+    if (step && clearedSteps.includes(step)) return;
+    pushIf(k, v);
+  };
+
+  maybePush('nama', rxErrors?.nama);
+  maybePush('nrp', rxErrors?.nrp);
+  maybePush('kelompokKP', rxErrors?.kelompokKP);
+  maybePush('q1', rxErrors?.q1);
+  maybePush('q2', rxErrors?.q2);
+  maybePush('q3', rxErrors?.q3);
+  maybePush('zipFile', rxErrors?.zipFile);
+  maybePush('selectedDivisions', rxErrors?.selectedDivisions);
+
+  const de = rxErrors?.divisionAnswers;
+  if (de && typeof de === 'object') {
+    Object.keys(de).forEach((divId) => {
+      const obj = de[divId];
+      if (obj && typeof obj === 'object') {
+        (['q1', 'q2', 'q3', 'q4', 'q5'] as const).forEach((k) => {
+          maybePush(`divisionAnswers.${divId}.${k}`, obj?.[k]);
+        });
+      } else {
+        maybePush(`divisionAnswers.${divId}`, de[divId]);
+      }
+    });
+  }
+
+  Object.keys(map).forEach((k) => {
+    if (/^divisionAnswers\./.test(k) && map[k] === 'Invalid input') {
+      map[k] = 'Belum diisi';
+    }
+  });
+
+  try {
+    if (isSubmitted && Array.isArray(selectedDivisions)) {
+      for (const divId of selectedDivisions) {
+        (['q1', 'q2', 'q3', 'q4', 'q5'] as const).forEach((k) => {
+          const key = `divisionAnswers.${divId}.${k}`;
+          const val =
+            divisionAnswers && divisionAnswers[divId]
+              ? divisionAnswers[divId][k]
+              : undefined;
+          const isEmpty =
+            val === undefined || val === null || String(val).trim() === '';
+          if (!map[key] && isEmpty) {
+            if (Object.keys(rxErrors || {}).length > 0) {
+              map[key] = 'Belum diisi';
+            }
+          }
+        });
+      }
+    }
+  } catch (err) {
+    void err;
+  }
+
+  return map;
+}
+
+function computeErrorSteps(
+  errorMap: Record<string, string>,
+  selectedDivisions: string[],
+) {
+  const set = new Set<number>();
+  Object.keys(errorMap).forEach((k) => {
+    const baseKeys = new Set([
+      'nama',
+      'nrp',
+      'kelompokKP',
+      'q1',
+      'q2',
+      'q3',
+      'zipFile',
+      'selectedDivisions',
+    ]);
+    if (baseKeys.has(k)) set.add(2);
+    const m = k.match(/^divisionAnswers\.([^.]+)(?:\.|$)/);
+    if (m && m[1]) {
+      const idx = (selectedDivisions || []).indexOf(m[1]);
+      set.add(idx >= 0 ? 3 + idx : 3);
+    }
+  });
+  return set;
+}
+
+/* ============================
+   Main Component
+   ============================ */
+
+export default function HiddenPageCF() {
+  // --- simple UI state
+  const [isReady, setIsReady] = React.useState(false);
+
+  // submission & dialog state
   const [submissionOpen, setSubmissionOpen] = React.useState(false);
-  const [submissionStatus, setSubmissionStatus] = React.useState<
-    'idle' | 'loading' | 'success' | 'error'
-  >('idle');
+  const [submissionStatus, setSubmissionStatus] =
+    React.useState<SubmissionStatus>('idle');
   const [submissionErrorMsg, setSubmissionErrorMsg] =
     React.useState<string>('');
   const [lastPayload, setLastPayload] = React.useState<any | null>(null);
+
+  // top-level success/error dialogs (kept for parity)
+  const [openSuccess, setOpenSuccess] = React.useState(false);
+  const [openError, setOpenError] = React.useState(false);
+  const [errorMsg, _setErrorMsg] = React.useState<string>('');
+
+  // form state persisted indicator (success/error/null)
   const [formState, setFormState] = React.useState<'success' | 'error' | null>(
     null,
   );
-  const [isReady, setIsReady] = React.useState(false);
+
+  // navigation & stepper
+  const [currentStep, setCurrentStep] = React.useState(1);
+  const [isNavigating, setIsNavigating] = React.useState(false);
+  const [clearedSteps, setClearedSteps] = React.useState<number[]>([]);
+  const [pendingFocus, setPendingFocus] = React.useState<{
+    step: number;
+    field?: string;
+  } | null>(null);
+
+  // small ref to skip toggling isNavigating when stepper triggers programmatically
+  const skipSetIsNavigatingRef = React.useRef(false);
+
+  // hooks: form controller
+  const controller = useMagangFormController();
+  const {
+    methods,
+    handleSubmit,
+    setValue,
+    reset,
+    resetField,
+    setFocus,
+    clearErrors,
+    // rhfFormState and control are provided by the controller but unused
+    // in this component; keep them available in the controller hook only.
+    selectedDivisions,
+    divisionAnswers,
+    zipFile,
+    nama,
+    nrp,
+    kelompokKP,
+    q1,
+    q2,
+    q3,
+  } = controller;
+
+  // schedule auto redirect (identical behavior)
   useScheduleAutoRedirect(5000, '/hidden-page-cf');
+
+  // upload mutation (identical callbacks)
   const { mutate } = useUploadMagang({
     onSuccess: (_data) => {
       try {
@@ -82,167 +434,11 @@ export default function Magang2Page() {
       }
     },
   });
-  const formId = React.useMemo(() => 'apply-magang-form', []);
-  const [currentStep, setCurrentStep] = React.useState(1);
-  const [isNavigating, setIsNavigating] = React.useState(false);
-  const [clearedSteps, setClearedSteps] = React.useState<number[]>([]);
-  const [pendingFocus, setPendingFocus] = React.useState<{
-    step: number;
-    field?: string;
-  } | null>(null);
 
-  const skipSetIsNavigatingRef = React.useRef(false);
+  // load persisted data on mount (fixed typing for setValue)
+  usePersistedLoad(setValue, setFormState, setIsReady);
 
-  const methods = useForm<MagangFormValues>({
-    resolver: zodResolver(magangFormSchema),
-    defaultValues: {
-      nama: '',
-      nrp: '',
-      kelompokKP: '',
-      q1: '',
-      q2: '',
-      q3: '',
-      zipFile: null as any,
-      selectedDivisions: [],
-      divisionAnswers: {} as any,
-    },
-    mode: 'onSubmit',
-    reValidateMode: 'onSubmit',
-  });
-  const {
-    handleSubmit,
-    setValue,
-    reset,
-    resetField,
-    control,
-    setFocus,
-    clearErrors,
-  } = methods;
-  const rawSelectedDivisions = useWatch({ control, name: 'selectedDivisions' });
-  const selectedDivisions = React.useMemo(
-    () => rawSelectedDivisions || [],
-    [rawSelectedDivisions],
-  );
-  const rawDivisionAnswers = useWatch({ control, name: 'divisionAnswers' });
-  const divisionAnswers = React.useMemo(
-    () => rawDivisionAnswers || {},
-    [rawDivisionAnswers],
-  );
-  const zipFile = useWatch({ control, name: 'zipFile' }) || null;
-  const nama = useWatch({ control, name: 'nama' }) || '';
-  const nrp = useWatch({ control, name: 'nrp' }) || '';
-  const kelompokKP = useWatch({ control, name: 'kelompokKP' }) || '';
-  const q1 = useWatch({ control, name: 'q1' }) || '';
-  const q2 = useWatch({ control, name: 'q2' }) || '';
-  const q3 = useWatch({ control, name: 'q3' }) || '';
-
-  const errorMap = React.useMemo(() => {
-    if (isNavigating) return {} as Record<string, string>;
-    const errs = (methods.formState?.errors || {}) as any;
-    const map: Record<string, string> = {};
-    const extractMsg = (v: any) => {
-      if (!v && v !== 0) return undefined;
-      if (typeof v === 'string') return v;
-      if (v?.message && typeof v.message === 'string' && v.message.length)
-        return v.message;
-      if (Array.isArray(v?._errors) && v._errors.length)
-        return String(v._errors[0]);
-      return undefined;
-    };
-    const push = (k: string, v: any) => {
-      const msg = extractMsg(v);
-      if (typeof msg === 'string' && msg.length) map[k] = msg;
-    };
-    const keyBelongsToStep = (key: string) => {
-      const baseKeys = new Set([
-        'nama',
-        'nrp',
-        'kelompokKP',
-        'q1',
-        'q2',
-        'q3',
-        'zipFile',
-        'selectedDivisions',
-      ]);
-      if (baseKeys.has(key)) return 2;
-      const m = key.match(/^divisionAnswers\.([^.]+)(?:\.|$)/);
-      if (m && m[1]) {
-        const divId = m[1];
-        const idx = (selectedDivisions || []).indexOf(divId);
-        if (idx >= 0) return 3 + idx;
-        return 3;
-      }
-      return 0;
-    };
-    const maybePush = (key: string, v: any) => {
-      const step = keyBelongsToStep(key);
-      if (step && clearedSteps.includes(step)) return;
-      push(key, v);
-    };
-    maybePush('nama', errs?.nama);
-    maybePush('nrp', errs?.nrp);
-    maybePush('kelompokKP', errs?.kelompokKP);
-    maybePush('q1', errs?.q1);
-    maybePush('q2', errs?.q2);
-    maybePush('q3', errs?.q3);
-    maybePush('zipFile', errs?.zipFile);
-    maybePush('selectedDivisions', errs?.selectedDivisions);
-    const de = errs?.divisionAnswers;
-    if (de && typeof de === 'object') {
-      Object.keys(de).forEach((divId) => {
-        const obj = de[divId];
-        if (obj && typeof obj === 'object') {
-          (['q1', 'q2', 'q3', 'q4', 'q5'] as const).forEach((k) => {
-            maybePush(`divisionAnswers.${divId}.${k}`, obj?.[k]);
-          });
-        } else {
-          maybePush(`divisionAnswers.${divId}`, de[divId]);
-        }
-      });
-    }
-    Object.keys(map).forEach((k) => {
-      if (/^divisionAnswers\./.test(k) && map[k] === 'Invalid input') {
-        map[k] = 'Belum diisi';
-      }
-    });
-    try {
-      const isSubmitted = !!methods.formState?.isSubmitted;
-      if (isSubmitted && Array.isArray(selectedDivisions)) {
-        for (const divId of selectedDivisions) {
-          (['q1', 'q2', 'q3', 'q4', 'q5'] as const).forEach((k) => {
-            const key = `divisionAnswers.${divId}.${k}`;
-            const val =
-              divisionAnswers && divisionAnswers[divId]
-                ? divisionAnswers[divId][k]
-                : undefined;
-            const isEmpty =
-              val === undefined || val === null || String(val).trim() === '';
-            if (!map[key] && isEmpty) {
-              if (Object.keys(errs || {}).length > 0) {
-                map[key] = 'Belum diisi';
-              }
-            }
-          });
-        }
-      }
-    } catch (err) {
-      void err;
-    }
-    return map;
-  }, [
-    methods.formState?.errors,
-    methods.formState?.isSubmitted,
-    isNavigating,
-    clearedSteps,
-    selectedDivisions,
-    divisionAnswers,
-  ]);
-
-  // React to errorMap changes if needed; no-op effect kept intentionally for future.
-  React.useEffect(() => {
-    void errorMap;
-  }, [errorMap]);
-
+  // Persist cleared steps to localStorage
   React.useEffect(() => {
     try {
       localStorage.setItem('magang:clearedSteps', JSON.stringify(clearedSteps));
@@ -263,82 +459,30 @@ export default function Magang2Page() {
     }
   }, []);
 
-  const errorSteps = React.useMemo(() => {
-    const set = new Set<number>();
-    Object.keys(errorMap).forEach((k) => {
-      const baseKeys = new Set([
-        'nama',
-        'nrp',
-        'kelompokKP',
-        'q1',
-        'q2',
-        'q3',
-        'zipFile',
-        'selectedDivisions',
-      ]);
-      if (baseKeys.has(k)) set.add(2);
-      const m = k.match(/^divisionAnswers\.([^.]+)(?:\.|$)/);
-      if (m && m[1]) {
-        const idx = (selectedDivisions || []).indexOf(m[1]);
-        set.add(idx >= 0 ? 3 + idx : 3);
-      }
-    });
-    return set;
-  }, [errorMap, selectedDivisions]);
-
+  // When formState is success, jump to last step (review)
   React.useEffect(() => {
-    let mounted = true;
-    (async () => {
-      try {
-        const preSel = loadSelectedDivisions();
-        const preAns = loadDivisionAnswers();
-        const preBase = loadBase();
-        const persistedState = loadFormState();
-        if (persistedState) setFormState(persistedState as any);
-        if (preSel && preSel.length)
-          setValue('selectedDivisions', preSel, { shouldDirty: false });
-        if (preAns && Object.keys(preAns).length)
-          setValue('divisionAnswers', preAns as any, { shouldDirty: false });
-        if (preBase) {
-          setValue('nama', preBase.nama, { shouldDirty: false });
-          setValue('nrp', preBase.nrp, { shouldDirty: false });
-          setValue('kelompokKP', preBase.kelompokKP, { shouldDirty: false });
-          setValue('q1', preBase.q1, { shouldDirty: false });
-          setValue('q2', preBase.q2, { shouldDirty: false });
-          setValue('q3', preBase.q3, { shouldDirty: false });
-        }
-
-        try {
-          const f = await loadZipFile();
-          if (f) {
-            setValue('zipFile', f as any, { shouldDirty: false });
-          }
-        } catch (err) {
-          void err;
-        }
-      } catch (err) {
-        void err;
-      }
-
-      if (mounted) setIsReady(true);
-    })();
-
-    return () => {
-      mounted = false;
-    };
-  }, [setValue]);
-
-  React.useEffect(() => {
-    if (formState === 'success') {
-      try {
+    try {
+      if (formState === 'success') {
         const totalSteps = 1 + 1 + selectedDivisions.length + 1;
         setCurrentStep(totalSteps);
-      } catch (err) {
-        void err;
       }
+    } catch (err) {
+      void err;
     }
   }, [formState, selectedDivisions.length]);
 
+  // keep selected divisions persisted
+  React.useEffect(() => {
+    saveSelectedDivisions(selectedDivisions);
+  }, [selectedDivisions]);
+
+  // shared helper to calculate total steps
+  const getTotalSteps = React.useCallback(
+    () => 1 + 1 + selectedDivisions.length + 1,
+    [selectedDivisions.length],
+  );
+
+  // division answers change handler (keeps persistence)
   const handleDivisionAnswersChange = React.useCallback(
     (
       divisionId: string,
@@ -354,18 +498,15 @@ export default function Magang2Page() {
     [divisionAnswers, setValue],
   );
 
+  // NEXT step (used by step components)
   const nextStep = React.useCallback(() => {
-    const totalSteps = 1 + 1 + selectedDivisions.length + 1;
-    // Scroll to top of page smoothly
+    const totalSteps = getTotalSteps();
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setIsNavigating(true);
     setCurrentStep((s) => Math.min(s + 1, totalSteps));
-  }, [selectedDivisions.length]);
+  }, [getTotalSteps]);
 
-  React.useEffect(() => {
-    saveSelectedDivisions(selectedDivisions);
-  }, [selectedDivisions]);
-
+  // Reset helpers
   const handleResetAll = React.useCallback(async () => {
     clearAllLocal();
     await clearZipFile();
@@ -395,7 +536,7 @@ export default function Magang2Page() {
 
   const handlePerStepReset = React.useCallback(
     async (step: number) => {
-      const totalSteps = 1 + 1 + selectedDivisions.length + 1;
+      const totalSteps = getTotalSteps();
       if (step <= 1) return;
       if (step === totalSteps) {
         await handleResetAll();
@@ -463,9 +604,33 @@ export default function Magang2Page() {
       selectedDivisions,
       setValue,
       clearErrors,
+      getTotalSteps,
     ],
   );
 
+  const handleResetFormState = React.useCallback(async () => {
+    try {
+      clearFormState();
+      setFormState(null);
+      await handleResetAll();
+    } catch (err) {
+      void err;
+    }
+  }, [handleResetAll]);
+
+  const handleStepperReset = React.useCallback(
+    async (step: number) => {
+      const totalSteps = getTotalSteps();
+      if (step === totalSteps) {
+        await handleResetFormState();
+        return;
+      }
+      await handlePerStepReset(step);
+    },
+    [handlePerStepReset, handleResetFormState, getTotalSteps],
+  );
+
+  // Submit handlers (on valid & on invalid) - preserve behavior
   const onSubmit = React.useCallback(
     async (data: MagangFormValues) => {
       const payload = {
@@ -491,31 +656,8 @@ export default function Magang2Page() {
     [mutate, selectedDivisions, divisionAnswers],
   );
 
-  const handleResetFormState = React.useCallback(async () => {
-    try {
-      clearFormState();
-      setFormState(null);
-      await handleResetAll();
-    } catch (err) {
-      void err;
-    }
-  }, [handleResetAll]);
-
-  const handleStepperReset = React.useCallback(
-    async (step: number) => {
-      const totalSteps = 1 + 1 + selectedDivisions.length + 1;
-      if (step === totalSteps) {
-        await handleResetFormState();
-        return;
-      }
-      await handlePerStepReset(step);
-    },
-    [handlePerStepReset, handleResetFormState, selectedDivisions.length],
-  );
-
   const onInvalid = React.useCallback(
     (errs: any) => {
-      // no-op: placeholder for potential pre-validation side-effects
       let targetStep = 2;
       const divisionErrs = errs?.divisionAnswers;
       if (divisionErrs && typeof divisionErrs === 'object') {
@@ -550,14 +692,46 @@ export default function Magang2Page() {
         }
       }
       try {
-        const el = document.getElementById(formId);
+        const el = document.getElementById(FORM_ID);
         el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } catch (err) {
         void err;
       }
     },
-    [formId, selectedDivisions, setFocus],
+    [selectedDivisions, setFocus],
   );
+
+  // build error map & steps when form state changes
+  const errorMap = React.useMemo(() => {
+    return buildErrorMap({
+      rxErrors: (methods.formState?.errors || {}) as any,
+      isNavigating,
+      clearedSteps,
+      selectedDivisions,
+      divisionAnswers,
+      isSubmitted: !!methods.formState?.isSubmitted,
+    });
+  }, [
+    methods.formState?.errors,
+    methods.formState?.isSubmitted,
+    isNavigating,
+    clearedSteps,
+    selectedDivisions,
+    divisionAnswers,
+  ]);
+
+  React.useEffect(() => {
+    void errorMap;
+  }, [errorMap]);
+
+  const errorSteps = React.useMemo(
+    () => computeErrorSteps(errorMap, selectedDivisions),
+    [errorMap, selectedDivisions],
+  );
+
+  /* ============================
+     UI Render
+     ============================ */
 
   if (!isReady) {
     return (
@@ -621,7 +795,7 @@ export default function Magang2Page() {
             <CardContent className='pt-6'>
               <FormProvider {...methods}>
                 <form
-                  id={formId}
+                  id={FORM_ID}
                   onSubmit={handleSubmit(onSubmit as any, onInvalid as any)}
                   noValidate
                 >
@@ -635,7 +809,6 @@ export default function Magang2Page() {
                         setCurrentStep(s);
                         return;
                       }
-                      // Scroll to top of page smoothly
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                       setIsNavigating(true);
                       setCurrentStep(s);
@@ -733,6 +906,7 @@ export default function Magang2Page() {
                     <Step>
                       <HMTCIntroductionStep onNext={nextStep} />
                     </Step>
+
                     <Step>
                       <ApplyMagangFormStep
                         onSubmitSuccess={() => {}}
@@ -778,6 +952,8 @@ export default function Magang2Page() {
             </CardContent>
           </Card>
         </main>
+
+        {/* Submission modal */}
         <Dialog
           open={submissionOpen}
           onOpenChange={(v) => {
@@ -876,6 +1052,7 @@ export default function Magang2Page() {
           </DialogContent>
         </Dialog>
 
+        {/* Success & Error dialogs (kept intact for parity) */}
         <Dialog open={openSuccess} onOpenChange={setOpenSuccess}>
           <DialogContent>
             <DialogHeader>
@@ -900,6 +1077,7 @@ export default function Magang2Page() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+
         <Dialog open={openError} onOpenChange={setOpenError}>
           <DialogContent>
             <DialogHeader>

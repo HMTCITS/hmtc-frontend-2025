@@ -13,36 +13,57 @@ import {
 import { useSchedule } from '@/hooks/api/useSchedule';
 import { cn } from '@/lib/utils';
 
-// Custom hook to manage announcement state globally
+/**
+ * HeaderAnnouncement
+ *
+ * - Always runs the same hooks in the same order (no early returns).
+ * - Emits a stable custom event 'announcement-visibility' whenever the
+ *   announcement's computed visibility changes so outer components (e.g. Navbar)
+ *   can react without coupling to internal logic.
+ *
+ * Rendering:
+ * - The component always returns a wrapper <div>. When the announcement should
+ *   be hidden we render it with display:none and aria-hidden so React's hook
+ *   order never changes between renders.
+ */
+
 export function useAnnouncementState() {
   const [isDismissed, setIsDismissed] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
 
   React.useEffect(() => {
-    // Check if announcement was previously dismissed
-    const dismissed = localStorage.getItem('announcement-dismissed') === 'true';
-    setIsDismissed(dismissed);
+    try {
+      const dismissed =
+        typeof window !== 'undefined' &&
+        localStorage.getItem('announcement-dismissed') === 'true';
+      setIsDismissed(dismissed);
+    } catch {
+      setIsDismissed(false);
+    }
   }, []);
 
   const dismissAnnouncement = React.useCallback(() => {
     setIsDismissed(true);
-    localStorage.setItem('announcement-dismissed', 'true');
-    // Dispatch custom event to notify other components
-    window.dispatchEvent(new CustomEvent('announcement-dismissed'));
+    try {
+      localStorage.setItem('announcement-dismissed', 'true');
+      window.dispatchEvent(new CustomEvent('announcement-dismissed'));
+    } catch {
+      // ignore
+    }
   }, []);
 
   const handleScroll = React.useCallback(() => {
-    const shouldHide = window.scrollY >= 80;
+    const shouldHide = typeof window !== 'undefined' && window.scrollY >= 80;
     setIsScrolled(shouldHide);
   }, []);
 
   React.useEffect(() => {
+    if (typeof window === 'undefined') return;
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
-  // Check if announcement should be visible based on all conditions
   const isTimeValid = isAnnouncementTimeValid();
   const isAnnouncementVisible =
     ANNOUNCEMENT_CONFIG.isActive && isTimeValid && !isDismissed && !isScrolled;
@@ -56,31 +77,28 @@ export function useAnnouncementState() {
   };
 }
 
-type HeaderAnnouncementProps = {
-  active?: boolean;
-};
+type HeaderAnnouncementProps = { active?: boolean };
 
 export default function HeaderAnnouncement({
   active,
 }: HeaderAnnouncementProps) {
-  const { dismissAnnouncement } = useAnnouncementState();
+  // UI state hook (always run)
+  const { dismissAnnouncement, isAnnouncementVisible } = useAnnouncementState();
 
-  // schedule data for the recruitment page — used to show countdown / CTA
+  // Schedule hook (always run)
   const {
     data: scheduleData,
     now,
     loading: _scheduleLoading,
   } = useSchedule('/ayomeludaftarmagang', 7000);
 
-  // allow parent to override schedule active state via prop
+  // Compute derived schedule state (always run)
   const scheduleActive =
     typeof active === 'boolean' ? active : (scheduleData?.active ?? true);
-
   const isLoading = Boolean(_scheduleLoading);
 
-  // compute remaining time until start if not active
   const timeUntilStart = React.useMemo(() => {
-    if (!scheduleData?.start) return null;
+    if (!scheduleData?.start || !now) return null;
     try {
       const start = new Date(scheduleData.start).getTime();
       const n = now.getTime();
@@ -90,11 +108,30 @@ export default function HeaderAnnouncement({
     }
   }, [scheduleData?.start, now]);
 
-  // consider the countdown reaching zero as active so the UI flips immediately
-  const isCountdownFinished = timeUntilStart === 0;
-  const effectiveActive = scheduleActive || isCountdownFinished;
+  const _timeUntilEnd = React.useMemo(() => {
+    if (!scheduleData?.end || !now) return null;
+    try {
+      const end = new Date(scheduleData.end).getTime();
+      const n = now.getTime();
+      return Math.max(0, end - n);
+    } catch {
+      return null;
+    }
+  }, [scheduleData?.end, now]);
 
-  const formatRemaining = (ms: number | null) => {
+  const isClosed = React.useMemo(() => {
+    if (!scheduleData?.end || !now) return false;
+    try {
+      const endMs = new Date(scheduleData.end).getTime();
+      const nowMs = now.getTime();
+      return nowMs > endMs;
+    } catch {
+      return false;
+    }
+  }, [scheduleData?.end, now]);
+
+  // Format remaining helper (stable)
+  const formatRemaining = React.useCallback((ms: number | null) => {
     if (ms == null) return '';
     const total = Math.floor(ms / 1000);
     const days = Math.floor(total / 86400);
@@ -104,10 +141,41 @@ export default function HeaderAnnouncement({
     if (days > 0)
       return `${days}d ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-  };
+  }, []);
+
+  const isCountdownFinished = timeUntilStart === 0;
+  const effectiveActive = scheduleActive || isCountdownFinished;
+
+  // ----- Emit announcement-visibility event so Navbar or other consumers can react -----
+  React.useEffect(() => {
+    try {
+      const ev = new CustomEvent('announcement-visibility', {
+        detail: { visible: isAnnouncementVisible && !isClosed },
+      });
+      // Persist visibility briefly so consumers that mount after this effect
+      // can still read the initial state (avoids race where Navbar mounts
+      // after HeaderAnnouncement already dispatched the event).
+      try {
+        localStorage.setItem(
+          'announcement-visible',
+          String(Boolean(isAnnouncementVisible && !isClosed)),
+        );
+      } catch {
+        // ignore storage errors
+      }
+      window.dispatchEvent(ev);
+    } catch {
+      // ignore
+    }
+  }, [isAnnouncementVisible, isClosed]);
+
+  // We avoid early returns: always render a container so hooks order is stable.
+  // If announcement is not visible or closed, we hide it with display:none and aria-hidden.
+  const shouldShow = isAnnouncementVisible && !isClosed;
 
   return (
     <div
+      // keep the wrapper always present to ensure consistent hook order across renders
       className={cn(
         'relative z-[110] w-full transition-transform duration-300 ease-in-out',
         ANNOUNCEMENT_CONFIG.backgroundColor,
@@ -115,6 +183,8 @@ export default function HeaderAnnouncement({
       )}
       role='region'
       aria-label='Pengumuman HMTC'
+      aria-hidden={!shouldShow}
+      style={{ display: shouldShow ? undefined : 'none' }}
     >
       <div className='mx-auto flex max-w-6xl items-center justify-center gap-3 px-4 py-3 sm:px-6 md:px-8'>
         <div className='flex min-w-0 items-center gap-4'>
@@ -132,7 +202,6 @@ export default function HeaderAnnouncement({
         </div>
 
         <div className='flex items-center gap-3'>
-          {/* Countdown box */}
           {!effectiveActive ? (
             <div
               className='flex items-center rounded-md bg-white/8 px-3 py-1 font-mono text-xs sm:text-sm'
@@ -146,7 +215,6 @@ export default function HeaderAnnouncement({
                   : '--:--:--'}
             </div>
           ) : (
-            // Action CTA when active
             !isLoading &&
             ANNOUNCEMENT_CONFIG.actionText &&
             ANNOUNCEMENT_CONFIG.actionUrl && (

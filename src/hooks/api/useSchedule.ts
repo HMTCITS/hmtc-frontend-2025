@@ -77,16 +77,6 @@ export function useSchedule(path = '/ayomeludaftarmagang', pollMs = 5000) {
   return { data, now, loading, error } as const;
 }
 
-type Schedule = {
-  active: boolean;
-  nextChange: string | null;
-  now: string;
-  start: string;
-  end: string;
-  timezone: string;
-  source?: string;
-};
-
 export function useScheduleAutoRedirect(
   intervalMs = 5000,
   path: string = '/ayomeludaftarmagang',
@@ -99,28 +89,47 @@ export function useScheduleAutoRedirect(
     let timer: number | null = null;
     const controller = new AbortController();
 
+    // normalize the incoming path into the `page` query value:
+    // examples:
+    //  - "/ayomeludaftarmagang" -> "ayomeludaftarmagang"
+    //  - "hidden-page-cf" -> "hidden-page-cf"
+    //  - "/some/prefix/other" -> "some" (only the first segment is used, same as original expectations)
+    const normalizedPath = (path || '').startsWith('/')
+      ? (path || '').slice(1)
+      : path || '';
+    const pageQueryValue = normalizedPath.split('/')[0] || '';
+
     const load = async () => {
       try {
         const url = new URL('/api/schedule', window.location.origin);
         url.searchParams.set('path', path);
-        const res = await fetch(url, {
+
+        const res = await fetch(url.toString(), {
           cache: 'no-store',
           signal: controller.signal,
         });
+
         if (!mounted) return;
         if (!res.ok) throw new Error('Failed to load schedule');
-        const json = (await res.json()) as Schedule;
+
+        const json = (await res.json()) as any;
         if (json.active === false) {
-          // if we're not already on coming-soon for this page, navigate there with page param
-          const search =
-            typeof window !== 'undefined' ? window.location.search : '';
-          const already = search.includes('page=ayomeludaftarmagang');
-          if (!already) router.replace('/coming-soon?page=ayomeludaftarmagang');
+          // check current page query param dynamically, instead of a hard-coded string
+          const params = new URLSearchParams(
+            typeof window !== 'undefined' ? window.location.search : '',
+          );
+          const currentPage = params.get('page');
+          const already = currentPage === pageQueryValue;
+          if (!already) {
+            const to = `/coming-soon${pageQueryValue ? `?page=${encodeURIComponent(pageQueryValue)}` : ''}`;
+            router.replace(to);
+          }
         }
         lastActiveRef.current = json.active;
       } catch (e: any) {
         if (!mounted) return;
         if (e?.name === 'AbortError') return;
+        // swallow other errors (same as original behaviour)
       }
     };
 
