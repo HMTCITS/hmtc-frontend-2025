@@ -24,3 +24,13 @@ export const userKeys = {
     [...userKeys.requests(id), filters ?? {}] as const,
 } as const;
 
+export const requestKeys = {
+  all: ['requests'] as const,
+  lists: () => [...requestKeys.all, 'list'] as const,
+  list: (filters?: Record<string, unknown>) =>
+    [...requestKeys.lists(), filters ?? {}] as const,
+  details: () => [...requestKeys.all, 'detail'] as const,
+  detail: (id: string) => [...requestKeys.details(), id] as const,
+} as const;
+
+
