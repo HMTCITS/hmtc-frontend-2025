@@ -45,6 +45,8 @@ const securityHeaders = [
 const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
+  // Build as a standalone app so Next produces `.next/standalone` for minimal runtime
+  output: 'standalone',
 
   compiler: {
     styledComponents: true,
