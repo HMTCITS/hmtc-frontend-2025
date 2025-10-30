@@ -26,7 +26,9 @@ export function SidebarNav({ items, className, onNavigate }: SidebarNavProps) {
     <aside className={cn('w-64 shrink-0 py-8 pr-3', className)}>
       <nav role='navigation' aria-label='Main' className='flex flex-col gap-4'>
         {items.map((it) => {
-          const active = pathname.startsWith(it.href);
+          // Check if pathname exactly matches or starts with href followed by '/'
+          const active =
+            pathname === it.href || pathname.startsWith(it.href + '/');
           const ItemIcon = it.icon;
 
           return (
