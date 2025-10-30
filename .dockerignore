@@ -1,0 +1,17 @@
+# Docker context ignore for backend
+**/node_modules
+.git
+.github
+.vscode
+.DS_Store
+.env
+*.local
+*.log
+bin/
+dist/
+build/
+.next
+node_modules/
+vendor/
+tmp/
+*.cache

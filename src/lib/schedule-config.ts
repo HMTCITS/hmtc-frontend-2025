@@ -33,8 +33,8 @@ export const PAGE_SCHEDULES: Array<{
     prefix: '/ayomeludaftarmagang',
     schedule: {
       mode: 'range',
-      start: '2025-10-24T00:00:00+07:00',
-      end: '2025-10-30T12:00:00+07:00',
+      start: '2025-10-30T15:00:00+07:00',
+      end: '2025-10-30T21:00:00+07:00',
       timezone: 'Asia/Jakarta',
     },
   },
