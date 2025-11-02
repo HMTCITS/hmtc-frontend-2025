@@ -226,4 +226,22 @@ export const galleryItems: GalleryItem[] = [
     width: 600,
     height: 400,
   },
+  {
+    id: 26,
+    date: 'Sabtu, 01 November 2025',
+    title: 'Pengangkatan C28',
+    image: '/gallery/c28.jpg',
+    link: 'https://drive.google.com/drive/folders/1rEv_qslsDyAzfnuyIHCqk5wY_yBQKqTB',
+    width: 600,
+    height: 400,
+  },
+  {
+    id: 27,
+    date: 'Sabtu, 01 November 2025',
+    title: 'Moment Mental Pengangkatan C28',
+    image: '/gallery/mental_c28.jpg',
+    link: 'https://drive.google.com/drive/folders/1HOZZmUHuf0ElgcPT8uIHYCj_c9Qxzq08?usp=drive_link',
+    width: 600,
+    height: 400,
+  },
 ];
