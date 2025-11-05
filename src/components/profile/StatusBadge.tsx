@@ -1,11 +1,13 @@
 'use client';
 
 import { cn } from '@/lib/utils';
+import type { RequestStatus as RequestStatusType } from '@/types/request';
 
-export type RequestStatus = 'pending' | 'approved' | 'rejected';
+// Support both 'pending' (old) and 'in_review' (new) for backward compatibility
+export type RequestStatus = 'pending' | 'in_review' | 'approved' | 'rejected';
 
 interface StatusBadgeProps {
-  status: RequestStatus;
+  status: RequestStatus | RequestStatusType;
   className?: string;
 }
 
@@ -19,6 +21,12 @@ const STATUS_CONFIG: Record<
   }
 > = {
   pending: {
+    label: 'In Review',
+    variant: 'primary',
+    className: 'bg-blue-100 text-blue-800 border-blue-300 hover:bg-blue-200',
+    ariaLabel: 'Status: In Review - Request is currently being reviewed',
+  },
+  in_review: {
     label: 'In Review',
     variant: 'primary',
     className: 'bg-blue-100 text-blue-800 border-blue-300 hover:bg-blue-200',
