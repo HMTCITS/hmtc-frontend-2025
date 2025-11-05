@@ -33,4 +33,13 @@ export const requestKeys = {
   detail: (id: string) => [...requestKeys.details(), id] as const,
 } as const;
 
+export const uploadKeys = {
+  all: ['uploads'] as const,
+  lists: () => [...uploadKeys.all, 'list'] as const,
+  list: (filters?: Record<string, unknown>) =>
+    [...uploadKeys.lists(), filters ?? {}] as const,
+  details: () => [...uploadKeys.all, 'detail'] as const,
+  detail: (id: string) => [...uploadKeys.details(), id] as const,
+} as const;
+
 
