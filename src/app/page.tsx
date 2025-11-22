@@ -6,7 +6,7 @@ import Footer from '@/layouts/Footer';
 
 export const metadata: Metadata = {
   title: {
-    default: 'HMTC ITS | Organisasi Mahasiswa Teknik Computer ITS',
+    default: 'HMTC ITS | Himpunan Mahasiswa Teknik Computer-Informatika ITS',
     template: '%s | HMTC ITS',
   },
   description:
