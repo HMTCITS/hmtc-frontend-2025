@@ -235,4 +235,13 @@ export const galleryItems: GalleryItem[] = [
     width: 600,
     height: 400,
   },
+  {
+    id: 27,
+    date: 'Minggu, 23 November 2025',
+    title: 'PKTI - TC Cup',
+    image: '/gallery/tcCup.JPG',
+    link: 'https://drive.google.com/drive/folders/18RofQxAGvn6Zg8FGOynWTmPRPmHCjeMR?usp=sharing',
+    width: 600,
+    height: 400,
+  },
 ];
