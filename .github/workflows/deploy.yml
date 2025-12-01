@@ -33,14 +33,26 @@ jobs:
           echo "DEPLOY_HOST raw: ${DEPLOY_HOST}"
           echo "Length : ${#DEPLOY_HOST}"
 
-          set -x  # ENABLE TRACE LOG
+          echo "--- Testing ping ---"
+          ping -c 3 "$DEPLOY_HOST" || echo "PING FAILED"
 
-          if [ -z "$DEPLOY_HOST" ]; then
-            echo "ERROR: DEPLOY_HOST secret is not set or empty" >&2
+          echo "--- Testing DNS lookup ---"
+          nslookup "$DEPLOY_HOST" || echo "NSLOOKUP FAILED"
+
+          echo "--- Testing SSH port 22 ---"
+          nc -vz "$DEPLOY_HOST" 22 || echo "PORT 22 NOT OPEN"
+
+          echo "--- Running ssh-keyscan with verbose ---"
+          set -x
+          ssh-keyscan -T 15 -v -H "$DEPLOY_HOST" 2>&1 | tee sshkeyscan.log
+          
+          # If ssh-keyscan completely failed, exit with error
+          if ! grep -q "ssh-rsa\|ssh-ed25519\|ecdsa" sshkeyscan.log; then
+            echo "ERROR: ssh-keyscan failed to retrieve any host key" >&2
             exit 1
           fi
 
-          mkdir -p ~/.ssh
+          # Otherwise append
           ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
 
       - name: Deploy Frontend
