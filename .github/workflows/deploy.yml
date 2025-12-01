@@ -11,19 +11,35 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Debug Secrets
+        run: |
+          echo "=== DEBUG SECRETS ==="
+          if [ -z "${{ secrets.DEPLOY_HOST }}" ]; then
+            echo "DEPLOY_HOST is EMPTY or NOT SET!"
+          else
+            echo "DEPLOY_HOST is SET (hidden)"
+          fi
+
       - name: Setup SSH agent
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
 
-      - name: Add host to known_hosts
+      - name: Add host to known_hosts (with debug)
         env:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
         run: |
+          echo "=== DEBUG STEP Add host ==="
+          echo "DEPLOY_HOST raw: ${DEPLOY_HOST}"
+          echo "Length : ${#DEPLOY_HOST}"
+
+          set -x  # ENABLE TRACE LOG
+
           if [ -z "$DEPLOY_HOST" ]; then
-            echo "ERROR: DEPLOY_HOST secret is not set" >&2
+            echo "ERROR: DEPLOY_HOST secret is not set or empty" >&2
             exit 1
           fi
+
           mkdir -p ~/.ssh
           ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
 
@@ -31,4 +47,10 @@ jobs:
         env:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
         run: |
+          echo "=== DEPLOY STEP ==="
+          echo "DEPLOY_HOST: $DEPLOY_HOST"
+
+          set -x  # TRACE COMMAND
+
           ssh -o StrictHostKeyChecking=no deploy@"$DEPLOY_HOST" "frontend"
+
