@@ -9,60 +9,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Debug Secrets
-        run: |
-          echo "=== DEBUG SECRETS ==="
-          if [ -z "${{ secrets.DEPLOY_HOST }}" ]; then
-            echo "DEPLOY_HOST is EMPTY or NOT SET!"
-          else
-            echo "DEPLOY_HOST is SET (hidden)"
-          fi
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup SSH agent
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
 
-      - name: Add host to known_hosts (with debug)
+      - name: Add host to known_hosts
         env:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
         run: |
-          echo "=== DEBUG STEP Add host ==="
-          echo "DEPLOY_HOST raw: ${DEPLOY_HOST}"
-          echo "Length : ${#DEPLOY_HOST}"
-
-          echo "--- Testing ping ---"
-          ping -c 3 "$DEPLOY_HOST" || echo "PING FAILED"
-
-          echo "--- Testing DNS lookup ---"
-          nslookup "$DEPLOY_HOST" || echo "NSLOOKUP FAILED"
-
-          echo "--- Testing SSH port 22 ---"
-          nc -vz "$DEPLOY_HOST" 22 || echo "PORT 22 NOT OPEN"
-
-          echo "--- Running ssh-keyscan with verbose ---"
-          set -x
-          ssh-keyscan -T 15 -v -H "$DEPLOY_HOST" 2>&1 | tee sshkeyscan.log
-          
-          # If ssh-keyscan completely failed, exit with error
-          if ! grep -q "ssh-rsa\|ssh-ed25519\|ecdsa" sshkeyscan.log; then
-            echo "ERROR: ssh-keyscan failed to retrieve any host key" >&2
-            exit 1
-          fi
-
-          # Otherwise append
+          mkdir -p ~/.ssh
           ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
 
-      - name: Deploy Frontend
+      - name: Deploy Frontend (robust & non-blocking)
         env:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
         run: |
-          echo "=== DEPLOY STEP ==="
-          echo "DEPLOY_HOST: $DEPLOY_HOST"
+          echo "=== DEPLOY FRONTEND ==="
+          echo "Target host: $DEPLOY_HOST"
 
-          set -x  # TRACE COMMAND
+          ssh \
+            -o StrictHostKeyChecking=no \
+            -o ServerAliveInterval=30 \
+            -o ServerAliveCountMax=10 \
+            deploy@"$DEPLOY_HOST" \
+            "nohup /opt/deployment/scripts/deploy-wrapper.sh frontend \
+              > /opt/deployment/logs/deploy-frontend.log 2>&1 &"
 
-          ssh -o StrictHostKeyChecking=no deploy@"$DEPLOY_HOST" "frontend"
-
+          echo "Deploy command sent successfully (running in background)."
