@@ -30,13 +30,14 @@ jobs:
         run: |
           echo "=== DEPLOY FRONTEND ==="
           echo "Target host: $DEPLOY_HOST"
-
+      
           ssh \
             -o StrictHostKeyChecking=no \
             -o ServerAliveInterval=30 \
             -o ServerAliveCountMax=10 \
             deploy@"$DEPLOY_HOST" \
-            "nohup /opt/deployment/scripts/deploy-wrapper.sh frontend \
-              > /opt/deployment/logs/deploy-frontend.log 2>&1 &"
-
+            "bash -lc 'nohup /opt/deployment/scripts/deploy-wrapper.sh frontend \
+              > /opt/deployment/logs/deploy-frontend.log 2>&1 &'"
+      
           echo "Deploy command sent successfully (running in background)."
+
