@@ -24,20 +24,17 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
 
-      - name: Deploy Frontend (robust & non-blocking)
+      - name: Deploy Frontend (forced-command safe)
         env:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
         run: |
           echo "=== DEPLOY FRONTEND ==="
           echo "Target host: $DEPLOY_HOST"
-      
+
           ssh \
             -o StrictHostKeyChecking=no \
             -o ServerAliveInterval=30 \
             -o ServerAliveCountMax=10 \
-            deploy@"$DEPLOY_HOST" \
-            "bash -lc 'nohup /opt/deployment/scripts/deploy-wrapper.sh frontend \
-              > /opt/deployment/logs/deploy-frontend.log 2>&1 &'"
-      
-          echo "Deploy command sent successfully (running in background)."
+            deploy@"$DEPLOY_HOST" frontend
 
+          echo "Deploy finished."
