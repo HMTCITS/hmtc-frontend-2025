@@ -307,4 +307,13 @@ export const galleryItems: GalleryItem[] = [
     width: 600,
     height: 400,
   },
+  {
+    id: 34,
+    date: 'Sabtu, 20 Desember 2025',
+    title: 'Farewell Party HMTC Suar Peradaban 2025',
+    image: '/gallery/FarewellParty.JPG',
+    link: 'https://drive.google.com/drive/folders/1MxATnYElh6DHzuW6ljYRsn2NaUAL3rjZ?usp=sharing',
+    width: 600,
+    height: 400,
+  },
 ];
